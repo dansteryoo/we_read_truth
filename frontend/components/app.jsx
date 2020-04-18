@@ -10,13 +10,13 @@ const App = () => (
     <div className='app-class'>
         <Modal />
 
-            <Switch>
-                <ProtectedRoute exact path='/home' component={HomePageContainer} />
-            </Switch>
-
         <Switch>
             <AuthRoute exact path='/' component={SplashContainer} />
             <AuthRoute exact path='/wrt/sign_up' component={SignUpContainer} />
+        </Switch>
+
+        <Switch>
+            <ProtectedRoute exact path='/home' component={HomePageContainer} />
         </Switch>
 
     </div>
