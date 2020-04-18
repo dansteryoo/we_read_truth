@@ -1,0 +1,25 @@
+
+    @font-face {
+        font-family: 'SmoothStone';
+        src: url('SmoothStone-Regular.otf') format('otf'),
+            url('SmoothStone-Regular.woff') format('woff'),
+            url('SmoothStone-Regular.ttf') format('truetype');
+        font-weight: 400;
+        font-style: normal;
+    };
+
+
+    @font-face {
+        font-family: 'Astra';
+        src: url('Astra.otf') format('otf');
+        font-weight: 400;
+        font-style: normal;
+    };
+
+
+    @font-face {
+        font-family: 'Shadows';
+        src: url('../font/ShadowsIntoLight.ttf') format('truetype');
+        font-weight: 400;
+        font-style: normal;
+    };
