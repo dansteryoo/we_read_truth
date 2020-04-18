@@ -30,6 +30,9 @@ class LogInForm extends React.Component {
     }
 
     renderErrors() {
+        if (this.props.errors === undefined) {
+            this.props.errors = []
+        }
         return (
             <ul className='form-errors'>
                 {this.props.errors.map((error, i) => (
