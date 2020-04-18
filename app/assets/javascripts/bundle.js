@@ -1173,6 +1173,10 @@ var LogInForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderErrors",
     value: function renderErrors() {
+      if (this.props.errors === undefined) {
+        this.props.errors = [];
+      }
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "form-errors"
       }, this.props.errors.map(function (error, i) {
