@@ -354,7 +354,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util_route_util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../util/route_util */ "./frontend/util/route_util.jsx");
 /* harmony import */ var _splash_modal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./splash/modal */ "./frontend/components/splash/modal.jsx");
 /* harmony import */ var _splash_splash_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./splash/splash_container */ "./frontend/components/splash/splash_container.js");
-/* harmony import */ var _home_home_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./home/home_container */ "./frontend/components/home/home_container.js");
+/* harmony import */ var _session_form_signup_form_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./session_form/signup_form_container */ "./frontend/components/session_form/signup_form_container.js");
+/* harmony import */ var _home_home_container__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./home/home_container */ "./frontend/components/home/home_container.js");
+
 
 
 
@@ -368,11 +370,15 @@ var App = function App() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_splash_modal__WEBPACK_IMPORTED_MODULE_3__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
     exact: true,
     path: "/home",
-    component: _home_home_container__WEBPACK_IMPORTED_MODULE_5__["default"]
+    component: _home_home_container__WEBPACK_IMPORTED_MODULE_6__["default"]
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_2__["AuthRoute"], {
     exact: true,
     path: "/",
     component: _splash_splash_container__WEBPACK_IMPORTED_MODULE_4__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_2__["AuthRoute"], {
+    exact: true,
+    path: "/wrt/sign_up",
+    component: _session_form_signup_form_container__WEBPACK_IMPORTED_MODULE_5__["default"]
   })));
 };
 
@@ -1358,7 +1364,7 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
       }
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "form-errors"
+        className: "signup-form-errors"
       }, this.props.errors.map(function (error, i) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           key: "error-".concat(i)
@@ -1369,17 +1375,17 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "form-container"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "form-title"
+        className: "form-container-signup"
+      }, this.renderErrors(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-title-signup"
       }, "Sign up with email"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit,
         className: "form"
-      }, this.renderErrors(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "form"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "signup-form"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "email",
-        className: "form-input",
+        className: "signup-form-input",
         value: this.state.email,
         placeholder: 'Email address',
         onChange: this.update('email'),
@@ -1391,7 +1397,7 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
         className: "fas fa-envelope fa-lg"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
-        className: "form-input",
+        className: "signup-form-input",
         value: this.state.firstName,
         placeholder: 'First name',
         onChange: this.update('firstName'),
@@ -1403,7 +1409,7 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
         className: "fas fa-user fa-lg"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
-        className: "form-input",
+        className: "signup-form-input",
         value: this.state.lastName,
         placeholder: 'Last name',
         onChange: this.update('lastName'),
@@ -1415,7 +1421,7 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
         className: "fas fa-user fa-lg"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "password",
-        className: "form-input",
+        className: "signup-form-input",
         value: this.state.password,
         placeholder: 'Create a password',
         onChange: this.update('password'),
@@ -1426,7 +1432,7 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
         id: "form-icon-login",
         className: "fas fa-lock fa-lg"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "form-button",
+        className: "signup-form-button",
         type: "submit",
         value: this.props.formType
       }, "Sign Up"))));

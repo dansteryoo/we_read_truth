@@ -6,6 +6,7 @@
     position: fixed;
     top: 0;
     width: 100%;
+    height: 107px;
     min-width: 1280px;
 
     li {
@@ -22,8 +23,8 @@
         background-color: transparent;
 
         img {
-            width: 300px;
-            padding: 35px 30px 25px 60px;
+            width: 250px;
+            padding: 18px 0 0 60px;
         }
     }
 
@@ -89,34 +90,28 @@
     .navsearch {
         display: flex;
         height: 50px;
-        position: relative;
-        border-radius: 4px;
+        width: 500px;
         margin: 27px 0 0 50px;
         align-items: center;
+        border: 1px solid #ebebeb;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
         img {
             margin: 0 12px;
         }
     }
 
-    .navsearch:before {
-        position: absolute;
-        width: 500px;
-        height: 50px;
-        border: 1px solid #ebebeb;
-        border-radius: 2px;
-        content: "";
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
     .navsearch-input {
         background-color: transparent;
+        width: 440px;
+        height: 35px;
         border: 0px;
-        font-size: 16px;
+        font-size: 14px;
         font-weight: 300;
         letter-spacing: 0.05rem;
         color: #484848;
-        padding-left: 20px;
+        padding: 0 20px;
     }
 
     .navsearch-input:focus {

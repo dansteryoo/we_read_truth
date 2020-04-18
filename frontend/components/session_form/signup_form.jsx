@@ -38,7 +38,7 @@ class SignUp extends React.Component {
             this.props.errors = []
         }
         return (
-            <ul className='form-errors'>
+            <ul className='signup-form-errors'>
                 {this.props.errors.map((error, i) => (
                     <li key={`error-${i}`}>{error}</li>
                 ))}
@@ -50,16 +50,14 @@ class SignUp extends React.Component {
 
 
         return (
-            <div className='form-container'>
-
-                <div className='form-title'>Sign up with email</div>
+            <div className='form-container-signup'>
+                {this.renderErrors()}
+                <div className='form-title-signup'>Sign up with email</div>
                     <form onSubmit={this.handleSubmit} className='form'>
                     
-                    {this.renderErrors()}
-                    
-                    <div className='form'>
+                    <div className='signup-form'>
                         <input type='email'
-                            className='form-input'
+                            className='signup-form-input'
                             value={this.state.email}
                             placeholder={'Email address'}
                             onChange={this.update('email')}
@@ -70,7 +68,7 @@ class SignUp extends React.Component {
                         <i id='form-icon-login' className='fas fa-envelope fa-lg'></i>
                         
                         <input type='text'
-                            className='form-input'
+                            className='signup-form-input'
                             value={this.state.firstName}
                             placeholder={'First name'}
                             onChange={this.update('firstName')}
@@ -81,7 +79,7 @@ class SignUp extends React.Component {
                         <i id='form-icon-login' className='fas fa-user fa-lg'></i>
                         
                         <input type='text'
-                            className='form-input'
+                            className='signup-form-input'
                             value={this.state.lastName}
                             placeholder={'Last name'}
                             onChange={this.update('lastName')}
@@ -92,7 +90,7 @@ class SignUp extends React.Component {
                         <i id='form-icon-login' className='fas fa-user fa-lg'></i>
                         
                         <input type='password'
-                            className='form-input'
+                            className='signup-form-input'
                             value={this.state.password}
                             placeholder={'Create a password'}
                             onChange={this.update('password')}
@@ -102,7 +100,7 @@ class SignUp extends React.Component {
                         />
                         <i id='form-icon-login' className='fas fa-lock fa-lg'></i>
    
-                            <button className='form-button' type='submit' value={this.props.formType}>Sign Up</button>
+                            <button className='signup-form-button' type='submit' value={this.props.formType}>Sign Up</button>
                         </div>
                     </form>
 
