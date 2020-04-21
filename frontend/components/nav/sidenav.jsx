@@ -1,5 +1,5 @@
 import React from 'react';
-import DevosWeekly from '../devos/devos_weekly_container';
+// import DevosWeekly from '../devos/devos_weekly_container';
 
 class SideNav extends React.Component {
     constructor(props) {
