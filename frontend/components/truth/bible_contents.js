@@ -1,7 +1,3 @@
-import devos from './hereadstruth.json';
-import React from 'react';
-import DevosWeeklyItems from './devos_weekly_items';
-
 const BIBLE_BOOKS = {
     Genesis: 1,
     Exodus: 2,
@@ -70,52 +66,3 @@ const BIBLE_BOOKS = {
     Jude: 65,
     Revelation: 66
 };
-
-class DevosWeekly extends React.Component {
-    constructor(props) {
-        super(props)
-    }
-
-    componentDidMount() {
-        
-    }
-
-    render() {
-
-        
-        
-
-        const { devos } = this.props;
-
-        return (
-            <div className='devos-index-container'>
-
-                <div className='devos-index-ph-title'>
-                    <span>Day 1</span>
-                </div>
-
-                <div className='devos-index-header'>
-                    <span>Title</span>
-                </div>
-
-                <div className='devos-index-subheader'>
-                    <span>Passage</span>
-                </div>
-
-                <ul className='devos-ul'>
-                    {
-                        devos.map(book => (
-                            <DevosWeeklyItems
-                                book={book}
-                                key={book.id}
-                            />
-                        ))
-                    }
-                </ul>
-            </div>
-        )
-    }
-
-}
-
-export default DevosWeekly;

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { fetchDevos } from '../../actions/devo_actions';
-import DevosWeekly from './devos_weekly';
+import DevoMain from './devos_body';
 
 
 const mapStateToProps = (state) => ({
@@ -13,4 +13,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(DevosWeekly);
+export default connect(mapStateToProps, mapDispatchToProps)(DevoMain);
