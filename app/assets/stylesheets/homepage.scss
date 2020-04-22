@@ -25,16 +25,39 @@
   margin-top: 107px;
 
   // Style in common for sidebars and main area:
-  .header {
+  .left-header,
+  .main-header, 
+  .right-header {
     position: relative;
     height: var(--header-height);
-    text-align: center; // Horizontal center
 
     .title { 
       position: absolute; 
-      left: 0; right: 0; 
+      left: 0; 
+      right: 0; 
     }
   }
+
+  .left-header {
+    text-align: left;
+
+    .title {
+      padding-left: 40%;
+    }
+  }
+
+  .main-header {
+    text-align: center;
+  }
+
+  .right-header {
+    text-align: right;
+
+      .title {
+      padding-right: 40%;
+    }
+  }
+
 
   .content {
     overflow: auto;

@@ -47,9 +47,9 @@ class HomePage extends React.Component {
                     &equiv;
                 </div>
                 <div className={`sidebar ${leftOpen}`} >
-                    <div className='header'>
+                    <div className='left-header'>
                         <h3 className='title'>
-                        Left header
+                        Plan
                         </h3>
                     </div>
                     <div className='content'>
@@ -59,17 +59,17 @@ class HomePage extends React.Component {
             </div>
 
             <div id='main'>
-                <div className='header'>
+                <div className='main-header'>
                     <h3 className={`
                         title
                         ${'left-' + leftOpen}
                         ${'right-' + rightOpen}
                     `}>
-                        Main header
+                        Main
                     </h3>
                 </div>
                 <div className='content'>
-                    <h3>Main content</h3><br/>
+                    <h3>Devo Body</h3><br/>
 
                 </div>
             </div>
@@ -80,13 +80,13 @@ class HomePage extends React.Component {
                     &equiv;
                 </div>
                 <div className={`sidebar ${rightOpen}`} >
-                    <div className='header'>
+                    <div className='right-header'>
                         <h3 className='title'>
-                        Right header
+                        Notes
                         </h3>
                     </div>
                     <div className='content'>
-                        <h3>Right content</h3><br/>
+                        <h3>Posts</h3><br/>
 
                     </div>
                 </div>
