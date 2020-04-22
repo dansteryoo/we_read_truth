@@ -4,11 +4,14 @@ import NavBarContainer from '../nav/navbar_container';
 
 class HomePage extends React.Component {
     constructor(props) {
-        super(props)
-    }
+        super(props);
 
-    componentDidMount() {
-        // this.props.fetchDevos();
+        this.state = {
+            leftOpen: true,
+            rightOpen: true,
+        }
+
+        this.toggleSidebar = this.toggleSidebar.bind(this);
     }
 
     componentDidMount() {
@@ -20,34 +23,79 @@ class HomePage extends React.Component {
         //     .catch(console.log)
     }
 
+    toggleSidebar(event) {
+        let key = `${event.currentTarget.parentNode.id}Open`;
+        this.setState({ [key]: !this.state[key] });
+    }
+
+
     render() {
+
+        let leftOpen = this.state.leftOpen ? 'open' : 'closed';
+        let rightOpen = this.state.rightOpen ? 'open' : 'closed';
 
         const { devos } = this.props;
 
         return (
             <>
             <NavBarContainer />
+            <div id='layout'>
 
-            <div className='hompage-main-container'>
-
-                <div className='sidenav-container'>
-                    <SideNavContainer />
+            <div id='left' className={leftOpen} >
+                <div className='icon'
+                    onClick={this.toggleSidebar} >
+                    &equiv;
                 </div>
-
-                <div className='homepage-mid-container'>
-                    DEVOS HERE
-
+                <div className={`sidebar ${leftOpen}`} >
+                    <div className='header'>
+                        <h3 className='title'>
+                        Left header
+                        </h3>
+                    </div>
+                    <div className='content'>
+                        <SideNavContainer />
+                    </div>
                 </div>
-
-                <div className='homepage-right-container'>
-                    NOTES HERE
-                </div>
-
             </div>
-        </>
-        )
-    }
 
+            <div id='main'>
+                <div className='header'>
+                    <h3 className={`
+                        title
+                        ${'left-' + leftOpen}
+                        ${'right-' + rightOpen}
+                    `}>
+                        Main header
+                    </h3>
+                </div>
+                <div className='content'>
+                    <h3>Main content</h3><br/>
+
+                </div>
+            </div>
+
+            <div id='right' className={rightOpen} >
+                <div className='icon'
+                    onClick={this.toggleSidebar} >
+                    &equiv;
+                </div>
+                <div className={`sidebar ${rightOpen}`} >
+                    <div className='header'>
+                        <h3 className='title'>
+                        Right header
+                        </h3>
+                    </div>
+                    <div className='content'>
+                        <h3>Right content</h3><br/>
+
+                    </div>
+                </div>
+            </div>
+
+      </div>
+      </>
+    );
+  }
 }
 
 export default HomePage;
