@@ -12,6 +12,13 @@ export const fetchDevo = (devoId) => (
     })
 );
 
+export const fetchDevoBook = (devoBook) => (
+    $.ajax({
+        url: `/api/devos`,
+        method: 'GET'
+    })
+);
+
 export const fetchSearchResult = (searchKeywords, startDate, endDate) => (
     $.ajax({
         type: 'GET',

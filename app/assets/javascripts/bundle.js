@@ -90,7 +90,7 @@
 /*!******************************************!*\
   !*** ./frontend/actions/devo_actions.js ***!
   \******************************************/
-/*! exports provided: RECEIVE_DEVOS, RECEIVE_DEVO, CLEAR_DEVO_STATE, receiveDevos, receiveDevo, clearDevoState, fetchDevos, fetchDevo, fetchSearchResult */
+/*! exports provided: RECEIVE_DEVOS, RECEIVE_DEVO, CLEAR_DEVO_STATE, RECEIVE_DEVO_BOOK, receiveDevos, receiveDevo, receiveDevoBook, clearDevoState, fetchDevos, fetchDevo, fetchDevoBook, fetchSearchResult */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -98,17 +98,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_DEVOS", function() { return RECEIVE_DEVOS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_DEVO", function() { return RECEIVE_DEVO; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CLEAR_DEVO_STATE", function() { return CLEAR_DEVO_STATE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_DEVO_BOOK", function() { return RECEIVE_DEVO_BOOK; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveDevos", function() { return receiveDevos; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveDevo", function() { return receiveDevo; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveDevoBook", function() { return receiveDevoBook; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clearDevoState", function() { return clearDevoState; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchDevos", function() { return fetchDevos; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchDevo", function() { return fetchDevo; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchDevoBook", function() { return fetchDevoBook; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchSearchResult", function() { return fetchSearchResult; });
-/* harmony import */ var _util_devos_api_util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/devos_api_util */ "./frontend/util/devos_api_util.jsx");
+/* harmony import */ var _util_devos_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/devos_api_util */ "./frontend/util/devos_api_util.jsx");
 
 var RECEIVE_DEVOS = 'RECEIVE_DEVOS';
 var RECEIVE_DEVO = 'RECEIVE_DEVO';
 var CLEAR_DEVO_STATE = "CLEAR_DEVO_STATE";
+var RECEIVE_DEVO_BOOK = 'RECEIVE_DEVO_BOOK';
 var receiveDevos = function receiveDevos(devos) {
   return {
     type: RECEIVE_DEVOS,
@@ -121,6 +125,12 @@ var receiveDevo = function receiveDevo(devo) {
     devo: devo
   };
 };
+var receiveDevoBook = function receiveDevoBook(devoBook) {
+  return {
+    type: RECEIVE_DEVO_BOOK,
+    devoBook: devoBook
+  };
+};
 var clearDevoState = function clearDevoState() {
   return {
     type: CLEAR_DEVO_STATE
@@ -128,21 +138,28 @@ var clearDevoState = function clearDevoState() {
 };
 var fetchDevos = function fetchDevos() {
   return function (dispatch) {
-    return _util_devos_api_util__WEBPACK_IMPORTED_MODULE_1__["fetchDevos"]().then(function (devos) {
+    return _util_devos_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchDevos"]().then(function (devos) {
       return dispatch(receiveDevos(devos));
     });
   };
 };
 var fetchDevo = function fetchDevo(devoId) {
   return function (dispatch) {
-    return _util_devos_api_util__WEBPACK_IMPORTED_MODULE_1__["fetchDevo"](devoId).then(function (devo) {
+    return _util_devos_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchDevo"](devoId).then(function (devo) {
       return dispatch(receiveDevo(devo));
+    });
+  };
+};
+var fetchDevoBook = function fetchDevoBook(devoBook) {
+  return function (dispatch) {
+    return _util_devos_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchDevoBook"](devoBook).then(function (devo) {
+      return dispatch(receiveDevoBook(devoBook));
     });
   };
 };
 var fetchSearchResult = function fetchSearchResult(keywords, startDate, endDate) {
   return function (dispatch) {
-    return _util_devos_api_util__WEBPACK_IMPORTED_MODULE_1__["fetchSearchResult"](keywords, startDate, endDate).then(function (devos) {
+    return _util_devos_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchSearchResult"](keywords, startDate, endDate).then(function (devos) {
       return dispatch(receiveListings(devos));
     });
   };
@@ -553,8 +570,9 @@ __webpack_require__.r(__webpack_exports__);
 var mapStateToProps = function mapStateToProps(state) {
   // debugger
   return {
-    errors: state.errors // notes: Object.values(state.notes)  
-
+    currentUser: state.users[state.session.id],
+    errors: state.errors,
+    devos: Object.values(state.devos)
   };
 };
 
@@ -1798,6 +1816,8 @@ document.addEventListener('DOMContentLoaded', function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_devo_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/devo_actions */ "./frontend/actions/devo_actions.js");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 var devosReducer = function devosReducer() {
@@ -1808,11 +1828,13 @@ var devosReducer = function devosReducer() {
 
   switch (action.type) {
     case _actions_devo_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_DEVOS"]:
-      return action.devos;
+      return Object.assign({}, newState, action.devos);
 
     case _actions_devo_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_DEVO"]:
-      newState[action.devo.id] = action.devo;
-      return newState;
+      return Object.assign({}, newState, _defineProperty({}, action.devo.id, action.devo));
+
+    case _actions_devo_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_DEVO_BOOK"]:
+      return Object.assign({}, newState, _defineProperty({}, action.devo.book, action.devoBook));
 
     case _actions_devo_actions__WEBPACK_IMPORTED_MODULE_0__["CLEAR_DEVO_STATE"]:
       return {};
@@ -1869,6 +1891,8 @@ var modalReducer = function modalReducer() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_note_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/note_actions */ "./frontend/actions/note_actions.js");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 var notesReducer = function notesReducer() {
@@ -1879,15 +1903,14 @@ var notesReducer = function notesReducer() {
 
   switch (action.type) {
     case _actions_note_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_NOTES"]:
-      return action.notes;
+      return Object.assign({}, newState, action.notes);
 
     case _actions_note_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_NOTE"]:
-      newState[action.note.id] = action.note;
-      return newState;
+      return Object.assign({}, newState, _defineProperty({}, action.note.id, action.note));
 
     case _actions_note_actions__WEBPACK_IMPORTED_MODULE_0__["REMOVE_NOTE"]:
       delete newState[action.noteId];
-      return newState;
+      return Object.assign({}, newState);
 
     default:
       return newState;
@@ -2074,13 +2097,14 @@ var configureStore = function configureStore() {
 /*!******************************************!*\
   !*** ./frontend/util/devos_api_util.jsx ***!
   \******************************************/
-/*! exports provided: fetchDevos, fetchDevo, fetchSearchResult */
+/*! exports provided: fetchDevos, fetchDevo, fetchDevoBook, fetchSearchResult */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchDevos", function() { return fetchDevos; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchDevo", function() { return fetchDevo; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchDevoBook", function() { return fetchDevoBook; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchSearchResult", function() { return fetchSearchResult; });
 var fetchDevos = function fetchDevos() {
   return $.ajax({
@@ -2091,6 +2115,12 @@ var fetchDevos = function fetchDevos() {
 var fetchDevo = function fetchDevo(devoId) {
   return $.ajax({
     url: "/api/devos/".concat(devoId),
+    method: 'GET'
+  });
+};
+var fetchDevoBook = function fetchDevoBook(devoBook) {
+  return $.ajax({
+    url: "/api/devos",
     method: 'GET'
   });
 };

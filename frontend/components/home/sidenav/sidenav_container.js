@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { closeModal, openModal } from '../../actions/modal_actions';
-import HomePage from './home';
+import SideNav from './sidenav';
 
 const mapStateToProps = (state) => {
     // debugger
@@ -17,6 +17,7 @@ const mapDispatchToProps = (dispatch) => ({
     openModal: (formType) => dispatch(openModal(formType)),
     fetchDevos: () => dispatch(fetchDevos()),
     fetchDevo: (devoId) => dispatch(fetchDevos(devoId)),
+    fetchDevoTitle: (devoTitle) => dispatch(fetchDevos(devoTitle)),
     fetchNotes: (noteId) => dispatch(fetchNotes(noteId)),
     createNote: (note) => dispatch(createNote(note)),
     updateNote: (noteId) => dispatch(updateNote(noteId)),
@@ -24,4 +25,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default connect(mapStateToProps, mapDispatchToProps)(SideNav);
