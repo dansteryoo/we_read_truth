@@ -7,6 +7,7 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :image_url
       t.string :session_token, null: false
       t.string :password_digest, null: false
+      t.string :notary_id
 
       t.timestamps
     end

@@ -1,5 +1,3 @@
-
-
 export const fetchDevos = () => (
     $.ajax({
         url: `/api/devos`,

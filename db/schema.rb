@@ -16,23 +16,22 @@ ActiveRecord::Schema.define(version: 2020_04_14_212949) do
   enable_extension "plpgsql"
 
   create_table "devos", force: :cascade do |t|
-    t.integer "day", null: false
+    t.string "gender", null: false
     t.string "book", null: false
-    t.string "chapter", null: false
-    t.string "verse", null: false
     t.string "title", null: false
-    t.string "passage", null: false
+    t.string "passages", null: false
     t.string "summary", null: false
-    t.string "author", null: false
-    t.integer "devotional_id", null: false
+    t.string "img", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["book"], name: "index_devos_on_book"
-    t.index ["devotional_id"], name: "index_devos_on_devotional_id"
   end
 
   create_table "notes", force: :cascade do |t|
+    t.text "title"
     t.text "body", null: false
+    t.text "category"
+    t.text "tags"
     t.integer "notary_id", null: false
     t.integer "devo_id", null: false
     t.datetime "created_at", null: false
@@ -48,6 +47,7 @@ ActiveRecord::Schema.define(version: 2020_04_14_212949) do
     t.string "image_url"
     t.string "session_token", null: false
     t.string "password_digest", null: false
+    t.string "notary_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true

@@ -3,11 +3,11 @@ import { closeModal, openModal } from '../../actions/modal_actions';
 import HomePage from './home';
 
 const mapStateToProps = (state) => {
+    // debugger
     return {
-        formType: 'Update',
         errors: state.errors,
-        devos: Object.values(state.devos),
-        notes: Object.values(state.notes)  
+
+        // notes: Object.values(state.notes)  
     }
 };
 

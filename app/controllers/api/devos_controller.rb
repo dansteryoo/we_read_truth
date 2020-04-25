@@ -33,7 +33,7 @@ class Api::DevosController < ApplicationController
 private
 
     def devo_params
-        params.require(:devo).permit(:day, :book, :chapter, :verse, :title, :passage, :summary, :author, :devotional_id, images: [])
+        params.require(:devo).permit(:gender, :book, :title, :passages, :summary, :img)
     end
 
     # def search

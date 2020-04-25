@@ -1,6 +1,8 @@
 import React from 'react';
-import SideNavContainer from '../nav/sidenav_container';
+import SideNav from './sidenav/sidenav';
 import NavBarContainer from '../nav/navbar_container';
+import MainBody from './main_body'
+
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -12,16 +14,26 @@ class HomePage extends React.Component {
         }
 
         this.toggleSidebar = this.toggleSidebar.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
 
     componentDidMount() {
-        // fetch('http://jsonplaceholder.typicode.com/users')
+        // fetch('../data_he')
         //     .then(res => res.json())
         //     .then((data) => {
         //         this.setState({ contacts: data })
         //     })
         //     .catch(console.log)
     }
+
+    handleClick(e) {
+        e.preventDefault();
+        this.setState({
+            day: "",
+            title: "",
+            passage: "",
+        })
+    };
 
     toggleSidebar(event) {
         let key = `${event.currentTarget.parentNode.id}Open`;
@@ -53,7 +65,11 @@ class HomePage extends React.Component {
                         </h3>
                     </div>
                     <div className='content'>
-                        <SideNavContainer />
+
+                        <SideNav 
+                        handleClick={this.handleClick}
+                        /> 
+
                     </div>
                 </div>
             </div>
@@ -69,7 +85,11 @@ class HomePage extends React.Component {
                     </h3>
                 </div>
                 <div className='content'>
-                    <h3>Devo Body</h3><br/>
+
+                    <MainBody 
+                        bookTitle=''
+                        passages=''
+                    />
 
                 </div>
             </div>
