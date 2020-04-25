@@ -6,20 +6,12 @@ class User < ApplicationRecord
     validates :email, uniqueness: true 
 
     after_initialize :ensure_session_token
- 
-    has_many :devos,
-        primary_key: :id,
-        foreign_key: :devotional_id,
-        class_name: :Devo,
-        dependent: :destroy
 
     has_many :notes,
         primary_key: :id,
         foreign_key: :notary_id,
         class_name: :Note,
         dependent: :destroy
-
-    has_one_attached :image
 
     attr_reader :password
 

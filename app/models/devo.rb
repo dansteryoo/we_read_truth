@@ -1,19 +1,11 @@
 class Devo < ApplicationRecord
 
-    validates :day, :book, :chapter, :verse, :title, :passage, :summary, :author, :devotional_id, presence: true
+    validates :gender, :book, :title, :passages, :summary, :img, presence: true
 
-    belongs_to :user,
-        primary_key: :id,
-        foreign_key: :devotional_id,
-        class_name: :User
-
-    has_many :notes,
-        primary_key: :id,
-        foreign_key: :devo_id,
-        class_name: :Note
-
-
-    has_many_attached :images
+    # belongs_to :note,
+    #     primary_key: :id,
+    #     foreign_key: :devo_id,
+    #     class_name: :Note
 
     def self.search_by_keywords(keywords)
         keyword = `%#{keywords}%`

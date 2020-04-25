@@ -1,1 +1,0 @@
-// Authorization: Token { { YOUR_KEY } }

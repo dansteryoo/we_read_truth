@@ -29,18 +29,18 @@ export const clearDevoState = () => {
 export const fetchDevos = () => dispatch => {
     return DevosAPIUtil.fetchDevos()
         .then(devos => dispatch(receiveDevos(devos))
-    )  
+        )
 };
 
 export const fetchDevo = (devoId) => dispatch => {
     return DevosAPIUtil.fetchDevo(devoId)
         .then(devo => dispatch(receiveDevo(devo))
-    )
+        )
 };
 
 
 export const fetchSearchResult = (keywords, startDate, endDate) => dispatch => {
     return DevosAPIUtil.fetchSearchResult(keywords, startDate, endDate)
         .then(devos => dispatch(receiveListings(devos))
-    )
+        )
 };
