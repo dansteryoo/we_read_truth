@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     resources :devos, only: [:index, :show]
     resources :notes, only: [:index, :show, :create, :destroy]
     get '/search', to: 'devos#search'
+    get '/book', to: 'devos#book'
   end
 
   root 'static_pages#root'

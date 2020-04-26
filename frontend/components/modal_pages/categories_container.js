@@ -1,20 +1,23 @@
 import { connect } from 'react-redux';
-import { logout } from '../../actions/session_actions';
 import { closeModal, openModal } from '../../actions/modal_actions';
-import Navbar from './navbar';
+import { fetchDevos } from '../../actions/devo_actions'
+import CategoriesPage from './categories';
 
 const mapStateToProps = (state) => {
+    // debugger
     return {
-        formType: 'Notes',
         currentUser: state.users[state.session.id],
-        errors: state.errors
+        errors: state.errors,
+        devos: Object.values(state.devos)
     }
 };
 
+
 const mapDispatchToProps = (dispatch) => ({
-    logout: () => dispatch(logout()),
     closeModal: () => dispatch(closeModal()),
     openModal: (formType) => dispatch(openModal(formType)),
+    fetchDevos: (devoBook) => dispatch(fetchDevos(devoBook)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
+
+export default connect(mapStateToProps, mapDispatchToProps)(CategoriesPage);

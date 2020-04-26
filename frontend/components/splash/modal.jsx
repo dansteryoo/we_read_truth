@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { closeModal } from '../../actions/modal_actions';
-import SignUpFormContainer from '../session_form/signup_form_container';
-import LogInFormContainer from '../session_form/login_form_container';
+import CategoriesContainer from '../modal_pages/categories_container';
+import NotesContainer from '../modal_pages/notes_container';
 
 
 const Modal = ({ modal, closeModal }) => {
@@ -10,11 +10,11 @@ const Modal = ({ modal, closeModal }) => {
 
     let component;
     switch (modal) {
-        case 'Log In':
-            component = <LogInFormContainer />;
+        case 'Notes':
+            component = <NotesContainer />;
             break;
-        case 'Sign Up':
-            component = <SignUpFormContainer />;
+        case 'Categories':
+            component = <CategoriesContainer />;
             break;
         default:
             return null;
@@ -46,7 +46,7 @@ const mapStateToProps = (state) => {
 
     return {
         modal: modalVar,
-        bookingId: idVar
+        typeId: idVar
     }
 };
 

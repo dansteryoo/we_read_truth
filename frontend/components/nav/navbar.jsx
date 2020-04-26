@@ -17,7 +17,7 @@ class NavBar extends React.Component {
     };
 
     render() {
-        
+        // debugger
         return (
             <nav className="nav-container" >
 
@@ -41,15 +41,17 @@ class NavBar extends React.Component {
                     <li className="devo-li">
                         <a>Devotionals</a>
                         <ul className="dropdown-devos">
-                            <li><a href="#">Old Testament</a></li>
-                            <li><a href="#">New Testament</a></li>
-                            <li><a href="#">Other</a></li>
+                            <li className="notes-li" onClick={() => this.props.openModal('Categories')}>
+                                Categories
+                            </li>
                         </ul>
                     </li>
                     <li className="profile-li">
                         <a>Profile</a>
                         <ul className="dropdown-profile">
-                            <li><a href="#">Notes</a></li>
+                            <li className="notes-li" onClick={() => this.props.openModal('Notes')}>
+                                Notes
+                            </li>
                             <li className="logout-li" onClick={() => this.props.logout()}>
                                 Logout
                             </li>

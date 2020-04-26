@@ -6,13 +6,14 @@ const devosReducer = (oldState = {}, action) => {
 
     switch (action.type) {
         case RECEIVE_DEVOS:
-            return Object.assign({}, newState, action.devos)
+            // debugger
+            return Object.assign({}, newState, { [action.devo.book]: action.devoBook });
 
         case RECEIVE_DEVO:
             return Object.assign({}, newState, { [action.devo.id]: action.devo });
 
-        case RECEIVE_DEVO_BOOK:
-            return Object.assign({}, newState, { [action.devo.book]: action.devoBook });
+        // case RECEIVE_DEVO_BOOK:
+        //     return Object.assign({}, newState, { [action.devo.book]: action.devoBook });
 
         case CLEAR_DEVO_STATE:
             return {};

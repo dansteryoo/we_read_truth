@@ -1,1 +1,1 @@
-json.extract! note, :id, :day, :book, :chapter, :verse, :title, :passage, :summary, :author
+json.extract! devos, :id, :gender, :book, :title, :passages, :summary, :img

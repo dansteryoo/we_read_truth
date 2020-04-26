@@ -15,7 +15,7 @@ class HeSideNav extends React.Component {
     };
 
     componentDidMount() {
-        debugger
+
     };
 
     handleClick(e) {

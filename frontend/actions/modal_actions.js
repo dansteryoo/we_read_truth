@@ -5,7 +5,7 @@ export const openModal = (modal, id) => ({
     type: OPEN_MODAL,
     modal: { 
         formType: modal, 
-        bookingId: id 
+        typeId: id 
     }
 });
 

@@ -90,7 +90,7 @@
 /*!******************************************!*\
   !*** ./frontend/actions/devo_actions.js ***!
   \******************************************/
-/*! exports provided: RECEIVE_DEVOS, RECEIVE_DEVO, CLEAR_DEVO_STATE, RECEIVE_DEVO_BOOK, receiveDevos, receiveDevo, receiveDevoBook, clearDevoState, fetchDevos, fetchDevo, fetchDevoBook, fetchSearchResult */
+/*! exports provided: RECEIVE_DEVOS, RECEIVE_DEVO, CLEAR_DEVO_STATE, RECEIVE_DEVO_BOOK, receiveDevos, receiveDevo, clearDevoState, fetchDevos, fetchDevo, fetchSearchResult */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -101,11 +101,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_DEVO_BOOK", function() { return RECEIVE_DEVO_BOOK; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveDevos", function() { return receiveDevos; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveDevo", function() { return receiveDevo; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveDevoBook", function() { return receiveDevoBook; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clearDevoState", function() { return clearDevoState; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchDevos", function() { return fetchDevos; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchDevo", function() { return fetchDevo; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchDevoBook", function() { return fetchDevoBook; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchSearchResult", function() { return fetchSearchResult; });
 /* harmony import */ var _util_devos_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/devos_api_util */ "./frontend/util/devos_api_util.jsx");
 
@@ -124,22 +122,22 @@ var receiveDevo = function receiveDevo(devo) {
     type: RECEIVE_DEVO,
     devo: devo
   };
-};
-var receiveDevoBook = function receiveDevoBook(devoBook) {
-  return {
-    type: RECEIVE_DEVO_BOOK,
-    devoBook: devoBook
-  };
-};
+}; // export const receiveDevoBook = (devoBook) => {
+//     return {
+//         type: RECEIVE_DEVO_BOOK,
+//         devoBook
+//     }
+// };
+
 var clearDevoState = function clearDevoState() {
   return {
     type: CLEAR_DEVO_STATE
   };
 };
-var fetchDevos = function fetchDevos() {
+var fetchDevos = function fetchDevos(devoBook) {
   return function (dispatch) {
-    return _util_devos_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchDevos"]().then(function (devos) {
-      return dispatch(receiveDevos(devos));
+    return _util_devos_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchDevos"](devoBook).then(function (devoBook) {
+      return dispatch(receiveDevos(devoBook));
     });
   };
 };
@@ -149,14 +147,12 @@ var fetchDevo = function fetchDevo(devoId) {
       return dispatch(receiveDevo(devo));
     });
   };
-};
-var fetchDevoBook = function fetchDevoBook(devoBook) {
-  return function (dispatch) {
-    return _util_devos_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchDevoBook"](devoBook).then(function (devo) {
-      return dispatch(receiveDevoBook(devoBook));
-    });
-  };
-};
+}; // export const fetchDevoBook = (devoBook) => dispatch => {
+//     return DevosAPIUtil.fetchDevoBook(devoBook)
+//         .then(devo => dispatch(receiveDevoBook(devoBook))
+//         )
+// };
+
 var fetchSearchResult = function fetchSearchResult(keywords, startDate, endDate) {
   return function (dispatch) {
     return _util_devos_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchSearchResult"](keywords, startDate, endDate).then(function (devos) {
@@ -187,7 +183,7 @@ var openModal = function openModal(modal, id) {
     type: OPEN_MODAL,
     modal: {
       formType: modal,
-      bookingId: id
+      typeId: id
     }
   };
 };
@@ -468,12 +464,9 @@ var HomePage = /*#__PURE__*/function (_React$Component) {
 
   _createClass(HomePage, [{
     key: "componentDidMount",
-    value: function componentDidMount() {// fetch('../data_he')
-      //     .then(res => res.json())
-      //     .then((data) => {
-      //         this.setState({ contacts: data })
-      //     })
-      //     .catch(console.log)
+    value: function componentDidMount() {
+      var book = "Genesis";
+      this.props.fetchDevo(book);
     }
   }, {
     key: "handleClick",
@@ -494,6 +487,7 @@ var HomePage = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      // debugger
       var leftOpen = this.state.leftOpen ? 'open' : 'closed';
       var rightOpen = this.state.rightOpen ? 'open' : 'closed';
       var devos = this.props.devos;
@@ -562,7 +556,9 @@ var HomePage = /*#__PURE__*/function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
-/* harmony import */ var _home__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./home */ "./frontend/components/home/home.jsx");
+/* harmony import */ var _actions_devo_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/devo_actions */ "./frontend/actions/devo_actions.js");
+/* harmony import */ var _home__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./home */ "./frontend/components/home/home.jsx");
+
 
 
 
@@ -584,68 +580,16 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     openModal: function openModal(formType) {
       return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_1__["openModal"])(formType));
     },
-    fetchDevos: function (_fetchDevos) {
-      function fetchDevos() {
-        return _fetchDevos.apply(this, arguments);
-      }
-
-      fetchDevos.toString = function () {
-        return _fetchDevos.toString();
-      };
-
-      return fetchDevos;
-    }(function () {
-      return dispatch(fetchDevos());
-    }),
-    fetchDevo: function fetchDevo(devoId) {
-      return dispatch(fetchDevos(devoId));
+    fetchDevos: function fetchDevos(devoBook) {
+      return dispatch(Object(_actions_devo_actions__WEBPACK_IMPORTED_MODULE_2__["fetchDevos"])(devoBook));
     },
-    fetchNotes: function (_fetchNotes) {
-      function fetchNotes(_x) {
-        return _fetchNotes.apply(this, arguments);
-      }
-
-      fetchNotes.toString = function () {
-        return _fetchNotes.toString();
-      };
-
-      return fetchNotes;
-    }(function (noteId) {
-      return dispatch(fetchNotes(noteId));
-    }),
-    createNote: function (_createNote) {
-      function createNote(_x2) {
-        return _createNote.apply(this, arguments);
-      }
-
-      createNote.toString = function () {
-        return _createNote.toString();
-      };
-
-      return createNote;
-    }(function (note) {
-      return dispatch(createNote(note));
-    }),
-    updateNote: function (_updateNote) {
-      function updateNote(_x3) {
-        return _updateNote.apply(this, arguments);
-      }
-
-      updateNote.toString = function () {
-        return _updateNote.toString();
-      };
-
-      return updateNote;
-    }(function (noteId) {
-      return dispatch(updateNote(noteId));
-    }),
-    deleteNote: function deleteNote(noteId) {
-      return dispatch(createNote(noteId));
+    fetchDevo: function fetchDevo(devoId) {
+      return dispatch(Object(_actions_devo_actions__WEBPACK_IMPORTED_MODULE_2__["fetchDevo"])(devoId));
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_home__WEBPACK_IMPORTED_MODULE_2__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_home__WEBPACK_IMPORTED_MODULE_3__["default"]));
 
 /***/ }),
 
@@ -783,9 +727,7 @@ var HeSideNav = /*#__PURE__*/function (_React$Component) {
 
   _createClass(HeSideNav, [{
     key: "componentDidMount",
-    value: function componentDidMount() {
-      debugger;
-    }
+    value: function componentDidMount() {}
   }, {
     key: "handleClick",
     value: function handleClick(e) {
@@ -967,19 +909,13 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
 
   _createClass(SideNav, [{
     key: "componentDidMount",
-    value: function componentDidMount() {
-      debugger;
-    }
+    value: function componentDidMount() {}
   }, {
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
         className: "sidenav-container"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_heside_nav__WEBPACK_IMPORTED_MODULE_1__["default"], {
-        bookTitle: "",
-        passages: "",
-        day: ""
-      }));
+      });
     }
   }]);
 
@@ -1008,7 +944,6 @@ __webpack_require__.r(__webpack_exports__);
 var SideNavList = function SideNavList(_ref) {
   var each = _ref.each,
       i = _ref.i;
-  debugger;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "leftside-nav-li"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
@@ -1023,6 +958,300 @@ var SideNavList = function SideNavList(_ref) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (SideNavList);
+
+/***/ }),
+
+/***/ "./frontend/components/modal_pages/categories.jsx":
+/*!********************************************************!*\
+  !*** ./frontend/components/modal_pages/categories.jsx ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+var CategoriesPage = /*#__PURE__*/function (_React$Component) {
+  _inherits(CategoriesPage, _React$Component);
+
+  var _super = _createSuper(CategoriesPage);
+
+  function CategoriesPage(props) {
+    var _this;
+
+    _classCallCheck(this, CategoriesPage);
+
+    _this = _super.call(this, props);
+    _this.state = {};
+    _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(CategoriesPage, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {}
+  }, {
+    key: "handleClick",
+    value: function handleClick(e) {
+      e.preventDefault();
+      this.setState({
+        day: "",
+        title: "",
+        passage: ""
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      // debugger
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-closing-x",
+        onClick: function onClick() {
+          return _this2.props.closeModal();
+        }
+      }, "\u2715"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-title"
+      }, "SHE CATEGORIES"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "section"
+      }, "EACH CATEGORY")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-or-separator"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-title"
+      }, "HE CATEGORIES"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "section"
+      }, "EACH CATEGORY")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null)));
+    }
+  }]);
+
+  return CategoriesPage;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (CategoriesPage);
+
+/***/ }),
+
+/***/ "./frontend/components/modal_pages/categories_container.js":
+/*!*****************************************************************!*\
+  !*** ./frontend/components/modal_pages/categories_container.js ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+/* harmony import */ var _actions_devo_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/devo_actions */ "./frontend/actions/devo_actions.js");
+/* harmony import */ var _categories__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./categories */ "./frontend/components/modal_pages/categories.jsx");
+
+
+
+
+
+var mapStateToProps = function mapStateToProps(state) {
+  // debugger
+  return {
+    currentUser: state.users[state.session.id],
+    errors: state.errors,
+    devos: Object.values(state.devos)
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    closeModal: function closeModal() {
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_1__["closeModal"])());
+    },
+    openModal: function openModal(formType) {
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_1__["openModal"])(formType));
+    },
+    fetchDevos: function fetchDevos(devoBook) {
+      return dispatch(Object(_actions_devo_actions__WEBPACK_IMPORTED_MODULE_2__["fetchDevos"])(devoBook));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_categories__WEBPACK_IMPORTED_MODULE_3__["default"]));
+
+/***/ }),
+
+/***/ "./frontend/components/modal_pages/notes.jsx":
+/*!***************************************************!*\
+  !*** ./frontend/components/modal_pages/notes.jsx ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+var NotesPage = /*#__PURE__*/function (_React$Component) {
+  _inherits(NotesPage, _React$Component);
+
+  var _super = _createSuper(NotesPage);
+
+  function NotesPage(props) {
+    var _this;
+
+    _classCallCheck(this, NotesPage);
+
+    _this = _super.call(this, props);
+    _this.state = {};
+    _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(NotesPage, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {}
+  }, {
+    key: "handleClick",
+    value: function handleClick(e) {
+      e.preventDefault();
+      this.setState({
+        day: "",
+        title: "",
+        passage: ""
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      // debugger
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-closing-x",
+        onClick: function onClick() {
+          return _this2.props.closeModal();
+        }
+      }, "\u2715"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-or-separator"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-title"
+      }, "MY NOTES HERE"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "section"
+      }, "EACH NOTE")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null)));
+    }
+  }]);
+
+  return NotesPage;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (NotesPage);
+
+/***/ }),
+
+/***/ "./frontend/components/modal_pages/notes_container.js":
+/*!************************************************************!*\
+  !*** ./frontend/components/modal_pages/notes_container.js ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+/* harmony import */ var _actions_note_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/note_actions */ "./frontend/actions/note_actions.js");
+/* harmony import */ var _notes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./notes */ "./frontend/components/modal_pages/notes.jsx");
+
+
+
+
+
+var mapStateToProps = function mapStateToProps(state) {
+  // debugger
+  return {
+    currentUser: state.users[state.session.id],
+    errors: state.errors,
+    devos: Object.values(state.devos)
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    closeModal: function closeModal() {
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_1__["closeModal"])());
+    },
+    openModal: function openModal(formType) {
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_1__["openModal"])(formType));
+    },
+    fetchNotes: function fetchNotes() {
+      return dispatch(Object(_actions_note_actions__WEBPACK_IMPORTED_MODULE_2__["fetchNotes"])());
+    },
+    fetchNote: function fetchNote(noteId) {
+      return dispatch(Object(_actions_note_actions__WEBPACK_IMPORTED_MODULE_2__["fetchNote"])(noteId));
+    },
+    deleteNote: function deleteNote(noteId) {
+      return dispatch(Object(_actions_note_actions__WEBPACK_IMPORTED_MODULE_2__["deleteNote"])(noteId));
+    },
+    updateNote: function updateNote(note) {
+      return dispatch(Object(_actions_note_actions__WEBPACK_IMPORTED_MODULE_2__["updateNote"])(note));
+    },
+    createNote: function createNote(note) {
+      return dispatch(Object(_actions_note_actions__WEBPACK_IMPORTED_MODULE_2__["createNote"])(note));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_notes__WEBPACK_IMPORTED_MODULE_3__["default"]));
 
 /***/ }),
 
@@ -1096,6 +1325,7 @@ var NavBar = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this3 = this;
 
+      // debugger
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
         className: "nav-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
@@ -1119,19 +1349,21 @@ var NavBar = /*#__PURE__*/function (_React$Component) {
         className: "devo-li"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "Devotionals"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "dropdown-devos"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "#"
-      }, "Old Testament")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "#"
-      }, "New Testament")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "#"
-      }, "Other")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "notes-li",
+        onClick: function onClick() {
+          return _this3.props.openModal('Categories');
+        }
+      }, "Categories"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "profile-li"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "Profile"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "dropdown-profile"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "#"
-      }, "Notes")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "notes-li",
+        onClick: function onClick() {
+          return _this3.props.openModal('Notes');
+        }
+      }, "Notes"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "logout-li",
         onClick: function onClick() {
           return _this3.props.logout();
@@ -1158,14 +1390,18 @@ var NavBar = /*#__PURE__*/function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
-/* harmony import */ var _navbar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./navbar */ "./frontend/components/nav/navbar.jsx");
+/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+/* harmony import */ var _navbar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./navbar */ "./frontend/components/nav/navbar.jsx");
+
 
 
 
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    currentUser: state.users[state.session.id]
+    formType: 'Notes',
+    currentUser: state.users[state.session.id],
+    errors: state.errors
   };
 };
 
@@ -1173,11 +1409,17 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     logout: function logout() {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["logout"])());
+    },
+    closeModal: function closeModal() {
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__["closeModal"])());
+    },
+    openModal: function openModal(formType) {
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__["openModal"])(formType));
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_navbar__WEBPACK_IMPORTED_MODULE_2__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_navbar__WEBPACK_IMPORTED_MODULE_3__["default"]));
 
 /***/ }),
 
@@ -1627,8 +1869,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
-/* harmony import */ var _session_form_signup_form_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../session_form/signup_form_container */ "./frontend/components/session_form/signup_form_container.js");
-/* harmony import */ var _session_form_login_form_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../session_form/login_form_container */ "./frontend/components/session_form/login_form_container.js");
+/* harmony import */ var _modal_pages_categories_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../modal_pages/categories_container */ "./frontend/components/modal_pages/categories_container.js");
+/* harmony import */ var _modal_pages_notes_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../modal_pages/notes_container */ "./frontend/components/modal_pages/notes_container.js");
 
 
 
@@ -1642,12 +1884,12 @@ var Modal = function Modal(_ref) {
   var component;
 
   switch (modal) {
-    case 'Log In':
-      component = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_session_form_login_form_container__WEBPACK_IMPORTED_MODULE_4__["default"], null);
+    case 'Notes':
+      component = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_modal_pages_notes_container__WEBPACK_IMPORTED_MODULE_4__["default"], null);
       break;
 
-    case 'Sign Up':
-      component = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_session_form_signup_form_container__WEBPACK_IMPORTED_MODULE_3__["default"], null);
+    case 'Categories':
+      component = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_modal_pages_categories_container__WEBPACK_IMPORTED_MODULE_3__["default"], null);
       break;
 
     default:
@@ -1684,7 +1926,7 @@ var mapStateToProps = function mapStateToProps(state) {
 
   return {
     modal: modalVar,
-    bookingId: idVar
+    typeId: idVar
   };
 };
 
@@ -1828,13 +2070,13 @@ var devosReducer = function devosReducer() {
 
   switch (action.type) {
     case _actions_devo_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_DEVOS"]:
-      return Object.assign({}, newState, action.devos);
+      // debugger
+      return Object.assign({}, newState, _defineProperty({}, action.devo.book, action.devoBook));
 
     case _actions_devo_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_DEVO"]:
       return Object.assign({}, newState, _defineProperty({}, action.devo.id, action.devo));
-
-    case _actions_devo_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_DEVO_BOOK"]:
-      return Object.assign({}, newState, _defineProperty({}, action.devo.book, action.devoBook));
+    // case RECEIVE_DEVO_BOOK:
+    //     return Object.assign({}, newState, { [action.devo.book]: action.devoBook });
 
     case _actions_devo_actions__WEBPACK_IMPORTED_MODULE_0__["CLEAR_DEVO_STATE"]:
       return {};
@@ -2097,31 +2339,31 @@ var configureStore = function configureStore() {
 /*!******************************************!*\
   !*** ./frontend/util/devos_api_util.jsx ***!
   \******************************************/
-/*! exports provided: fetchDevos, fetchDevo, fetchDevoBook, fetchSearchResult */
+/*! exports provided: fetchDevo, fetchDevos, fetchSearchResult */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchDevos", function() { return fetchDevos; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchDevo", function() { return fetchDevo; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchDevoBook", function() { return fetchDevoBook; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchDevos", function() { return fetchDevos; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchSearchResult", function() { return fetchSearchResult; });
-var fetchDevos = function fetchDevos() {
-  return $.ajax({
-    url: "/api/devos",
-    method: 'GET'
-  });
-};
+// export const fetchDevos = () => {
+//     return $.ajax({
+//         url: `/api/devos`,
+//         method: 'GET'
+//     })
+// };
 var fetchDevo = function fetchDevo(devoId) {
   return $.ajax({
     url: "/api/devos/".concat(devoId),
     method: 'GET'
   });
 };
-var fetchDevoBook = function fetchDevoBook(devoBook) {
+var fetchDevos = function fetchDevos(devoBook) {
   return $.ajax({
-    url: "/api/devos",
-    method: 'GET'
+    url: "/api/devos/",
+    method: 'GET',
+    data: devoBook
   });
 };
 var fetchSearchResult = function fetchSearchResult(searchKeywords, startDate, endDate) {

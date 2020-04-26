@@ -1,23 +1,24 @@
-export const fetchDevos = () => (
-    $.ajax({
-        url: `/api/devos`,
-        method: 'GET'
-    })
-);
+// export const fetchDevos = () => {
+//     return $.ajax({
+//         url: `/api/devos`,
+//         method: 'GET'
+//     })
+// };
 
-export const fetchDevo = (devoId) => (
-    $.ajax({
+export const fetchDevo = (devoId) => {
+    return $.ajax({
         url: `/api/devos/${devoId}`,
         method: 'GET'
     })
-);
+};
 
-export const fetchDevoBook = (devoBook) => (
-    $.ajax({
-        url: `/api/devos`,
-        method: 'GET'
+export const fetchDevos = (devoBook) => {
+    return $.ajax({
+        url: `/api/devos/`,
+        method: 'GET',
+        data: devoBook
     })
-);
+};
 
 export const fetchSearchResult = (searchKeywords, startDate, endDate) => (
     $.ajax({
