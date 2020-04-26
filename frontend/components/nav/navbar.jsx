@@ -10,6 +10,10 @@ class NavBar extends React.Component {
         }
     }
 
+    componentWillMount(){
+        this.props.closeModal();
+    }
+
     update(f) {
         return e => this.setState({
             [f]: e.target.value
