@@ -1,6 +1,7 @@
 import React from 'react';
 import SideNav from './sidenav/sidenav';
 import NavBarContainer from '../nav/navbar_container';
+import NotesFormContainer from '../notes/notes_form_container'
 import MainBody from './main_body'
 
 
@@ -103,7 +104,8 @@ class HomePage extends React.Component {
                         </h3>
                     </div>
                     <div className='content'>
-                        <h3>Posts</h3><br/>
+                    
+                    <NotesFormContainer />
 
                     </div>
                 </div>
