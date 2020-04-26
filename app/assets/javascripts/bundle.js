@@ -1503,13 +1503,9 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
-      var _this3 = this;
-
       e.preventDefault();
-      var user = Object.assign({}, this.state);
-      this.props.processForm(user).then(function () {
-        return _this3.props.closeModal();
-      });
+      var note = Object.assign({}, this.state);
+      this.props.createNote(note);
     }
   }, {
     key: "renderErrors",
@@ -1572,7 +1568,51 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
   return NotesForm;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (NotesForm);
+/* harmony default export */ __webpack_exports__["default"] = (NotesForm); // constructor(props) {
+//     super(props);
+//     this.state = {
+//         fullName: null,
+//         email: null,
+//         password: null,
+//         errors: {
+//             fullName: '',
+//             email: '',
+//             password: '',
+//         }
+//     };
+// }
+// handleChange = (event) => {
+//     event.preventDefault();
+//     const { name, value } = event.target;
+//     let errors = this.state.errors;
+//     switch (name) {
+//         case 'fullName':
+//             errors.fullName =
+//                 value.length < 5
+//                     ? 'Full Name must be 5 characters long!'
+//                     : '';
+//             break;
+//         case 'email':
+//             errors.email =
+//                 validEmailRegex.test(value)
+//                     ? ''
+//                     : 'Email is not valid!';
+//             break;
+//         case 'password':
+//             errors.password =
+//                 value.length < 8
+//                     ? 'Password must be 8 characters long!'
+//                     : '';
+//             break;
+//         default:
+//             break;
+//     }
+//     this.setState({ errors, [name]: value }, () => {
+//         console.log(errors)
+//     })
+// }
+// const validEmailRegex =
+//     RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
 
 /***/ }),
 
@@ -1620,6 +1660,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     updateNote: function updateNote(note) {
       return dispatch(Object(_actions_note_actions__WEBPACK_IMPORTED_MODULE_1__["updateNote"])(note));
+    },
+    createNote: function createNote(note) {
+      return dispatch(Object(_actions_note_actions__WEBPACK_IMPORTED_MODULE_1__["createNote"])(note));
     }
   };
 };
@@ -1932,6 +1975,7 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
         this.props.errors = [];
       }
 
+      debugger;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "signup-form-errors"
       }, this.props.errors.map(function (error, i) {
@@ -2612,6 +2656,7 @@ var fetchNote = function fetchNote(noteId) {
   });
 };
 var createNote = function createNote(note) {
+  debugger;
   return $.ajax({
     url: "api/notes/",
     method: 'POST',

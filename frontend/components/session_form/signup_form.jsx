@@ -37,6 +37,7 @@ class SignUp extends React.Component {
         if (this.props.errors === undefined) {
             this.props.errors = []
         }
+        debugger
         return (
             <ul className='signup-form-errors'>
                 {this.props.errors.map((error, i) => (
