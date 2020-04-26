@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { closeModal, openModal } from '../../actions/modal_actions';
 import { fetchDevo, fetchDevos, fetchDevoBook } from '../../actions/devo_actions'
+import { clearErrors } from '../../actions/session_actions';
 import HomePage from './home';
 
 const mapStateToProps = (state) => {
@@ -18,6 +19,7 @@ const mapDispatchToProps = (dispatch) => ({
     openModal: (formType) => dispatch(openModal(formType)),
     fetchDevos: (devoBook) => dispatch(fetchDevos(devoBook)),
     fetchDevo: (devoId) => dispatch(fetchDevo(devoId)),
+    clearErrors: () => dispatch(clearErrors())
 });
 
 

@@ -7,13 +7,11 @@ class Api::DevosController < ApplicationController
 
     def show
         @devos = Devo.find(params[:id])
-        debugger
         render :show
     end
 
     def book
         @devos = Devo.find_by(book: params[:book])
-        debugger
         render :show
     end
 
