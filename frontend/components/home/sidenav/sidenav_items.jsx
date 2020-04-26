@@ -2,7 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const SideNavList = ({ each, i }) => {
-    debugger
+
+
     return (
         <li className='leftside-nav-li'>
             <Link to={`/listings/${listing.id}`}>

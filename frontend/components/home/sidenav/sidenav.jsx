@@ -12,18 +12,21 @@ class SideNav extends React.Component {
     }
 
     componentDidMount() {
-        debugger
+
     }
 
     render() {
 
         return (
             <nav className="sidenav-container" >
-                <HeSideNav
-                    bookTitle=''
-                    passages=''
-                    day=''
-                />
+                {/*
+                    listings.map(listing => (
+                        <ListingsIndexItems
+                            listing={listing}
+                            key={listing.id}
+                        />
+                    ))
+                    */}
             </nav>
         )
     }

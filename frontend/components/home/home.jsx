@@ -18,12 +18,9 @@ class HomePage extends React.Component {
     }
 
     componentDidMount() {
-        // fetch('../data_he')
-        //     .then(res => res.json())
-        //     .then((data) => {
-        //         this.setState({ contacts: data })
-        //     })
-        //     .catch(console.log)
+
+        let book = "Genesis"
+        this.props.fetchDevo(book);
     }
 
     handleClick(e) {
@@ -42,7 +39,7 @@ class HomePage extends React.Component {
 
 
     render() {
-
+        // debugger
         let leftOpen = this.state.leftOpen ? 'open' : 'closed';
         let rightOpen = this.state.rightOpen ? 'open' : 'closed';
 

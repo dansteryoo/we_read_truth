@@ -19,12 +19,12 @@ export const receiveDevo = (devo) => {
     }
 };
 
-export const receiveDevoBook = (devoBook) => {
-    return {
-        type: RECEIVE_DEVO_BOOK,
-        devoBook
-    }
-};
+// export const receiveDevoBook = (devoBook) => {
+//     return {
+//         type: RECEIVE_DEVO_BOOK,
+//         devoBook
+//     }
+// };
 
 export const clearDevoState = () => {
     return {
@@ -33,9 +33,9 @@ export const clearDevoState = () => {
 };
 
 
-export const fetchDevos = () => dispatch => {
-    return DevosAPIUtil.fetchDevos()
-        .then(devos => dispatch(receiveDevos(devos))
+export const fetchDevos = (devoBook) => dispatch => {
+    return DevosAPIUtil.fetchDevos(devoBook)
+        .then(devoBook => dispatch(receiveDevos(devoBook))
         )
 };
 
@@ -45,11 +45,11 @@ export const fetchDevo = (devoId) => dispatch => {
         )
 };
 
-export const fetchDevoBook = (devoBook) => dispatch => {
-    return DevosAPIUtil.fetchDevoBook(devoBook)
-        .then(devo => dispatch(receiveDevoBook(devoBook))
-        )
-};
+// export const fetchDevoBook = (devoBook) => dispatch => {
+//     return DevosAPIUtil.fetchDevoBook(devoBook)
+//         .then(devo => dispatch(receiveDevoBook(devoBook))
+//         )
+// };
 
 export const fetchSearchResult = (keywords, startDate, endDate) => dispatch => {
     return DevosAPIUtil.fetchSearchResult(keywords, startDate, endDate)
