@@ -1,38 +1,39 @@
 
 
-export const fetchNotes = () => (
-    $.ajax({
+export const fetchNotes = () => {
+    return $.ajax({
         url: `/api/notes`,
         method: 'GET'
     })
-);
+};
 
-export const fetchNote = (noteId) => (
-    $.ajax({
+export const fetchNote = (noteId) => {
+    return $.ajax({
         url: `/api/notes/${noteId}`,
         method: 'GET'
     })
-);
+};
 
-export const createNote = (note) => (
-    $.ajax({
+export const createNote = (note) => {
+    debugger
+    return $.ajax({
         url: `api/notes/`,
         method: 'POST',
         data: { note }
     })
-);
+};
 
-export const updateNote = (note) => (
-    $.ajax({
+export const updateNote = (note) => {
+    return $.ajax({
         url: `api/notes/${note.id}`,
         method: 'PATCH',
         data: { note }
     })
-);
+};
 
-export const deleteNote = (noteId) => (
-    $.ajax({
+export const deleteNote = (noteId) => {
+    return $.ajax({
         url: `api/notes/${noteId}`,
         method: 'DELETE'
     })
-);
+};
