@@ -34,6 +34,7 @@
         justify-content: flex-end;
         width: 100%;
         list-style: none;
+        margin: 28px 0 0 0;
 
         //------------------Navbar Dropdown
 
@@ -48,6 +49,8 @@
                 transition: all 0.2s ease;
                 display: none;
                 margin: 0;
+                padding: 0 0 10px 20px;
+                background-color: #fff;
 
                 li {
                     clear: both;
@@ -79,7 +82,7 @@
     .nav-links li {
         color: black;
         font-weight: 500;
-        margin: 40px 70px 0 0;
+        margin: 14px 100px 0 0;
         height: 20px;
         cursor: pointer;
     }

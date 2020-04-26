@@ -9,13 +9,117 @@
   top:0px;
 }
 
-.modal-closing-x {
+.form-closing-x {
   position: relative;
-  height: 50px;
-  width: 50px;
-  color: #000000;;
-  vertical-align: middle;
-  line-height: 40px;
+  height: 15px;
+  width: 15px;
+  line-height: 16px;
   padding: 10px;
+  background-color: #ff5a5f;
+  color: white;
+  font-size: 20px;
+  text-align: center;
+  border-radius: 50%;
   cursor: pointer;
 }
+
+
+//------------------Notes Page Modal
+
+$color_1: #3d3d3d;
+$color_2: #d3d3d3;
+$color_3: #d9fff0;
+
+.notes-page-container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    width: 80%;
+    height: 70%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -42%);
+    padding: 20px;
+    font-size: 14px;
+    color: black;
+    z-index: 1;
+    background-color: #f3ede8; //skin
+}
+
+.form-or-separator-notes hr {
+    border: none;
+    border-top: 1px solid #D3D3D3;
+    overflow: visible;
+    text-align: center;
+    margin-top: 14px;
+}
+
+.form-or-separator-notes hr:after {
+    content: 'My Notes';
+    position: relative;
+    top: -15px;
+    background: #f3ede8;
+    color: #767676;
+    padding: 0 15px;
+    font-size: 20px;
+}
+
+
+.notes-page-section {
+  width: 75%;
+  height: 75%;
+  background-color: transparent;
+  padding: 0;
+  top: 0;
+}
+
+//------------------Categories Page Modal
+
+.categories-page-container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    width: 80%;
+    height: 70%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -42%);
+    padding: 20px;
+    font-size: 14px;
+    color: black;
+    z-index: 1;
+    background-color: #f3ede8; //skin
+}
+
+.form-or-separator-categories hr {
+    border: none;
+    border-top: 1px solid #D3D3D3;
+    overflow: visible;
+    text-align: center;
+    margin-top: 8px;
+}
+
+.form-or-separator-categories hr:after {
+    content: 'Book Titles';
+    position: relative;
+    top: -15px;
+    background: #f3ede8;
+    color: #767676;
+    padding: 0 15px;
+    font-size: 20px;
+}
+
+.categories-section {
+  width: 100%;
+  height: 100%;
+  background-color: blue;
+  padding: 0;
+  top: 0;
+}
+
+.categories-title {
+  background-color: red;
+  padding: 0;
+  top: 0;
+}
+

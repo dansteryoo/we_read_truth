@@ -31,23 +31,20 @@ class NotesPage extends React.Component {
         // debugger
         return (
         <>
-                <div className='form-container'>
-                    <div className='form-closing-x' onClick={() => this.props.closeModal()}>&#10005;</div>
-                    <br />
-                    <br />
-                    <div className='form-or-separator'>
-                        <hr />
-                    </div>
-                    <div className='form-title'>
-                        MY NOTES HERE
-                    </div>
-                    <br />
-                    <section>
-                        <div className='section'>
-                            EACH NOTE
+                <div className='notes-page-container'>
+                    <div className='notes-page-content'>
+                        <div className='form-closing-x' onClick={() => this.props.closeModal()}>&#10005;</div>
+
+                        <div className='form-or-separator-notes'>
+                            <hr />
                         </div>
-                    </section>
-                    <br />
+                        <section>
+                            <div className='notes-page-section'>
+                                EACH NOTE
+                            </div>
+                        </section>
+
+                    </div>
                 </div>
         </>
     );
