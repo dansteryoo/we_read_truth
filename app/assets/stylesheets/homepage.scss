@@ -2,7 +2,7 @@
 :root {
   --landscape-width: 25; // % OR vw for responsive window resizing!
   --portrait-width: 80vw;
-  --header-height: 4rem;
+  --header-height: 6.2rem;
   --secs: 0.4s;
   --bg-left: white;
   --bg-right: white;
@@ -26,6 +26,7 @@
       position: absolute; 
       left: 0; 
       right: 0; 
+      top: 23px;
     }
   }
 
