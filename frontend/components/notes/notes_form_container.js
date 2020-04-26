@@ -1,0 +1,22 @@
+import { connect } from 'react-redux';
+import { fetchNotes, fetchNote, deleteNote, updateNote } from '../../actions/note_actions';
+import { openModal } from '../../actions/modal_actions';
+import NotesForm from './notes_form';
+import { withRouter } from 'react-router-dom';
+
+
+const mapStateToProps = (state) => ({
+    currentUser: state.users[state.session.id],
+    notes: Object.values(state.notes),
+    errors: state.errors
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    openModal: (formType, id) => dispatch(openModal(formType, id)),
+    fetchNotes: () => dispatch(fetchNotes()),
+    fetchNote: (noteId) => dispatch(fetchNote(noteId)),
+    deleteNote: (noteId) => dispatch(deleteNote(noteId)),
+    updateNote: (note) => dispatch(updateNote(note))
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NotesForm));

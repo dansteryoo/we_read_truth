@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { closeModal } from '../../actions/modal_actions';
 import CategoriesContainer from '../modal_pages/categories_container';
-import NotesContainer from '../modal_pages/notes_container';
+import NotesContainer from '../modal_pages/notespage_container';
 
 
 const Modal = ({ modal, closeModal }) => {
