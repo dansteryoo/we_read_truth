@@ -1,9 +1,11 @@
-// export const fetchDevos = () => {
-//     return $.ajax({
-//         url: `/api/devos`,
-//         method: 'GET'
-//     })
-// };
+
+export const fetchDevoIndex = () => {
+    return $.ajax({
+        url: `/api/devos`,
+        method: 'GET'
+    })
+};
+
 
 export const fetchDevo = (devoId) => {
     return $.ajax({
@@ -12,9 +14,9 @@ export const fetchDevo = (devoId) => {
     })
 };
 
-export const fetchDevos = (devoBook) => {
+export const fetchDevoBook = (devoBook) => {
     return $.ajax({
-        url: `/api/devos/`,
+        url: `/api/book/?book=${devoBook}`,
         method: 'GET',
         data: devoBook
     })

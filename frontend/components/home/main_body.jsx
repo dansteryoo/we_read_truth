@@ -2,14 +2,19 @@ import React from 'react';
 
 class MainBody extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
+
+        this.state = {
+        }
     }
 
     componentDidMount() {
-
+        // this.props.fetchDevo();
     }
 
     render() {
+
+        debugger
         return (
             <div className='devo-main-container'>
 

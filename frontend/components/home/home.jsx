@@ -1,5 +1,7 @@
 import React from 'react';
 import SideNav from './sidenav/sidenav';
+import HeSideNav from './sidenav/heside_nav';
+import SheSideNav from './sidenav/sheside_nav';
 import NavBarContainer from '../nav/navbar_container';
 import NotesFormContainer from '../notes/notes_form_container'
 import MainBody from './main_body'
@@ -18,10 +20,9 @@ class HomePage extends React.Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
-    componentDidMount() {
-
+    componentWillMount() {
         let book = "Genesis"
-        this.props.fetchDevo(book);
+        this.props.fetchDevoBook(book);
     }
 
     handleClick(e) {
@@ -39,13 +40,16 @@ class HomePage extends React.Component {
     }
 
 
+
     render() {
-        // debugger
+        debugger
         let leftOpen = this.state.leftOpen ? 'open' : 'closed';
         let rightOpen = this.state.rightOpen ? 'open' : 'closed';
 
-        const { devos } = this.props;
+        const { fetchDevo, fetchDevoBook, heDevos, sheDevos } = this.props;
 
+        let sideNav;
+        
         return (
             <>
             <NavBarContainer />
@@ -64,8 +68,12 @@ class HomePage extends React.Component {
                     </div>
                     <div className='content'>
 
-                        <SideNav 
-                        handleClick={this.handleClick}
+                        <HeSideNav 
+                            heDevos={heDevos}
+                        /> 
+
+                        <SheSideNav 
+                            sheDevos={sheDevos}
                         /> 
 
                     </div>
@@ -85,8 +93,8 @@ class HomePage extends React.Component {
                 <div className='content'>
 
                     <MainBody 
-                        bookTitle=''
-                        passages=''
+                        heDevos={heDevos}
+                        sheDevos={sheDevos}
                     />
 
                 </div>
