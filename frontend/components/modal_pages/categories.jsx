@@ -8,23 +8,83 @@ class CategoriesPage extends React.Component {
         super(props);
 
         this.state = {
-            heOTbooks: [], 
-            heNTBooks: [],
-            heOther: [],
-            sheOTbooks: [],
-            sheNTBooks: [],
-            sheOther: []
-        }
-
+                Genesis: 1,
+                Exodus: 2,
+                Leviticus: 3,
+                Numbers: 4,
+                Deuteronomy: 5,
+                Joshua: 6,
+                Judges: 7,
+                Ruth: 8,
+                FirstSamuel: 9,
+                SecondSamuel: 10,
+                FirstKings: 11,
+                SecondKings: 12,
+                FirstChronicles: 13,
+                SecondChronicles: 14,
+                Ezra: 15,
+                Nehemiah: 16,
+                Esther: 17,
+                Job: 18,
+                Psalm: 19,
+                Proverbs: 20,
+                Ecclesiastes: 21,
+                SongofSongs: 22,
+                Isaiah: 23,
+                Jeremiah: 24,
+                Lamentations: 25,
+                Ezekiel: 26,
+                Daniel: 27,
+                Hosea: 28,
+                Joel: 29,
+                Amos: 30,
+                Obadiah: 31,
+                Jonah: 32,
+                Micah: 33,
+                Nahum: 34,
+                Habakkuk: 35,
+                Zephaniah: 36,
+                Haggai: 37,
+                Zechariah: 38,
+                Malachi: 39,
+                Matthew: 40,
+                Mark: 41,
+                Luke: 42,
+                John: 43,
+                Acts: 44,
+                Romans: 45,
+                FirstCorinthians: 46,
+                SecondCorinthians: 47,
+                Galatians: 48,
+                Ephesians: 49,
+                Philippians: 50,
+                Colossians: 51,
+                FirstThessalonians: 52,
+                SecondThessalonians: 53,
+                FirstTimothy: 54,
+                SecondTimothy: 55,
+                Titus: 56,
+                Philemon: 57,
+                Hebrews: 58,
+                James: 59,
+                FirstPeter: 60,
+                SecondPeter: 61,
+                FirstJohn: 62,
+                SecondJohn: 63,
+                ThirdJohn: 64,
+                Jude: 65,
+                Revelation: 66
+            };
 
         this.handleClick = this.handleClick.bind(this);
-        this.filterOTBooks = this.filterOTBooks.bind(this);
-        // this.filterNTBooks = this.filterNTBooks.bind(this);
     }
 
     componentDidMount() {
-        debugger
         this.props.fetchDevoIndex();
+    }
+
+    componentWillMount() {
+        this.props.clearDevoState();
     }
 
     handleClick(e) {
@@ -36,106 +96,26 @@ class CategoriesPage extends React.Component {
         })
     };
 
-    filterOTBooks(data) {
-
-        const OTbooks = [
-            "Genesis",
-            "Exodus",
-            "Leviticus",
-            "Numbers",
-            "Deuteronomy",
-            "Joshua",
-            "Judges",
-            "Ruth",
-            "1&2Samuel",
-            "1&2Kings",
-            "1&2Chronicles",
-            "Ezra",
-            "Nehemiah",
-            "Esther",
-            "Job",
-            "Psalms",
-            "Proverbs",
-            "Ecclesiastes",
-            "SongofSongs",
-            "Isaiah",
-            "Jeremiah",
-            "Lamentations",
-            "Ezekiel",
-            "Daniel",
-            "Hosea",
-            "Joel,Amos,Obadiah,Jonah,andMicah",
-            "Nahum,Habakkuk,Zephaniah,andHaggai",
-            "ZechariahandMalachi",
-        ] 
-
-        const bookTitleFormat = {
-            "ZechariahandMalachi": "Zechariah & Malachi",
-            "Nahum,Habakkuk,Zephaniah,andHaggai": "Nahum, Habakkuk, Zephaniah, & Haggai",
-            "1&2Kings": "1 & 2 Kings",
-            "SongofSongs": "Song of Songs",
-            "1&2Samuel": "1 & 2 Samuel",
-            "Joel,Amos,Obadiah,Jonah,andMicah": "Joel, Amos, Obadiah, Jonah, & Micah",
-        }
-
-        const arr = []
-
-        data.forEach(ele => {
-    debugger
-            if (OTbooks.includes(ele) && bookTitleFormat[ele] === undefined) {
-                arr.push(ele)
-            } else if (OTbooks.includes(ele)){
-                arr.push(bookTitleFormat[ele])
-            }
-        })
-
-        this.setState({heOTbooks: arr})
-    }
-
-
-    // NTBOOKS = [
-    //     "Matthew",
-    //     "Mark",
-    //     "Luke",
-    //     "John",
-    //     "ActsoftheApostles",
-    //     "Romans",
-    //     "1&2Corinthians",
-    //     "Galatians",
-    //     "Ephesians",
-    //     "Philippians",
-    //     "Colossians",
-    //     "1&2Thessalonians",
-    //     "1&2TimothyandTitus",
-    //     "Philemon",
-    //     "Hebrews",
-    //     "James",
-    //     "1&2Peter",
-    //     "123John",
-    //     "Jude",
-    //     "Revelation",
-    // ]
-
 
     render() {
-        debugger
 
-        filterOTBooks(this.props.heDevoIndex)
+        
+
+
         return (
             <>
                 <div className='categories-page-container'>
 
                         <div className='form-closing-x' onClick={() => this.props.closeModal()}>&#10005;</div>
 
+                    <section className='categories-section'>
                     <div className='categories-title'>
-                        SHE CATEGORIES
+                        <span>Old Testament</span>
                     </div>
-
-                    <section>
                         <div className='categories-OT'>
                             <ul className='she-category-ul'> 
                                 {
-                                    this.state.sheDevoIndex.map(eachDevoIdx => (
+                                    this.props.sheDevoIndex.map(eachDevoIdx => (
                                         <CategoryListOT
                                             devoIdx={eachDevoIdx}
                                             key={eachDevoIdx.id}
@@ -143,6 +123,9 @@ class CategoriesPage extends React.Component {
                                     ))
                                 }
                             </ul>
+                        </div>
+                        <div className='categories-title'>
+                            <span>New Testament</span>
                         </div>
                         <div className='categories-NT'>
                             <ul className='she-category-ul'>
@@ -158,14 +141,7 @@ class CategoriesPage extends React.Component {
                         </div>
                         <div className='categories-Other'>
                             <ul className='she-category-ul'>
-                                {
-                                    this.props.sheDevoIndex.map(eachDevoIdx => (
-                                        <CategoryListOther
-                                            devoIdx={eachDevoIdx}
-                                            key={eachDevoIdx.id}
-                                        />
-                                    ))
-                                }
+
                             </ul>
                         </div>
                     </section>
@@ -174,15 +150,15 @@ class CategoriesPage extends React.Component {
                             <hr />
                         </div>
 
+                    <section className='categories-section'>
                     <div className='categories-title'>
-                        HE CATEGORIES
+                        <span>Old Testament</span>
                     </div>
 
-                    <section>
                         <div className='categories-OT'>
                             <ul className='he-category-ul'>
                                 {
-                                    this.props.sheDevoIndex.map(eachDevoIdx => (
+                                    this.props.heDevoIndex.map(eachDevoIdx => (
                                         <CategoryListOT
                                             devoIdx={eachDevoIdx}
                                             key={eachDevoIdx.id}
@@ -191,10 +167,13 @@ class CategoriesPage extends React.Component {
                                 }
                             </ul>
                         </div>
+                    <div className='categories-title'>
+                        <span>New Testament</span>
+                    </div>
                         <div className='categories-NT'>
                             <ul className='he-category-ul'>
                                 {
-                                    this.props.sheDevoIndex.map(eachDevoIdx => (
+                                    this.props.heDevoIndex.map(eachDevoIdx => (
                                         <CategoryListNT
                                             devoIdx={eachDevoIdx}
                                             key={eachDevoIdx.id}
@@ -205,14 +184,7 @@ class CategoriesPage extends React.Component {
                         </div>
                         <div className='categories-Other'>
                             <ul className='he-category-ul'>
-                                {
-                                    this.props.sheDevoIndex.map(eachDevoIdx => (
-                                        <CategoryListOther
-                                            devoIdx={eachDevoIdx}
-                                            key={eachDevoIdx.id}
-                                        />
-                                    ))
-                                }
+
                             </ul>
                         </div>
                     </section>
