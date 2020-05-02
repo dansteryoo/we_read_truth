@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { closeModal, openModal } from '../../actions/modal_actions';
-import { fetchDevoIndex } from '../../actions/devo_actions'
+import { fetchDevoIndex, clearDevoState } from '../../actions/devo_actions'
 import CategoriesPage from './categories';
 import { withRouter } from 'react-router-dom';
 
@@ -29,6 +29,7 @@ const mapDispatchToProps = (dispatch) => ({
     closeModal: () => dispatch(closeModal()),
     openModal: (modal, book) => dispatch(openModal(modal, book)),
     fetchDevoIndex: () => dispatch(fetchDevoIndex()),
+    clearDevoState: () => dispatch(clearDevoState()),
 });
 
 

@@ -1041,24 +1041,86 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      heOTbooks: [],
-      heNTBooks: [],
-      heOther: [],
-      sheOTbooks: [],
-      sheNTBooks: [],
-      sheOther: []
+      Genesis: 1,
+      Exodus: 2,
+      Leviticus: 3,
+      Numbers: 4,
+      Deuteronomy: 5,
+      Joshua: 6,
+      Judges: 7,
+      Ruth: 8,
+      FirstSamuel: 9,
+      SecondSamuel: 10,
+      FirstKings: 11,
+      SecondKings: 12,
+      FirstChronicles: 13,
+      SecondChronicles: 14,
+      Ezra: 15,
+      Nehemiah: 16,
+      Esther: 17,
+      Job: 18,
+      Psalm: 19,
+      Proverbs: 20,
+      Ecclesiastes: 21,
+      SongofSongs: 22,
+      Isaiah: 23,
+      Jeremiah: 24,
+      Lamentations: 25,
+      Ezekiel: 26,
+      Daniel: 27,
+      Hosea: 28,
+      Joel: 29,
+      Amos: 30,
+      Obadiah: 31,
+      Jonah: 32,
+      Micah: 33,
+      Nahum: 34,
+      Habakkuk: 35,
+      Zephaniah: 36,
+      Haggai: 37,
+      Zechariah: 38,
+      Malachi: 39,
+      Matthew: 40,
+      Mark: 41,
+      Luke: 42,
+      John: 43,
+      Acts: 44,
+      Romans: 45,
+      FirstCorinthians: 46,
+      SecondCorinthians: 47,
+      Galatians: 48,
+      Ephesians: 49,
+      Philippians: 50,
+      Colossians: 51,
+      FirstThessalonians: 52,
+      SecondThessalonians: 53,
+      FirstTimothy: 54,
+      SecondTimothy: 55,
+      Titus: 56,
+      Philemon: 57,
+      Hebrews: 58,
+      James: 59,
+      FirstPeter: 60,
+      SecondPeter: 61,
+      FirstJohn: 62,
+      SecondJohn: 63,
+      ThirdJohn: 64,
+      Jude: 65,
+      Revelation: 66
     };
     _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
-    _this.filterOTBooks = _this.filterOTBooks.bind(_assertThisInitialized(_this)); // this.filterNTBooks = this.filterNTBooks.bind(this);
-
     return _this;
   }
 
   _createClass(CategoriesPage, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      debugger;
       this.props.fetchDevoIndex();
+    }
+  }, {
+    key: "componentWillMount",
+    value: function componentWillMount() {
+      this.props.clearDevoState();
     }
   }, {
     key: "handleClick",
@@ -1071,60 +1133,10 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
-    key: "filterOTBooks",
-    value: function filterOTBooks(data) {
-      var OTbooks = ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1&2Samuel", "1&2Kings", "1&2Chronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalms", "Proverbs", "Ecclesiastes", "SongofSongs", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel,Amos,Obadiah,Jonah,andMicah", "Nahum,Habakkuk,Zephaniah,andHaggai", "ZechariahandMalachi"];
-      var bookTitleFormat = {
-        "ZechariahandMalachi": "Zechariah & Malachi",
-        "Nahum,Habakkuk,Zephaniah,andHaggai": "Nahum, Habakkuk, Zephaniah, & Haggai",
-        "1&2Kings": "1 & 2 Kings",
-        "SongofSongs": "Song of Songs",
-        "1&2Samuel": "1 & 2 Samuel",
-        "Joel,Amos,Obadiah,Jonah,andMicah": "Joel, Amos, Obadiah, Jonah, & Micah"
-      };
-      var arr = [];
-      data.forEach(function (ele) {
-        debugger;
-
-        if (OTbooks.includes(ele) && bookTitleFormat[ele] === undefined) {
-          arr.push(ele);
-        } else if (OTbooks.includes(ele)) {
-          arr.push(bookTitleFormat[ele]);
-        }
-      });
-      this.setState({
-        heOTbooks: arr
-      });
-    } // NTBOOKS = [
-    //     "Matthew",
-    //     "Mark",
-    //     "Luke",
-    //     "John",
-    //     "ActsoftheApostles",
-    //     "Romans",
-    //     "1&2Corinthians",
-    //     "Galatians",
-    //     "Ephesians",
-    //     "Philippians",
-    //     "Colossians",
-    //     "1&2Thessalonians",
-    //     "1&2TimothyandTitus",
-    //     "Philemon",
-    //     "Hebrews",
-    //     "James",
-    //     "1&2Peter",
-    //     "123John",
-    //     "Jude",
-    //     "Revelation",
-    // ]
-
-  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
 
-      debugger;
-      filterOTBooks(this.props.heDevoIndex);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "categories-page-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1132,18 +1144,22 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
         onClick: function onClick() {
           return _this2.props.closeModal();
         }
-      }, "\u2715"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "\u2715"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+        className: "categories-section"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "categories-title"
-      }, "SHE CATEGORIES"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Old Testament")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "categories-OT"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "she-category-ul"
-      }, this.state.sheDevoIndex.map(function (eachDevoIdx) {
+      }, this.props.sheDevoIndex.map(function (eachDevoIdx) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_category_list_OT__WEBPACK_IMPORTED_MODULE_1__["default"], {
           devoIdx: eachDevoIdx,
           key: eachDevoIdx.id
         });
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "categories-title"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "New Testament")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "categories-NT"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "she-category-ul"
@@ -1156,29 +1172,28 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
         className: "categories-Other"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "she-category-ul"
-      }, this.props.sheDevoIndex.map(function (eachDevoIdx) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_category_list_Other__WEBPACK_IMPORTED_MODULE_3__["default"], {
-          devoIdx: eachDevoIdx,
-          key: eachDevoIdx.id
-        });
-      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-or-separator-categories"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+        className: "categories-section"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "categories-title"
-      }, "HE CATEGORIES"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Old Testament")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "categories-OT"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "he-category-ul"
-      }, this.props.sheDevoIndex.map(function (eachDevoIdx) {
+      }, this.props.heDevoIndex.map(function (eachDevoIdx) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_category_list_OT__WEBPACK_IMPORTED_MODULE_1__["default"], {
           devoIdx: eachDevoIdx,
           key: eachDevoIdx.id
         });
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "categories-title"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "New Testament")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "categories-NT"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "he-category-ul"
-      }, this.props.sheDevoIndex.map(function (eachDevoIdx) {
+      }, this.props.heDevoIndex.map(function (eachDevoIdx) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_category_list_NT__WEBPACK_IMPORTED_MODULE_2__["default"], {
           devoIdx: eachDevoIdx,
           key: eachDevoIdx.id
@@ -1187,12 +1202,7 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
         className: "categories-Other"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "he-category-ul"
-      }, this.props.sheDevoIndex.map(function (eachDevoIdx) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_category_list_Other__WEBPACK_IMPORTED_MODULE_3__["default"], {
-          devoIdx: eachDevoIdx,
-          key: eachDevoIdx.id
-        });
-      }))))));
+      })))));
     }
   }]);
 
@@ -1255,6 +1265,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     fetchDevoIndex: function fetchDevoIndex() {
       return dispatch(Object(_actions_devo_actions__WEBPACK_IMPORTED_MODULE_2__["fetchDevoIndex"])());
+    },
+    clearDevoState: function clearDevoState() {
+      return dispatch(Object(_actions_devo_actions__WEBPACK_IMPORTED_MODULE_2__["clearDevoState"])());
     }
   };
 };
@@ -1280,6 +1293,23 @@ var _this = undefined;
 
 var CategoryListNT = function CategoryListNT(_ref) {
   var devoIdx = _ref.devoIdx;
+  var NTbooks = ["Matthew", "Mark", "Luke", "John", "ActsoftheApostles", "Romans", "1&2Corinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1&2Thessalonians", "1&2TimothyandTitus", "Philemon", "Hebrews", "James", "1&2Peter", "123John", "Jude", "Revelation"];
+  var NTbookFormat = {
+    "1&2Thessalonians": "1 & 2 Thessalonians",
+    "1&2Peter": "1 & 2 Peter",
+    "1&2TimothyandTitus": "1 & 2 Timothy & Titus",
+    "ActsoftheApostles": "Acts",
+    "1&2Corinthians": "1 & 2 Corinthians"
+  };
+  var NTbook;
+  debugger;
+
+  if (NTbooks.includes(devoIdx.book) && NTbookFormat[devoIdx.book] === undefined) {
+    NTbook = devoIdx.book;
+  } else if (NTbooks.includes(devoIdx.book) && NTbookFormat[devoIdx.book] !== undefined) {
+    NTbook = NTbookFormat[devoIdx.book];
+  }
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "category-li"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1287,7 +1317,7 @@ var CategoryListNT = function CategoryListNT(_ref) {
     onClick: function onClick() {
       return _this.props.fetchDevo(devoIdx.book);
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, devoIdx.book)));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, NTbook)));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (CategoryListNT);
@@ -1311,6 +1341,24 @@ var _this = undefined;
 
 var CategoryListOT = function CategoryListOT(_ref) {
   var devoIdx = _ref.devoIdx;
+  var OTbooks = ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1&2Samuel", "1&2Kings", "1&2Chronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalms", "Proverbs", "Ecclesiastes", "SongofSongs", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel,Amos,Obadiah,Jonah,andMicah", "Nahum,Habakkuk,Zephaniah,andHaggai", "ZechariahandMalachi"];
+  var OTbookFormat = {
+    "ZechariahandMalachi": "Zechariah & Malachi",
+    "Nahum,Habakkuk,Zephaniah,andHaggai": "Nahum, Habakkuk, Zephaniah, & Haggai",
+    "1&2Kings": "1 & 2 Kings",
+    "SongofSongs": "Song of Songs",
+    "1&2Samuel": "1 & 2 Samuel",
+    "Joel,Amos,Obadiah,Jonah,andMicah": "Joel, Amos, Obadiah, Jonah, & Micah"
+  };
+  var OTbook;
+  debugger;
+
+  if (OTbooks.includes(devoIdx.book) && OTbookFormat[devoIdx.book] === undefined) {
+    OTbook = devoIdx.book;
+  } else if (OTbooks.includes(devoIdx.book) && OTbookFormat[devoIdx.book] !== undefined) {
+    OTbook = OTbookFormat[devoIdx.book];
+  }
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "category-li"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1318,7 +1366,7 @@ var CategoryListOT = function CategoryListOT(_ref) {
     onClick: function onClick() {
       return _this.props.fetchDevo(devoIdx.book);
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, devoIdx.book)));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, OTbook)));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (CategoryListOT);

@@ -115,14 +115,23 @@ $color_3: #d9fff0;
   column-count: 4;
   width: 100%;
   height: 100%;
-  // background-color: blue;
   padding: 0;
   top: 0;
+  font-size: 0.85rem;
 }
 
 .categories-title {
-  // background-color: red;
   padding: 0;
   top: 0;
+  font-size: 1rem;
+  font-weight: bold;
+  text-decoration: underline;
+  margin: 10px 0 6px;
 }
+
+
+.category-li {
+  margin-top: 2px;
+}
+
 
