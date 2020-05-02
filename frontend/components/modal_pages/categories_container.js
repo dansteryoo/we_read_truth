@@ -1,23 +1,35 @@
 import { connect } from 'react-redux';
 import { closeModal, openModal } from '../../actions/modal_actions';
-import { fetchDevos } from '../../actions/devo_actions'
+import { fetchDevoIndex } from '../../actions/devo_actions'
 import CategoriesPage from './categories';
+import { withRouter } from 'react-router-dom';
 
 const mapStateToProps = (state) => {
-    // debugger
+
+    // let heDevoIdx, sheDevoIdx;
+    // if (state.devos.count === undefined) {
+    //     heDevoIdx = {};
+    //     sheDevoIdx = {};
+    // } else {
+
+        let heDevoIdx = Object.values(state.devos).filter(ele => ele.gender === "HE");
+        let sheDevoIdx = Object.values(state.devos).filter(ele => ele.gender === "SHE");
+    // }
+
     return {
         currentUser: state.users[state.session.id],
         errors: state.errors,
-        devos: Object.values(state.devos)
+        devoBook: state.modal.book,
+        heDevoIndex: heDevoIdx,
+        sheDevoIndex: sheDevoIdx
     }
 };
 
-
 const mapDispatchToProps = (dispatch) => ({
     closeModal: () => dispatch(closeModal()),
-    openModal: (formType) => dispatch(openModal(formType)),
-    fetchDevos: (devoBook) => dispatch(fetchDevos(devoBook)),
+    openModal: (modal, book) => dispatch(openModal(modal, book)),
+    fetchDevoIndex: () => dispatch(fetchDevoIndex()),
 });
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(CategoriesPage);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CategoriesPage));

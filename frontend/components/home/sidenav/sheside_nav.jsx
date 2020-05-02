@@ -1,36 +1,42 @@
 import React from 'react';
-import SideNavList from './sidenav_items'
 
 class SheSideNav extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            gender: "he_data",
-            folder: "NT", 
-            name: "acts",
-            book: "",
-            passages: "",
+        this.state = { 
+            id: '',
+            gender: '',
+            book: '', 
+            title: '',
+            passages: '',
+            summary: '',
+            img: ''
         }
-    }
+
+
+        this.handleClick = this.handleClick.bind(this);
+    };
 
     componentDidMount() {
 
-    }
+    };
+
+    handleClick(e) {
+        e.preventDefault();
+        this.setState({
+            day: "",
+            title: "",
+            passage: "",
+        })
+    };
 
     render() {
-
+        debugger
         return (
             <nav className="sidenav-container" >
                     <ul className='sidenav-ul'>
-                        {/*
-                            this.state.book.map((each, i) => (
-                                <SideNavList
-                                    each={each}
-                                    key={i}
-                                />
-                            ))
-                        */}
+
                     <li className='leftside-nav-li'>
                         <div className='leftside-nav-day'>
                             <span>{}Day 1</span>

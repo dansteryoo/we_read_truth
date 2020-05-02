@@ -5,7 +5,7 @@ import Navbar from './navbar';
 
 const mapStateToProps = (state) => {
     return {
-        formType: 'Notes',
+        // devoBook: state.modal.book,
         currentUser: state.users[state.session.id],
         errors: state.errors
     }
@@ -14,7 +14,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
     logout: () => dispatch(logout()),
     closeModal: () => dispatch(closeModal()),
-    openModal: (formType) => dispatch(openModal(formType)),
+    openModal: (modal, book) => dispatch(openModal(modal, book)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

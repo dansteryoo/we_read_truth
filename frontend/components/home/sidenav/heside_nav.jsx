@@ -1,15 +1,19 @@
 import React from 'react';
-import SideNavList from './sidenav_items'
 
 class HeSideNav extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            day: "",
-            title: "", 
-            passage: "",
-        };
+            id: '',
+            gender: '',
+            book: '',
+            title: '',
+            passages: '',
+            summary: '',
+            img: ''
+        }
+
 
         this.handleClick = this.handleClick.bind(this);
     };

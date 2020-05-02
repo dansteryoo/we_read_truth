@@ -10,7 +10,7 @@ class NavBar extends React.Component {
         }
     }
 
-    componentWillMount(){
+    componentWillUnmount(){
         this.props.closeModal();
     }
 

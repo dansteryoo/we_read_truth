@@ -1,8 +1,8 @@
 class Api::DevosController < ApplicationController
     
     def index
-        @devos = Devo.where(book: params[:book])
-        render :show
+        @devos = Devo.select(:book, :gender).distinct
+        render :index
     end
 
     def show
@@ -11,9 +11,10 @@ class Api::DevosController < ApplicationController
     end
 
     def book
-        @devos = Devo.find_by(book: params[:book])
-        render :show
+        @devos = Devo.where(book: params[:book])
+        render :book
     end
+    
 
     def search
         search_result = Devo.search_by_keywords(params[:search_keywords])

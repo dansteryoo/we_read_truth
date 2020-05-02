@@ -4,7 +4,7 @@ import { fetchNote, fetchNotes, deleteNote, updateNote, createNote } from '../..
 import NotesPage from './notespage';
 
 const mapStateToProps = (state) => {
-    // debugger
+    debugger
     return {
         currentUser: state.users[state.session.id],
         errors: state.errors,

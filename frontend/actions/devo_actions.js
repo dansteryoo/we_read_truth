@@ -1,14 +1,22 @@
 import * as DevosAPIUtil from '../util/devos_api_util';
 
-export const RECEIVE_DEVOS = 'RECEIVE_DEVOS';
 export const RECEIVE_DEVO = 'RECEIVE_DEVO';
 export const CLEAR_DEVO_STATE = "CLEAR_DEVO_STATE";
 export const RECEIVE_DEVO_BOOK = 'RECEIVE_DEVO_BOOK';
+export const RECEIVE_DEVO_INDEX = 'RECEIVE_DEVO_INDEX';
 
-export const receiveDevos = (devos) => {
+
+export const receiveDevoIndex = (devoIndex) => {
     return {
-        type: RECEIVE_DEVOS,
-        devos
+        type: RECEIVE_DEVO_INDEX,
+        devoIndex
+    }
+};
+
+export const receiveDevoBook = (devoBook) => {
+    return {
+        type: RECEIVE_DEVO_BOOK,
+        devoBook
     }
 };
 
@@ -19,23 +27,21 @@ export const receiveDevo = (devo) => {
     }
 };
 
-// export const receiveDevoBook = (devoBook) => {
-//     return {
-//         type: RECEIVE_DEVO_BOOK,
-//         devoBook
-//     }
-// };
-
 export const clearDevoState = () => {
     return {
         type: CLEAR_DEVO_STATE
     }
 };
 
+export const fetchDevoIndex = () => dispatch => {
+    return DevosAPIUtil.fetchDevoIndex()
+        .then(devoIndex => dispatch(receiveDevoIndex(devoIndex))
+        )
+};
 
-export const fetchDevos = (devoBook) => dispatch => {
-    return DevosAPIUtil.fetchDevos(devoBook)
-        .then(devoBook => dispatch(receiveDevos(devoBook))
+export const fetchDevoBook = (devoBook) => dispatch => {
+    return DevosAPIUtil.fetchDevoBook(devoBook)
+        .then(devoBook => dispatch(receiveDevoBook(devoBook))
         )
 };
 

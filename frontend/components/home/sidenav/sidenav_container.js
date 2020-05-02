@@ -3,7 +3,7 @@ import { closeModal, openModal } from '../../actions/modal_actions';
 import SideNav from './sidenav';
 
 const mapStateToProps = (state) => {
-    // debugger
+    debugger
     return {
         currentUser: state.users[state.session.id],
         errors: state.errors,
@@ -15,9 +15,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
     closeModal: () => dispatch(closeModal()),
     openModal: (formType) => dispatch(openModal(formType)),
-    fetchDevos: () => dispatch(fetchDevos()),
-    fetchDevo: (devoId) => dispatch(fetchDevos(devoId)),
-    fetchDevoTitle: (devoTitle) => dispatch(fetchDevos(devoTitle)),
+    fetchDevoBook: () => dispatch(fetchDevoBook()),
     fetchNotes: (noteId) => dispatch(fetchNotes(noteId)),
     createNote: (note) => dispatch(createNote(note)),
     updateNote: (noteId) => dispatch(updateNote(noteId)),
