@@ -7,36 +7,36 @@ class Api::NotesController < ApplicationController
     end
 
     def show
-        @note = Note.find(params[:id])
+        @notes = Note.find(params[:id])
         render :show
     end
 
     def create
-        @note = Note.new(note_params)
-        @note.notary_id = current_user.id
+        @notes = Note.new(note_params)
+        @notes.notary_id = current_user.id
 
-        if @note.save
+        if @notes.save
             render :show
         else
-            render json: @note.errors.full_messages, status: 422
+            render json: @notes.errors.full_messages, status: 422
         end
     end
 
     def update
-        @note = Note.find(params[:id])
+        @notes = Note.find(params[:id])
 
-        if @note.update(note_params)
+        if @notes.update(note_params)
             render :show
         else
-            render json: @note.errors.full_messages, status: 422
+            render json: @notes.errors.full_messages, status: 422
         end
     end
 
     def destroy
-        @note = Note.find(params[:id])
-        @note.destory 
+        @notes = Note.find(params[:id])
+        @notes.destory 
         
-        if @note.destroy 
+        if @notes.destroy 
             render json: :show
         end
     end
@@ -44,7 +44,7 @@ class Api::NotesController < ApplicationController
 private
 
     def note_params
-        params.require(:note).permit(:devo_id, :notary_id, :body)
+        params.require(:note).permit(:title, :body, :category, :tags)
     end
 
 end

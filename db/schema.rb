@@ -33,10 +33,8 @@ ActiveRecord::Schema.define(version: 2020_04_14_212949) do
     t.text "category"
     t.text "tags"
     t.integer "notary_id", null: false
-    t.integer "devo_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["devo_id"], name: "index_notes_on_devo_id"
     t.index ["notary_id"], name: "index_notes_on_notary_id"
   end
 

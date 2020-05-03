@@ -32,7 +32,6 @@ class NotesForm extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
         let note = Object.assign({}, this.state);
-        
         this.props.createNote(note);
     }
 
@@ -52,13 +51,12 @@ class NotesForm extends React.Component {
             <>
                 <div className='notes-form-container'>
                     <form onSubmit={this.handleSubmit} >
-                        {/*this.renderErrors()*/}
                         <div className='notes-form'>
 
                             {/* title */}
 
                             <input type='text'
-                                className='notes-form-input'
+                                className='notes-form-input-title'
                                 value={this.state.title}
                                 placeholder={'Title'}
                                 onChange={this.update('title')}
@@ -72,6 +70,7 @@ class NotesForm extends React.Component {
                                 value={this.state.body}
                                 placeholder={'Enter note here..'}
                                 onChange={this.update('body')}
+                            // required
                             />
 
                             {/* categories and tags */}
@@ -92,6 +91,7 @@ class NotesForm extends React.Component {
                                 // required   
                                 />
                             </div>
+                            {this.renderErrors()}
                             <div className='button-container'>
                                 <button className='notes-form-submit-button' type='submit'>
                                     Submit

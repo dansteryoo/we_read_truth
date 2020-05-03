@@ -1,8 +1,4 @@
-json.notes do 
-    @listing.notes.each do |note|
-        json.set! note.id do 
-        json.partial! "api/notes/note", note: note
-        json.partial! "api/users/user", user: note.notary
-    end
-  end
-end
+json.partial! "api/notes/note", notes: @notes
+    json.author_email @notes.user.email
+    json.author_first_name @notes.user.first_name
+    json.author_last_name @notes.user.last_name
