@@ -1041,7 +1041,8 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
       bibleBooks: ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1&2Samuel", "SecondSamuel", "1&2Kings", "SecondKings", "1&2Chronicles", "SecondChronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalm", "Proverbs:TheWayofWisdom", "Ecclesiastes", "SongofSongs", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel,Amos,Obadiah,Jonah,andMicah", "Amos", "Obadiah", "Jonah", "Micah", "Nahum,Habakkuk,Zephaniah,andHaggai", "Habakkuk", "Zephaniah", "Haggai", "ZechariahandMalachi", "Malachi", "Matthew", "Mark", "Luke", "John", "ActsoftheApostles", "Romans", "1&2Corinthians", "SecondCorinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1&2Thessalonians", "SecondThessalonians", "1&2TimothyandTitus", "SecondTimothy", "Titus", "Philemon", "Hebrews", "James", "1&2Peter", "SecondPeter", "123John", "SecondJohn", "ThirdJohn", "Jude", "Revelation"]
     };
     _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
-    _this.sortTitles = _this.sortTitles.bind(_assertThisInitialized(_this));
+    _this.sortBibleTitles = _this.sortBibleTitles.bind(_assertThisInitialized(_this));
+    _this.sortOtherTitles = _this.sortOtherTitles.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1058,11 +1059,22 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
     // sort an array in the same order of another array
 
   }, {
-    key: "sortTitles",
-    value: function sortTitles(data) {
+    key: "sortBibleTitles",
+    value: function sortBibleTitles(data) {
       var bibleBooks = this.state.bibleBooks;
       return data.sort(function (a, b) {
         return bibleBooks.indexOf(a.book) - bibleBooks.indexOf(b.book);
+      }).map(function (ele) {
+        return ele;
+      });
+    } // this.props.sheDevoIndex.sort((a, b) => a.book < b.book ? -1 : 1
+    // sort an array of objects in alphabetical order
+
+  }, {
+    key: "sortOtherTitles",
+    value: function sortOtherTitles(data) {
+      return data.sort(function (a, b) {
+        return a.book < b.book ? -1 : 1;
       }).map(function (ele) {
         return ele;
       });
@@ -1082,7 +1094,6 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      console.log(this.sortTitles(this.props.sheDevoIndex));
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "categories-page-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1098,7 +1109,7 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
         className: "categories-OT"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "she-category-ul"
-      }, this.sortTitles(this.props.sheDevoIndex).map(function (eachDevoIdx) {
+      }, this.sortBibleTitles(this.props.sheDevoIndex).map(function (eachDevoIdx) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_category_list_OT__WEBPACK_IMPORTED_MODULE_1__["default"], {
           devoIdx: eachDevoIdx,
           key: eachDevoIdx.id
@@ -1109,16 +1120,23 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
         className: "categories-NT"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "she-category-ul"
-      }, this.sortTitles(this.props.sheDevoIndex).map(function (eachDevoIdx) {
+      }, this.sortBibleTitles(this.props.sheDevoIndex).map(function (eachDevoIdx) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_category_list_NT__WEBPACK_IMPORTED_MODULE_2__["default"], {
           devoIdx: eachDevoIdx,
           key: eachDevoIdx.id
         });
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "categories-title"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Other Books")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "categories-Other"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "she-category-ul"
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.sortOtherTitles(this.props.sheDevoIndex).map(function (eachDevoIdx) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_category_list_Other__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          devoIdx: eachDevoIdx,
+          key: eachDevoIdx.id
+        });
+      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-or-separator-categories"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "categories-section"
@@ -1128,7 +1146,7 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
         className: "categories-OT"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "he-category-ul"
-      }, this.sortTitles(this.props.heDevoIndex).map(function (eachDevoIdx) {
+      }, this.sortBibleTitles(this.props.heDevoIndex).map(function (eachDevoIdx) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_category_list_OT__WEBPACK_IMPORTED_MODULE_1__["default"], {
           devoIdx: eachDevoIdx,
           key: eachDevoIdx.id
@@ -1139,16 +1157,23 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
         className: "categories-NT"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "he-category-ul"
-      }, this.sortTitles(this.props.heDevoIndex).map(function (eachDevoIdx) {
+      }, this.sortBibleTitles(this.props.heDevoIndex).map(function (eachDevoIdx) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_category_list_NT__WEBPACK_IMPORTED_MODULE_2__["default"], {
           devoIdx: eachDevoIdx,
           key: eachDevoIdx.id
         });
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "categories-title"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Other Books")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "categories-Other"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "he-category-ul"
-      })))));
+        className: "she-category-ul"
+      }, this.sortOtherTitles(this.props.heDevoIndex).map(function (eachDevoIdx) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_category_list_Other__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          devoIdx: eachDevoIdx,
+          key: eachDevoIdx.id
+        });
+      }))))));
     }
   }]);
 
@@ -1335,6 +1360,61 @@ var _this = undefined;
 
 var CategoryListOther = function CategoryListOther(_ref) {
   var devoIdx = _ref.devoIdx;
+  var otherBooks = ["Justice", "HymnsV", "TheSermonontheMount", "Lent2017:YouAreMine", "Advent2018:UntiltheSonofGodAppears", "ThisIstheGospel", "Lent2018:SeetheLord’sSalvation", "MourningandDancing", "2019Wrapped:SheReadsTruthYearinReview", "NamesofGod", "OpenYourBible//Launch-WeekSampler", "InSpirit&inTruth:AStudyofBiblicalWorship", "Advent2016:ChristWasBornforThis", "Lent2016", "Hymns", "TheResurrectedLife", "TheRisenChrist", "Lent2020:HisLoveEndures", "Jesus,KeepMeNearTheCross", "TheBeatitudes", "PsalmsforPrayer", "AttributesofGod", "PsalmsofRest", "TheLifeofMoses", "HymnsIV", "BecauseHeLives", "HymnsII", "TheMiraclesofJesus", "SongsfortheRoad:ThePsalmsofAscent", "Women&MenintheWord:OldTestament", "HymnsIII", "GiveThanks", "MakingRoom:AStudyofBiblicalHospitality", "IAm:StatementsofOurSavior", "WorthyofPraise", "Advent2017:JoytotheWorld", "HoldingTighttoPermanent", "Advent2019:AThrillofHope", "CountdowntoActs", "FruitoftheSpirit", "Advent2015:BornIsTheKing", "TheParablesofJesus", "GoTellItontheMountain", "HymnsofHope", "PsalmsofGratitude"];
+  var OTHERbookFormat = {
+    "HymnsV": 'Hymns V',
+    "TheSermonontheMount": 'The Sermon on the Mount',
+    "Lent2017:YouAreMine": 'Lent 2017',
+    "Advent2018:UntiltheSonofGodAppears": 'Advent 2018',
+    "ThisIstheGospel": 'This is the Gospel',
+    "Lent2018:SeetheLord’sSalvation": 'Lent 2018',
+    "MourningandDancing": 'Mourning & Dancing',
+    "2019Wrapped:SheReadsTruthYearinReview": '2019 Wrapped: Year in Review',
+    "NamesofGod": 'Names of God',
+    "OpenYourBible//Launch-WeekSampler": 'OpenYourBible: Week Sampler',
+    "InSpirit&inTruth:AStudyofBiblicalWorship": 'Biblical Worship',
+    "Advent2016:ChristWasBornforThis": 'Advent 2016',
+    "Lent2016": 'Lent 2016',
+    "Hymns": 'Hymns I',
+    "TheResurrectedLife": 'The Resurrected Life',
+    "TheRisenChrist": 'The Risen Christ',
+    "Lent2020:HisLoveEndures": 'Lent 2020',
+    "Jesus,KeepMeNearTheCross": 'Jesus, Keep Me Near The Cross',
+    "TheBeatitudes": 'The Beatitudes',
+    "PsalmsforPrayer": 'Psalms for Prayer',
+    "AttributesofGod": 'Attributes of God',
+    "PsalmsofRest": 'Psalms of Rest',
+    "TheLifeofMoses": 'The Life of Moses',
+    "HymnsIV": 'Hymns IV',
+    "BecauseHeLives": 'Because He Lives',
+    "HymnsII": 'Hymns II',
+    "TheMiraclesofJesus": 'The Miracles of Jesus',
+    "SongsfortheRoad:ThePsalmsofAscent": 'The Psalms of Ascent',
+    "Women&MenintheWord:OldTestament": 'Old Testament Women & Men',
+    "HymnsIII": 'Hymns III',
+    "GiveThanks": 'Give Thanks',
+    "MakingRoom:AStudyofBiblicalHospitality": 'Biblical Hospitality',
+    "IAm:StatementsofOurSavior": 'I Am: Statements of Our Savior',
+    "WorthyofPraise": 'Worthy of Praise',
+    "Advent2017:JoytotheWorld": 'Advent 2017',
+    "HoldingTighttoPermanent": 'Holding Tight to Permanent',
+    "Advent2019:AThrillofHope": 'Advent 2019',
+    "CountdowntoActs": 'Countdown to Acts',
+    "FruitoftheSpirit": 'Fruit of the Spirit',
+    "Advent2015:BornIsTheKing": 'Advent 2015',
+    "TheParablesofJesus": 'The Parables of Jesus',
+    "GoTellItontheMountain": 'Go Tell It on the Mountain',
+    "HymnsofHope": 'Hymns of Hope',
+    "PsalmsofGratitude": 'Psalms of Gratitude'
+  };
+  var otherBook;
+
+  if (otherBooks.includes(devoIdx.book) && OTHERbookFormat[devoIdx.book] === undefined) {
+    otherBook = devoIdx.book;
+  } else if (otherBooks.includes(devoIdx.book) && OTHERbookFormat[devoIdx.book] !== undefined) {
+    otherBook = OTHERbookFormat[devoIdx.book];
+  }
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "category-li"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1342,7 +1422,7 @@ var CategoryListOther = function CategoryListOther(_ref) {
     onClick: function onClick() {
       return _this.props.fetchDevo(devoIdx.book);
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, devoIdx.book)));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, otherBook)));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (CategoryListOther);
