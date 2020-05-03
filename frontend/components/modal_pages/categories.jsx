@@ -79,7 +79,8 @@ class CategoriesPage extends React.Component {
         };
 
         this.handleClick = this.handleClick.bind(this);
-        this.sortTitles = this.sortTitles.bind(this);
+        this.sortBibleTitles = this.sortBibleTitles.bind(this);
+        this.sortOtherTitles = this.sortOtherTitles.bind(this);
     }
 
     componentDidMount() {
@@ -93,13 +94,23 @@ class CategoriesPage extends React.Component {
     // this.props.sheDevoIndex.sort((a, b) => this.state.bibleBooks.indexOf(a.book) - this.state.bibleBooks.indexOf(b.book))
     // sort an array in the same order of another array
 
-    sortTitles(data) {
+    sortBibleTitles(data) {
         const { bibleBooks } = this.state
         return data
             .sort((a, b) => bibleBooks.indexOf(a.book) - bibleBooks.indexOf(b.book))
             .map(ele => ele)
     }
 
+    // this.props.sheDevoIndex.sort((a, b) => a.book < b.book ? -1 : 1
+    // sort an array of objects in alphabetical order
+
+    sortOtherTitles(data) {
+        return data
+            .sort((a, b) => {
+                return a.book < b.book ? -1 : 1
+            })
+            .map(ele => ele)
+    }
 
     handleClick(e) {
         e.preventDefault();
@@ -111,8 +122,7 @@ class CategoriesPage extends React.Component {
     }
 
     render() {
-
-        console.log(this.sortTitles(this.props.sheDevoIndex))
+    
         return (
             <>
                 <div className="categories-page-container">
@@ -126,7 +136,7 @@ class CategoriesPage extends React.Component {
                         </div>
                         <div className="categories-OT">
                             <ul className="she-category-ul">
-                                {this.sortTitles(this.props.sheDevoIndex).map((eachDevoIdx) => (
+                                {this.sortBibleTitles(this.props.sheDevoIndex).map((eachDevoIdx) => (
                                     <CategoryListOT devoIdx={eachDevoIdx} key={eachDevoIdx.id} />
                                 ))}
                             </ul>
@@ -136,13 +146,20 @@ class CategoriesPage extends React.Component {
                         </div>
                         <div className="categories-NT">
                             <ul className="she-category-ul">
-                                {this.sortTitles(this.props.sheDevoIndex).map((eachDevoIdx) => (
+                                {this.sortBibleTitles(this.props.sheDevoIndex).map((eachDevoIdx) => (
                                     <CategoryListNT devoIdx={eachDevoIdx} key={eachDevoIdx.id} />
                                 ))}
                             </ul>
                         </div>
+                        <div className="categories-title">
+                            <span>Other Books</span>
+                        </div>
                         <div className="categories-Other">
-                            <ul className="she-category-ul"></ul>
+                            <ul className="she-category-ul">
+                                {this.sortOtherTitles(this.props.sheDevoIndex).map((eachDevoIdx) => (
+                                <CategoryListOther devoIdx={eachDevoIdx} key={eachDevoIdx.id} />
+                            ))}
+                            </ul>
                         </div>
                     </section>
 
@@ -157,7 +174,7 @@ class CategoriesPage extends React.Component {
 
                         <div className="categories-OT">
                             <ul className="he-category-ul">
-                                {this.sortTitles(this.props.heDevoIndex).map((eachDevoIdx) => (
+                                {this.sortBibleTitles(this.props.heDevoIndex).map((eachDevoIdx) => (
                                     <CategoryListOT devoIdx={eachDevoIdx} key={eachDevoIdx.id} />
                                 ))}
                             </ul>
@@ -167,13 +184,20 @@ class CategoriesPage extends React.Component {
                         </div>
                         <div className="categories-NT">
                             <ul className="he-category-ul">
-                                {this.sortTitles(this.props.heDevoIndex).map((eachDevoIdx) => (
+                                {this.sortBibleTitles(this.props.heDevoIndex).map((eachDevoIdx) => (
                                     <CategoryListNT devoIdx={eachDevoIdx} key={eachDevoIdx.id} />
                                 ))}
                             </ul>
                         </div>
+                        <div className="categories-title">
+                            <span>Other Books</span>
+                        </div>
                         <div className="categories-Other">
-                            <ul className="he-category-ul"></ul>
+                            <ul className="she-category-ul">
+                                {this.sortOtherTitles(this.props.heDevoIndex).map((eachDevoIdx) => (
+                                    <CategoryListOther devoIdx={eachDevoIdx} key={eachDevoIdx.id} />
+                                ))}
+                            </ul>
                         </div>
                     </section>
                 </div>
