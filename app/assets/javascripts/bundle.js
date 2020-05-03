@@ -208,7 +208,7 @@ var closeModal = function closeModal() {
 /*!******************************************!*\
   !*** ./frontend/actions/note_actions.js ***!
   \******************************************/
-/*! exports provided: RECEIVE_NOTES, RECEIVE_NOTE, REMOVE_NOTE, receiveReviews, receiveReview, removeReview, fetchNotes, fetchNote, createNote, updateNote, deleteNote */
+/*! exports provided: RECEIVE_NOTES, RECEIVE_NOTE, REMOVE_NOTE, receiveNotes, receiveNote, removeNote, fetchNotes, fetchNote, createNote, updateNote, deleteNote */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -216,9 +216,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_NOTES", function() { return RECEIVE_NOTES; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_NOTE", function() { return RECEIVE_NOTE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_NOTE", function() { return REMOVE_NOTE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveReviews", function() { return receiveReviews; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveReview", function() { return receiveReview; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeReview", function() { return removeReview; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveNotes", function() { return receiveNotes; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveNote", function() { return receiveNote; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeNote", function() { return removeNote; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchNotes", function() { return fetchNotes; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchNote", function() { return fetchNote; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createNote", function() { return createNote; });
@@ -229,22 +229,22 @@ __webpack_require__.r(__webpack_exports__);
 var RECEIVE_NOTES = 'RECEIVE_NOTES';
 var RECEIVE_NOTE = 'RECEIVE_NOTE';
 var REMOVE_NOTE = 'REMOVE_NOTE';
-var receiveReviews = function receiveReviews(reviews) {
+var receiveNotes = function receiveNotes(notes) {
   return {
-    type: RECEIVE_REVIEWS,
-    reviews: reviews
+    type: RECEIVE_NOTES,
+    notes: notes
   };
 };
-var receiveReview = function receiveReview(review) {
+var receiveNote = function receiveNote(note) {
   return {
-    type: RECEIVE_REVIEW,
-    review: review
+    type: RECEIVE_NOTE,
+    note: note
   };
 };
-var removeReview = function removeReview(reviewId) {
+var removeNote = function removeNote(noteId) {
   return {
-    type: REMOVE_REVIEW,
-    reviewId: reviewId
+    type: REMOVE_NOTE,
+    noteId: noteId
   };
 };
 var fetchNotes = function fetchNotes() {
@@ -1859,7 +1859,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
         className: "notes-form"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
-        className: "notes-form-input",
+        className: "notes-form-input-title",
         value: this.state.title,
         placeholder: 'Title',
         onChange: this.update('title') // required
@@ -1868,7 +1868,8 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
         className: "notes-form-textarea",
         value: this.state.body,
         placeholder: 'Enter note here..',
-        onChange: this.update('body')
+        onChange: this.update('body') // required
+
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "notes-form-bottom"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -1885,7 +1886,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
         placeholder: '#tags',
         onChange: this.update('tags') // required   
 
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      })), this.renderErrors(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "button-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "notes-form-submit-button",

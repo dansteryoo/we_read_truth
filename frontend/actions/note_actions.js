@@ -5,24 +5,24 @@ export const RECEIVE_NOTE = 'RECEIVE_NOTE';
 export const REMOVE_NOTE = 'REMOVE_NOTE';
 
 
-export const receiveReviews = (reviews) => {
+export const receiveNotes = (notes) => {
     return {
-        type: RECEIVE_REVIEWS,
-        reviews
+        type: RECEIVE_NOTES,
+        notes
     }
 };
 
-export const receiveReview = (review) => {
+export const receiveNote = (note) => {
     return {
-        type: RECEIVE_REVIEW,
-        review
+        type: RECEIVE_NOTE,
+        note
     }
 };
 
-export const removeReview = (reviewId) => {
+export const removeNote = (noteId) => {
     return {
-        type: REMOVE_REVIEW,
-        reviewId
+        type: REMOVE_NOTE,
+        noteId
     }
 };
 

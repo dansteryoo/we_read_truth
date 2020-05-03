@@ -27,7 +27,8 @@ $color_3: #d9fff0;
   padding: 20px;
 }
 
-.notes-form-input {
+.notes-form-input,
+.notes-form-input-title {
   display: flex;
   border-radius: 6px;
   color: $color_1;
@@ -36,10 +37,11 @@ $color_3: #d9fff0;
   padding: 0 10px;
   margin: 10px;
   font-size: 12px;
+  height: 30px;
 }
 
-.notes-form-input {
-  height: 30px;
+.notes-form-input-title {
+  font-weight: bold;
 }
 
 .notes-form-textarea {
@@ -57,18 +59,21 @@ $color_3: #d9fff0;
 }
 
 .notes-form-input::placeholder,
-.notes-form-textarea::placeholder {
+.notes-form-textarea::placeholder,
+.notes-form-input-title::placeholder {
   color: $color_2;
 }
 
 .notes-form-input:focus,
-.notes-form-textarea:focus {
+.notes-form-textarea:focus,
+.notes-form-input-title:focus {
   outline: none;
   box-shadow: 0 0 0 0.1rem $color_3;
 }
 
 .notes-form-input:invalid,
-.notes-form-textarea:invalid {
+.notes-form-textarea:invalid,
+.notes-form-input-title:invalid {
   outline: none;
   box-shadow: 0 0 0 1px #FF5A5F;
 }

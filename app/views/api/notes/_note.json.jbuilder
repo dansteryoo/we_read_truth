@@ -1,1 +1,1 @@
-json.extract! review, :id, :body, :devo_id, :notary_id, :created_at, :updated_at
+json.extract! notes, :id, :title, :body, :category, :tags, :notary_id, :created_at, :updated_at
