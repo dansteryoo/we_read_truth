@@ -122,6 +122,8 @@ class CategoriesPage extends React.Component {
     }
 
     render() {
+
+        console.log(this.sortOtherTitles(this.props.sheDevoIndex))
     
         return (
             <>

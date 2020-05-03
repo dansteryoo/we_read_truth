@@ -1094,6 +1094,7 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
+      console.log(this.sortOtherTitles(this.props.sheDevoIndex));
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "categories-page-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1372,7 +1373,7 @@ var CategoryListOther = function CategoryListOther(_ref) {
     "2019Wrapped:SheReadsTruthYearinReview": '2019 Wrapped: Year in Review',
     "NamesofGod": 'Names of God',
     "OpenYourBible//Launch-WeekSampler": 'OpenYourBible: Week Sampler',
-    "InSpirit&inTruth:AStudyofBiblicalWorship": 'Biblical Worship',
+    "InSpirit&inTruth:AStudyofBiblicalWorship": 'In Spirit & in Truth: Biblical Worship',
     "Advent2016:ChristWasBornforThis": 'Advent 2016',
     "Lent2016": 'Lent 2016',
     "Hymns": 'Hymns I',
@@ -1393,7 +1394,7 @@ var CategoryListOther = function CategoryListOther(_ref) {
     "Women&MenintheWord:OldTestament": 'Old Testament Women & Men',
     "HymnsIII": 'Hymns III',
     "GiveThanks": 'Give Thanks',
-    "MakingRoom:AStudyofBiblicalHospitality": 'Biblical Hospitality',
+    "MakingRoom:AStudyofBiblicalHospitality": 'MakingRoom: Biblical Hospitality',
     "IAm:StatementsofOurSavior": 'I Am: Statements of Our Savior',
     "WorthyofPraise": 'Worthy of Praise',
     "Advent2017:JoytotheWorld": 'Advent 2017',
