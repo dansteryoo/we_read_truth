@@ -14,7 +14,6 @@ class MainBody extends React.Component {
 
     render() {
 
-        debugger
         return (
             <div className='devo-main-container'>
 

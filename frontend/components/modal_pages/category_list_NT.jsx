@@ -34,7 +34,7 @@ const CategoryListNT = ({ devoIdx }) => {
     }
 
     let NTbook;
-    debugger
+
     if (NTbooks.includes(devoIdx.book) && NTbookFormat[devoIdx.book] === undefined) {
         NTbook = devoIdx.book
     } else if (NTbooks.includes(devoIdx.book) && NTbookFormat[devoIdx.book] !== undefined) {

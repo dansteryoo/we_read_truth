@@ -42,7 +42,7 @@ class HomePage extends React.Component {
 
 
     render() {
-        debugger
+
         let leftOpen = this.state.leftOpen ? 'open' : 'closed';
         let rightOpen = this.state.rightOpen ? 'open' : 'closed';
 
