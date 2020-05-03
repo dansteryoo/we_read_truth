@@ -7,14 +7,7 @@ class Devo < ApplicationRecord
     #     foreign_key: :devo_id,
     #     class_name: :Note
 
-    # def book(book)
-    #     book = `%#{book}%`
-
-    #     search_result = Devo.where("book LIKE ?", book)
-    #         debugger
-    #     search_result
-    # end
-
+    
     # def self.search_by_dates(search_result, start_date, end_date)
     #     search_start = Date.parse(start_date)
     #     search_end = Date.parse(end_date)

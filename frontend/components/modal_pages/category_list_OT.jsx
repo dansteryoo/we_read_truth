@@ -38,12 +38,13 @@ const CategoryListOT = ({ devoIdx }) => {
         "Nahum,Habakkuk,Zephaniah,andHaggai": "Nahum, Habakkuk, Zephaniah, & Haggai",
         "1&2Kings": "1 & 2 Kings",
         "SongofSongs": "Song of Songs",
+        "Proverbs:TheWayofWisdom" : "Proverbs",
         "1&2Samuel": "1 & 2 Samuel",
         "Joel,Amos,Obadiah,Jonah,andMicah": "Joel, Amos, Obadiah, Jonah, & Micah",
     }
 
     let OTbook;
-    debugger
+
     if (OTbooks.includes(devoIdx.book) && OTbookFormat[devoIdx.book] === undefined) {
         OTbook = devoIdx.book
     } else if (OTbooks.includes(devoIdx.book) && OTbookFormat[devoIdx.book] !== undefined) {

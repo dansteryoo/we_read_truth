@@ -502,7 +502,6 @@ var HomePage = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      debugger;
       var leftOpen = this.state.leftOpen ? 'open' : 'closed';
       var rightOpen = this.state.rightOpen ? 'open' : 'closed';
       var _this$props = this.props,
@@ -691,7 +690,6 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      debugger;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "devo-main-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -888,7 +886,6 @@ var SheSideNav = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      debugger;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
         className: "sidenav-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
@@ -974,7 +971,7 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      debugger;
+      // debugger
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
         className: "sidenav-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sheside_nav__WEBPACK_IMPORTED_MODULE_2__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_heside_nav__WEBPACK_IMPORTED_MODULE_1__["default"], null));
@@ -1041,74 +1038,10 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      Genesis: 1,
-      Exodus: 2,
-      Leviticus: 3,
-      Numbers: 4,
-      Deuteronomy: 5,
-      Joshua: 6,
-      Judges: 7,
-      Ruth: 8,
-      FirstSamuel: 9,
-      SecondSamuel: 10,
-      FirstKings: 11,
-      SecondKings: 12,
-      FirstChronicles: 13,
-      SecondChronicles: 14,
-      Ezra: 15,
-      Nehemiah: 16,
-      Esther: 17,
-      Job: 18,
-      Psalm: 19,
-      Proverbs: 20,
-      Ecclesiastes: 21,
-      SongofSongs: 22,
-      Isaiah: 23,
-      Jeremiah: 24,
-      Lamentations: 25,
-      Ezekiel: 26,
-      Daniel: 27,
-      Hosea: 28,
-      Joel: 29,
-      Amos: 30,
-      Obadiah: 31,
-      Jonah: 32,
-      Micah: 33,
-      Nahum: 34,
-      Habakkuk: 35,
-      Zephaniah: 36,
-      Haggai: 37,
-      Zechariah: 38,
-      Malachi: 39,
-      Matthew: 40,
-      Mark: 41,
-      Luke: 42,
-      John: 43,
-      Acts: 44,
-      Romans: 45,
-      FirstCorinthians: 46,
-      SecondCorinthians: 47,
-      Galatians: 48,
-      Ephesians: 49,
-      Philippians: 50,
-      Colossians: 51,
-      FirstThessalonians: 52,
-      SecondThessalonians: 53,
-      FirstTimothy: 54,
-      SecondTimothy: 55,
-      Titus: 56,
-      Philemon: 57,
-      Hebrews: 58,
-      James: 59,
-      FirstPeter: 60,
-      SecondPeter: 61,
-      FirstJohn: 62,
-      SecondJohn: 63,
-      ThirdJohn: 64,
-      Jude: 65,
-      Revelation: 66
+      bibleBooks: ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1&2Samuel", "SecondSamuel", "1&2Kings", "SecondKings", "1&2Chronicles", "SecondChronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalm", "Proverbs:TheWayofWisdom", "Ecclesiastes", "SongofSongs", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel,Amos,Obadiah,Jonah,andMicah", "Amos", "Obadiah", "Jonah", "Micah", "Nahum,Habakkuk,Zephaniah,andHaggai", "Habakkuk", "Zephaniah", "Haggai", "ZechariahandMalachi", "Malachi", "Matthew", "Mark", "Luke", "John", "ActsoftheApostles", "Romans", "1&2Corinthians", "SecondCorinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1&2Thessalonians", "SecondThessalonians", "1&2TimothyandTitus", "SecondTimothy", "Titus", "Philemon", "Hebrews", "James", "1&2Peter", "SecondPeter", "123John", "SecondJohn", "ThirdJohn", "Jude", "Revelation"]
     };
     _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
+    _this.sortTitles = _this.sortTitles.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1121,6 +1054,18 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
     key: "componentWillMount",
     value: function componentWillMount() {
       this.props.clearDevoState();
+    } // this.props.sheDevoIndex.sort((a, b) => this.state.bibleBooks.indexOf(a.book) - this.state.bibleBooks.indexOf(b.book))
+    // sort an array in the same order of another array
+
+  }, {
+    key: "sortTitles",
+    value: function sortTitles(data) {
+      var bibleBooks = this.state.bibleBooks;
+      return data.sort(function (a, b) {
+        return bibleBooks.indexOf(a.book) - bibleBooks.indexOf(b.book);
+      }).map(function (ele) {
+        return ele;
+      });
     }
   }, {
     key: "handleClick",
@@ -1137,6 +1082,7 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
+      console.log(this.sortTitles(this.props.sheDevoIndex));
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "categories-page-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1152,7 +1098,7 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
         className: "categories-OT"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "she-category-ul"
-      }, this.props.sheDevoIndex.map(function (eachDevoIdx) {
+      }, this.sortTitles(this.props.sheDevoIndex).map(function (eachDevoIdx) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_category_list_OT__WEBPACK_IMPORTED_MODULE_1__["default"], {
           devoIdx: eachDevoIdx,
           key: eachDevoIdx.id
@@ -1163,7 +1109,7 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
         className: "categories-NT"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "she-category-ul"
-      }, this.props.sheDevoIndex.map(function (eachDevoIdx) {
+      }, this.sortTitles(this.props.sheDevoIndex).map(function (eachDevoIdx) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_category_list_NT__WEBPACK_IMPORTED_MODULE_2__["default"], {
           devoIdx: eachDevoIdx,
           key: eachDevoIdx.id
@@ -1182,7 +1128,7 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
         className: "categories-OT"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "he-category-ul"
-      }, this.props.heDevoIndex.map(function (eachDevoIdx) {
+      }, this.sortTitles(this.props.heDevoIndex).map(function (eachDevoIdx) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_category_list_OT__WEBPACK_IMPORTED_MODULE_1__["default"], {
           devoIdx: eachDevoIdx,
           key: eachDevoIdx.id
@@ -1193,7 +1139,7 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
         className: "categories-NT"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "he-category-ul"
-      }, this.props.heDevoIndex.map(function (eachDevoIdx) {
+      }, this.sortTitles(this.props.heDevoIndex).map(function (eachDevoIdx) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_category_list_NT__WEBPACK_IMPORTED_MODULE_2__["default"], {
           devoIdx: eachDevoIdx,
           key: eachDevoIdx.id
@@ -1272,7 +1218,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_categories__WEBPACK_IMPORTED_MODULE_3__["default"])));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_categories__WEBPACK_IMPORTED_MODULE_3__["default"]));
 
 /***/ }),
 
@@ -1302,7 +1248,6 @@ var CategoryListNT = function CategoryListNT(_ref) {
     "1&2Corinthians": "1 & 2 Corinthians"
   };
   var NTbook;
-  debugger;
 
   if (NTbooks.includes(devoIdx.book) && NTbookFormat[devoIdx.book] === undefined) {
     NTbook = devoIdx.book;
@@ -1347,11 +1292,11 @@ var CategoryListOT = function CategoryListOT(_ref) {
     "Nahum,Habakkuk,Zephaniah,andHaggai": "Nahum, Habakkuk, Zephaniah, & Haggai",
     "1&2Kings": "1 & 2 Kings",
     "SongofSongs": "Song of Songs",
+    "Proverbs:TheWayofWisdom": "Proverbs",
     "1&2Samuel": "1 & 2 Samuel",
     "Joel,Amos,Obadiah,Jonah,andMicah": "Joel, Amos, Obadiah, Jonah, & Micah"
   };
   var OTbook;
-  debugger;
 
   if (OTbooks.includes(devoIdx.book) && OTbookFormat[devoIdx.book] === undefined) {
     OTbook = devoIdx.book;

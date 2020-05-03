@@ -32,7 +32,8 @@ class SheSideNav extends React.Component {
     };
 
     render() {
-        debugger
+
+        
         return (
             <nav className="sidenav-container" >
                     <ul className='sidenav-ul'>

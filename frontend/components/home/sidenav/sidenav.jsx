@@ -16,7 +16,7 @@ class SideNav extends React.Component {
     }
 
     render() {
-        debugger
+        // debugger
         return (
             <nav className="sidenav-container" >
             <SheSideNav/>
