@@ -2,7 +2,7 @@ class Api::NotesController < ApplicationController
     before_action :require_logged_in!
 
     def index
-        @notes = Note.all
+        @notes = Note.where(notary_id: current_user.id)
         render :index
     end
 

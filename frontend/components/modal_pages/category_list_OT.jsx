@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CategoryListOT = ({ devoIdx }) => {
+const CategoryListOT = ({ eachDevoTitle }) => {
 
     const OTbooks = [
         "Genesis",
@@ -45,15 +45,15 @@ const CategoryListOT = ({ devoIdx }) => {
 
     let OTbook;
 
-    if (OTbooks.includes(devoIdx.book) && OTbookFormat[devoIdx.book] === undefined) {
-        OTbook = devoIdx.book
-    } else if (OTbooks.includes(devoIdx.book) && OTbookFormat[devoIdx.book] !== undefined) {
-        OTbook = OTbookFormat[devoIdx.book]
+    if (OTbooks.includes(eachDevoTitle.book) && OTbookFormat[eachDevoTitle.book] === undefined) {
+        OTbook = eachDevoTitle.book
+    } else if (OTbooks.includes(eachDevoTitle.book) && OTbookFormat[eachDevoTitle.book] !== undefined) {
+        OTbook = OTbookFormat[eachDevoTitle.book]
     }
 
     return (
         <li className='category-li'>
-            <div className='category-title' onClick={() => this.props.fetchDevo(devoIdx.book)}>
+            <div className='category-title' onClick={() => this.props.fetchDevo(eachDevoTitle.book)}>
                 <span>{OTbook}</span>
             </div>
         </li>

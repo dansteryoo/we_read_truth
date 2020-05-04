@@ -22,7 +22,7 @@ class NavBar extends React.Component {
     };
 
     render() {
-        // debugger
+
         return (
             <nav className="nav-container" >
 

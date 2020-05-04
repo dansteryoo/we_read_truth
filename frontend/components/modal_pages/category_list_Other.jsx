@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CategoryListOther = ({ devoIdx }) => {
+const CategoryListOther = ({ eachDevoTitle }) => {
 
     const otherBooks = [
         "Justice",
@@ -99,15 +99,15 @@ const CategoryListOther = ({ devoIdx }) => {
 
     let otherBook;
 
-    if (otherBooks.includes(devoIdx.book) && OTHERbookFormat[devoIdx.book] === undefined) {
-        otherBook = devoIdx.book
-    } else if (otherBooks.includes(devoIdx.book) && OTHERbookFormat[devoIdx.book] !== undefined) {
-        otherBook = OTHERbookFormat[devoIdx.book]
+    if (otherBooks.includes(eachDevoTitle.book) && OTHERbookFormat[eachDevoTitle.book] === undefined) {
+        otherBook = eachDevoTitle.book
+    } else if (otherBooks.includes(eachDevoTitle.book) && OTHERbookFormat[eachDevoTitle.book] !== undefined) {
+        otherBook = OTHERbookFormat[eachDevoTitle.book]
     }
 
     return (
         <li className='category-li'>
-                <div className='category-title' onClick={() => this.props.fetchDevo(devoIdx.book)}>
+                <div className='category-title' onClick={() => this.props.fetchDevo(eachDevoTitle.book)}>
                 <span>{otherBook}</span> 
                 </div>
         </li>

@@ -3,7 +3,6 @@ import { closeModal, openModal } from '../../actions/modal_actions';
 import SideNav from './sidenav';
 
 const mapStateToProps = (state) => {
-    debugger
     return {
         currentUser: state.users[state.session.id],
         errors: state.errors,
