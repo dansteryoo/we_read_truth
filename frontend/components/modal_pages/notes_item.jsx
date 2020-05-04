@@ -1,7 +1,7 @@
 import React from 'react';
 
-const NotesItem = ({ eachNote }) => {
-    
+const NotesItem = ({ eachNote, fetchNote, handleClick }) => {
+
     return (
         <li className='note-li'>
             <div className='note-title'>

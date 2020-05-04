@@ -187,12 +187,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "closeModal", function() { return closeModal; });
 var OPEN_MODAL = 'OPEN_MODAL';
 var CLOSE_MODAL = 'CLOSE_MODAL';
-var openModal = function openModal(modal, book) {
+var openModal = function openModal(modal, data) {
   return {
     type: OPEN_MODAL,
     modal: {
       formType: modal,
-      devoBook: book
+      data: data
     }
   };
 };
@@ -478,10 +478,9 @@ var HomePage = /*#__PURE__*/function (_React$Component) {
   }
 
   _createClass(HomePage, [{
-    key: "componentWillMount",
-    value: function componentWillMount() {
-      var book = "Genesis";
-      this.props.fetchDevoBook(book);
+    key: "componentDidMount",
+    value: function componentDidMount() {// let book = "Genesis"
+      // this.props.fetchDevoBook(book);
     }
   }, {
     key: "handleClick",
@@ -1051,8 +1050,8 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
       this.props.fetchDevoIndex();
     }
   }, {
-    key: "componentWillMount",
-    value: function componentWillMount() {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
       this.props.clearDevoState();
     } // this.props.sheDevoIndex.sort((a, b) => this.state.bibleBooks.indexOf(a.book) - this.state.bibleBooks.indexOf(b.book))
     // sort an array in the same order of another array
@@ -1091,14 +1090,17 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
-
+      var _this$props = this.props,
+          sheDevoIndex = _this$props.sheDevoIndex,
+          heDevoIndex = _this$props.heDevoIndex,
+          fetchDevoBook = _this$props.fetchDevoBook,
+          closeModal = _this$props.closeModal;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "categories-page-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-closing-x",
         onClick: function onClick() {
-          return _this2.props.closeModal();
+          return closeModal();
         }
       }, "\u2715"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "categories-section"
@@ -1108,9 +1110,10 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
         className: "categories-OT"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "she-category-ul"
-      }, this.sortBibleTitles(this.props.sheDevoIndex).map(function (eachDevoTitle, i) {
+      }, this.sortBibleTitles(sheDevoIndex).map(function (eachDevoTitle, i) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_category_list_OT__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          fetchDevoBook: _this2.props.fetchDevoBook(),
+          closeModal: closeModal,
+          fetchDevoBook: fetchDevoBook,
           eachDevoTitle: eachDevoTitle,
           key: i
         });
@@ -1120,9 +1123,10 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
         className: "categories-NT"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "she-category-ul"
-      }, this.sortBibleTitles(this.props.sheDevoIndex).map(function (eachDevoTitle, i) {
+      }, this.sortBibleTitles(sheDevoIndex).map(function (eachDevoTitle, i) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_category_list_NT__WEBPACK_IMPORTED_MODULE_2__["default"], {
-          fetchDevoBook: _this2.props.fetchDevoBook(),
+          closeModal: closeModal,
+          fetchDevoBook: fetchDevoBook,
           eachDevoTitle: eachDevoTitle,
           key: i
         });
@@ -1132,9 +1136,10 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
         className: "categories-Other"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "she-category-ul"
-      }, this.sortOtherTitles(this.props.sheDevoIndex).map(function (eachDevoTitle, i) {
+      }, this.sortOtherTitles(sheDevoIndex).map(function (eachDevoTitle, i) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_category_list_Other__WEBPACK_IMPORTED_MODULE_3__["default"], {
-          fetchDevoBook: _this2.props.fetchDevoBook(),
+          closeModal: closeModal,
+          fetchDevoBook: fetchDevoBook,
           eachDevoTitle: eachDevoTitle,
           key: i
         });
@@ -1148,9 +1153,10 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
         className: "categories-OT"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "he-category-ul"
-      }, this.sortBibleTitles(this.props.heDevoIndex).map(function (eachDevoTitle, i) {
+      }, this.sortBibleTitles(heDevoIndex).map(function (eachDevoTitle, i) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_category_list_OT__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          fetchDevoBook: _this2.props.fetchDevoBook(),
+          closeModal: closeModal,
+          fetchDevoBook: fetchDevoBook,
           eachDevoTitle: eachDevoTitle,
           key: i
         });
@@ -1160,9 +1166,10 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
         className: "categories-NT"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "he-category-ul"
-      }, this.sortBibleTitles(this.props.heDevoIndex).map(function (eachDevoTitle, i) {
+      }, this.sortBibleTitles(heDevoIndex).map(function (eachDevoTitle, i) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_category_list_NT__WEBPACK_IMPORTED_MODULE_2__["default"], {
-          fetchDevoBook: _this2.props.fetchDevoBook(),
+          closeModal: closeModal,
+          fetchDevoBook: fetchDevoBook,
           eachDevoTitle: eachDevoTitle,
           key: i
         });
@@ -1172,9 +1179,10 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
         className: "categories-Other"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "she-category-ul"
-      }, this.sortOtherTitles(this.props.heDevoIndex).map(function (eachDevoTitle, i) {
+      }, this.sortOtherTitles(heDevoIndex).map(function (eachDevoTitle, i) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_category_list_Other__WEBPACK_IMPORTED_MODULE_3__["default"], {
-          fetchDevoBook: _this2.props.fetchDevoBook(),
+          closeModal: closeModal,
+          fetchDevoBook: fetchDevoBook,
           eachDevoTitle: eachDevoTitle,
           key: i
         });
@@ -1208,6 +1216,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var mapStateToProps = function mapStateToProps(state) {
+  // debugger
   // let heDevoIdx, sheDevoIdx;
   // if (state.devos.count === undefined) {
   //     heDevoIdx = {};
@@ -1264,12 +1273,12 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-var _this = undefined;
-
 
 
 var CategoryListNT = function CategoryListNT(_ref) {
-  var eachDevoTitle = _ref.eachDevoTitle;
+  var eachDevoTitle = _ref.eachDevoTitle,
+      fetchDevoBook = _ref.fetchDevoBook,
+      closeModal = _ref.closeModal;
   var NTbooks = ["Matthew", "Mark", "Luke", "John", "ActsoftheApostles", "Romans", "1&2Corinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1&2Thessalonians", "1&2TimothyandTitus", "Philemon", "Hebrews", "James", "1&2Peter", "123John", "Jude", "Revelation"];
   var NTbookFormat = {
     "1&2Thessalonians": "1 & 2 Thessalonians",
@@ -1286,14 +1295,19 @@ var CategoryListNT = function CategoryListNT(_ref) {
     NTbook = NTbookFormat[eachDevoTitle.book];
   }
 
+  var handleClick = function handleClick(e) {
+    e.preventDefault();
+    fetchDevoBook(eachDevoTitle.book).then(function () {
+      return closeModal();
+    });
+  };
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "category-li"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     className: "category-title",
-    onClick: function onClick() {
-      return _this.props.fetchDevo(eachDevoTitle.book);
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, NTbook)));
+    onClick: handleClick
+  }, NTbook));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (CategoryListNT);
@@ -1311,12 +1325,12 @@ var CategoryListNT = function CategoryListNT(_ref) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-var _this = undefined;
-
 
 
 var CategoryListOT = function CategoryListOT(_ref) {
-  var eachDevoTitle = _ref.eachDevoTitle;
+  var eachDevoTitle = _ref.eachDevoTitle,
+      fetchDevoBook = _ref.fetchDevoBook,
+      closeModal = _ref.closeModal;
   var OTbooks = ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1&2Samuel", "1&2Kings", "1&2Chronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalms", "Proverbs", "Ecclesiastes", "SongofSongs", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel,Amos,Obadiah,Jonah,andMicah", "Nahum,Habakkuk,Zephaniah,andHaggai", "ZechariahandMalachi"];
   var OTbookFormat = {
     "ZechariahandMalachi": "Zechariah & Malachi",
@@ -1335,14 +1349,19 @@ var CategoryListOT = function CategoryListOT(_ref) {
     OTbook = OTbookFormat[eachDevoTitle.book];
   }
 
+  var handleClick = function handleClick(e) {
+    e.preventDefault();
+    fetchDevoBook(eachDevoTitle.book).then(function () {
+      return closeModal();
+    });
+  };
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "category-li"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     className: "category-title",
-    onClick: function onClick() {
-      return _this.props.fetchDevo(eachDevoTitle.book);
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, OTbook)));
+    onClick: handleClick
+  }, OTbook));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (CategoryListOT);
@@ -1360,12 +1379,12 @@ var CategoryListOT = function CategoryListOT(_ref) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-var _this = undefined;
-
 
 
 var CategoryListOther = function CategoryListOther(_ref) {
-  var eachDevoTitle = _ref.eachDevoTitle;
+  var eachDevoTitle = _ref.eachDevoTitle,
+      fetchDevoBook = _ref.fetchDevoBook,
+      closeModal = _ref.closeModal;
   var otherBooks = ["Justice", "HymnsV", "TheSermonontheMount", "Lent2017:YouAreMine", "Advent2018:UntiltheSonofGodAppears", "ThisIstheGospel", "Lent2018:SeetheLord’sSalvation", "MourningandDancing", "2019Wrapped:SheReadsTruthYearinReview", "NamesofGod", "OpenYourBible//Launch-WeekSampler", "InSpirit&inTruth:AStudyofBiblicalWorship", "Advent2016:ChristWasBornforThis", "Lent2016", "Hymns", "TheResurrectedLife", "TheRisenChrist", "Lent2020:HisLoveEndures", "Jesus,KeepMeNearTheCross", "TheBeatitudes", "PsalmsforPrayer", "AttributesofGod", "PsalmsofRest", "TheLifeofMoses", "HymnsIV", "BecauseHeLives", "HymnsII", "TheMiraclesofJesus", "SongsfortheRoad:ThePsalmsofAscent", "Women&MenintheWord:OldTestament", "HymnsIII", "GiveThanks", "MakingRoom:AStudyofBiblicalHospitality", "IAm:StatementsofOurSavior", "WorthyofPraise", "Advent2017:JoytotheWorld", "HoldingTighttoPermanent", "Advent2019:AThrillofHope", "CountdowntoActs", "FruitoftheSpirit", "Advent2015:BornIsTheKing", "TheParablesofJesus", "GoTellItontheMountain", "HymnsofHope", "PsalmsofGratitude"];
   var OTHERbookFormat = {
     "HymnsV": 'Hymns V',
@@ -1421,14 +1440,19 @@ var CategoryListOther = function CategoryListOther(_ref) {
     otherBook = OTHERbookFormat[eachDevoTitle.book];
   }
 
+  var handleClick = function handleClick(e) {
+    e.preventDefault();
+    fetchDevoBook(eachDevoTitle.book).then(function () {
+      return closeModal();
+    });
+  };
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "category-li"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     className: "category-title",
-    onClick: function onClick() {
-      return _this.props.fetchDevo(eachDevoTitle.book);
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, otherBook)));
+    onClick: handleClick
+  }, otherBook));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (CategoryListOther);
@@ -1449,7 +1473,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var NotesItem = function NotesItem(_ref) {
-  var eachNote = _ref.eachNote;
+  var eachNote = _ref.eachNote,
+      fetchNote = _ref.fetchNote,
+      handleClick = _ref.handleClick;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "note-li"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1538,6 +1564,8 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       var _this$props = this.props,
           currentUser = _this$props.currentUser,
           notes = _this$props.notes,
@@ -1562,7 +1590,8 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
         className: "notes-page-ul"
       }, notes.map(function (eachNote) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_notes_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          fetchNote: fetchNote(),
+          handleClick: _this2.handleClick,
+          fetchNote: fetchNote,
           eachNote: eachNote,
           key: eachNote.id
         });
@@ -2704,7 +2733,7 @@ var devosReducer = function devosReducer() {
 
   switch (action.type) {
     case _actions_devo_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_DEVO_BOOK"]:
-      return Object.assign({}, newState, action.devos);
+      return Object.assign({}, newState, action.devoBook);
 
     case _actions_devo_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_DEVO"]:
       return Object.assign({}, newState, _defineProperty({}, action.devo.id, action.devo));

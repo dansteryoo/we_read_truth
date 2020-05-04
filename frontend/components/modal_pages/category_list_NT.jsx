@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CategoryListNT = ({ eachDevoTitle }) => {
+const CategoryListNT = ({ eachDevoTitle, fetchDevoBook, closeModal }) => {
 
     const NTbooks = [
         "Matthew",
@@ -40,12 +40,19 @@ const CategoryListNT = ({ eachDevoTitle }) => {
     } else if (NTbooks.includes(eachDevoTitle.book) && NTbookFormat[eachDevoTitle.book] !== undefined) {
         NTbook = NTbookFormat[eachDevoTitle.book]
     }
-    
+
+    const handleClick = (e) => {
+        e.preventDefault();
+        fetchDevoBook(eachDevoTitle.book)
+            .then(() => closeModal());
+    }
+
+
     return (
         <li className='category-li'>
-                <div className='category-title' onClick={() => this.props.fetchDevo(eachDevoTitle.book)}>
-                <span>{NTbook}</span> 
-                </div>
+            <span className='category-title' onClick={handleClick}>
+                {NTbook}
+            </span>
         </li>
     )
 }

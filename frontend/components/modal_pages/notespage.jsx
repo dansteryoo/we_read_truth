@@ -44,7 +44,8 @@ class NotesPage extends React.Component {
                         <ul className="notes-page-ul">
                             {notes.map((eachNote) => (
                                 <NotesItem 
-                                    fetchNote={fetchNote()}
+                                    handleClick={this.handleClick}
+                                    fetchNote={fetchNote}
                                     eachNote={eachNote} 
                                     key={eachNote.id} />
                             ))}
