@@ -87,7 +87,7 @@ class CategoriesPage extends React.Component {
         this.props.fetchDevoIndex();
     }
 
-    componentWillMount() {
+    componentWillUnmount() {
         this.props.clearDevoState();
     }
 
@@ -122,11 +122,13 @@ class CategoriesPage extends React.Component {
     }
 
     render() {
+
+        const { sheDevoIndex, heDevoIndex, fetchDevoBook, closeModal } = this.props
         
         return (
             <>
                 <div className="categories-page-container">
-                    <div className="form-closing-x" onClick={() => this.props.closeModal()}>
+                    <div className="form-closing-x" onClick={() => closeModal()}>
                         &#10005;
                     </div>
 
@@ -136,9 +138,10 @@ class CategoriesPage extends React.Component {
                         </div>
                         <div className="categories-OT">
                             <ul className="she-category-ul">
-                                {this.sortBibleTitles(this.props.sheDevoIndex).map((eachDevoTitle, i) => (
+                                {this.sortBibleTitles(sheDevoIndex).map((eachDevoTitle, i) => (
                                     <CategoryListOT 
-                                        fetchDevoBook={this.props.fetchDevoBook()}
+                                        closeModal={closeModal}
+                                        fetchDevoBook={fetchDevoBook}
                                         eachDevoTitle={eachDevoTitle} 
                                         key={i} />
                                 ))}
@@ -149,9 +152,10 @@ class CategoriesPage extends React.Component {
                         </div>
                         <div className="categories-NT">
                             <ul className="she-category-ul">
-                                {this.sortBibleTitles(this.props.sheDevoIndex).map((eachDevoTitle, i) => (
+                                {this.sortBibleTitles(sheDevoIndex).map((eachDevoTitle, i) => (
                                     <CategoryListNT 
-                                        fetchDevoBook={this.props.fetchDevoBook()}
+                                        closeModal={closeModal}
+                                        fetchDevoBook={fetchDevoBook}
                                         eachDevoTitle={eachDevoTitle}
                                         key={i} />
                                 ))}
@@ -162,9 +166,10 @@ class CategoriesPage extends React.Component {
                         </div>
                         <div className="categories-Other">
                             <ul className="she-category-ul">
-                                {this.sortOtherTitles(this.props.sheDevoIndex).map((eachDevoTitle, i) => (
+                                {this.sortOtherTitles(sheDevoIndex).map((eachDevoTitle, i) => (
                                     <CategoryListOther 
-                                        fetchDevoBook={this.props.fetchDevoBook()}
+                                        closeModal={closeModal}
+                                        fetchDevoBook={fetchDevoBook}
                                         eachDevoTitle={eachDevoTitle}
                                         key={i} />
                                 ))}
@@ -183,9 +188,10 @@ class CategoriesPage extends React.Component {
 
                         <div className="categories-OT">
                             <ul className="he-category-ul">
-                                {this.sortBibleTitles(this.props.heDevoIndex).map((eachDevoTitle, i) => (
+                                {this.sortBibleTitles(heDevoIndex).map((eachDevoTitle, i) => (
                                     <CategoryListOT 
-                                        fetchDevoBook={this.props.fetchDevoBook()}
+                                        closeModal={closeModal}
+                                        fetchDevoBook={fetchDevoBook}
                                         eachDevoTitle={eachDevoTitle}
                                         key={i} />
                                 ))}
@@ -196,9 +202,10 @@ class CategoriesPage extends React.Component {
                         </div>
                         <div className="categories-NT">
                             <ul className="he-category-ul">
-                                {this.sortBibleTitles(this.props.heDevoIndex).map((eachDevoTitle, i) => (
+                                {this.sortBibleTitles(heDevoIndex).map((eachDevoTitle, i) => (
                                     <CategoryListNT 
-                                        fetchDevoBook={this.props.fetchDevoBook()}
+                                        closeModal={closeModal}
+                                        fetchDevoBook={fetchDevoBook}
                                         eachDevoTitle={eachDevoTitle}
                                         key={i} />
                                 ))}
@@ -209,9 +216,10 @@ class CategoriesPage extends React.Component {
                         </div>
                         <div className="categories-Other">
                             <ul className="she-category-ul">
-                                {this.sortOtherTitles(this.props.heDevoIndex).map((eachDevoTitle, i) => (
+                                {this.sortOtherTitles(heDevoIndex).map((eachDevoTitle, i) => (
                                     <CategoryListOther 
-                                        fetchDevoBook={this.props.fetchDevoBook()}
+                                        closeModal={closeModal}
+                                        fetchDevoBook={fetchDevoBook}
                                         eachDevoTitle={eachDevoTitle}
                                         key={i} />
                                 ))}

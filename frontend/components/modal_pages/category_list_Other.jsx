@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CategoryListOther = ({ eachDevoTitle }) => {
+const CategoryListOther = ({ eachDevoTitle, fetchDevoBook, closeModal }) => {
 
     const otherBooks = [
         "Justice",
@@ -105,13 +105,20 @@ const CategoryListOther = ({ eachDevoTitle }) => {
         otherBook = OTHERbookFormat[eachDevoTitle.book]
     }
 
+    const handleClick = (e) => {
+        e.preventDefault();
+        fetchDevoBook(eachDevoTitle.book)
+        .then(() => closeModal());
+    }
+
     return (
         <li className='category-li'>
-                <div className='category-title' onClick={() => this.props.fetchDevo(eachDevoTitle.book)}>
-                <span>{otherBook}</span> 
-                </div>
+            <span className='category-title' onClick={handleClick}>
+                {otherBook}
+            </span>
         </li>
     )
 }
+
 
 export default CategoryListOther;

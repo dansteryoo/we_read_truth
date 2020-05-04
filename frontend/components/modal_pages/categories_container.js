@@ -4,6 +4,7 @@ import { fetchDevoIndex, clearDevoState, fetchDevoBook } from '../../actions/dev
 import CategoriesPage from './categories';
 
 const mapStateToProps = (state) => {
+    // debugger
 
     // let heDevoIdx, sheDevoIdx;
     // if (state.devos.count === undefined) {

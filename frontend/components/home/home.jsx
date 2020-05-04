@@ -20,9 +20,9 @@ class HomePage extends React.Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
-    componentWillMount() {
-        let book = "Genesis"
-        this.props.fetchDevoBook(book);
+    componentDidMount() {
+        // let book = "Genesis"
+        // this.props.fetchDevoBook(book);
     }
 
     handleClick(e) {

@@ -174,10 +174,20 @@ $color_3: #d9fff0;
   margin: 5px 0;
 }
 
+//------------------Category Items Modal
 
 .category-li {
   margin-top: 3px;
     width: 189px;
 }
 
+.category-title:hover {
+  cursor: pointer;
+  color: #d9fff0;
+  text-shadow: 0px 0px 10px #767676;
+}
+
+.category-title {
+  color: #767676;
+}
 
