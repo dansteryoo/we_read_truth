@@ -23,7 +23,7 @@ const NotesItem = ({ eachNote, fetchNote, handleClick, deleteNote }) => {
             </div>
 
             <div className='note-button-container'>
-                <button className='note-delete'  onClick={deleteNote(eachNote.id)}>
+                <button className='note-delete'  onClick={() => deleteNote(eachNote.id)}>
                     Delete
                 </button>
             </div>

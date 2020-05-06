@@ -1494,7 +1494,9 @@ var NotesItem = function NotesItem(_ref) {
     className: "note-button-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     className: "note-delete",
-    onClick: deleteNote(eachNote.id)
+    onClick: function onClick() {
+      return deleteNote(eachNote.id);
+    }
   }, "Delete")));
 };
 
