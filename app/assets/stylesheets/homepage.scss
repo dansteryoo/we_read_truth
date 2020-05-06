@@ -26,7 +26,7 @@
       position: absolute; 
       left: 0; 
       right: 0; 
-      top: 23px;
+      // top: 23px;
     }
   }
 
@@ -34,26 +34,31 @@
     text-align: right;
 
     .title {
-      padding-right: 50%;
+      padding-right: 33%;
+      padding-top: 17px;
     }
   }
 
   .main-header {
     text-align: center;
+    span {
+      font-size: 40px;
+    }
   }
 
   .right-header {
     text-align: left;
 
       .title {
-      padding-left: 40%;
+      padding-left: 41%;
+      padding-top: 17px;
     }
   }
 
   .content {
     overflow: auto;
     box-sizing: border-box;
-    height: calc(100vh - var(--header-height));
+    // height: calc(100vh - var(--header-height));
     // padding: 1rem;
   }
 }

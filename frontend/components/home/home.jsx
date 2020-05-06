@@ -5,6 +5,7 @@ import SheSideNav from './sidenav/sheside_nav';
 import NavBarContainer from '../nav/navbar_container';
 import NotesFormContainer from '../notes/notes_form_container'
 import MainBody from './main_body'
+import { logoutCurrentUser } from '../../actions/session_actions';
 
 
 class HomePage extends React.Component {
@@ -46,7 +47,7 @@ class HomePage extends React.Component {
         let leftOpen = this.state.leftOpen ? 'open' : 'closed';
         let rightOpen = this.state.rightOpen ? 'open' : 'closed';
 
-        const { fetchDevo, fetchDevoBook, heDevos, sheDevos } = this.props;
+        const { fetchDevo, fetchDevoBook, heDevos, sheDevos, currentUser } = this.props;
 
         let sideNav;
         
@@ -63,7 +64,7 @@ class HomePage extends React.Component {
                 <div className={`sidebar ${leftOpen}`} >
                     <div className='left-header'>
                         <h3 className='title'>
-                        Plan
+                            <span>Current Plan</span>
                         </h3>
                     </div>
                     <div className='content'>
@@ -87,7 +88,7 @@ class HomePage extends React.Component {
                         ${'left-' + leftOpen}
                         ${'right-' + rightOpen}
                     `}>
-                        Main
+                        <span>Welcome {currentUser.first_name}!</span>
                     </h3>
                 </div>
                 <div className='content'>
@@ -108,7 +109,7 @@ class HomePage extends React.Component {
                 <div className={`sidebar ${rightOpen}`} >
                     <div className='right-header'>
                         <h3 className='title'>
-                        Notes
+                            <span>My Notes</span>
                         </h3>
                     </div>
                     <div className='content'>
