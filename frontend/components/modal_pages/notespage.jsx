@@ -27,6 +27,7 @@ class NotesPage extends React.Component {
 
     render() {
         const { currentUser, notes, fetchNote, closeModal, deleteNote } = this.props
+
         return (
             <>
             <div className='notes-page-container'>
