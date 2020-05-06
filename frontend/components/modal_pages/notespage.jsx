@@ -26,7 +26,7 @@ class NotesPage extends React.Component {
 
 
     render() {
-        const { currentUser, notes, fetchNote, closeModal } = this.props
+        const { currentUser, notes, fetchNote, closeModal, deleteNote } = this.props
         return (
             <>
             <div className='notes-page-container'>
@@ -45,6 +45,7 @@ class NotesPage extends React.Component {
                             {notes.map((eachNote) => (
                                 <NotesItem 
                                     handleClick={this.handleClick}
+                                    deleteNote={deleteNote}
                                     fetchNote={fetchNote}
                                     eachNote={eachNote} 
                                     key={eachNote.id} />

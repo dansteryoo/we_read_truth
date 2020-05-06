@@ -1478,7 +1478,8 @@ __webpack_require__.r(__webpack_exports__);
 var NotesItem = function NotesItem(_ref) {
   var eachNote = _ref.eachNote,
       fetchNote = _ref.fetchNote,
-      handleClick = _ref.handleClick;
+      handleClick = _ref.handleClick,
+      deleteNote = _ref.deleteNote;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "note-li"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1489,7 +1490,12 @@ var NotesItem = function NotesItem(_ref) {
     className: "note-bottom"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Categories: "), eachNote.category, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Tags: "), eachNote.tags), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "note-time"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Created: "), Date(eachNote.created_at).slice(0, 15), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Updated: "), Date(eachNote.updated_at).slice(0, 15)));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Created: "), Date(eachNote.created_at).slice(0, 15), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Updated: "), Date(eachNote.updated_at).slice(0, 15)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "note-button-container"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "note-delete",
+    onClick: deleteNote(eachNote.id)
+  }, "Delete")));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (NotesItem);
@@ -1573,7 +1579,8 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
           currentUser = _this$props.currentUser,
           notes = _this$props.notes,
           fetchNote = _this$props.fetchNote,
-          closeModal = _this$props.closeModal;
+          closeModal = _this$props.closeModal,
+          deleteNote = _this$props.deleteNote;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "notes-page-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1594,6 +1601,7 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       }, notes.map(function (eachNote) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_notes_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
           handleClick: _this2.handleClick,
+          deleteNote: deleteNote,
           fetchNote: fetchNote,
           eachNote: eachNote,
           key: eachNote.id
