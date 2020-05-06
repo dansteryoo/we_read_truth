@@ -55,17 +55,17 @@ class NotesForm extends React.Component {
                         <div className='notes-form'>
 
                             {/* title */}
-
+                            <label>Title</label>
                             <input type='text'
                                 className='notes-form-input-title'
                                 value={this.state.title}
-                                placeholder={'Title'}
+                                // placeholder={'Title'}
                                 onChange={this.update('title')}
                             // required
                             />
 
                             {/* body */}
-
+                            <label>Body</label>
                             <textarea 
                                 className='notes-form-textarea'
                                 value={this.state.body}
@@ -77,17 +77,19 @@ class NotesForm extends React.Component {
                             {/* categories and tags */}
 
                             <div className='notes-form-bottom'> 
+                                <label>Category</label>
                                 <input type='text'
                                     className='notes-form-input'
                                     value={this.state.category}
-                                    placeholder={'category'}
+                                    // placeholder={'category'}
                                     onChange={this.update('category')}
                                 // required   
                                 />
+                                <label>#Tags</label>
                                 <input type='text'
                                     className='notes-form-input'
                                     value={this.state.tags}
-                                    placeholder={'#tags'}
+                                    // placeholder={'#tags'}
                                     onChange={this.update('tags')}
                                 // required   
                                 />

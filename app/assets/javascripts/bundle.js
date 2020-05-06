@@ -425,6 +425,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _nav_navbar_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../nav/navbar_container */ "./frontend/components/nav/navbar_container.js");
 /* harmony import */ var _notes_notes_form_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../notes/notes_form_container */ "./frontend/components/notes/notes_form_container.js");
 /* harmony import */ var _main_body__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./main_body */ "./frontend/components/home/main_body.jsx");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -448,6 +449,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
 
 
 
@@ -507,7 +509,8 @@ var HomePage = /*#__PURE__*/function (_React$Component) {
           fetchDevo = _this$props.fetchDevo,
           fetchDevoBook = _this$props.fetchDevoBook,
           heDevos = _this$props.heDevos,
-          sheDevos = _this$props.sheDevos;
+          sheDevos = _this$props.sheDevos,
+          currentUser = _this$props.currentUser;
       var sideNav;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav_navbar_container__WEBPACK_IMPORTED_MODULE_4__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "layout"
@@ -523,7 +526,7 @@ var HomePage = /*#__PURE__*/function (_React$Component) {
         className: "left-header"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
         className: "title"
-      }, "Plan")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Current Plan"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "content"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sidenav_heside_nav__WEBPACK_IMPORTED_MODULE_2__["default"], {
         heDevos: heDevos
@@ -535,7 +538,7 @@ var HomePage = /*#__PURE__*/function (_React$Component) {
         className: "main-header"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
         className: "\n                        title\n                        ".concat('left-' + leftOpen, "\n                        ").concat('right-' + rightOpen, "\n                    ")
-      }, "Main")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Welcome ", currentUser.first_name, "!"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "content"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_main_body__WEBPACK_IMPORTED_MODULE_6__["default"], {
         heDevos: heDevos,
@@ -552,7 +555,7 @@ var HomePage = /*#__PURE__*/function (_React$Component) {
         className: "right-header"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
         className: "title"
-      }, "Notes")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "My Notes"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "content"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_notes_notes_form_container__WEBPACK_IMPORTED_MODULE_5__["default"], null))))));
     }
@@ -1937,14 +1940,14 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
         onSubmit: this.handleSubmit
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "notes-form"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Title"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         className: "notes-form-input-title",
-        value: this.state.title,
-        placeholder: 'Title',
+        value: this.state.title // placeholder={'Title'}
+        ,
         onChange: this.update('title') // required
 
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Body"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
         className: "notes-form-textarea",
         value: this.state.body,
         placeholder: 'Enter note here..',
@@ -1952,18 +1955,18 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
 
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "notes-form-bottom"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Category"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         className: "notes-form-input",
-        value: this.state.category,
-        placeholder: 'category',
+        value: this.state.category // placeholder={'category'}
+        ,
         onChange: this.update('category') // required   
 
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "#Tags"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         className: "notes-form-input",
-        value: this.state.tags,
-        placeholder: '#tags',
+        value: this.state.tags // placeholder={'#tags'}
+        ,
         onChange: this.update('tags') // required   
 
       })), this.renderErrors(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
