@@ -1,6 +1,6 @@
 import React from 'react';
 
-const NotesItem = ({ eachNote, fetchNote, handleClick }) => {
+const NotesItem = ({ eachNote, fetchNote, handleClick, deleteNote }) => {
 
     return (
         <li className='note-li'>
@@ -20,6 +20,12 @@ const NotesItem = ({ eachNote, fetchNote, handleClick }) => {
                 <span>Created: </span>{Date(eachNote.created_at).slice(0, 15)}
                 <br/>
                 <span>Updated: </span>{Date(eachNote.updated_at).slice(0, 15)}
+            </div>
+
+            <div className='note-button-container'>
+                <button className='note-delete'  onClick={deleteNote(eachNote.id)}>
+                    Delete
+                </button>
             </div>
         </li>
     )

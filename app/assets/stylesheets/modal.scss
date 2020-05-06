@@ -1,3 +1,12 @@
+$darkgray: #3d3d3d;
+$lightgray: #d3d3d3;
+$gray: #767676;
+$mint: #d9fff0;
+$darkmint: #c0ffe6;
+$skin: #f3ede8;
+$blue: #4ca6ff;
+$green: #00a699;
+$orange: #ff5a5f;
 
 .modal-background {
   position: fixed;
@@ -17,7 +26,7 @@
     width: 15px;
     line-height: 16px;
     padding: 10px;
-    background-color: #ff5a5f;
+    background-color: $orange;
     color: white;
     font-size: 20px;
     border-radius: 50%;
@@ -26,10 +35,6 @@
 
 
 //------------------Notes Page Modal
-
-$color_1: #3d3d3d;
-$color_2: #d3d3d3;
-$color_3: #d9fff0;
 
 .notes-page-container {
     display: flex;
@@ -45,13 +50,13 @@ $color_3: #d9fff0;
     font-size: 14px;
     color: black;
     z-index: 10;
-    background-color: #f3ede8; //skin
+    background-color: $skin;
     overflow-y: auto;
 }
 
 .form-or-separator-notes hr {
     border: none;
-    border-top: 1px solid #D3D3D3;
+    border-top: 1px solid $lightgray;
     overflow: visible;
     text-align: center;
 }
@@ -59,8 +64,8 @@ $color_3: #d9fff0;
 .form-or-separator-notes hr:after {
     position: relative;
     top: -15px;
-    background: #f3ede8;
-    color: #767676;
+    background: $skin;
+    color: $gray;
     padding: 0 15px;
     font-size: 20px;
 }
@@ -68,7 +73,7 @@ $color_3: #d9fff0;
 .notes-page-username span {
     position: relative;
     font-size: 20px;
-    color: #767676;
+    color: $gray;
     z-index: 1;
     top: -10px;
     padding: 10px;
@@ -96,9 +101,9 @@ $color_3: #d9fff0;
     box-sizing: border-box;
     background-color: white;
     padding: 15px 20px;
-    border: 1px solid #D3D3D3;
+    border: 1px solid $lightgray;
     border-radius: 10px;
-    box-shadow: 0 2px 6px 0 #D3D3D3;
+    box-shadow: 0 2px 6px 0 $lightgray;
     margin: 10px;
     width: 260px;
     height: 200px;
@@ -113,6 +118,20 @@ $color_3: #d9fff0;
       text-overflow: ellipsis;
     }
 
+}
+
+.note-delete {
+  width: 100px;
+  height: 35px;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  margin: 10px 0;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 25px;
+  letter-spacing: 0.1rem;
+  background-color: $orange;
 }
 
 
@@ -132,12 +151,12 @@ $color_3: #d9fff0;
     font-size: 14px;
     color: black;
     z-index: 1;
-    background-color: #f3ede8; //skin
+    background-color: $skin;
 }
 
 .form-or-separator-categories hr {
     border: none;
-    border-top: 1px solid #D3D3D3;
+    border-top: 1px solid $lightgray;
     overflow: visible;
     text-align: center;
     height: 10px;
@@ -147,8 +166,8 @@ $color_3: #d9fff0;
     content: 'Book Titles';
     position: relative;
     top: -15px;
-    background: #f3ede8;
-    color: #767676;
+    background: $skin;
+    color: $gray;
     padding: 0 15px;
     font-size: 20px;
 }
@@ -183,11 +202,11 @@ $color_3: #d9fff0;
 
 .category-title:hover {
   cursor: pointer;
-  color: #d9fff0;
-  text-shadow: 0px 0px 10px #767676;
+  color: $mint;
+  text-shadow: 0px 0px 10px $gray;
 }
 
 .category-title {
-  color: #767676;
+  color: $gray;
 }
 

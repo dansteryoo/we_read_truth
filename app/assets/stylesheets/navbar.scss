@@ -1,3 +1,13 @@
+$darkgray: #3d3d3d;
+$lightgray: #d3d3d3;
+$gray: #767676;
+$mint: #d9fff0;
+$darkmint: #c0ffe6;
+$skin: #f3ede8;
+$blue: #4ca6ff;
+$green: #00a699;
+$orange: #ff5a5f;
+
 //------------------Nav Splash
 
 .nav-container {
@@ -51,7 +61,7 @@
                 display: none;
                 margin: 0;
                 padding: 0 0 10px 20px;
-                background-color: #fff;
+                background-color: white;
 
                 li {
                     clear: both;
@@ -59,14 +69,14 @@
                 }
 
                 li:hover {
-                    color: #4ca6ff;
+                    color: $blue;
                 }
             }
         }
 
         .devo-li:hover, 
         .profile-li:hover {
-            color: #4ca6ff;
+            color: $blue;
         }
 
         .devo-li:hover > ul,
@@ -115,7 +125,7 @@
         font-size: 14px;
         font-weight: 300;
         letter-spacing: 0.05rem;
-        color: #484848;
+        color: $gray;
         padding: 0 20px;
     }
 

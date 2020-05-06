@@ -1,7 +1,13 @@
 
-$color_1: #3d3d3d;
-$color_2: #d3d3d3;
-$color_3: #d9fff0;
+$darkgray: #3d3d3d;
+$lightgray: #d3d3d3;
+$gray: #767676;
+$mint: #d9fff0;
+$darkmint: #c0ffe6;
+$skin: #f3ede8;
+$blue: #4ca6ff;
+$green: #00a699;
+$orange: #ff5a5f;
 
 //------------------Notes Page Modal
 
@@ -13,12 +19,12 @@ $color_3: #d9fff0;
   margin: 0;
   padding: 0;
   z-index: 1;
-  // border-top: solid 0.01rem $color_2;
-  // border-left: solid 0.01rem $color_2;
+  // border-top: solid 0.01rem $lightgray;
+  // border-left: solid 0.01rem $lightgray;
   label {
     font-size: 0.8rem;
     margin-left: 12px;
-    color: #767676;
+    color: $gray;
   }
 }
 
@@ -36,7 +42,7 @@ $color_3: #d9fff0;
   background-color: #f3ede8; //skin
   display: flex;
   border-radius: 6px;
-  color: $color_1;
+  color: $darkgray;
   width: 92%;
   border: none;
   padding: 0 10px;
@@ -55,7 +61,7 @@ $color_3: #d9fff0;
     padding: 10px;
     display: flex;
     border-radius: 6px;
-    color: $color_1;
+    color: $darkgray;
     width: 98%;
     border: none;
     margin: 0 10px 10px;
@@ -66,14 +72,14 @@ $color_3: #d9fff0;
 .notes-form-input::placeholder,
 .notes-form-textarea::placeholder,
 .notes-form-input-title::placeholder {
-  color: $color_2;
+  color: $lightgray;
 }
 
 .notes-form-input:focus,
 .notes-form-textarea:focus,
 .notes-form-input-title:focus {
   outline: none;
-  box-shadow: 0 2px 6px 2px $color_2;
+  box-shadow: 0 2px 6px 2px $lightgray;
 }
 
 // .notes-form-input:invalid,
@@ -89,7 +95,6 @@ $color_3: #d9fff0;
 .notes-form-delete-button {
   width: 100px;
   height: 35px;
-  color: #fff;
   font-size: 12px;
   font-weight: bold;
   margin: 10px 0;
@@ -103,20 +108,28 @@ $color_3: #d9fff0;
 .notes-form-edit-button:hover,
 .notes-form-submit-button:hover,
 .notes-form-delete-button:hover {
-  opacity: 70%;
+  box-shadow: 0 2px 6px 2px $lightgray;
+}
+
+.notes-form-edit-button:active,
+.notes-form-submit-button:active,
+.notes-form-delete-button:active {
+  opacity: 60%;
+  box-shadow: 0 2px 6px 2px $lightgray;
 }
 
 
 .notes-form-delete-button {
-  background-color: #484848;
+  background-color: $gray;
 }
 
 .notes-form-update-button {
-  background-color: #f3ede8;
+  background-color: $skin;
 }
 
 .notes-form-submit-button {
-  background-color: #ff5a5f;
+  background-color: $mint;
+  color: $darkgray;
 }
 
 .button-container {

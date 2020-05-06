@@ -11,6 +11,16 @@
 //     height: 100vh;
 // }
 
+$darkgray: #3d3d3d;
+$lightgray: #d3d3d3;
+$gray: #767676;
+$mint: #d9fff0;
+$darkmint: #c0ffe6;
+$skin: #f3ede8;
+$blue: #4ca6ff;
+$green: #00a699;
+$orange: #ff5a5f;
+
 //---------------Signup Form
 
 .form-container-signup {
@@ -42,13 +52,13 @@
 
     .signup-form-input {
         border-radius: 25px;
-        color: #484848;
+        color: $darkgray;
         font-size: 16px;
         font-weight: 300;
         letter-spacing: 0.03rem;
         height: 25px;
         width: 95%;
-        border: 1px solid lightgray;
+        border: 1px solid $lightgray;
         margin-top: 20px;
         padding: 10px 10px 10px 20px;
     }
@@ -59,12 +69,12 @@
 
     .signup-form-input:focus {
         outline: none;
-        box-shadow: 0 0 0 2px #4ca6ff;
+        box-shadow: 0 0 0 2px $blue;
     }
 
     .signup-form-input:invalid {
         outline: none;
-        box-shadow: 0 0 0 1px #FF5A5F;
+        box-shadow: 0 0 0 1px $orange;
     }
 
     .signup-form-button {
@@ -75,7 +85,7 @@
         margin-top: 24px;
         border-radius: 25px;
         background-color: black;
-        color: #FFFFFF;
+        color: white;
         font-size: 18px;
         font-weight: bold;
         letter-spacing: 0.05rem;
@@ -84,7 +94,7 @@
 }
 
 .signup-form-errors {
-  color: #FF5A5F;
+  color: $orange;
 
   li {
     display: flex;
@@ -94,7 +104,7 @@
 }
 
 #form-icon-login {
-  color: #767676;
+  color: $gray;
   display: block;
   position: absolute;
   left: 528px;
