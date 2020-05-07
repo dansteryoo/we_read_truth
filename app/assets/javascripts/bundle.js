@@ -1477,11 +1477,13 @@ __webpack_require__.r(__webpack_exports__);
 
 var NotesItem = function NotesItem(_ref) {
   var eachNote = _ref.eachNote,
-      fetchNote = _ref.fetchNote,
       handleClick = _ref.handleClick,
       deleteNote = _ref.deleteNote;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-    className: "note-li"
+    className: "note-li",
+    onClick: function onClick() {
+      return handleClick(eachNote.id);
+    }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "note-title"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Title: "), eachNote.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1564,18 +1566,17 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "handleClick",
-    value: function handleClick(e) {
-      e.preventDefault();
-      this.setState({
-        day: "",
-        title: "",
-        passage: ""
+    value: function handleClick(noteId) {
+      var _this2 = this;
+
+      this.props.fetchNote(noteId).then(function () {
+        return _this2.props.closeModal();
       });
     }
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       var _this$props = this.props,
           currentUser = _this$props.currentUser,
@@ -1602,7 +1603,7 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
         className: "notes-page-ul"
       }, notes.map(function (eachNote) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_notes_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          handleClick: _this2.handleClick,
+          handleClick: _this3.handleClick,
           deleteNote: deleteNote,
           fetchNote: fetchNote,
           eachNote: eachNote,
@@ -1638,11 +1639,23 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var mapStateToProps = function mapStateToProps(state) {
+  var noteId;
+  var notes;
+
+  if (state.notes.noteId !== undefined) {
+    noteId = state.notes.noteId;
+    notes = {};
+  } else {
+    noteId = {};
+  }
+
+  notes = Object.values(state.notes);
   return {
     currentUser: state.users[state.session.id],
     errors: state.errors,
     devos: Object.values(state.devos),
-    notes: Object.values(state.notes)
+    notes: notes,
+    noteId: noteId
   };
 };
 
@@ -1944,6 +1957,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      debugger;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "notes-form-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
@@ -2062,10 +2076,23 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var mapStateToProps = function mapStateToProps(state) {
+  var noteId;
+  var notes;
+
+  if (state.notes.noteId !== undefined) {
+    noteId = state.notes.noteId;
+    notes = {};
+  } else {
+    noteId = {};
+  }
+
+  notes = Object.values(state.notes);
   return {
     currentUser: state.users[state.session.id],
-    notes: Object.values(state.notes),
-    errors: state.errors
+    errors: state.errors,
+    devos: Object.values(state.devos),
+    notes: notes,
+    noteId: noteId
   };
 };
 
@@ -2809,8 +2836,6 @@ var modalReducer = function modalReducer() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_note_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/note_actions */ "./frontend/actions/note_actions.js");
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 
 var notesReducer = function notesReducer() {
@@ -2824,7 +2849,9 @@ var notesReducer = function notesReducer() {
       return Object.assign({}, newState, action.notes);
 
     case _actions_note_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_NOTE"]:
-      return Object.assign({}, newState, _defineProperty({}, action.note.id, action.note));
+      return Object.assign({}, {
+        noteId: action.note
+      });
 
     case _actions_note_actions__WEBPACK_IMPORTED_MODULE_0__["REMOVE_NOTE"]:
       delete newState[action.noteId];

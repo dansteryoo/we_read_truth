@@ -15,19 +15,15 @@ class NotesPage extends React.Component {
         this.props.fetchNotes()
     };
 
-    handleClick(e) {
-        e.preventDefault();
-        this.setState({
-            day: "",
-            title: "",
-            passage: "",
-        })
+    handleClick(noteId) {
+        this.props.fetchNote(noteId)
+        .then(() => this.props.closeModal())
     };
 
 
     render() {
         const { currentUser, notes, fetchNote, closeModal, deleteNote } = this.props
-
+    
         return (
             <>
             <div className='notes-page-container'>

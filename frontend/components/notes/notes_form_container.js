@@ -7,10 +7,22 @@ import { withRouter } from 'react-router-dom';
 
 
 const mapStateToProps = (state) => {
+
+    let noteId;
+    let notes;
+    if (state.notes.noteId !== undefined) {
+        noteId = state.notes.noteId;
+        notes = {};
+    } else {
+        noteId = {};
+    } notes = Object.values(state.notes);
+
     return {
         currentUser: state.users[state.session.id],
-        notes: Object.values(state.notes),
-        errors: state.errors
+        errors: state.errors,
+        devos: Object.values(state.devos),
+        notes: notes,
+        noteId: noteId
     }
 };
 
