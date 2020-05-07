@@ -43,6 +43,8 @@ $orange: #ff5a5f;
     min-width: 380px;
     width: 80%;
     height: 70%;
+    min-width: 1000px;
+    min-height: 600px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -42%);
@@ -118,6 +120,17 @@ $orange: #ff5a5f;
       text-overflow: ellipsis;
     }
 
+}
+
+.note-li:hover {
+  box-shadow: 0 0 20px 5px $mint;
+  cursor: default;
+}
+
+.note-li:active {
+  opacity: 70%;
+  box-shadow: 0 0 20px 5px $mint;
+  cursor: default;
 }
 
 .note-delete {

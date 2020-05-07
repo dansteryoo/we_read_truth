@@ -4,11 +4,23 @@ import { fetchNote, fetchNotes, deleteNote, updateNote, createNote } from '../..
 import NotesPage from './notespage';
 
 const mapStateToProps = (state) => {
+
+    let noteId;
+    let notes; 
+    if (state.notes.noteId !== undefined) {
+        noteId = state.notes.noteId;
+        notes = {};
+    } else {
+        noteId = {};
+    }   notes = Object.values(state.notes);
+
+
     return {
         currentUser: state.users[state.session.id],
         errors: state.errors,
         devos: Object.values(state.devos),
-        notes: Object.values(state.notes)
+        notes: notes,
+        noteId: noteId
     }
 };
 

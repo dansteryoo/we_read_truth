@@ -1,9 +1,9 @@
 import React from 'react';
 
-const NotesItem = ({ eachNote, fetchNote, handleClick, deleteNote }) => {
-
+const NotesItem = ({ eachNote, handleClick, deleteNote }) => {
+    
     return (
-        <li className='note-li'>
+        <li className='note-li' onClick={() => handleClick(eachNote.id)}>
             <div className='note-title'>
                 <span>Title: </span>{eachNote.title}
             </div>
