@@ -23,7 +23,7 @@ const CategoryListNT = ({ eachDevoTitle, fetchDevoBook, closeModal }) => {
         "123John",
         "Jude",
         "Revelation",
-    ]
+    ];
 
     const NTbookFormat = {
         "1&2thessalonians": "1 & 2 Thessalonians",
@@ -31,7 +31,7 @@ const CategoryListNT = ({ eachDevoTitle, fetchDevoBook, closeModal }) => {
         "1&2timothyandtitus": "1 & 2 Timothy & Titus",
         "actsoftheapostles": "Acts",
         "1&2corinthians": "1 & 2 Corinthians"
-    }
+    };
 
     const lowerCaseTitle = NTbooks.map(ele => ele.toLowerCase());
 
@@ -39,15 +39,16 @@ const CategoryListNT = ({ eachDevoTitle, fetchDevoBook, closeModal }) => {
 
     if (lowerCaseTitle.includes(eachDevoTitle.book) && NTbookFormat[eachDevoTitle.book] === undefined) {
         NTbook = NTbooks[lowerCaseTitle.indexOf(eachDevoTitle.book)]
+    
     } else if (lowerCaseTitle.includes(eachDevoTitle.book) && NTbookFormat[eachDevoTitle.book] !== undefined) {
         NTbook = NTbookFormat[eachDevoTitle.book]
-    }
+    };
 
     const handleClick = (e) => {
         e.preventDefault();
         fetchDevoBook(eachDevoTitle.book)
             .then(() => closeModal());
-    }
+    };
 
 
     return (
@@ -57,6 +58,6 @@ const CategoryListNT = ({ eachDevoTitle, fetchDevoBook, closeModal }) => {
             </span>
         </li>
     )
-}
+};
 
 export default CategoryListNT;

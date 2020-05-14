@@ -31,7 +31,7 @@ const CategoryListOT = ({ eachDevoTitle, fetchDevoBook, closeModal }) => {
         "Joel,Amos,Obadiah,Jonah,andMicah",
         "Nahum,Habakkuk,Zephaniah,andHaggai",
         "ZechariahandMalachi",
-    ]
+    ];
 
     const OTbookFormat = {
         "zechariahandmalachi": "Zechariah & Malachi",
@@ -41,7 +41,7 @@ const CategoryListOT = ({ eachDevoTitle, fetchDevoBook, closeModal }) => {
         "proverbs:theWayofwisdom" : "Proverbs",
         "1&2samuel": "1 & 2 Samuel",
         "joel,amos,obadiah,jonah,andmicah": "Joel, Amos, Obadiah, Jonah, & Micah",
-    }
+    };
 
     const lowerCaseTitle = OTbooks.map(ele => ele.toLowerCase());
 
@@ -49,15 +49,16 @@ const CategoryListOT = ({ eachDevoTitle, fetchDevoBook, closeModal }) => {
 
     if (lowerCaseTitle.includes(eachDevoTitle.book) && OTbookFormat[eachDevoTitle.book] === undefined) {
         OTbook = OTbooks[lowerCaseTitle.indexOf(eachDevoTitle.book)]
+    
     } else if (lowerCaseTitle.includes(eachDevoTitle.book) && OTbookFormat[eachDevoTitle.book] !== undefined) {
         OTbook = OTbookFormat[eachDevoTitle.book]
-    }
+    };
     
     const handleClick = (e) => {
         e.preventDefault();
         fetchDevoBook(eachDevoTitle.book)
             .then(() => closeModal());
-    }
+    };
     
     return (
         <li className='category-li'>
@@ -66,7 +67,7 @@ const CategoryListOT = ({ eachDevoTitle, fetchDevoBook, closeModal }) => {
             </span>
         </li>
     )
-}
+};
 
 
 export default CategoryListOT;

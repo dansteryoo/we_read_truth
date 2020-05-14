@@ -16,8 +16,8 @@ class NotesPage extends React.Component {
     };
 
     handleClick(noteId) {
-        this.props.fetchNote(noteId)
-        .then(() => this.props.closeModal())
+        // this.props.fetchNote(noteId)
+        // .then(() => this.props.closeModal())
     };
 
 

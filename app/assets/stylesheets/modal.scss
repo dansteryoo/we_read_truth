@@ -43,7 +43,6 @@ $orange: #ff5a5f;
     min-width: 380px;
     width: 80%;
     height: 70%;
-    min-width: 1000px;
     min-height: 600px;
     top: 50%;
     left: 50%;
@@ -114,12 +113,13 @@ $orange: #ff5a5f;
       font-weight: bold;
     }
 
-    .note-body {
+    .note-title,
+    .note-body,
+    .note-bottom {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
-
 }
 
 .note-li:hover {
@@ -157,6 +157,8 @@ $orange: #ff5a5f;
     position: absolute;
     width: 80%;
     height: 75%;
+    min-width: 1000px;
+    min-height: 600px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -42%);
@@ -165,6 +167,7 @@ $orange: #ff5a5f;
     color: black;
     z-index: 1;
     background-color: $skin;
+    overflow-y: auto;
 }
 
 .form-or-separator-categories hr {

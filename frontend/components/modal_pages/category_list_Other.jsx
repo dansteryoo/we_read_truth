@@ -95,30 +95,31 @@ const CategoryListOther = ({ eachDevoTitle, fetchDevoBook, closeModal }) => {
         "GoTellItontheMountain": 'Go Tell It on the Mountain',
         "HymnsofHope": 'Hymns of Hope',
         "PsalmsofGratitude": 'Psalms of Gratitude',
-    }
+    };
 
     const lowerCaseTitle = otherBooks.map(ele => ele.toLowerCase());
 
-    //interate and lowercase keys but keep the same values
-    const lowerCaseFormat = OTHERbookFormat.map(ele => {
-        debugger
-        ele.toLowerCase()
-    });
+    const lowerCaseFormat = (data) => {
+        let hash = {};
+        for (let key in data) { 
+            hash[key.toLowerCase()] = data[key]
+        };
+        return hash;
+    };
 
     let otherBook;
 
-    if (otherBooks.includes(eachDevoTitle.book) && OTHERbookFormat[eachDevoTitle.book] === undefined) {
-        otherBook = eachDevoTitle.book
-    } else if (otherBooks.includes(eachDevoTitle.book) && OTHERbookFormat[eachDevoTitle.book] !== undefined) {
-        otherBook = OTHERbookFormat[eachDevoTitle.book]
-    }
+    if (lowerCaseTitle.includes(eachDevoTitle.book) 
+        && lowerCaseFormat(OTHERbookFormat)[eachDevoTitle.book] !== undefined) {
+        otherBook = lowerCaseFormat(OTHERbookFormat)[eachDevoTitle.book]
+    };
 
     const handleClick = (e) => {
         e.preventDefault();
         fetchDevoBook(eachDevoTitle.book)
         .then(() => closeModal());
-    }
-
+    };
+    // debugger
     return (
         <li className='category-li'>
             <span className='category-title' onClick={handleClick}>
@@ -126,7 +127,7 @@ const CategoryListOther = ({ eachDevoTitle, fetchDevoBook, closeModal }) => {
             </span>
         </li>
     )
-}
+};
 
 
 export default CategoryListOther;
