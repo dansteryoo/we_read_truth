@@ -1242,7 +1242,7 @@ var mapStateToProps = function mapStateToProps(state) {
     });
   }
 
-  debugger;
+  ;
   return {
     currentUser: state.users[state.session.id],
     errors: state.errors,
@@ -1311,6 +1311,8 @@ var CategoryListNT = function CategoryListNT(_ref) {
     NTbook = NTbookFormat[eachDevoTitle.book];
   }
 
+  ;
+
   var handleClick = function handleClick(e) {
     e.preventDefault();
     fetchDevoBook(eachDevoTitle.book).then(function () {
@@ -1367,6 +1369,8 @@ var CategoryListOT = function CategoryListOT(_ref) {
   } else if (lowerCaseTitle.includes(eachDevoTitle.book) && OTbookFormat[eachDevoTitle.book] !== undefined) {
     OTbook = OTbookFormat[eachDevoTitle.book];
   }
+
+  ;
 
   var handleClick = function handleClick(e) {
     e.preventDefault();
@@ -1453,26 +1457,34 @@ var CategoryListOther = function CategoryListOther(_ref) {
   };
   var lowerCaseTitle = otherBooks.map(function (ele) {
     return ele.toLowerCase();
-  }); //interate and lowercase keys but keep the same values
-
-  var lowerCaseFormat = OTHERbookFormat.map(function (ele) {
-    debugger;
-    ele.toLowerCase();
   });
+
+  var lowerCaseFormat = function lowerCaseFormat(data) {
+    var hash = {};
+
+    for (var key in data) {
+      hash[key.toLowerCase()] = data[key];
+    }
+
+    ;
+    return hash;
+  };
+
   var otherBook;
 
-  if (otherBooks.includes(eachDevoTitle.book) && OTHERbookFormat[eachDevoTitle.book] === undefined) {
-    otherBook = eachDevoTitle.book;
-  } else if (otherBooks.includes(eachDevoTitle.book) && OTHERbookFormat[eachDevoTitle.book] !== undefined) {
-    otherBook = OTHERbookFormat[eachDevoTitle.book];
+  if (lowerCaseTitle.includes(eachDevoTitle.book) && lowerCaseFormat(OTHERbookFormat)[eachDevoTitle.book] !== undefined) {
+    otherBook = lowerCaseFormat(OTHERbookFormat)[eachDevoTitle.book];
   }
+
+  ;
 
   var handleClick = function handleClick(e) {
     e.preventDefault();
     fetchDevoBook(eachDevoTitle.book).then(function () {
       return closeModal();
     });
-  };
+  }; // debugger
+
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "category-li"
@@ -1590,17 +1602,13 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "handleClick",
-    value: function handleClick(noteId) {
-      var _this2 = this;
-
-      this.props.fetchNote(noteId).then(function () {
-        return _this2.props.closeModal();
-      });
+    value: function handleClick(noteId) {// this.props.fetchNote(noteId)
+      // .then(() => this.props.closeModal())
     }
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this2 = this;
 
       var _this$props = this.props,
           currentUser = _this$props.currentUser,
@@ -1627,7 +1635,7 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
         className: "notes-page-ul"
       }, notes.map(function (eachNote) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_notes_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          handleClick: _this3.handleClick,
+          handleClick: _this2.handleClick,
           deleteNote: deleteNote,
           fetchNote: fetchNote,
           eachNote: eachNote,

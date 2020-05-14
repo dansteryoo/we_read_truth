@@ -7,7 +7,8 @@ const mapStateToProps = (state) => {
     let allDevosIdx = Object.values(state.devos).map(each => ({ 
         gender: each.gender, 
         book: each.book.toLowerCase() 
-    }))
+    }));
+
     let heDevoIdx;
     let sheDevoIdx;
 
@@ -21,8 +22,8 @@ const mapStateToProps = (state) => {
         sheDevoIdx = allDevosIdx.filter(ele => (
             ele.gender === "SHE" && ele.book.match(state.modal.data)
         ));
-    }
-    debugger
+    };
+
     return {
         currentUser: state.users[state.session.id],
         errors: state.errors,
