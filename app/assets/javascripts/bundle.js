@@ -1106,7 +1106,7 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
       }, "\u2715"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "categories-section"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "categories-title"
+        className: "categories-title-she"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Old Testament")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "categories-OT"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
@@ -1119,7 +1119,7 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
           key: i
         });
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "categories-title"
+        className: "categories-title-she"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "New Testament")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "categories-NT"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
@@ -1132,7 +1132,7 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
           key: i
         });
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "categories-title"
+        className: "categories-title-she"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Other Books")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "categories-Other"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
@@ -1149,7 +1149,7 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "categories-section"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "categories-title"
+        className: "categories-title-he"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Old Testament")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "categories-OT"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
@@ -1162,7 +1162,7 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
           key: i
         });
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "categories-title"
+        className: "categories-title-he"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "New Testament")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "categories-NT"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
@@ -1175,7 +1175,7 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
           key: i
         });
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "categories-title"
+        className: "categories-title-he"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Other Books")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "categories-Other"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
@@ -1417,10 +1417,9 @@ var CategoryListOther = function CategoryListOther(_ref) {
     "ThisIstheGospel": 'This is the Gospel',
     "Lent2018:SeetheLord’sSalvation": 'Lent 2018',
     "MourningandDancing": 'Mourning & Dancing',
-    "2019Wrapped:SheReadsTruthYearinReview": '2019 Wrapped: Year in Review',
+    "2019Wrapped:SheReadsTruthYearinReview": '2019 Wrapped (Year in Review)',
     "NamesofGod": 'Names of God',
-    "OpenYourBible//Launch-WeekSampler": 'OpenYourBible: Week Sampler',
-    "InSpirit&inTruth:AStudyofBiblicalWorship": 'In Spirit & in Truth: Biblical Worship',
+    "InSpirit&inTruth:AStudyofBiblicalWorship": 'In Spirit & in Truth (Biblical Worship)',
     "Advent2016:ChristWasBornforThis": 'Advent 2016',
     "Lent2016": 'Lent 2016',
     "Hymns": 'Hymns I',
@@ -1441,8 +1440,8 @@ var CategoryListOther = function CategoryListOther(_ref) {
     "Women&MenintheWord:OldTestament": 'Old Testament Women & Men',
     "HymnsIII": 'Hymns III',
     "GiveThanks": 'Give Thanks',
-    "MakingRoom:AStudyofBiblicalHospitality": 'MakingRoom: Biblical Hospitality',
-    "IAm:StatementsofOurSavior": 'I Am: Statements of Our Savior',
+    "MakingRoom:AStudyofBiblicalHospitality": 'MakingRoom (Biblical Hospitality)',
+    "IAm:StatementsofOurSavior": 'I Am (Statements of Our Savior)',
     "WorthyofPraise": 'Worthy of Praise',
     "Advent2017:JoytotheWorld": 'Advent 2017',
     "HoldingTighttoPermanent": 'Holding Tight to Permanent',

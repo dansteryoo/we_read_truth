@@ -7,6 +7,8 @@ $skin: #f3ede8;
 $blue: #4ca6ff;
 $green: #00a699;
 $orange: #ff5a5f;
+$pink: #ffc0cb;
+$darkpink: #ff8da1;
 
 .modal-background {
   position: fixed;
@@ -223,13 +225,21 @@ $orange: #ff5a5f;
   column-fill: auto;
 }
 
-.categories-title {
+.categories-title-he,
+.categories-title-she {
   padding: 0;
   top: 0;
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: bold;
-  text-decoration: underline;
   margin: 5px 0;
+}
+
+.categories-title-he span {
+  color: $blue;
+}
+
+.categories-title-she span {
+  color: $darkpink;
 }
 
 //------------------Category Items Modal

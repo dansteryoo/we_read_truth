@@ -133,7 +133,7 @@ class CategoriesPage extends React.Component {
                     </div>
 
                     <section className="categories-section">
-                        <div className="categories-title">
+                        <div className="categories-title-she">
                             <span>Old Testament</span>
                         </div>
                         <div className="categories-OT">
@@ -147,7 +147,7 @@ class CategoriesPage extends React.Component {
                                 ))}
                             </ul>
                         </div>
-                        <div className="categories-title">
+                        <div className="categories-title-she">
                             <span>New Testament</span>
                         </div>
                         <div className="categories-NT">
@@ -161,7 +161,7 @@ class CategoriesPage extends React.Component {
                                 ))}
                             </ul>
                         </div>
-                        <div className="categories-title">
+                        <div className="categories-title-she">
                             <span>Other Books</span>
                         </div>
                         <div className="categories-Other">
@@ -182,7 +182,7 @@ class CategoriesPage extends React.Component {
                     </div>
 
                     <section className="categories-section">
-                        <div className="categories-title">
+                        <div className="categories-title-he">
                             <span>Old Testament</span>
                         </div>
 
@@ -197,7 +197,7 @@ class CategoriesPage extends React.Component {
                                 ))}
                             </ul>
                         </div>
-                        <div className="categories-title">
+                        <div className="categories-title-he">
                             <span>New Testament</span>
                         </div>
                         <div className="categories-NT">
@@ -211,7 +211,7 @@ class CategoriesPage extends React.Component {
                                 ))}
                             </ul>
                         </div>
-                        <div className="categories-title">
+                        <div className="categories-title-he">
                             <span>Other Books</span>
                         </div>
                         <div className="categories-Other">
