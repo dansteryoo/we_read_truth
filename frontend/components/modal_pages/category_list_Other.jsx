@@ -97,6 +97,14 @@ const CategoryListOther = ({ eachDevoTitle, fetchDevoBook, closeModal }) => {
         "PsalmsofGratitude": 'Psalms of Gratitude',
     }
 
+    const lowerCaseTitle = otherBooks.map(ele => ele.toLowerCase());
+
+    //interate and lowercase keys but keep the same values
+    const lowerCaseFormat = OTHERbookFormat.map(ele => {
+        debugger
+        ele.toLowerCase()
+    });
+
     let otherBook;
 
     if (otherBooks.includes(eachDevoTitle.book) && OTHERbookFormat[eachDevoTitle.book] === undefined) {

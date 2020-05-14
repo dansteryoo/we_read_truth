@@ -26,18 +26,20 @@ const CategoryListNT = ({ eachDevoTitle, fetchDevoBook, closeModal }) => {
     ]
 
     const NTbookFormat = {
-        "1&2Thessalonians": "1 & 2 Thessalonians",
-        "1&2Peter": "1 & 2 Peter",
-        "1&2TimothyandTitus": "1 & 2 Timothy & Titus",
-        "ActsoftheApostles": "Acts",
-        "1&2Corinthians": "1 & 2 Corinthians"
+        "1&2thessalonians": "1 & 2 Thessalonians",
+        "1&2peter": "1 & 2 Peter",
+        "1&2timothyandtitus": "1 & 2 Timothy & Titus",
+        "actsoftheapostles": "Acts",
+        "1&2corinthians": "1 & 2 Corinthians"
     }
+
+    const lowerCaseTitle = NTbooks.map(ele => ele.toLowerCase());
 
     let NTbook;
 
-    if (NTbooks.includes(eachDevoTitle.book) && NTbookFormat[eachDevoTitle.book] === undefined) {
-        NTbook = eachDevoTitle.book
-    } else if (NTbooks.includes(eachDevoTitle.book) && NTbookFormat[eachDevoTitle.book] !== undefined) {
+    if (lowerCaseTitle.includes(eachDevoTitle.book) && NTbookFormat[eachDevoTitle.book] === undefined) {
+        NTbook = NTbooks[lowerCaseTitle.indexOf(eachDevoTitle.book)]
+    } else if (lowerCaseTitle.includes(eachDevoTitle.book) && NTbookFormat[eachDevoTitle.book] !== undefined) {
         NTbook = NTbookFormat[eachDevoTitle.book]
     }
 
