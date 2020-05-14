@@ -1,9 +1,9 @@
 import React from 'react';
 
-const NotesItem = ({ eachNote, handleClick, deleteNote }) => {
+const NotesItem = ({ eachNote, handleUpdate, deleteNote }) => {
     
     return (
-        <li className='note-li' onClick={() => handleClick(eachNote.id)}>
+        <li className='note-li'>
             <div className='note-title'>
                 <span>Title: </span>{eachNote.title}
             </div>
@@ -25,6 +25,9 @@ const NotesItem = ({ eachNote, handleClick, deleteNote }) => {
             <div className='note-button-container'>
                 <button className='note-delete'  onClick={() => deleteNote(eachNote.id)}>
                     Delete
+                </button>
+                <button className='note-update' onClick={() => handleUpdate(eachNote.id)}>
+                    Update
                 </button>
             </div>
         </li>

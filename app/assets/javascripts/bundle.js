@@ -1513,13 +1513,10 @@ __webpack_require__.r(__webpack_exports__);
 
 var NotesItem = function NotesItem(_ref) {
   var eachNote = _ref.eachNote,
-      handleClick = _ref.handleClick,
+      handleUpdate = _ref.handleUpdate,
       deleteNote = _ref.deleteNote;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-    className: "note-li",
-    onClick: function onClick() {
-      return handleClick(eachNote.id);
-    }
+    className: "note-li"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "note-title"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Title: "), eachNote.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1535,7 +1532,12 @@ var NotesItem = function NotesItem(_ref) {
     onClick: function onClick() {
       return deleteNote(eachNote.id);
     }
-  }, "Delete")));
+  }, "Delete"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "note-update",
+    onClick: function onClick() {
+      return handleUpdate(eachNote.id);
+    }
+  }, "Update")));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (NotesItem);
@@ -1591,7 +1593,7 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {};
-    _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
+    _this.handleUpdate = _this.handleUpdate.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1601,14 +1603,18 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       this.props.fetchNotes();
     }
   }, {
-    key: "handleClick",
-    value: function handleClick(noteId) {// this.props.fetchNote(noteId)
-      // .then(() => this.props.closeModal())
+    key: "handleUpdate",
+    value: function handleUpdate(noteId) {
+      var _this2 = this;
+
+      this.props.fetchNote(noteId).then(function () {
+        return _this2.props.closeModal();
+      });
     }
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       var _this$props = this.props,
           currentUser = _this$props.currentUser,
@@ -1635,7 +1641,7 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
         className: "notes-page-ul"
       }, notes.map(function (eachNote) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_notes_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          handleClick: _this2.handleClick,
+          handleUpdate: _this3.handleUpdate,
           deleteNote: deleteNote,
           fetchNote: fetchNote,
           eachNote: eachNote,

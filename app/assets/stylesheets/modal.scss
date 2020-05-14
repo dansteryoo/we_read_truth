@@ -127,14 +127,18 @@ $orange: #ff5a5f;
   cursor: default;
 }
 
-.note-li:active {
-  opacity: 70%;
-  box-shadow: 0 0 20px 5px $mint;
-  cursor: default;
-}
+// .note-li:active {
+//   opacity: 70%;
+//   box-shadow: 0 0 20px 5px $mint;
+//   cursor: default;
+// }
+.note-button-container {
+  display: flex;
+  justify-content: space-between;
 
-.note-delete {
-  width: 70px;
+  .note-delete,
+  .note-update {
+    width: 70px;
     height: 25px;
     color: white;
     font-size: 11px;
@@ -144,7 +148,25 @@ $orange: #ff5a5f;
     text-align: center;
     border-radius: 25px;
     letter-spacing: 0.1rem;
+  }
+
+  .note-delete {
     background-color: $orange;
+  }
+  .note-update {
+    background-color: $blue;
+  }
+
+  .note-delete:hover,
+  .note-update:hover {
+    box-shadow: 0 2px 6px 2px $lightgray;
+  }
+
+  .note-delete:active,
+  .note-update:active {
+    opacity: 60%;
+    box-shadow: 0 2px 6px 2px $lightgray;
+  }
 }
 
 

@@ -8,21 +8,22 @@ class NotesPage extends React.Component {
         this.state = {
         };
 
-        this.handleClick = this.handleClick.bind(this);
+        this.handleUpdate = this.handleUpdate.bind(this);
     };
 
     componentDidMount() {
         this.props.fetchNotes()
     };
 
-    handleClick(noteId) {
-        // this.props.fetchNote(noteId)
-        // .then(() => this.props.closeModal())
+    handleUpdate(noteId) {
+        this.props.fetchNote(noteId)
+        .then(() => this.props.closeModal())
     };
 
-
     render() {
-        const { currentUser, notes, fetchNote, closeModal, deleteNote } = this.props
+        const { 
+            currentUser, notes, fetchNote, closeModal, deleteNote 
+        } = this.props
     
         return (
             <>
@@ -41,7 +42,7 @@ class NotesPage extends React.Component {
                         <ul className="notes-page-ul">
                             {notes.map((eachNote) => (
                                 <NotesItem 
-                                    handleClick={this.handleClick}
+                                    handleUpdate={this.handleUpdate}
                                     deleteNote={deleteNote}
                                     fetchNote={fetchNote}
                                     eachNote={eachNote} 
