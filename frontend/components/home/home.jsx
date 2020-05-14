@@ -5,7 +5,6 @@ import SheSideNav from './sidenav/sheside_nav';
 import NavBarContainer from '../nav/navbar_container';
 import NotesFormContainer from '../notes/notes_form_container'
 import MainBody from './main_body'
-import { logoutCurrentUser } from '../../actions/session_actions';
 
 
 class HomePage extends React.Component {

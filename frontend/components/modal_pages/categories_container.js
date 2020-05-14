@@ -4,22 +4,28 @@ import { fetchDevoIndex, clearDevoState, fetchDevoBook } from '../../actions/dev
 import CategoriesPage from './categories';
 
 const mapStateToProps = (state) => {
-    // debugger
+    let allDevosIdx = Object.values(state.devos).map(each => ({ 
+        gender: each.gender, 
+        book: each.book.toLowerCase() 
+    }))
+    let heDevoIdx;
+    let sheDevoIdx;
 
-    // let heDevoIdx, sheDevoIdx;
-    // if (state.devos.count === undefined) {
-    //     heDevoIdx = {};
-    //     sheDevoIdx = {};
-    // } else {
-
-        let heDevoIdx = Object.values(state.devos).filter(ele => ele.gender === "HE");
-        let sheDevoIdx = Object.values(state.devos).filter(ele => ele.gender === "SHE");
-    // }
-
+    if (state.modal.data === undefined) {
+        heDevoIdx = allDevosIdx.filter(ele => ele.gender === "HE");
+        sheDevoIdx = allDevosIdx.filter(ele => ele.gender === "SHE");
+    } else {
+        heDevoIdx = allDevosIdx.filter(ele => (
+            ele.gender === "HE" && ele.book.match(state.modal.data)
+        ));
+        sheDevoIdx = allDevosIdx.filter(ele => (
+            ele.gender === "SHE" && ele.book.match(state.modal.data)
+        ));
+    }
+    debugger
     return {
         currentUser: state.users[state.session.id],
         errors: state.errors,
-        devoBook: state.modal.book,
         heDevoIndex: heDevoIdx,
         sheDevoIndex: sheDevoIdx
     }
