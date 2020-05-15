@@ -90,7 +90,7 @@
 /*!******************************************!*\
   !*** ./frontend/actions/devo_actions.js ***!
   \******************************************/
-/*! exports provided: RECEIVE_DEVO, CLEAR_DEVO_STATE, RECEIVE_DEVO_BOOK, RECEIVE_DEVO_INDEX, receiveDevoIndex, receiveDevoBook, receiveDevo, clearDevoState, fetchDevoIndex, fetchDevoBook, fetchDevo, fetchSearchResult */
+/*! exports provided: RECEIVE_DEVO, CLEAR_DEVO_STATE, RECEIVE_DEVO_BOOK, RECEIVE_DEVO_INDEX, receiveDevoIndex, receiveDevoBook, receiveDevo, clearDevoState, fetchDevoIndex, fetchDevoBook, fetchDevo */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -106,7 +106,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchDevoIndex", function() { return fetchDevoIndex; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchDevoBook", function() { return fetchDevoBook; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchDevo", function() { return fetchDevo; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchSearchResult", function() { return fetchSearchResult; });
 /* harmony import */ var _util_devos_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/devos_api_util */ "./frontend/util/devos_api_util.jsx");
 
 var RECEIVE_DEVO = 'RECEIVE_DEVO';
@@ -154,18 +153,6 @@ var fetchDevo = function fetchDevo(devoId) {
   return function (dispatch) {
     return _util_devos_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchDevo"](devoId).then(function (devo) {
       return dispatch(receiveDevo(devo));
-    });
-  };
-}; // export const fetchDevoBook = (devoBook) => dispatch => {
-//     return DevosAPIUtil.fetchDevoBook(devoBook)
-//         .then(devo => dispatch(receiveDevoBook(devoBook))
-//         )
-// };
-
-var fetchSearchResult = function fetchSearchResult(keywords, startDate, endDate) {
-  return function (dispatch) {
-    return _util_devos_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchSearchResult"](keywords, startDate, endDate).then(function (devos) {
-      return dispatch(receiveListings(devos));
     });
   };
 };
@@ -1054,11 +1041,11 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
       this.props.clearDevoState();
-    } // this.props.sheDevoIndex.sort((a, b) => this.state.bibleBooks.indexOf(a.book) - this.state.bibleBooks.indexOf(b.book))
-    // sort an array in the same order of another array
-
+    }
   }, {
     key: "sortBibleTitles",
+    // this.props.sheDevoIndex.sort((a, b) => this.state.bibleBooks.indexOf(a.book) - this.state.bibleBooks.indexOf(b.book))
+    // sort titles by bible order 
     value: function sortBibleTitles(data) {
       var bibleBooks = this.state.bibleBooks;
       var lowerCaseTitle = bibleBooks.map(function (ele) {
@@ -1069,11 +1056,11 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
       }).map(function (ele) {
         return ele;
       });
-    } // this.props.sheDevoIndex.sort((a, b) => a.book < b.book ? -1 : 1
-    // sort an array of objects in alphabetical order
-
+    }
   }, {
     key: "sortOtherTitles",
+    // this.props.sheDevoIndex.sort((a, b) => a.book < b.book ? -1 : 1
+    // sort title by alphabetical order
     value: function sortOtherTitles(data) {
       return data.sort(function (a, b) {
         return a.book < b.book ? -1 : 1;
@@ -1684,12 +1671,12 @@ var mapStateToProps = function mapStateToProps(state) {
 
   if (state.notes.noteId !== undefined) {
     noteId = state.notes.noteId;
-    notes = {};
+    notes = [];
   } else {
     noteId = {};
+    notes = Object.values(state.notes);
   }
 
-  notes = Object.values(state.notes);
   return {
     currentUser: state.users[state.session.id],
     errors: state.errors,
@@ -2026,7 +2013,15 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
 
   _createClass(NotesForm, [{
     key: "componentDidMount",
-    value: function componentDidMount() {}
+    value: function componentDidMount() {// if (Object.values(this.props.noteId).length > 0) {
+      //     this.setState({
+      //         title: '',
+      //         category: '',
+      //         tags: '',
+      //         body: '',
+      //     })
+      // }
+    }
   }, {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
@@ -2170,12 +2165,12 @@ var mapStateToProps = function mapStateToProps(state) {
 
   if (state.notes.noteId !== undefined) {
     noteId = state.notes.noteId;
-    notes = {};
+    notes = [];
   } else {
     noteId = {};
+    notes = Object.values(state.notes);
   }
 
-  notes = Object.values(state.notes);
   return {
     currentUser: state.users[state.session.id],
     errors: state.errors,
@@ -2935,6 +2930,7 @@ var notesReducer = function notesReducer() {
 
   switch (action.type) {
     case _actions_note_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_NOTES"]:
+      delete newState.noteId;
       return Object.assign({}, newState, action.notes);
 
     case _actions_note_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_NOTE"]:
@@ -3128,7 +3124,7 @@ var configureStore = function configureStore() {
 /*!******************************************!*\
   !*** ./frontend/util/devos_api_util.jsx ***!
   \******************************************/
-/*! exports provided: fetchDevoIndex, fetchDevo, fetchDevoBook, fetchSearchResult */
+/*! exports provided: fetchDevoIndex, fetchDevo, fetchDevoBook */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3136,7 +3132,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchDevoIndex", function() { return fetchDevoIndex; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchDevo", function() { return fetchDevo; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchDevoBook", function() { return fetchDevoBook; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchSearchResult", function() { return fetchSearchResult; });
 var fetchDevoIndex = function fetchDevoIndex() {
   return $.ajax({
     url: "/api/devos",
@@ -3154,17 +3149,6 @@ var fetchDevoBook = function fetchDevoBook(devoBook) {
     url: "/api/book/?book=".concat(devoBook),
     method: 'GET',
     data: devoBook
-  });
-};
-var fetchSearchResult = function fetchSearchResult(searchKeywords, startDate, endDate) {
-  return $.ajax({
-    type: 'GET',
-    url: "/api/search",
-    data: {
-      keywords: searchKeywords,
-      start_date: startDate,
-      end_date: endDate
-    }
   });
 };
 

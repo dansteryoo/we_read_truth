@@ -50,15 +50,3 @@ export const fetchDevo = (devoId) => dispatch => {
         .then(devo => dispatch(receiveDevo(devo))
         )
 };
-
-// export const fetchDevoBook = (devoBook) => dispatch => {
-//     return DevosAPIUtil.fetchDevoBook(devoBook)
-//         .then(devo => dispatch(receiveDevoBook(devoBook))
-//         )
-// };
-
-export const fetchSearchResult = (keywords, startDate, endDate) => dispatch => {
-    return DevosAPIUtil.fetchSearchResult(keywords, startDate, endDate)
-        .then(devos => dispatch(receiveListings(devos))
-        )
-};

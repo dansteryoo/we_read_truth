@@ -5,7 +5,7 @@ import { clearErrors } from '../../actions/session_actions';
 import HomePage from './home';
 
 const mapStateToProps = (state) => {
-
+    
     let heDevos, sheDevos;
     if (state.devos.count === undefined) {
         heDevos = {};
