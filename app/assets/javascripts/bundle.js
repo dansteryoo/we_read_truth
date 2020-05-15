@@ -2014,7 +2014,8 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       title: '',
       category: '',
       tags: '',
-      body: ''
+      body: '',
+      success: false
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     return _this;
@@ -2040,9 +2041,32 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
+      var _this3 = this;
+
       e.preventDefault();
       var note = Object.assign({}, this.state);
-      this.props.createNote(note);
+      this.props.createNote(note).then(function () {
+        _this3.setState({
+          success: true,
+          title: '',
+          category: '',
+          tags: '',
+          body: ''
+        });
+      }).then(function () {
+        return _this3.renderSuccessMsg();
+      });
+    }
+  }, {
+    key: "renderSuccessMsg",
+    value: function renderSuccessMsg() {
+      var _this4 = this;
+
+      window.setTimeout(function () {
+        _this4.setState({
+          success: false
+        });
+      }, 4000);
     }
   }, {
     key: "renderErrors",
@@ -2058,99 +2082,60 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      // debugger
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "notes-form-container"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        onSubmit: this.handleSubmit
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "notes-form"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Title"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "text",
-        className: "notes-form-input-title",
-        value: this.state.title // placeholder={'Title'}
-        ,
-        onChange: this.update('title') // required
+      if (this.state.success) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "success-message-div"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Note Created!"));
+      } else {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "notes-form-container"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+          onSubmit: this.handleSubmit
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "notes-form"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Title"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          type: "text",
+          className: "notes-form-input-title",
+          value: this.state.title // placeholder={'Title'}
+          ,
+          onChange: this.update('title') // required
 
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Body"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
-        className: "notes-form-textarea",
-        value: this.state.body,
-        placeholder: 'Enter note here..',
-        onChange: this.update('body') // required
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Body"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+          className: "notes-form-textarea",
+          value: this.state.body,
+          placeholder: 'Enter note here..',
+          onChange: this.update('body') // required
 
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "notes-form-bottom"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Category"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "text",
-        className: "notes-form-input",
-        value: this.state.category // placeholder={'category'}
-        ,
-        onChange: this.update('category') // required   
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "notes-form-bottom"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Category"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          type: "text",
+          className: "notes-form-input",
+          value: this.state.category // placeholder={'category'}
+          ,
+          onChange: this.update('category') // required   
 
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "#Tags"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "text",
-        className: "notes-form-input",
-        value: this.state.tags // placeholder={'#tags'}
-        ,
-        onChange: this.update('tags') // required   
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "#Tags"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          type: "text",
+          className: "notes-form-input",
+          value: this.state.tags // placeholder={'#tags'}
+          ,
+          onChange: this.update('tags') // required   
 
-      })), this.renderErrors(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "button-container"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "notes-form-submit-button",
-        type: "submit"
-      }, "Submit")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null)));
+        })), this.renderErrors(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "button-container"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "notes-form-submit-button",
+          type: "submit"
+        }, "Submit")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null)));
+      }
     }
   }]);
 
   return NotesForm;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (NotesForm); // constructor(props) {
-//     super(props);
-//     this.state = {
-//         fullName: null,
-//         email: null,
-//         password: null,
-//         errors: {
-//             fullName: '',
-//             email: '',
-//             password: '',
-//         }
-//     };
-// }
-// handleChange = (event) => {
-//     event.preventDefault();
-//     const { name, value } = event.target;
-//     let errors = this.state.errors;
-//     switch (name) {
-//         case 'fullName':
-//             errors.fullName =
-//                 value.length < 5
-//                     ? 'Full Name must be 5 characters long!'
-//                     : '';
-//             break;
-//         case 'email':
-//             errors.email =
-//                 validEmailRegex.test(value)
-//                     ? ''
-//                     : 'Email is not valid!';
-//             break;
-//         case 'password':
-//             errors.password =
-//                 value.length < 8
-//                     ? 'Password must be 8 characters long!'
-//                     : '';
-//             break;
-//         default:
-//             break;
-//     }
-//     this.setState({ errors, [name]: value }, () => {
-//         console.log(errors)
-//     })
-// }
-// const validEmailRegex =
-//     RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
+/* harmony default export */ __webpack_exports__["default"] = (NotesForm);
 
 /***/ }),
 
