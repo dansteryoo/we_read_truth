@@ -96,8 +96,9 @@ class CategoriesPage extends React.Component {
 
     sortBibleTitles(data) {
         const { bibleBooks } = this.state
+        const lowerCaseTitle = bibleBooks.map(ele => ele.toLowerCase());
         return data
-            .sort((a, b) => bibleBooks.indexOf(a.book) - bibleBooks.indexOf(b.book))
+            .sort((a, b) => lowerCaseTitle.indexOf(a.book) - lowerCaseTitle.indexOf(b.book))
             .map(ele => ele)
     }
 
