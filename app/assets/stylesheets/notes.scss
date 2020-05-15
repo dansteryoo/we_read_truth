@@ -8,6 +8,8 @@ $skin: #f3ede8;
 $blue: #4ca6ff;
 $green: #00a699;
 $orange: #ff5a5f;
+$pink: #ffc0cb;
+$darkpink: #ff8da1;
 
 //------------------Notes Page Modal
 
@@ -136,4 +138,34 @@ $orange: #ff5a5f;
   display: flex;
   justify-content: center;
   margin-left: 20px;
+}
+
+.success-message-div {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    z-index: 2;
+
+    span {
+      position: absolute;
+      color: $green;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      font-size: 24px;
+      top: 35%;
+      left: 50%;
+      margin-right: -50%;
+      transform: translate(-50%, -50%);
+      animation: fadeIn ease 3s;
+      visibility: visible;
+    }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
