@@ -21,15 +21,3 @@ export const fetchDevoBook = (devoBook) => {
         data: devoBook
     })
 };
-
-export const fetchSearchResult = (searchKeywords, startDate, endDate) => (
-    $.ajax({
-        type: 'GET',
-        url: `/api/search`,
-        data: {
-            keywords: searchKeywords,
-            start_date: startDate,
-            end_date: endDate
-        }
-    })
-);

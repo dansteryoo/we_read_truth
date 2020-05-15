@@ -81,18 +81,18 @@ class CategoriesPage extends React.Component {
         this.handleClick = this.handleClick.bind(this);
         this.sortBibleTitles = this.sortBibleTitles.bind(this);
         this.sortOtherTitles = this.sortOtherTitles.bind(this);
-    }
+    };
 
     componentDidMount() {
         this.props.fetchDevoIndex();
-    }
+    };
 
     componentWillUnmount() {
         this.props.clearDevoState();
-    }
+    };
 
     // this.props.sheDevoIndex.sort((a, b) => this.state.bibleBooks.indexOf(a.book) - this.state.bibleBooks.indexOf(b.book))
-    // sort an array in the same order of another array
+    // sort titles by bible order 
 
     sortBibleTitles(data) {
         const { bibleBooks } = this.state
@@ -100,10 +100,10 @@ class CategoriesPage extends React.Component {
         return data
             .sort((a, b) => lowerCaseTitle.indexOf(a.book) - lowerCaseTitle.indexOf(b.book))
             .map(ele => ele)
-    }
+    };
 
     // this.props.sheDevoIndex.sort((a, b) => a.book < b.book ? -1 : 1
-    // sort an array of objects in alphabetical order
+    // sort title by alphabetical order
 
     sortOtherTitles(data) {
         return data
@@ -111,7 +111,7 @@ class CategoriesPage extends React.Component {
                 return a.book < b.book ? -1 : 1
             })
             .map(ele => ele)
-    }
+    };
 
     handleClick(e) {
         e.preventDefault();
@@ -120,10 +120,9 @@ class CategoriesPage extends React.Component {
             title: "",
             passage: "",
         });
-    }
+    };
 
     render() {
-
         const { sheDevoIndex, heDevoIndex, fetchDevoBook, closeModal } = this.props
         
         return (

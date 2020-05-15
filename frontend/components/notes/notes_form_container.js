@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { fetchNotes, fetchNote, deleteNote, updateNote, createNote } from '../../actions/note_actions';
+import { fetchNote, fetchNotes, deleteNote, updateNote, createNote } from '../../actions/note_actions'
 import { openModal } from '../../actions/modal_actions';
 import { clearErrors } from '../../actions/session_actions';
 import NotesForm from './notes_form';
@@ -10,12 +10,14 @@ const mapStateToProps = (state) => {
 
     let noteId;
     let notes;
+    
     if (state.notes.noteId !== undefined) {
         noteId = state.notes.noteId;
-        notes = {};
+        notes = [];
     } else {
         noteId = {};
-    } notes = Object.values(state.notes);
+        notes = Object.values(state.notes);
+    } 
 
     return {
         currentUser: state.users[state.session.id],

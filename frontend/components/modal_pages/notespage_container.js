@@ -6,14 +6,15 @@ import NotesPage from './notespage';
 const mapStateToProps = (state) => {
 
     let noteId;
-    let notes; 
+    let notes;
+
     if (state.notes.noteId !== undefined) {
         noteId = state.notes.noteId;
-        notes = {};
+        notes = [];
     } else {
         noteId = {};
-    }   notes = Object.values(state.notes);
-
+        notes = Object.values(state.notes);
+    } 
 
     return {
         currentUser: state.users[state.session.id],
@@ -24,7 +25,6 @@ const mapStateToProps = (state) => {
     }
 };
 
-
 const mapDispatchToProps = (dispatch) => ({
     closeModal: () => dispatch(closeModal()),
     openModal: (formType, id) => dispatch(openModal(formType, id)),
@@ -34,6 +34,5 @@ const mapDispatchToProps = (dispatch) => ({
     updateNote: (note) => dispatch(updateNote(note)),
     createNote: (note) => dispatch(createNote(note))
 });
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(NotesPage);

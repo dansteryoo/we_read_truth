@@ -16,11 +16,18 @@ class NotesForm extends React.Component {
     };
 
     componentDidMount() {
-
+        // if (Object.values(this.props.noteId).length > 0) {
+        //     this.setState({
+        //         title: '',
+        //         category: '',
+        //         tags: '',
+        //         body: '',
+        //     })
+        // }
     };
 
     componentWillUnmount() {
-        this.props.clearErrors();
+        this.props.clearErrors()
     };
 
     update(f) {
@@ -62,6 +69,7 @@ class NotesForm extends React.Component {
     };
 
     render() {
+
         if (this.state.success) {
             return (
                 <div className='success-message-div'>
