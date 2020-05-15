@@ -1061,8 +1061,11 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
     key: "sortBibleTitles",
     value: function sortBibleTitles(data) {
       var bibleBooks = this.state.bibleBooks;
+      var lowerCaseTitle = bibleBooks.map(function (ele) {
+        return ele.toLowerCase();
+      });
       return data.sort(function (a, b) {
-        return bibleBooks.indexOf(a.book) - bibleBooks.indexOf(b.book);
+        return lowerCaseTitle.indexOf(a.book) - lowerCaseTitle.indexOf(b.book);
       }).map(function (ele) {
         return ele;
       });
