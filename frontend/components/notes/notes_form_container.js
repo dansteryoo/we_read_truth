@@ -26,7 +26,6 @@ const mapStateToProps = (state) => {
         noteErrors = [];
     } 
 
-    console.log(state.notes.noteErrors)
     return {
         currentUser: state.users[state.session.id],
         errors: state.errors,

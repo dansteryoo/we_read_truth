@@ -10,36 +10,39 @@ class NotesForm extends React.Component {
             tags: '',
             body: '',
             success: false,
+            update: false
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleUpdate = this.handleUpdate.bind(this);
     };
 
     componentDidMount() {
-        
-        // const { noteId, fetchNote } = this.props
-        // if (Object.values(this.props.noteId).length > 0) {
-        //     fetchNote(noteId.id)
-        //         .then(() => this.setState({
-        //             title: noteId.title,
-        //             category: noteId.category,
-        //             tags: noteId.tags,
-        //             body: noteId.body,
-        //         })
-        //     )  
-        // }
+       this.props.fetchNotes();
     };
 
     componentWillUnmount() {
-        this.props.clearErrors()
+        this.props.clearErrors();
     };
+
+    // componentDidUpdate(nextProps) {
+    //     if (this.props.noteId !== nextProps.noteId) {
+    //         debugger
+    //     const { noteId } = this.props;
+    //         this.setState({ 
+    //             title: noteId.title,
+    //             category: noteId.category,
+    //             tags: noteId.tags,
+    //             body: noteId.body,
+    //         })
+    //     }
+    // };
 
     handleChange(f) {
         return e => this.setState({
             [f]: e.target.value
         })
     };
-    
 
     handleSubmit(e) {
         e.preventDefault();
@@ -57,19 +60,39 @@ class NotesForm extends React.Component {
             .then(() => this.renderSuccessMsg())
     };
 
-    updateStateWithNoteId() {
-        const { noteId } = this.props
-        this.setState({
-            title: noteId.title,
-            category: noteId.category,
-            tags: noteId.tags,
-            body: noteId.body,
-        })
+    handleUpdate(e) {
+        e.preventDefault();
+        const { title, category, tags, body } = this.state;
+        let noteUpdate = {
+            id: this.props.noteId.id,
+            title: title,
+            category: category,
+            tags: tags,
+            body: body,
+        };
+        this.props.updateNote(noteUpdate)
+            .then(() => {
+                this.setState({
+                    update: true,
+                    title: '',
+                    category: '',
+                    tags: '',
+                    body: '',
+                })
+            })
+            .then(() => this.renderUpdateMsg())
+            .then(() => this.props.fetchNotes())
     };
 
     renderSuccessMsg() {
         window.setTimeout(() => {
             this.setState({ success: false })
+        }, 4000)
+    };
+
+    renderUpdateMsg() {
+        window.setTimeout(() => {
+            this.setState({ update: false })
         }, 4000)
     };
 
@@ -84,15 +107,85 @@ class NotesForm extends React.Component {
     };
 
     render() {
-
+        
         if (this.state.success) {
             return (
                 <div className='success-message-div'>
                     <span>Note Created!</span>
                 </div>
             )
-        // } else if (Object.values(this.props.noteId).length > 0) {
-        //     return window.location.reload();
+        } else if (this.state.update) {
+            return (
+                <div className='success-message-div'>
+                    <span>Note Updated!</span>
+                </div>
+            )
+
+        //----------- Update Form -----------//
+
+        } else if (Object.values(this.props.noteId).length > 0) {
+            return (
+                <>
+                    <div className='notes-form-container'>
+                        {this.renderErrors()}
+                        <form onSubmit={this.handleUpdate} >
+                            <div className='notes-form'>
+
+                                {/* title */}
+                                <label>Title</label>
+                                <input type='text'
+                                    className='notes-form-input-title'
+                                    value={this.state.title}
+                                    // placeholder={'Title'}
+                                    onChange={this.handleChange('title')}
+                                // required
+                                />
+
+                                {/* body */}
+                                <label>Body</label>
+                                <textarea
+                                    className='notes-form-textarea'
+                                    value={this.state.body}
+                                    placeholder={'Enter note here..'}
+                                    onChange={this.handleChange('body')}
+                                // required
+                                />
+
+                                {/* categories and tags */}
+
+                                <div className='notes-form-bottom'>
+                                    <label>Category</label>
+                                    <input type='text'
+                                        className='notes-form-input'
+                                        value={this.state.category}
+                                        // placeholder={'category'}
+                                        onChange={this.handleChange('category')}
+                                    // required   
+                                    />
+                                    <label>#Tags</label>
+                                    <input type='text'
+                                        className='notes-form-input'
+                                        value={this.state.tags}
+                                        // placeholder={'#tags'}
+                                        onChange={this.handleChange('tags')}
+                                    // required   
+                                    />
+                                </div>
+                                <div className='button-container'>
+                                    <button className='notes-form-submit-button' type='submit'>
+                                        Submit
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <br />
+                    </div>
+                </>
+            );
+
+        //----------- Create Form -----------//
+
         } else {
             return (
                 <>
