@@ -15,6 +15,7 @@ class NotesForm extends React.Component {
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleUpdate = this.handleUpdate.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     };
 
     componentDidMount() {
@@ -24,19 +25,6 @@ class NotesForm extends React.Component {
     componentWillUnmount() {
         this.props.clearErrors();
     };
-
-    // componentDidUpdate(nextProps) {
-    //     if (this.props.noteId !== nextProps.noteId) {
-    //         debugger
-    //     const { noteId } = this.props;
-    //         this.setState({ 
-    //             title: noteId.title,
-    //             category: noteId.category,
-    //             tags: noteId.tags,
-    //             body: noteId.body,
-    //         })
-    //     }
-    // };
 
     handleChange(f) {
         return e => this.setState({
@@ -58,6 +46,7 @@ class NotesForm extends React.Component {
                 })
             })
             .then(() => this.renderSuccessMsg())
+            .then(() => this.props.fetchNotes())
     };
 
     handleUpdate(e) {
@@ -135,9 +124,9 @@ class NotesForm extends React.Component {
                                 <label>Title</label>
                                 <input type='text'
                                     className='notes-form-input-title'
-                                    value={this.state.title}
                                     // placeholder={'Title'}
                                     onChange={this.handleChange('title')}
+                                    defaultValue={this.props.noteId.title}
                                 // required
                                 />
 
@@ -145,9 +134,9 @@ class NotesForm extends React.Component {
                                 <label>Body</label>
                                 <textarea
                                     className='notes-form-textarea'
-                                    value={this.state.body}
                                     placeholder={'Enter note here..'}
                                     onChange={this.handleChange('body')}
+                                    defaultValue={this.props.noteId.body}
                                 // required
                                 />
 
@@ -157,17 +146,17 @@ class NotesForm extends React.Component {
                                     <label>Category</label>
                                     <input type='text'
                                         className='notes-form-input'
-                                        value={this.state.category}
                                         // placeholder={'category'}
                                         onChange={this.handleChange('category')}
+                                        defaultValue={this.props.noteId.category}
                                     // required   
                                     />
                                     <label>#Tags</label>
                                     <input type='text'
                                         className='notes-form-input'
-                                        value={this.state.tags}
                                         // placeholder={'#tags'}
                                         onChange={this.handleChange('tags')}
+                                        defaultValue={this.props.noteId.tags}
                                     // required   
                                     />
                                 </div>
@@ -201,6 +190,7 @@ class NotesForm extends React.Component {
                                     value={this.state.title}
                                     // placeholder={'Title'}
                                     onChange={this.handleChange('title')}
+                                    defaultValue={this.props.noteId.title}
                                 // required
                                 />
 
