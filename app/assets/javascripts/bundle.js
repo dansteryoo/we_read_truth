@@ -1517,7 +1517,6 @@ var NotesItem = function NotesItem(_ref) {
   var eachNote = _ref.eachNote,
       handleUpdate = _ref.handleUpdate,
       deleteNote = _ref.deleteNote;
-  debugger;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "note-li"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2024,6 +2023,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.handleUpdate = _this.handleUpdate.bind(_assertThisInitialized(_this));
+    _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -2039,18 +2039,6 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "handleChange",
-    // componentDidUpdate(nextProps) {
-    //     if (this.props.noteId !== nextProps.noteId) {
-    //         debugger
-    //     const { noteId } = this.props;
-    //         this.setState({ 
-    //             title: noteId.title,
-    //             category: noteId.category,
-    //             tags: noteId.tags,
-    //             body: noteId.body,
-    //         })
-    //     }
-    // };
     value: function handleChange(f) {
       var _this2 = this;
 
@@ -2075,6 +2063,8 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
         });
       }).then(function () {
         return _this3.renderSuccessMsg();
+      }).then(function () {
+        return _this3.props.fetchNotes();
       });
     }
   }, {
@@ -2162,32 +2152,32 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
           className: "notes-form"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Title"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "text",
-          className: "notes-form-input-title",
-          value: this.state.title // placeholder={'Title'}
+          className: "notes-form-input-title" // placeholder={'Title'}
           ,
-          onChange: this.handleChange('title') // required
+          onChange: this.handleChange('title'),
+          defaultValue: this.props.noteId.title // required
 
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Body"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
           className: "notes-form-textarea",
-          value: this.state.body,
           placeholder: 'Enter note here..',
-          onChange: this.handleChange('body') // required
+          onChange: this.handleChange('body'),
+          defaultValue: this.props.noteId.body // required
 
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-form-bottom"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Category"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "text",
-          className: "notes-form-input",
-          value: this.state.category // placeholder={'category'}
+          className: "notes-form-input" // placeholder={'category'}
           ,
-          onChange: this.handleChange('category') // required   
+          onChange: this.handleChange('category'),
+          defaultValue: this.props.noteId.category // required   
 
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "#Tags"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "text",
-          className: "notes-form-input",
-          value: this.state.tags // placeholder={'#tags'}
+          className: "notes-form-input" // placeholder={'#tags'}
           ,
-          onChange: this.handleChange('tags') // required   
+          onChange: this.handleChange('tags'),
+          defaultValue: this.props.noteId.tags // required   
 
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "button-container"
@@ -2207,7 +2197,8 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
           className: "notes-form-input-title",
           value: this.state.title // placeholder={'Title'}
           ,
-          onChange: this.handleChange('title') // required
+          onChange: this.handleChange('title'),
+          defaultValue: this.props.noteId.title // required
 
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Body"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
           className: "notes-form-textarea",
@@ -3322,7 +3313,6 @@ var createNote = function createNote(note) {
   });
 };
 var updateNote = function updateNote(note) {
-  debugger;
   return $.ajax({
     url: "api/notes/".concat(note.id),
     method: 'PATCH',

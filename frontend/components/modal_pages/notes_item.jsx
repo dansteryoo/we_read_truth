@@ -1,7 +1,7 @@
 import React from 'react';
 
 const NotesItem = ({ eachNote, handleUpdate, deleteNote }) => {
-    debugger
+    
     return (
         <li className='note-li'>
             <div className='note-title'>
