@@ -15,7 +15,7 @@ class NotesForm extends React.Component {
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleUpdate = this.handleUpdate.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+        this.input = React.createRef();
     };
 
     componentDidMount() {
@@ -46,7 +46,6 @@ class NotesForm extends React.Component {
                 })
             })
             .then(() => this.renderSuccessMsg())
-            .then(() => this.props.fetchNotes())
     };
 
     handleUpdate(e) {
@@ -113,6 +112,7 @@ class NotesForm extends React.Component {
         //----------- Update Form -----------//
 
         } else if (Object.values(this.props.noteId).length > 0) {
+            console.log(this.props.noteId)
             return (
                 <>
                     <div className='notes-form-container'>
@@ -123,20 +123,24 @@ class NotesForm extends React.Component {
                                 {/* title */}
                                 <label>Title</label>
                                 <input type='text'
+                                    // ref={this.input}
                                     className='notes-form-input-title'
                                     // placeholder={'Title'}
                                     onChange={this.handleChange('title')}
                                     defaultValue={this.props.noteId.title}
+                                    // value={this.props.noteId.title}
                                 // required
                                 />
 
                                 {/* body */}
                                 <label>Body</label>
                                 <textarea
+                                    // ref={this.input}
                                     className='notes-form-textarea'
                                     placeholder={'Enter note here..'}
                                     onChange={this.handleChange('body')}
                                     defaultValue={this.props.noteId.body}
+                                    // value={this.props.noteId.body}
                                 // required
                                 />
 
@@ -145,18 +149,22 @@ class NotesForm extends React.Component {
                                 <div className='notes-form-bottom'>
                                     <label>Category</label>
                                     <input type='text'
+                                        // ref={this.input}
                                         className='notes-form-input'
                                         // placeholder={'category'}
                                         onChange={this.handleChange('category')}
                                         defaultValue={this.props.noteId.category}
+                                        // value={this.props.noteId.category}
                                     // required   
                                     />
                                     <label>#Tags</label>
                                     <input type='text'
+                                        // ref={this.input}
                                         className='notes-form-input'
                                         // placeholder={'#tags'}
                                         onChange={this.handleChange('tags')}
                                         defaultValue={this.props.noteId.tags}
+                                        // value={this.props.noteId.tags}
                                     // required   
                                     />
                                 </div>
