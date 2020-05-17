@@ -195,7 +195,7 @@ var closeModal = function closeModal() {
 /*!******************************************!*\
   !*** ./frontend/actions/note_actions.js ***!
   \******************************************/
-/*! exports provided: RECEIVE_NOTES, RECEIVE_NOTE, REMOVE_NOTE, receiveNotes, receiveNote, removeNote, fetchNotes, fetchNote, createNote, updateNote, deleteNote */
+/*! exports provided: RECEIVE_NOTES, RECEIVE_NOTE, REMOVE_NOTE, RECEIVE_NOTE_ERRORS, receiveNotes, receiveNote, removeNote, receiveErrors, fetchNotes, fetchNote, createNote, updateNote, deleteNote */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -203,9 +203,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_NOTES", function() { return RECEIVE_NOTES; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_NOTE", function() { return RECEIVE_NOTE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_NOTE", function() { return REMOVE_NOTE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_NOTE_ERRORS", function() { return RECEIVE_NOTE_ERRORS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveNotes", function() { return receiveNotes; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveNote", function() { return receiveNote; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeNote", function() { return removeNote; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveErrors", function() { return receiveErrors; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchNotes", function() { return fetchNotes; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchNote", function() { return fetchNote; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createNote", function() { return createNote; });
@@ -216,6 +218,7 @@ __webpack_require__.r(__webpack_exports__);
 var RECEIVE_NOTES = 'RECEIVE_NOTES';
 var RECEIVE_NOTE = 'RECEIVE_NOTE';
 var REMOVE_NOTE = 'REMOVE_NOTE';
+var RECEIVE_NOTE_ERRORS = 'RECEIVE_NOTE_ERRORS';
 var receiveNotes = function receiveNotes(notes) {
   return {
     type: RECEIVE_NOTES,
@@ -232,6 +235,12 @@ var removeNote = function removeNote(noteId) {
   return {
     type: REMOVE_NOTE,
     noteId: noteId
+  };
+};
+var receiveErrors = function receiveErrors(errors) {
+  return {
+    type: RECEIVE_NOTE_ERRORS,
+    errors: errors
   };
 };
 var fetchNotes = function fetchNotes() {
@@ -252,6 +261,8 @@ var createNote = function createNote(note) {
   return function (dispatch) {
     return _util_notes_api_util__WEBPACK_IMPORTED_MODULE_0__["createNote"](note).then(function (note) {
       return dispatch(receiveNote(note));
+    }, function (err) {
+      return dispatch(receiveErrors(err.responseJSON));
     });
   };
 };
@@ -259,6 +270,8 @@ var updateNote = function updateNote(note) {
   return function (dispatch) {
     return _util_notes_api_util__WEBPACK_IMPORTED_MODULE_0__["updateNote"](note).then(function (note) {
       return dispatch(receiveNote(note));
+    }, function (err) {
+      return dispatch(receiveErrors(err.responseJSON));
     });
   };
 };
@@ -2013,13 +2026,16 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
 
   _createClass(NotesForm, [{
     key: "componentDidMount",
-    value: function componentDidMount() {// if (Object.values(this.props.noteId).length > 0) {
-      //     this.setState({
-      //         title: '',
-      //         category: '',
-      //         tags: '',
-      //         body: '',
-      //     })
+    value: function componentDidMount() {// const { noteId, fetchNote } = this.props
+      // if (Object.values(this.props.noteId).length > 0) {
+      //     fetchNote(noteId.id)
+      //         .then(() => this.setState({
+      //             title: noteId.title,
+      //             category: noteId.category,
+      //             tags: noteId.tags,
+      //             body: noteId.body,
+      //         })
+      //     )  
       // }
     }
   }, {
@@ -2028,8 +2044,8 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       this.props.clearErrors();
     }
   }, {
-    key: "update",
-    value: function update(f) {
+    key: "handleChange",
+    value: function handleChange(f) {
       var _this2 = this;
 
       return function (e) {
@@ -2056,6 +2072,17 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "updateStateWithNoteId",
+    value: function updateStateWithNoteId() {
+      var noteId = this.props.noteId;
+      this.setState({
+        title: noteId.title,
+        category: noteId.category,
+        tags: noteId.tags,
+        body: noteId.body
+      });
+    }
+  }, {
     key: "renderSuccessMsg",
     value: function renderSuccessMsg() {
       var _this4 = this;
@@ -2070,8 +2097,8 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
     key: "renderErrors",
     value: function renderErrors() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "form-errors"
-      }, this.props.errors.map(function (error, i) {
+        className: "form-errors-notes"
+      }, this.props.noteErrors.map(function (error, i) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           key: "error-".concat(i)
         }, error);
@@ -2083,11 +2110,12 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       if (this.state.success) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "success-message-div"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Note Created!"));
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Note Created!")); // } else if (Object.values(this.props.noteId).length > 0) {
+        //     return window.location.reload();
       } else {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-form-container"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        }, this.renderErrors(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
           onSubmit: this.handleSubmit
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-form"
@@ -2096,13 +2124,13 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
           className: "notes-form-input-title",
           value: this.state.title // placeholder={'Title'}
           ,
-          onChange: this.update('title') // required
+          onChange: this.handleChange('title') // required
 
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Body"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
           className: "notes-form-textarea",
           value: this.state.body,
           placeholder: 'Enter note here..',
-          onChange: this.update('body') // required
+          onChange: this.handleChange('body') // required
 
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-form-bottom"
@@ -2111,16 +2139,16 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
           className: "notes-form-input",
           value: this.state.category // placeholder={'category'}
           ,
-          onChange: this.update('category') // required   
+          onChange: this.handleChange('category') // required   
 
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "#Tags"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "text",
           className: "notes-form-input",
           value: this.state.tags // placeholder={'#tags'}
           ,
-          onChange: this.update('tags') // required   
+          onChange: this.handleChange('tags') // required   
 
-        })), this.renderErrors(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "button-container"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "notes-form-submit-button",
@@ -2162,6 +2190,7 @@ __webpack_require__.r(__webpack_exports__);
 var mapStateToProps = function mapStateToProps(state) {
   var noteId;
   var notes;
+  var noteErrors;
 
   if (state.notes.noteId !== undefined) {
     noteId = state.notes.noteId;
@@ -2171,12 +2200,20 @@ var mapStateToProps = function mapStateToProps(state) {
     notes = Object.values(state.notes);
   }
 
+  if (state.notes.noteErrors !== undefined) {
+    noteErrors = state.notes.noteErrors;
+  } else {
+    noteErrors = [];
+  }
+
+  console.log(state.notes.noteErrors);
   return {
     currentUser: state.users[state.session.id],
     errors: state.errors,
     devos: Object.values(state.devos),
     notes: notes,
-    noteId: noteId
+    noteId: noteId,
+    noteErrors: noteErrors
   };
 };
 
@@ -2309,8 +2346,8 @@ var LogInForm = /*#__PURE__*/function (_React$Component) {
       this.props.processForm(user);
     }
   }, {
-    key: "update",
-    value: function update(f) {
+    key: "handleChange",
+    value: function handleChange(f) {
       var _this2 = this;
 
       return function (e) {
@@ -2325,7 +2362,7 @@ var LogInForm = /*#__PURE__*/function (_React$Component) {
       }
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "form-errors"
+        className: "form-errors-login"
       }, this.props.errors.map(function (error, i) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           key: "error-".concat(i)
@@ -2349,7 +2386,7 @@ var LogInForm = /*#__PURE__*/function (_React$Component) {
         className: "form-input",
         value: this.state.email,
         placeholder: 'Email address',
-        onChange: this.update('email') // required
+        onChange: this.handleChange('email') // required
 
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         id: "form-icon-login",
@@ -2359,7 +2396,7 @@ var LogInForm = /*#__PURE__*/function (_React$Component) {
         className: "form-input",
         value: this.state.password,
         placeholder: 'Password',
-        onChange: this.update('password'),
+        onChange: this.handleChange('password'),
         autoComplete: "on" // required   
 
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -2499,8 +2536,8 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
       this.props.processForm(user);
     }
   }, {
-    key: "update",
-    value: function update(f) {
+    key: "handleChange",
+    value: function handleChange(f) {
       var _this2 = this;
 
       return function (e) {
@@ -2515,7 +2552,7 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
       }
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "signup-form-errors"
+        className: "form-errors-signup"
       }, this.props.errors.map(function (error, i) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           key: "error-".concat(i)
@@ -2539,7 +2576,7 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
         className: "signup-form-input",
         value: this.state.email,
         placeholder: 'Email address',
-        onChange: this.update('email'),
+        onChange: this.handleChange('email'),
         name: "email" // noValidate
         // required
 
@@ -2551,7 +2588,7 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
         className: "signup-form-input",
         value: this.state.firstName,
         placeholder: 'First name',
-        onChange: this.update('firstName'),
+        onChange: this.handleChange('firstName'),
         name: "firstName" // noValidate
         // required
 
@@ -2563,7 +2600,7 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
         className: "signup-form-input",
         value: this.state.lastName,
         placeholder: 'Last name',
-        onChange: this.update('lastName'),
+        onChange: this.handleChange('lastName'),
         name: "lastName" // noValidate
         // required
 
@@ -2575,7 +2612,7 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
         className: "signup-form-input",
         value: this.state.password,
         placeholder: 'Create a password',
-        onChange: this.update('password'),
+        onChange: this.handleChange('password'),
         name: "password" // noValidate
         // required
 
@@ -2941,6 +2978,11 @@ var notesReducer = function notesReducer() {
     case _actions_note_actions__WEBPACK_IMPORTED_MODULE_0__["REMOVE_NOTE"]:
       delete newState[action.noteId];
       return Object.assign({}, newState);
+
+    case _actions_note_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_NOTE_ERRORS"]:
+      return Object.assign({}, {
+        noteErrors: action.errors
+      });
 
     default:
       return newState;
