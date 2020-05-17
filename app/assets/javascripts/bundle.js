@@ -2023,7 +2023,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.handleUpdate = _this.handleUpdate.bind(_assertThisInitialized(_this));
-    _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
+    _this.input = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     return _this;
   }
 
@@ -2063,8 +2063,6 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
         });
       }).then(function () {
         return _this3.renderSuccessMsg();
-      }).then(function () {
-        return _this3.props.fetchNotes();
       });
     }
   }, {
@@ -2144,6 +2142,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
           className: "success-message-div"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Note Updated!")); //----------- Update Form -----------//
       } else if (Object.values(this.props.noteId).length > 0) {
+        console.log(this.props.noteId);
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-form-container"
         }, this.renderErrors(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
@@ -2151,33 +2150,41 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-form"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Title"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-          type: "text",
+          type: "text" // ref={this.input}
+          ,
           className: "notes-form-input-title" // placeholder={'Title'}
           ,
           onChange: this.handleChange('title'),
-          defaultValue: this.props.noteId.title // required
+          defaultValue: this.props.noteId.title // value={this.props.noteId.title}
+          // required
 
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Body"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+          // ref={this.input}
           className: "notes-form-textarea",
           placeholder: 'Enter note here..',
           onChange: this.handleChange('body'),
-          defaultValue: this.props.noteId.body // required
+          defaultValue: this.props.noteId.body // value={this.props.noteId.body}
+          // required
 
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-form-bottom"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Category"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-          type: "text",
+          type: "text" // ref={this.input}
+          ,
           className: "notes-form-input" // placeholder={'category'}
           ,
           onChange: this.handleChange('category'),
-          defaultValue: this.props.noteId.category // required   
+          defaultValue: this.props.noteId.category // value={this.props.noteId.category}
+          // required   
 
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "#Tags"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-          type: "text",
+          type: "text" // ref={this.input}
+          ,
           className: "notes-form-input" // placeholder={'#tags'}
           ,
           onChange: this.handleChange('tags'),
-          defaultValue: this.props.noteId.tags // required   
+          defaultValue: this.props.noteId.tags // value={this.props.noteId.tags}
+          // required   
 
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "button-container"
