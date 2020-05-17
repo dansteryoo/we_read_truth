@@ -1517,6 +1517,7 @@ var NotesItem = function NotesItem(_ref) {
   var eachNote = _ref.eachNote,
       handleUpdate = _ref.handleUpdate,
       deleteNote = _ref.deleteNote;
+  debugger;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "note-li"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1527,7 +1528,7 @@ var NotesItem = function NotesItem(_ref) {
     className: "note-bottom"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Categories: "), eachNote.category, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Tags: "), eachNote.tags), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "note-time"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Created: "), Date(eachNote.created_at).slice(0, 15), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Updated: "), Date(eachNote.updated_at).slice(0, 15)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Created: "), new Date(eachNote.created_at).toString().slice(0, 15), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Updated: "), new Date(eachNote.updated_at).toString().slice(0, 15)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "note-button-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     className: "note-delete",
@@ -2018,25 +2019,18 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       category: '',
       tags: '',
       body: '',
-      success: false
+      success: false,
+      update: false
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.handleUpdate = _this.handleUpdate.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(NotesForm, [{
     key: "componentDidMount",
-    value: function componentDidMount() {// const { noteId, fetchNote } = this.props
-      // if (Object.values(this.props.noteId).length > 0) {
-      //     fetchNote(noteId.id)
-      //         .then(() => this.setState({
-      //             title: noteId.title,
-      //             category: noteId.category,
-      //             tags: noteId.tags,
-      //             body: noteId.body,
-      //         })
-      //     )  
-      // }
+    value: function componentDidMount() {
+      this.props.fetchNotes();
     }
   }, {
     key: "componentWillUnmount",
@@ -2045,6 +2039,18 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "handleChange",
+    // componentDidUpdate(nextProps) {
+    //     if (this.props.noteId !== nextProps.noteId) {
+    //         debugger
+    //     const { noteId } = this.props;
+    //         this.setState({ 
+    //             title: noteId.title,
+    //             category: noteId.category,
+    //             tags: noteId.tags,
+    //             body: noteId.body,
+    //         })
+    //     }
+    // };
     value: function handleChange(f) {
       var _this2 = this;
 
@@ -2072,24 +2078,56 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
-    key: "updateStateWithNoteId",
-    value: function updateStateWithNoteId() {
-      var noteId = this.props.noteId;
-      this.setState({
-        title: noteId.title,
-        category: noteId.category,
-        tags: noteId.tags,
-        body: noteId.body
+    key: "handleUpdate",
+    value: function handleUpdate(e) {
+      var _this4 = this;
+
+      e.preventDefault();
+      var _this$state = this.state,
+          title = _this$state.title,
+          category = _this$state.category,
+          tags = _this$state.tags,
+          body = _this$state.body;
+      var noteUpdate = {
+        id: this.props.noteId.id,
+        title: title,
+        category: category,
+        tags: tags,
+        body: body
+      };
+      this.props.updateNote(noteUpdate).then(function () {
+        _this4.setState({
+          update: true,
+          title: '',
+          category: '',
+          tags: '',
+          body: ''
+        });
+      }).then(function () {
+        return _this4.renderUpdateMsg();
+      }).then(function () {
+        return _this4.props.fetchNotes();
       });
     }
   }, {
     key: "renderSuccessMsg",
     value: function renderSuccessMsg() {
-      var _this4 = this;
+      var _this5 = this;
 
       window.setTimeout(function () {
-        _this4.setState({
+        _this5.setState({
           success: false
+        });
+      }, 4000);
+    }
+  }, {
+    key: "renderUpdateMsg",
+    value: function renderUpdateMsg() {
+      var _this6 = this;
+
+      window.setTimeout(function () {
+        _this6.setState({
+          update: false
         });
       }, 4000);
     }
@@ -2110,8 +2148,53 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       if (this.state.success) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "success-message-div"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Note Created!")); // } else if (Object.values(this.props.noteId).length > 0) {
-        //     return window.location.reload();
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Note Created!"));
+      } else if (this.state.update) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "success-message-div"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Note Updated!")); //----------- Update Form -----------//
+      } else if (Object.values(this.props.noteId).length > 0) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "notes-form-container"
+        }, this.renderErrors(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+          onSubmit: this.handleUpdate
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "notes-form"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Title"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          type: "text",
+          className: "notes-form-input-title",
+          value: this.state.title // placeholder={'Title'}
+          ,
+          onChange: this.handleChange('title') // required
+
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Body"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+          className: "notes-form-textarea",
+          value: this.state.body,
+          placeholder: 'Enter note here..',
+          onChange: this.handleChange('body') // required
+
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "notes-form-bottom"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Category"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          type: "text",
+          className: "notes-form-input",
+          value: this.state.category // placeholder={'category'}
+          ,
+          onChange: this.handleChange('category') // required   
+
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "#Tags"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          type: "text",
+          className: "notes-form-input",
+          value: this.state.tags // placeholder={'#tags'}
+          ,
+          onChange: this.handleChange('tags') // required   
+
+        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "button-container"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "notes-form-submit-button",
+          type: "submit"
+        }, "Submit")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null))); //----------- Create Form -----------//
       } else {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-form-container"
@@ -2206,7 +2289,6 @@ var mapStateToProps = function mapStateToProps(state) {
     noteErrors = [];
   }
 
-  console.log(state.notes.noteErrors);
   return {
     currentUser: state.users[state.session.id],
     errors: state.errors,
@@ -2357,10 +2439,6 @@ var LogInForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderErrors",
     value: function renderErrors() {
-      if (this.props.errors === undefined) {
-        this.props.errors = [];
-      }
-
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "form-errors-login"
       }, this.props.errors.map(function (error, i) {
@@ -2436,9 +2514,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var mapStateToProps = function mapStateToProps(state) {
+  var errors;
+
+  if (state.errors !== undefined) {
+    errors = state.errors;
+  } else {
+    errors = [];
+  }
+
   return {
     formType: 'Log In',
-    errors: state.errors
+    errors: errors
   };
 };
 
@@ -2547,10 +2633,6 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderErrors",
     value: function renderErrors() {
-      if (this.props.errors === undefined) {
-        this.props.errors = [];
-      }
-
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "form-errors-signup"
       }, this.props.errors.map(function (error, i) {
@@ -2653,9 +2735,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var mapStateToProps = function mapStateToProps(state) {
+  var errors;
+
+  if (state.errors !== undefined) {
+    errors = state.errors;
+  } else {
+    errors = [];
+  }
+
   return {
     formType: 'Sign Up',
-    errors: state.errors
+    errors: errors
   };
 };
 
@@ -3232,6 +3322,7 @@ var createNote = function createNote(note) {
   });
 };
 var updateNote = function updateNote(note) {
+  debugger;
   return $.ajax({
     url: "api/notes/".concat(note.id),
     method: 'PATCH',

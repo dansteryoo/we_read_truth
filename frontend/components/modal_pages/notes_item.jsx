@@ -1,7 +1,7 @@
 import React from 'react';
 
 const NotesItem = ({ eachNote, handleUpdate, deleteNote }) => {
-    
+    debugger
     return (
         <li className='note-li'>
             <div className='note-title'>
@@ -17,9 +17,9 @@ const NotesItem = ({ eachNote, handleUpdate, deleteNote }) => {
             </div>
 
             <div className='note-time'>
-                <span>Created: </span>{Date(eachNote.created_at).slice(0, 15)}
+                <span>Created: </span>{new Date(eachNote.created_at).toString().slice(0, 15)}
                 <br/>
-                <span>Updated: </span>{Date(eachNote.updated_at).slice(0, 15)}
+                <span>Updated: </span>{new Date(eachNote.updated_at).toString().slice(0, 15)}
             </div>
 
             <div className='note-button-container'>
