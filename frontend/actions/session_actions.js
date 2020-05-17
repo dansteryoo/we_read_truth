@@ -33,7 +33,6 @@ export const clearErrors = () => {
 };
 
 
-
 export const signup = (userData) => dispatch => {
     return SessionsAPIUtil.signup(userData)
         .then(user => (dispatch(receiveCurrentUser(user))), 

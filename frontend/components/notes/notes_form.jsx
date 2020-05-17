@@ -16,13 +16,17 @@ class NotesForm extends React.Component {
     };
 
     componentDidMount() {
+        
+        // const { noteId, fetchNote } = this.props
         // if (Object.values(this.props.noteId).length > 0) {
-        //     this.setState({
-        //         title: '',
-        //         category: '',
-        //         tags: '',
-        //         body: '',
-        //     })
+        //     fetchNote(noteId.id)
+        //         .then(() => this.setState({
+        //             title: noteId.title,
+        //             category: noteId.category,
+        //             tags: noteId.tags,
+        //             body: noteId.body,
+        //         })
+        //     )  
         // }
     };
 
@@ -30,11 +34,12 @@ class NotesForm extends React.Component {
         this.props.clearErrors()
     };
 
-    update(f) {
+    handleChange(f) {
         return e => this.setState({
             [f]: e.target.value
         })
     };
+    
 
     handleSubmit(e) {
         e.preventDefault();
@@ -52,6 +57,16 @@ class NotesForm extends React.Component {
             .then(() => this.renderSuccessMsg())
     };
 
+    updateStateWithNoteId() {
+        const { noteId } = this.props
+        this.setState({
+            title: noteId.title,
+            category: noteId.category,
+            tags: noteId.tags,
+            body: noteId.body,
+        })
+    };
+
     renderSuccessMsg() {
         window.setTimeout(() => {
             this.setState({ success: false })
@@ -60,8 +75,8 @@ class NotesForm extends React.Component {
 
     renderErrors() {
         return (
-            <ul className='form-errors'>
-                {this.props.errors.map((error, i) => (
+            <ul className='form-errors-notes'>
+                {this.props.noteErrors.map((error, i) => (
                     <li key={`error-${i}`}>{error}</li>
                 ))}
             </ul>
@@ -76,10 +91,13 @@ class NotesForm extends React.Component {
                     <span>Note Created!</span>
                 </div>
             )
+        // } else if (Object.values(this.props.noteId).length > 0) {
+        //     return window.location.reload();
         } else {
             return (
                 <>
                     <div className='notes-form-container'>
+                        {this.renderErrors()}
                         <form onSubmit={this.handleSubmit} >
                             <div className='notes-form'>
 
@@ -89,7 +107,7 @@ class NotesForm extends React.Component {
                                     className='notes-form-input-title'
                                     value={this.state.title}
                                     // placeholder={'Title'}
-                                    onChange={this.update('title')}
+                                    onChange={this.handleChange('title')}
                                 // required
                                 />
 
@@ -99,7 +117,7 @@ class NotesForm extends React.Component {
                                     className='notes-form-textarea'
                                     value={this.state.body}
                                     placeholder={'Enter note here..'}
-                                    onChange={this.update('body')}
+                                    onChange={this.handleChange('body')}
                                 // required
                                 />
 
@@ -111,7 +129,7 @@ class NotesForm extends React.Component {
                                         className='notes-form-input'
                                         value={this.state.category}
                                         // placeholder={'category'}
-                                        onChange={this.update('category')}
+                                        onChange={this.handleChange('category')}
                                     // required   
                                     />
                                     <label>#Tags</label>
@@ -119,11 +137,10 @@ class NotesForm extends React.Component {
                                         className='notes-form-input'
                                         value={this.state.tags}
                                         // placeholder={'#tags'}
-                                        onChange={this.update('tags')}
+                                        onChange={this.handleChange('tags')}
                                     // required   
                                     />
                                 </div>
-                                {this.renderErrors()}
                                 <div className='button-container'>
                                     <button className='notes-form-submit-button' type='submit'>
                                         Submit

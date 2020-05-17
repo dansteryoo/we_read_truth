@@ -3,6 +3,7 @@ import * as NotesAPIUtil from '../util/notes_api_util';
 export const RECEIVE_NOTES = 'RECEIVE_NOTES';
 export const RECEIVE_NOTE = 'RECEIVE_NOTE';
 export const REMOVE_NOTE = 'REMOVE_NOTE';
+export const RECEIVE_NOTE_ERRORS = 'RECEIVE_NOTE_ERRORS';
 
 
 export const receiveNotes = (notes) => {
@@ -26,6 +27,12 @@ export const removeNote = (noteId) => {
     }
 };
 
+export const receiveErrors = (errors) => {
+    return {
+        type: RECEIVE_NOTE_ERRORS,
+        errors
+    }
+};
 
 export const fetchNotes = () => dispatch => {
     return NotesAPIUtil.fetchNotes()
@@ -41,13 +48,15 @@ export const fetchNote = (noteId) => dispatch => {
 
 export const createNote = (note) => dispatch => {
     return NotesAPIUtil.createNote(note)
-        .then(note => dispatch(receiveNote(note))
+        .then(note => dispatch(receiveNote(note)),
+        err => (dispatch(receiveErrors(err.responseJSON)))
     )
 };
 
 export const updateNote = (note) => dispatch => {
     return NotesAPIUtil.updateNote(note)
-        .then(note => dispatch(receiveNote(note))
+        .then(note => dispatch(receiveNote(note)),
+        err => (dispatch(receiveErrors(err.responseJSON)))
     )
 };
 

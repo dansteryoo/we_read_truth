@@ -27,7 +27,7 @@ class SignUp extends React.Component {
         this.props.processForm(user)
     };
 
-    update(f) {
+    handleChange(f) {
         return e => this.setState({
             [f]: e.target.value
         })
@@ -39,7 +39,7 @@ class SignUp extends React.Component {
         }
 
         return (
-            <ul className='signup-form-errors'>
+            <ul className='form-errors-signup'>
                 {this.props.errors.map((error, i) => (
                     <li key={`error-${i}`}>{error}</li>
                 ))}
@@ -61,7 +61,7 @@ class SignUp extends React.Component {
                             className='signup-form-input'
                             value={this.state.email}
                             placeholder={'Email address'}
-                            onChange={this.update('email')}
+                            onChange={this.handleChange('email')}
                             name='email' 
                         // noValidate
                         // required
@@ -72,7 +72,7 @@ class SignUp extends React.Component {
                             className='signup-form-input'
                             value={this.state.firstName}
                             placeholder={'First name'}
-                            onChange={this.update('firstName')}
+                            onChange={this.handleChange('firstName')}
                             name='firstName'
                         // noValidate
                         // required
@@ -83,7 +83,7 @@ class SignUp extends React.Component {
                             className='signup-form-input'
                             value={this.state.lastName}
                             placeholder={'Last name'}
-                            onChange={this.update('lastName')}
+                            onChange={this.handleChange('lastName')}
                             name='lastName'
                         // noValidate
                         // required
@@ -94,7 +94,7 @@ class SignUp extends React.Component {
                             className='signup-form-input'
                             value={this.state.password}
                             placeholder={'Create a password'}
-                            onChange={this.update('password')}
+                            onChange={this.handleChange('password')}
                             name='password'
                         // noValidate
                         // required

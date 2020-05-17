@@ -169,3 +169,14 @@ $darkpink: #ff8da1;
     opacity: 1;
   }
 }
+
+
+.form-errors-notes {
+  color: $orange;
+
+  li {
+    display: flex;
+    justify-content: center;
+    font-size: 12px;
+  }
+}

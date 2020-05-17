@@ -23,7 +23,7 @@ class LogInForm extends React.Component {
         this.props.processForm(user)
     }
 
-    update(f) {
+    handleChange(f) {
         return e => this.setState({
             [f]: e.target.value
         });
@@ -33,8 +33,9 @@ class LogInForm extends React.Component {
         if (this.props.errors === undefined) {
             this.props.errors = []
         }
+        
         return (
-            <ul className='form-errors'>
+            <ul className='form-errors-login'>
                 {this.props.errors.map((error, i) => (
                     <li key={`error-${i}`}>{error}</li>
                 ))}
@@ -58,7 +59,7 @@ class LogInForm extends React.Component {
                             className='form-input'
                             value={this.state.email}
                             placeholder={'Email address'}
-                            onChange={this.update('email')}
+                            onChange={this.handleChange('email')}
                             // required
                         />
                         <i id='form-icon-login' className='fas fa-envelope fa-lg'></i>
@@ -67,7 +68,7 @@ class LogInForm extends React.Component {
                             className='form-input'
                             value={this.state.password}
                             placeholder={'Password'}
-                            onChange={this.update('password')}
+                            onChange={this.handleChange('password')}
                             autoComplete='on'
                             // required   
                         />
