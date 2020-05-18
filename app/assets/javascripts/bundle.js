@@ -2045,7 +2045,8 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       tags: '',
       body: '',
       update: false,
-      success: false
+      success: false,
+      updateErrors: ''
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.handleUpdate = _this.handleUpdate.bind(_assertThisInitialized(_this));
@@ -2128,19 +2129,41 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
         tags: tags,
         body: body
       };
-      this.props.updateNote(noteUpdate).then(function () {
-        _this4.setState({
-          update: true,
-          title: '',
-          category: '',
-          tags: '',
-          body: ''
+
+      var trimmerLength = function trimmerLength(word) {
+        return word.trim().length;
+      };
+
+      if (trimmerLength(title) === 0 || trimmerLength(body) === 0) {
+        if (trimmerLength(title) === 0 && trimmerLength(body) !== 0) {
+          this.setState({
+            updateErrors: ["Title can't be blank"]
+          });
+        } else if (trimmerLength(body) === 0 && trimmerLength(title) !== 0) {
+          this.setState({
+            updateErrors: ["Body can't be blank"]
+          });
+        } else {
+          this.setState({
+            updateErrors: ["Title can't be blank", "Body can't be blank"]
+          });
+        }
+      } else {
+        this.props.updateNote(noteUpdate).then(function () {
+          _this4.setState({
+            updateErrors: '',
+            update: true,
+            title: '',
+            category: '',
+            tags: '',
+            body: ''
+          });
+        }).then(function () {
+          return _this4.renderUpdateMsg();
+        }).then(function () {
+          return _this4.props.fetchNotes();
         });
-      }).then(function () {
-        return _this4.renderUpdateMsg();
-      }).then(function () {
-        return _this4.props.fetchNotes();
-      });
+      }
     }
   }, {
     key: "renderSuccessMsg",
@@ -2176,6 +2199,19 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       }));
     }
   }, {
+    key: "renderUpdateErrors",
+    value: function renderUpdateErrors() {
+      if (this.state.updateErrors.length > 0) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+          className: "form-errors-notes"
+        }, this.state.updateErrors.map(function (error, i) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+            key: "error-".concat(i)
+          }, error);
+        }));
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       if (this.state.success) {
@@ -2189,7 +2225,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       } else if (Object.values(this.props.noteId).length > 0) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-form-container"
-        }, this.renderErrors(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        }, this.renderUpdateErrors(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
           onSubmit: this.handleUpdate
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-form"

@@ -3,7 +3,6 @@ import React from 'react';
 class NotesForm extends React.Component {
     constructor(props) {
         super(props);
-
   
         this.state = {
             id: '',
@@ -13,6 +12,7 @@ class NotesForm extends React.Component {
             body: '',
             update: false,
             success: false,
+            updateErrors: ''
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -48,6 +48,7 @@ class NotesForm extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        
         let note = Object.assign({}, this.state);
         this.props.createNote(note)
             .then(() => {
@@ -72,18 +73,39 @@ class NotesForm extends React.Component {
             tags: tags,
             body: body,
         };
-        this.props.updateNote(noteUpdate)
-            .then(() => {
-                this.setState({
-                    update: true,
-                    title: '',
-                    category: '',
-                    tags: '',
-                    body: '',
+
+        const trimmerLength = (word) => {
+            return word.trim().length;
+        }
+
+        if (trimmerLength(title) === 0 || trimmerLength(body) === 0) {
+            if (trimmerLength(title) === 0 && trimmerLength(body) !== 0) {
+                this.setState({ 
+                    updateErrors: ["Title can't be blank"]
                 })
-            })
-            .then(() => this.renderUpdateMsg())
-            .then(() => this.props.fetchNotes())
+            } else if (trimmerLength(body) === 0 && trimmerLength(title) !== 0) {
+                this.setState({ 
+                    updateErrors: ["Body can't be blank"]
+                })
+            } else {
+                this.setState({ 
+                    updateErrors: ["Title can't be blank", "Body can't be blank"]
+                })
+            }
+        } else {
+            this.props.updateNote(noteUpdate)
+                .then(() => {
+                    this.setState({
+                        updateErrors: '',
+                        update: true,
+                        title: '',
+                        category: '',
+                        tags: '',
+                        body: '',
+                    })
+                }).then(() => this.renderUpdateMsg())
+                .then(() => this.props.fetchNotes())
+        }
     };
 
     renderSuccessMsg() {
@@ -108,6 +130,18 @@ class NotesForm extends React.Component {
         )
     };
 
+    renderUpdateErrors() {
+        if (this.state.updateErrors.length > 0) {
+            return (
+                <ul className='form-errors-notes'>
+                    {this.state.updateErrors.map((error, i) => (
+                        <li key={`error-${i}`}>{error}</li>
+                    ))}
+                </ul>
+            )
+        }
+    }
+
     render() {
         
         if (this.state.success) {
@@ -130,7 +164,9 @@ class NotesForm extends React.Component {
             return (
                 <>
                     <div className='notes-form-container'>
-                        {this.renderErrors()}
+                        {
+                            this.renderUpdateErrors()
+                        }
                         <form onSubmit={this.handleUpdate} >
                             <div className='notes-form'>
 
@@ -190,7 +226,9 @@ class NotesForm extends React.Component {
             return (
                 <>
                     <div className='notes-form-container'>
-                        {this.renderErrors()}
+                        {
+                            this.renderErrors()
+                        }
                         <form onSubmit={this.handleSubmit} >
                             <div className='notes-form'>
 
