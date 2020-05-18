@@ -89,6 +89,21 @@ $darkpink: #ff8da1;
     background-color: transparent;
 }
 
+.notes-page-section-empty {
+    position: relative;
+    width: 100%;
+    height: 400px;
+
+    span {
+      position: absolute;
+      letter-spacing: 0.1em;
+      font-size: 24px;
+      top: 60%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+}
+
 .notes-page-ul {
     font-size: 13px;
     line-height: 1.5rem;

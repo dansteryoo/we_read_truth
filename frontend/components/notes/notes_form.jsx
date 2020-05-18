@@ -4,13 +4,15 @@ class NotesForm extends React.Component {
     constructor(props) {
         super(props);
 
+  
         this.state = {
+            id: '',
             title: '',
             category: '',
             tags: '',
             body: '',
+            update: false,
             success: false,
-            update: false
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -24,6 +26,19 @@ class NotesForm extends React.Component {
     componentWillUnmount() {
         this.props.clearErrors();
     };
+
+    componentDidUpdate(prevProps) {
+        if (this.props.noteId !== prevProps.noteId) {
+            const { id, title, category, tags, body } = this.props.noteId;
+            this.setState({
+                id: id,
+                title: title,
+                category: category,
+                tags: tags,
+                body: body,
+            })
+        }
+    }
 
     handleChange(f) {
         return e => this.setState({
@@ -49,9 +64,9 @@ class NotesForm extends React.Component {
 
     handleUpdate(e) {
         e.preventDefault();
-        const { title, category, tags, body } = this.state;
+        const { id, title, category, tags, body } = this.state;
         let noteUpdate = {
-            id: this.props.noteId.id,
+            id: id,
             title: title,
             category: category,
             tags: tags,
@@ -111,7 +126,7 @@ class NotesForm extends React.Component {
         //----------- Update Form -----------//
 
         } else if (Object.values(this.props.noteId).length > 0) {
-            console.log(this.props.noteId)
+
             return (
                 <>
                     <div className='notes-form-container'>
@@ -124,7 +139,7 @@ class NotesForm extends React.Component {
                                 <input type='text'
                                     className='notes-form-input-title'
                                     onChange={this.handleChange('title')}
-                                    defaultValue={this.props.noteId.title || this.state.title}
+                                    value={this.state.title}
                                 // required
                                 />
 
@@ -134,7 +149,7 @@ class NotesForm extends React.Component {
                                     className='notes-form-textarea'
                                     placeholder={'Enter note here..'}
                                     onChange={this.handleChange('body')}
-                                    defaultValue={this.props.noteId.body || this.state.body}
+                                    value={this.state.body}
                                 // required
                                 />
 
@@ -145,14 +160,14 @@ class NotesForm extends React.Component {
                                     <input type='text'
                                         className='notes-form-input'
                                         onChange={this.handleChange('category')}
-                                        defaultValue={this.props.noteId.category || this.state.category}
+                                        value={this.state.category}
                                     // required   
                                     />
                                     <label>#Tags</label>
                                     <input type='text'
                                         className='notes-form-input'
                                         onChange={this.handleChange('tags')}
-                                        defaultValue={this.props.noteId.tags || this.state.tags}
+                                        value={this.state.tags}
                                     // required   
                                     />
                                 </div>
@@ -185,7 +200,6 @@ class NotesForm extends React.Component {
                                     className='notes-form-input-title'
                                     value={this.state.title}
                                     onChange={this.handleChange('title')}
-                                    defaultValue={this.props.noteId.title}
                                 // required
                                 />
 
