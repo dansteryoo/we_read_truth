@@ -25,15 +25,13 @@ class NavBar extends React.Component {
     };
 
     this.props.openModal("Categories", match(this.state.search.toLowerCase()))
-// debugger
-    // this.props.processForm(match(this.state.search));
   }
 
   componentWillUnmount() {
     this.props.closeModal();
   }
 
-  update(f) {
+  handleChange(f) {
     return (e) =>
       this.setState({
         [f]: e.target.value,
@@ -48,13 +46,14 @@ class NavBar extends React.Component {
         </Link>
 
         <div className="navsearch">
+          <img className='navsearch-icon' src={window.search_icon} height='20' />
           <form onSubmit={this.handleSubmit} className="navbar-search-form">
             <input
               className="navsearch-input"
               type="text"
               placeholder="Search.."
               value={this.state.search}
-              onChange={this.update("search")}
+              onChange={this.handleChange("search")}
             />
           </form>
         </div>
