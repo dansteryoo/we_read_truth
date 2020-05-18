@@ -1798,8 +1798,7 @@ var NavBar = /*#__PURE__*/function (_React$Component) {
         return new RegExp(input); // return values.filter((each) => each.match(result));
       };
 
-      this.props.openModal("Categories", match(this.state.search.toLowerCase())); // debugger
-      // this.props.processForm(match(this.state.search));
+      this.props.openModal("Categories", match(this.state.search.toLowerCase()));
     }
   }, {
     key: "componentWillUnmount",
@@ -1807,8 +1806,8 @@ var NavBar = /*#__PURE__*/function (_React$Component) {
       this.props.closeModal();
     }
   }, {
-    key: "update",
-    value: function update(f) {
+    key: "handleChange",
+    value: function handleChange(f) {
       var _this2 = this;
 
       return function (e) {
@@ -1829,7 +1828,11 @@ var NavBar = /*#__PURE__*/function (_React$Component) {
         src: window.logo
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "navsearch"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "navsearch-icon",
+        src: window.search_icon,
+        height: "20"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit,
         className: "navbar-search-form"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -1837,7 +1840,7 @@ var NavBar = /*#__PURE__*/function (_React$Component) {
         type: "text",
         placeholder: "Search..",
         value: this.state.search,
-        onChange: this.update("search")
+        onChange: this.handleChange("search")
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "nav-links"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
@@ -2023,7 +2026,6 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.handleUpdate = _this.handleUpdate.bind(_assertThisInitialized(_this));
-    _this.input = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     return _this;
   }
 
@@ -2150,41 +2152,30 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-form"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Title"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-          type: "text" // ref={this.input}
-          ,
-          className: "notes-form-input-title" // placeholder={'Title'}
-          ,
+          type: "text",
+          className: "notes-form-input-title",
           onChange: this.handleChange('title'),
-          defaultValue: this.props.noteId.title // value={this.props.noteId.title}
-          // required
+          defaultValue: this.props.noteId.title || this.state.title // required
 
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Body"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
-          // ref={this.input}
           className: "notes-form-textarea",
           placeholder: 'Enter note here..',
           onChange: this.handleChange('body'),
-          defaultValue: this.props.noteId.body // value={this.props.noteId.body}
-          // required
+          defaultValue: this.props.noteId.body || this.state.body // required
 
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-form-bottom"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Category"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-          type: "text" // ref={this.input}
-          ,
-          className: "notes-form-input" // placeholder={'category'}
-          ,
+          type: "text",
+          className: "notes-form-input",
           onChange: this.handleChange('category'),
-          defaultValue: this.props.noteId.category // value={this.props.noteId.category}
-          // required   
+          defaultValue: this.props.noteId.category || this.state.category // required   
 
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "#Tags"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-          type: "text" // ref={this.input}
-          ,
-          className: "notes-form-input" // placeholder={'#tags'}
-          ,
+          type: "text",
+          className: "notes-form-input",
           onChange: this.handleChange('tags'),
-          defaultValue: this.props.noteId.tags // value={this.props.noteId.tags}
-          // required   
+          defaultValue: this.props.noteId.tags || this.state.tags // required   
 
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "button-container"
@@ -2202,8 +2193,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Title"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "text",
           className: "notes-form-input-title",
-          value: this.state.title // placeholder={'Title'}
-          ,
+          value: this.state.title,
           onChange: this.handleChange('title'),
           defaultValue: this.props.noteId.title // required
 
@@ -2218,15 +2208,13 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Category"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "text",
           className: "notes-form-input",
-          value: this.state.category // placeholder={'category'}
-          ,
+          value: this.state.category,
           onChange: this.handleChange('category') // required   
 
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "#Tags"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "text",
           className: "notes-form-input",
-          value: this.state.tags // placeholder={'#tags'}
-          ,
+          value: this.state.tags,
           onChange: this.handleChange('tags') // required   
 
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
