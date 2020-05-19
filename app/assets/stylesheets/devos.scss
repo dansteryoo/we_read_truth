@@ -1,3 +1,67 @@
-// Place all the styles related to the devos controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+$darkgray: #3d3d3d;
+$lightgray: #d3d3d3;
+$gray: #767676;
+$mint: #d9fff0;
+$darkmint: #c0ffe6;
+$skin: #f3ede8;
+$blue: #4ca6ff;
+$green: #00a699;
+$orange: #ff5a5f;
+$pink: #ffc0cb;
+$darkpink: #ff8da1;
+
+.sidenav-container {
+    overflow-y: scroll;
+    width: 360px;
+    padding-left: 27px;
+    height: 100vh;
+
+    .sidenav-title {
+        margin-bottom: 10px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid black;
+
+        span {
+            font-size: 18px;
+            font-weight: bold;
+        }
+    }
+}
+
+//------------------Each Daily Devo li
+
+.daily-devo-li {
+    padding: 10px 0;
+    width: 273px;
+
+    //title && day 
+    span {
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .daily-devo-days,
+    .daily-devo-title {
+        font-size: 14px;
+        letter-spacing: 0.01rem;
+    }
+}
+
+.daily-devo-li:hover {
+    cursor: pointer;
+    font-weight: bold;
+
+    span {
+        font-size: 16px;
+        color: $mint;
+        text-shadow: 0px 0px 10px $darkgray;
+    }
+    
+    .daily-devo-days,
+    .daily-devo-title {
+        font-size: 16px;
+        letter-spacing: 0.01rem;
+        color: $mint;
+        text-shadow: 0px 0px 7px $darkgray;
+    }
+}

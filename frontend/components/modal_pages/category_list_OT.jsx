@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CategoryListOT = ({ eachDevoTitle, fetchDevoBook, closeModal }) => {
+const CategoryListOT = ({ eachDevoTitle, handleClick }) => {
 
     const OTbooks = [
         "Genesis",
@@ -46,23 +46,21 @@ const CategoryListOT = ({ eachDevoTitle, fetchDevoBook, closeModal }) => {
     const lowerCaseTitle = OTbooks.map(ele => ele.toLowerCase());
 
     let OTbook;
+    let fetchBookPayload = {
+        gender: eachDevoTitle.gender,
+        book: OTbooks[lowerCaseTitle.indexOf(eachDevoTitle.book)]
+    }
 
     if (lowerCaseTitle.includes(eachDevoTitle.book) && OTbookFormat[eachDevoTitle.book] === undefined) {
         OTbook = OTbooks[lowerCaseTitle.indexOf(eachDevoTitle.book)]
-    
+
     } else if (lowerCaseTitle.includes(eachDevoTitle.book) && OTbookFormat[eachDevoTitle.book] !== undefined) {
         OTbook = OTbookFormat[eachDevoTitle.book]
     };
     
-    const handleClick = (e) => {
-        e.preventDefault();
-        fetchDevoBook(eachDevoTitle.book)
-            .then(() => closeModal());
-    };
-    
     return (
         <li className='category-li'>
-            <span className='category-title' onClick={handleClick}>
+            <span className='category-title' onClick={(e) => handleClick(fetchBookPayload, e)}>
                 {OTbook}
             </span>
         </li>

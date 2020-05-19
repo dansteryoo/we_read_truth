@@ -4,7 +4,12 @@ import { fetchDevoIndex, clearDevoState, fetchDevoBook } from '../../actions/dev
 import CategoriesPage from './categories';
 
 const mapStateToProps = (state) => {
-    let allDevosIdx = Object.values(state.devos).map(each => ({ 
+    
+    let allDevosIdxFiltered = Object.values(state.devos).filter(ele => {
+        return ele.gender === "HE" || ele.gender === "SHE"
+    });
+
+    let allDevosIdx = allDevosIdxFiltered.map(each => ({ 
         gender: each.gender, 
         book: each.book.toLowerCase() 
     }));
@@ -24,11 +29,19 @@ const mapStateToProps = (state) => {
         ));
     };
 
+    let devoBook;
+    if (state.devos.devoBook === undefined) {
+        devoBook = []
+    } else {
+        devoBook = Object.values(state.devos.devoBook)
+    };
+
     return {
         currentUser: state.users[state.session.id],
         errors: state.errors,
         heDevoIndex: heDevoIdx,
-        sheDevoIndex: sheDevoIdx
+        sheDevoIndex: sheDevoIdx,
+        devoBook: devoBook
     }
 };
 

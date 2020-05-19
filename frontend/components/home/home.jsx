@@ -1,7 +1,5 @@
 import React from 'react';
-import SideNav from './sidenav/sidenav';
-import HeSideNav from './sidenav/heside_nav';
-import SheSideNav from './sidenav/sheside_nav';
+import SidNavContainer from './sidenav/sidenav_container';
 import NavBarContainer from '../nav/navbar_container';
 import NotesFormContainer from '../notes/notes_form_container'
 import MainBody from './main_body'
@@ -20,9 +18,18 @@ class HomePage extends React.Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
-    componentDidMount() {
-        // let book = "Genesis"
-        // this.props.fetchDevoBook(book);
+    componentDidUpdate(prevProps) {
+        
+        // if (this.props.noteId !== prevProps.noteId) {
+        //     const { id, title, category, tags, body } = this.props.noteId;
+        //     this.setState({
+        //         id: id,
+        //         title: title,
+        //         category: category,
+        //         tags: tags,
+        //         body: body,
+        //     })
+        // }
     }
 
     handleClick(e) {
@@ -46,9 +53,7 @@ class HomePage extends React.Component {
         let leftOpen = this.state.leftOpen ? 'open' : 'closed';
         let rightOpen = this.state.rightOpen ? 'open' : 'closed';
 
-        const { fetchDevo, fetchDevoBook, heDevos, sheDevos, currentUser } = this.props;
-
-        let sideNav;
+        const { currentUser } = this.props;
         
         return (
             <>
@@ -67,14 +72,10 @@ class HomePage extends React.Component {
                         </h3>
                     </div>
                     <div className='content'>
-
-                        <HeSideNav 
-                            heDevos={heDevos}
-                        /> 
-
-                        <SheSideNav 
-                            sheDevos={sheDevos}
-                        /> 
+                        {/* 
+                            SIDE NAV
+                        */}
+                        <SidNavContainer/>
 
                     </div>
                 </div>
@@ -91,12 +92,10 @@ class HomePage extends React.Component {
                     </h3>
                 </div>
                 <div className='content'>
-
-                    <MainBody 
-                        heDevos={heDevos}
-                        sheDevos={sheDevos}
-                    />
-
+                    {/* 
+                        MAIN BODY 
+                    */}
+                    <MainBody/>
                 </div>
             </div>
 
@@ -112,9 +111,10 @@ class HomePage extends React.Component {
                         </h3>
                     </div>
                     <div className='content'>
-                    
-                    <NotesFormContainer />
-
+                        {/* 
+                            NOTES FORM 
+                        */}
+                        <NotesFormContainer />
                     </div>
                 </div>
             </div>

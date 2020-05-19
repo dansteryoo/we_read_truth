@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CategoryListNT = ({ eachDevoTitle, fetchDevoBook, closeModal }) => {
+const CategoryListNT = ({ eachDevoTitle, handleClick }) => {
 
     const NTbooks = [
         "Matthew",
@@ -36,24 +36,21 @@ const CategoryListNT = ({ eachDevoTitle, fetchDevoBook, closeModal }) => {
     const lowerCaseTitle = NTbooks.map(ele => ele.toLowerCase());
 
     let NTbook;
+    let fetchBookPayload = {
+        gender: eachDevoTitle.gender,
+        book: NTbooks[lowerCaseTitle.indexOf(eachDevoTitle.book)]
+    }
 
     if (lowerCaseTitle.includes(eachDevoTitle.book) && NTbookFormat[eachDevoTitle.book] === undefined) {
         NTbook = NTbooks[lowerCaseTitle.indexOf(eachDevoTitle.book)]
-    
+        
     } else if (lowerCaseTitle.includes(eachDevoTitle.book) && NTbookFormat[eachDevoTitle.book] !== undefined) {
         NTbook = NTbookFormat[eachDevoTitle.book]
     };
 
-    const handleClick = (e) => {
-        e.preventDefault();
-        fetchDevoBook(eachDevoTitle.book)
-            .then(() => closeModal());
-    };
-
-
     return (
         <li className='category-li'>
-            <span className='category-title' onClick={handleClick}>
+            <span className='category-title' onClick={(e) => handleClick(fetchBookPayload, e)}>
                 {NTbook}
             </span>
         </li>
