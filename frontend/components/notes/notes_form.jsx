@@ -48,8 +48,9 @@ class NotesForm extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        
+
         let note = Object.assign({}, this.state);
+        
         this.props.createNote(note)
             .then(() => {
                 this.setState({ 
@@ -65,7 +66,9 @@ class NotesForm extends React.Component {
 
     handleUpdate(e) {
         e.preventDefault();
+
         const { id, title, category, tags, body } = this.state;
+
         let noteUpdate = {
             id: id,
             title: title,

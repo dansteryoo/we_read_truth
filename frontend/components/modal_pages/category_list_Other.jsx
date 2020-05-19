@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CategoryListOther = ({ eachDevoTitle, fetchDevoBook, closeModal }) => {
+const CategoryListOther = ({ eachDevoTitle, handleClick }) => {
 
     const otherBooks = [
         "Justice",
@@ -107,21 +107,19 @@ const CategoryListOther = ({ eachDevoTitle, fetchDevoBook, closeModal }) => {
     };
 
     let otherBook;
+    let fetchBookPayload = {
+        gender: eachDevoTitle.gender,
+        book: otherBooks[lowerCaseTitle.indexOf(eachDevoTitle.book)]
+    }
 
     if (lowerCaseTitle.includes(eachDevoTitle.book) 
         && lowerCaseFormat(OTHERbookFormat)[eachDevoTitle.book] !== undefined) {
         otherBook = lowerCaseFormat(OTHERbookFormat)[eachDevoTitle.book]
     };
 
-    const handleClick = (e) => {
-        e.preventDefault();
-        fetchDevoBook(eachDevoTitle.book)
-        .then(() => closeModal());
-    };
-    // debugger
     return (
         <li className='category-li'>
-            <span className='category-title' onClick={handleClick}>
+            <span className='category-title' onClick={(e) => handleClick(fetchBookPayload, e)}>
                 {otherBook}
             </span>
         </li>

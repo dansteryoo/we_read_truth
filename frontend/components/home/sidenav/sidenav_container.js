@@ -1,12 +1,22 @@
 import { connect } from 'react-redux';
-import { closeModal, openModal } from '../../actions/modal_actions';
+import { closeModal, openModal } from '../../../actions/modal_actions';
 import SideNav from './sidenav';
 
 const mapStateToProps = (state) => {
+    
+    let devoBook;
+    if (state.devos.devoBook === undefined) {
+        devoBook = []
+    } else {
+        devoBook = Object.values(state.devos.devoBook).filter(ele => {
+            return ele.title !== "Weekly Truth" && ele.title !== "Grace Day"
+        })
+    };
+    
     return {
         currentUser: state.users[state.session.id],
         errors: state.errors,
-        devos: Object.values(state.devos)  
+        devoBook: devoBook
     }
 };
 

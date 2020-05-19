@@ -16,8 +16,7 @@ export const fetchDevo = (devoId) => {
 
 export const fetchDevoBook = (devoBook) => {
     return $.ajax({
-        url: `/api/book/?book=${devoBook}`,
-        method: 'GET',
-        data: devoBook
+        url: `api/book/?book=${devoBook.book}&gender=${devoBook.gender}`,
+        method: 'GET'
     })
 };

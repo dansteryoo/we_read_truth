@@ -12,7 +12,12 @@ const devosReducer = (oldState = {}, action) => {
             return Object.assign({}, newState, { [action.devo.id]: action.devo });
 
         case RECEIVE_DEVO_INDEX:
-            return Object.assign({}, newState, action.devoIndex);
+            let devoIndex = (data) => {
+                let hash = {}
+                Object.values(data).forEach((ele, i) => hash[i] = ele)
+                return hash
+            };
+            return Object.assign({}, newState, devoIndex(action.devoIndex));
 
         case CLEAR_DEVO_STATE:
             return {};

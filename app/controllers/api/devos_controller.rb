@@ -11,7 +11,7 @@ class Api::DevosController < ApplicationController
     end
 
     def book
-        @devos = Devo.where(book: params[:book])
+        @devos = Devo.where(book: params[:book], gender: params[:gender])
         render :book
     end
     
