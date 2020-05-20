@@ -156,9 +156,6 @@ class NotesForm extends React.Component {
 
     render() { 
 
-        console.log('THIS.STATE:')
-        console.log(this.state)
-
         if (this.state.success) {
             return (
                 <div className='success-message-div'>
@@ -175,8 +172,6 @@ class NotesForm extends React.Component {
             //----------- Update Form -----------//
 
         } else if (this.state.updateForm) {
-            console.log('UPDATE FORM')
-            console.log(this.props.noteId)
             return (
                 <>
                     <div className='notes-form-container'>
