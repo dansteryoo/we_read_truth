@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import { logout, clearErrors } from '../../actions/session_actions';
 import { closeModal, openModal } from '../../actions/modal_actions';
 import { clearDevoState } from '../../actions/devo_actions';
+import { clearNoteState } from '../../actions/note_actions';
 import Navbar from './navbar';
 
 const mapStateToProps = (state) => {
@@ -23,6 +24,7 @@ const mapDispatchToProps = (dispatch) => ({
     openModal: (modal, book) => dispatch(openModal(modal, book)),
     clearDevoState: () => dispatch(clearDevoState()),
     clearErrors: () => dispatch(clearErrors()),
+    clearNoteState: () => dispatch(clearNoteState()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
