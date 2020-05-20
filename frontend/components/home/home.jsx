@@ -71,7 +71,7 @@ class HomePage extends React.Component {
                             <span>Current Plan</span>
                         </h3>
                     </div>
-                    <div className='content'>
+                    <div className='left-content'>
                         {/* 
                             SIDE NAV
                         */}
