@@ -25,7 +25,7 @@ class NotesPage extends React.Component {
     };
 
     render() {
-        
+    
         const { currentUser, notes, fetchNote, closeModal, deleteNote } = this.props
 
         let currentUser_firstName; 
@@ -34,8 +34,6 @@ class NotesPage extends React.Component {
         } else {
             currentUser_firstName = currentUser.first_name;
         };
-
-        debugger
         
         if (notes.length === 0) {
             return (

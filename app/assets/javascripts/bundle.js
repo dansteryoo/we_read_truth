@@ -1625,7 +1625,6 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       }
 
       ;
-      debugger;
 
       if (notes.length === 0) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2019,7 +2018,8 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       body: '',
       update: false,
       success: false,
-      updateErrors: ''
+      updateErrors: '',
+      updateForm: false
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.handleUpdate = _this.handleUpdate.bind(_assertThisInitialized(_this));
@@ -2040,19 +2040,22 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
       if (this.props.noteId !== prevProps.noteId) {
-        var _this$props$noteId = this.props.noteId,
-            id = _this$props$noteId.id,
-            title = _this$props$noteId.title,
-            category = _this$props$noteId.category,
-            tags = _this$props$noteId.tags,
-            body = _this$props$noteId.body;
-        this.setState({
-          id: id,
-          title: title,
-          category: category,
-          tags: tags,
-          body: body
-        });
+        if (Number.isInteger(this.props.noteId.id)) {
+          var _this$props$noteId = this.props.noteId,
+              id = _this$props$noteId.id,
+              title = _this$props$noteId.title,
+              category = _this$props$noteId.category,
+              tags = _this$props$noteId.tags,
+              body = _this$props$noteId.body;
+          this.setState({
+            id: id,
+            title: title,
+            category: category,
+            tags: tags,
+            body: body,
+            updateForm: true
+          });
+        }
       }
     }
   }, {
@@ -2077,10 +2080,14 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
           title: '',
           category: '',
           tags: '',
-          body: ''
+          body: '',
+          id: '',
+          updateForm: false
         });
       }).then(function () {
         return _this3.renderSuccessMsg();
+      }).then(function () {
+        return _this3.props.clearNoteState();
       });
     }
   }, {
@@ -2129,7 +2136,9 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
             title: '',
             category: '',
             tags: '',
-            body: ''
+            body: '',
+            id: '',
+            updateForm: false
           });
         }).then(function () {
           return _this4.renderUpdateMsg();
@@ -2187,6 +2196,9 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      console.log('THIS.STATE:');
+      console.log(this.state);
+
       if (this.state.success) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "success-message-div"
@@ -2195,7 +2207,9 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "success-message-div"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Note Updated!")); //----------- Update Form -----------//
-      } else if (Object.values(this.props.noteId).length > 0) {
+      } else if (this.state.updateForm) {
+        console.log('UPDATE FORM');
+        console.log(this.props.noteId);
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-form-container"
         }, this.renderUpdateErrors(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
@@ -2357,6 +2371,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     clearErrors: function clearErrors() {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_3__["clearErrors"])());
+    },
+    clearNoteState: function clearNoteState() {
+      return dispatch(Object(_actions_note_actions__WEBPACK_IMPORTED_MODULE_1__["clearNoteState"])());
     }
   };
 };
