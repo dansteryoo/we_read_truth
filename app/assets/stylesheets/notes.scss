@@ -40,7 +40,7 @@ $darkpink: #ff8da1;
 
 .notes-form-input,
 .notes-form-input-title {
-  background-color: #f3ede8; //skin
+  background-color: $skin;
   display: flex;
   border-radius: 6px;
   color: $darkgray;
@@ -57,8 +57,8 @@ $darkpink: #ff8da1;
 }
 
 .notes-form-textarea {
-    background-color: #f3ede8;
-    height: 350px;
+    background-color: $skin;
+    height: 37vh;
     padding: 10px;
     display: flex;
     border-radius: 6px;

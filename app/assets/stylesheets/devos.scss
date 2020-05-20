@@ -12,9 +12,9 @@ $darkpink: #ff8da1;
 
 .sidenav-container {
     overflow-y: scroll;
-    width: 360px;
-    padding-left: 27px;
-    height: 100vh;
+    padding-left: 1.8rem;
+    width: 98%;
+    height: 70vh;
 
     .sidenav-title {
         margin-bottom: 10px;
@@ -32,7 +32,7 @@ $darkpink: #ff8da1;
 
 .daily-devo-li {
     padding: 10px 0;
-    width: 273px;
+    width: 98%;
 
     //title && day 
     span {
