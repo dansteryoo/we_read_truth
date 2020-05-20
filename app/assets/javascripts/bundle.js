@@ -2206,9 +2206,6 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      console.log('THIS.STATE:');
-      console.log(this.state);
-
       if (this.state.success) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "success-message-div"
@@ -2218,8 +2215,6 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
           className: "success-message-div"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Note Updated!")); //----------- Update Form -----------//
       } else if (this.state.updateForm) {
-        console.log('UPDATE FORM');
-        console.log(this.props.noteId);
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-form-container"
         }, this.renderUpdateErrors(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
