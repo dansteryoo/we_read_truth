@@ -1,5 +1,5 @@
 import { 
-    RECEIVE_NOTES, RECEIVE_NOTE, REMOVE_NOTE, RECEIVE_NOTE_ERRORS
+    RECEIVE_NOTES, RECEIVE_NOTE, REMOVE_NOTE, RECEIVE_NOTE_ERRORS, CLEAR_NOTE_STATE
 } from '../actions/note_actions';
 
 const notesReducer = (oldState = {}, action) => {
@@ -8,6 +8,7 @@ const notesReducer = (oldState = {}, action) => {
 
     switch (action.type) {
         case RECEIVE_NOTES:
+            console.log(action.notes)
             delete newState.noteId
             return Object.assign({}, newState, action.notes);
 
@@ -20,6 +21,9 @@ const notesReducer = (oldState = {}, action) => {
 
         case RECEIVE_NOTE_ERRORS:
             return Object.assign({}, { noteErrors: action.errors });
+
+        case CLEAR_NOTE_STATE:
+            return {};
 
         default:
             return newState;

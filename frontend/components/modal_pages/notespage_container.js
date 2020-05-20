@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
 import { closeModal, openModal } from '../../actions/modal_actions';
-import { fetchNote, fetchNotes, deleteNote, updateNote, createNote } from '../../actions/note_actions'
+import { 
+    fetchNote, fetchNotes, deleteNote, updateNote, createNote, clearNoteState 
+} from '../../actions/note_actions'
 import NotesPage from './notespage';
 
 const mapStateToProps = (state) => {
@@ -32,7 +34,8 @@ const mapDispatchToProps = (dispatch) => ({
     fetchNote: (noteId) => dispatch(fetchNote(noteId)),
     deleteNote: (noteId) => dispatch(deleteNote(noteId)),
     updateNote: (note) => dispatch(updateNote(note)),
-    createNote: (note) => dispatch(createNote(note))
+    createNote: (note) => dispatch(createNote(note)),
+    clearNoteState: () => dispatch(clearNoteState()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NotesPage);

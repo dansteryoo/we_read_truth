@@ -195,7 +195,7 @@ var closeModal = function closeModal() {
 /*!******************************************!*\
   !*** ./frontend/actions/note_actions.js ***!
   \******************************************/
-/*! exports provided: RECEIVE_NOTES, RECEIVE_NOTE, REMOVE_NOTE, RECEIVE_NOTE_ERRORS, receiveNotes, receiveNote, removeNote, receiveErrors, fetchNotes, fetchNote, createNote, updateNote, deleteNote */
+/*! exports provided: RECEIVE_NOTES, RECEIVE_NOTE, REMOVE_NOTE, RECEIVE_NOTE_ERRORS, CLEAR_NOTE_STATE, receiveNotes, receiveNote, removeNote, receiveErrors, clearNoteState, fetchNotes, fetchNote, createNote, updateNote, deleteNote */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -204,10 +204,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_NOTE", function() { return RECEIVE_NOTE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_NOTE", function() { return REMOVE_NOTE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_NOTE_ERRORS", function() { return RECEIVE_NOTE_ERRORS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CLEAR_NOTE_STATE", function() { return CLEAR_NOTE_STATE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveNotes", function() { return receiveNotes; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveNote", function() { return receiveNote; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeNote", function() { return removeNote; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveErrors", function() { return receiveErrors; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clearNoteState", function() { return clearNoteState; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchNotes", function() { return fetchNotes; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchNote", function() { return fetchNote; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createNote", function() { return createNote; });
@@ -219,6 +221,7 @@ var RECEIVE_NOTES = 'RECEIVE_NOTES';
 var RECEIVE_NOTE = 'RECEIVE_NOTE';
 var REMOVE_NOTE = 'REMOVE_NOTE';
 var RECEIVE_NOTE_ERRORS = 'RECEIVE_NOTE_ERRORS';
+var CLEAR_NOTE_STATE = "CLEAR_NOTE_STATE";
 var receiveNotes = function receiveNotes(notes) {
   return {
     type: RECEIVE_NOTES,
@@ -241,6 +244,11 @@ var receiveErrors = function receiveErrors(errors) {
   return {
     type: RECEIVE_NOTE_ERRORS,
     errors: errors
+  };
+};
+var clearNoteState = function clearNoteState() {
+  return {
+    type: CLEAR_NOTE_STATE
   };
 };
 var fetchNotes = function fetchNotes() {
@@ -289,7 +297,7 @@ var deleteNote = function deleteNote(noteId) {
 /*!*********************************************!*\
   !*** ./frontend/actions/session_actions.js ***!
   \*********************************************/
-/*! exports provided: RECEIVE_CURRENT_USER, LOGOUT_CURRENT_USER, RECEIVE_SESSION_ERRORS, CLEAR_ERRORS, receiveCurrentUser, logoutCurrentUser, receiveErrors, clearErrors, signup, login, logout */
+/*! exports provided: RECEIVE_CURRENT_USER, LOGOUT_CURRENT_USER, RECEIVE_SESSION_ERRORS, CLEAR_ERRORS, receiveCurrentUser, logoutCurrentUser, receiveErrors, clearErrors, signup, login, logout, logindemo */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -305,6 +313,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "signup", function() { return signup; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "login", function() { return login; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logout", function() { return logout; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logindemo", function() { return logindemo; });
 /* harmony import */ var _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/session_api_util */ "./frontend/util/session_api_util.jsx");
 
 var RECEIVE_CURRENT_USER = 'RECEIVE_CURRENT_USER';
@@ -355,6 +364,15 @@ var logout = function logout() {
   return function (dispatch) {
     return _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__["logout"]().then(function () {
       return dispatch(logoutCurrentUser());
+    });
+  };
+};
+var logindemo = function logindemo() {
+  return function (dispatch) {
+    return _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__["logindemo"]().then(function (user) {
+      return dispatch(receiveCurrentUser(user));
+    }, function (err) {
+      return dispatch(receiveErrors(err.responseJSON));
     });
   };
 };
@@ -1561,6 +1579,11 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       this.props.fetchNotes();
     }
   }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      this.props.clearNoteState();
+    }
+  }, {
     key: "handleUpdate",
     value: function handleUpdate(noteId) {
       var _this2 = this;
@@ -1580,6 +1603,15 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
           fetchNote = _this$props.fetchNote,
           closeModal = _this$props.closeModal,
           deleteNote = _this$props.deleteNote;
+      var currentUser_firstName;
+
+      if (currentUser === undefined) {
+        currentUser_firstName = 0;
+      } else {
+        currentUser_firstName = currentUser.first_name;
+      }
+
+      ;
 
       if (notes.length === 0) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1593,7 +1625,7 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
           }
         }, "\u2715"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-page-username"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, currentUser.first_name, "'s Notes")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, currentUser_firstName, "'s Notes")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "form-or-separator-notes"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
           className: "notes-page-section"
@@ -1612,7 +1644,7 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
           }
         }, "\u2715"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-page-username"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, currentUser.first_name, "'s Notes")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, currentUser_firstName, "'s Notes")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "form-or-separator-notes"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
           className: "notes-page-section"
@@ -1699,6 +1731,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     createNote: function createNote(note) {
       return dispatch(Object(_actions_note_actions__WEBPACK_IMPORTED_MODULE_2__["createNote"])(note));
+    },
+    clearNoteState: function clearNoteState() {
+      return dispatch(Object(_actions_note_actions__WEBPACK_IMPORTED_MODULE_2__["clearNoteState"])());
     }
   };
 };
@@ -2431,6 +2466,7 @@ var LogInForm = /*#__PURE__*/function (_React$Component) {
       password: ''
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.handleDemoUser = _this.handleDemoUser.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -2445,6 +2481,11 @@ var LogInForm = /*#__PURE__*/function (_React$Component) {
       e.preventDefault();
       var user = Object.assign({}, this.state);
       this.props.processForm(user);
+    }
+  }, {
+    key: "handleDemoUser",
+    value: function handleDemoUser() {
+      this.props.logindemo();
     }
   }, {
     key: "handleChange",
@@ -2503,7 +2544,11 @@ var LogInForm = /*#__PURE__*/function (_React$Component) {
         className: "form-button",
         type: "submit",
         value: this.props.formType
-      }, "Log In"))));
+      }, "Log In"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "form-demo-button",
+        type: "submit",
+        onClick: this.handleDemoUser
+      }, "Demo User"));
     }
   }]);
 
@@ -2549,6 +2594,9 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
+    logindemo: function logindemo() {
+      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["logindemo"])());
+    },
     processForm: function processForm(user) {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["login"])(user));
     },
@@ -3084,6 +3132,7 @@ var notesReducer = function notesReducer() {
 
   switch (action.type) {
     case _actions_note_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_NOTES"]:
+      console.log(action.notes);
       delete newState.noteId;
       return Object.assign({}, newState, action.notes);
 
@@ -3100,6 +3149,9 @@ var notesReducer = function notesReducer() {
       return Object.assign({}, {
         noteErrors: action.errors
       });
+
+    case _actions_note_actions__WEBPACK_IMPORTED_MODULE_0__["CLEAR_NOTE_STATE"]:
+      return {};
 
     default:
       return newState;
@@ -3431,7 +3483,7 @@ var ProtectedRoute = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withR
 /*!********************************************!*\
   !*** ./frontend/util/session_api_util.jsx ***!
   \********************************************/
-/*! exports provided: signup, login, logout, fetchUsers, fetchUser, updateUser, deleteUser */
+/*! exports provided: signup, login, logout, logindemo, fetchUsers, fetchUser, updateUser, deleteUser */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3439,6 +3491,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "signup", function() { return signup; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "login", function() { return login; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logout", function() { return logout; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logindemo", function() { return logindemo; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUsers", function() { return fetchUsers; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUser", function() { return fetchUser; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateUser", function() { return updateUser; });
@@ -3465,6 +3518,18 @@ var logout = function logout() {
   return $.ajax({
     url: "/api/session",
     method: 'DELETE'
+  });
+};
+var logindemo = function logindemo() {
+  return $.ajax({
+    method: 'POST',
+    url: "/api/session",
+    data: {
+      user: {
+        email: 'demo@user.com',
+        password: 'demouser987654321'
+      }
+    }
   });
 };
 var fetchUsers = function fetchUsers() {
