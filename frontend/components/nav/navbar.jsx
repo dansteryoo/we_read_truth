@@ -27,6 +27,10 @@ class NavBar extends React.Component {
     this.props.openModal("Categories", match(this.state.search.toLowerCase()))
   }
 
+  componentDidMount() {
+    this.props.clearNoteState()
+  }
+
   componentWillUnmount() {
     this.props.closeModal()
   }
