@@ -12,7 +12,8 @@ class NotesForm extends React.Component {
             body: '',
             update: false,
             success: false,
-            updateErrors: ''
+            updateErrors: '',
+            updateForm: false
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -29,14 +30,17 @@ class NotesForm extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.noteId !== prevProps.noteId) {
-            const { id, title, category, tags, body } = this.props.noteId;
-            this.setState({
-                id: id,
-                title: title,
-                category: category,
-                tags: tags,
-                body: body,
-            })
+            if (Number.isInteger(this.props.noteId.id)) {
+                const { id, title, category, tags, body } = this.props.noteId;
+                this.setState({
+                    id: id,
+                    title: title,
+                    category: category,
+                    tags: tags,
+                    body: body,
+                    updateForm: true,
+                })
+            }
         }
     }
 
@@ -59,9 +63,12 @@ class NotesForm extends React.Component {
                     category: '',
                     tags: '',
                     body: '',
+                    id: '',
+                    updateForm: false,
                 })
             })
             .then(() => this.renderSuccessMsg())
+            .then(() => this.props.clearNoteState())
     };
 
     handleUpdate(e) {
@@ -105,6 +112,8 @@ class NotesForm extends React.Component {
                         category: '',
                         tags: '',
                         body: '',
+                        id: '',
+                        updateForm: false,
                     })
                 }).then(() => this.renderUpdateMsg())
                 .then(() => this.props.fetchNotes())
@@ -145,7 +154,10 @@ class NotesForm extends React.Component {
         }
     }
 
-    render() {
+    render() { 
+
+        console.log('THIS.STATE:')
+        console.log(this.state)
 
         if (this.state.success) {
             return (
@@ -162,8 +174,9 @@ class NotesForm extends React.Component {
 
             //----------- Update Form -----------//
 
-        } else if (Object.values(this.props.noteId).length > 0) {
-
+        } else if (this.state.updateForm) {
+            console.log('UPDATE FORM')
+            console.log(this.props.noteId)
             return (
                 <>
                     <div className='notes-form-container'>

@@ -1,5 +1,7 @@
 import { connect } from 'react-redux';
-import { fetchNote, fetchNotes, deleteNote, updateNote, createNote } from '../../actions/note_actions'
+import { 
+    fetchNote, fetchNotes, deleteNote, updateNote, createNote, clearNoteState
+} from '../../actions/note_actions'
 import { openModal } from '../../actions/modal_actions';
 import { clearErrors } from '../../actions/session_actions';
 import NotesForm from './notes_form';
@@ -43,7 +45,8 @@ const mapDispatchToProps = (dispatch) => ({
     deleteNote: (noteId) => dispatch(deleteNote(noteId)),
     updateNote: (note) => dispatch(updateNote(note)),
     createNote: (note) => dispatch(createNote(note)),
-    clearErrors: () => dispatch(clearErrors())
+    clearErrors: () => dispatch(clearErrors()),
+    clearNoteState: () => dispatch(clearNoteState()),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NotesForm));
