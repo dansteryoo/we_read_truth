@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -28,7 +28,7 @@ class NavBar extends React.Component {
   }
 
   componentWillUnmount() {
-    this.props.closeModal();
+    this.props.closeModal()
   }
 
   handleChange(f) {
@@ -62,10 +62,7 @@ class NavBar extends React.Component {
           <li className="devo-li">
             <a>Devotionals</a>
             <ul className="dropdown-devos">
-              <li
-                className="notes-li"
-                onClick={() => this.props.openModal("Categories")}
-              >
+              <li className="notes-li" onClick={() => this.props.openModal("Categories")}>
                 Categories
               </li>
             </ul>
@@ -73,17 +70,14 @@ class NavBar extends React.Component {
           <li className="profile-li">
             <a>Profile</a>
             <ul className="dropdown-profile">
-              <li
-                className="notes-li"
-                onClick={() => this.props.openModal("Notes")}
-              >
+              <li className="notes-li" onClick={() => this.props.openModal("Notes")}>
                 Notes
-              </li>
-              <li className="logout-li" onClick={() => this.props.logout()}>
-                Logout
               </li>
             </ul>
           </li>
+          <li className="logout-li" onClick={() => this.props.logout()}>
+            Logout
+              </li>
         </ul>
       </nav>
     );

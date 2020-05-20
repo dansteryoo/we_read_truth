@@ -3,7 +3,7 @@ import React from 'react';
 class NotesForm extends React.Component {
     constructor(props) {
         super(props);
-  
+
         this.state = {
             id: '',
             title: '',
@@ -20,7 +20,7 @@ class NotesForm extends React.Component {
     };
 
     componentDidMount() {
-       this.props.fetchNotes();
+        this.props.fetchNotes();
     };
 
     componentWillUnmount() {
@@ -50,10 +50,10 @@ class NotesForm extends React.Component {
         e.preventDefault();
 
         let note = Object.assign({}, this.state);
-        
+
         this.props.createNote(note)
             .then(() => {
-                this.setState({ 
+                this.setState({
                     success: true,
                     title: '',
                     category: '',
@@ -83,15 +83,15 @@ class NotesForm extends React.Component {
 
         if (trimmerLength(title) === 0 || trimmerLength(body) === 0) {
             if (trimmerLength(title) === 0 && trimmerLength(body) !== 0) {
-                this.setState({ 
+                this.setState({
                     updateErrors: ["Title can't be blank"]
                 })
             } else if (trimmerLength(body) === 0 && trimmerLength(title) !== 0) {
-                this.setState({ 
+                this.setState({
                     updateErrors: ["Body can't be blank"]
                 })
             } else {
-                this.setState({ 
+                this.setState({
                     updateErrors: ["Title can't be blank", "Body can't be blank"]
                 })
             }
@@ -146,7 +146,7 @@ class NotesForm extends React.Component {
     }
 
     render() {
-        
+
         if (this.state.success) {
             return (
                 <div className='success-message-div'>
@@ -160,7 +160,7 @@ class NotesForm extends React.Component {
                 </div>
             )
 
-        //----------- Update Form -----------//
+            //----------- Update Form -----------//
 
         } else if (Object.values(this.props.noteId).length > 0) {
 
@@ -223,7 +223,7 @@ class NotesForm extends React.Component {
                 </>
             );
 
-        //----------- Create Form -----------//
+            //----------- Create Form -----------//
 
         } else {
             return (
@@ -246,7 +246,7 @@ class NotesForm extends React.Component {
 
                                 {/* body */}
                                 <label>Body</label>
-                                <textarea 
+                                <textarea
                                     className='notes-form-textarea'
                                     value={this.state.body}
                                     placeholder={'Enter note here..'}
@@ -256,7 +256,7 @@ class NotesForm extends React.Component {
 
                                 {/* categories and tags */}
 
-                                <div className='notes-form-bottom'> 
+                                <div className='notes-form-bottom'>
                                     <label>Category</label>
                                     <input type='text'
                                         className='notes-form-input'

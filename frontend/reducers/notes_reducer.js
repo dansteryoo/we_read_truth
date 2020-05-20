@@ -8,8 +8,8 @@ const notesReducer = (oldState = {}, action) => {
 
     switch (action.type) {
         case RECEIVE_NOTES:
-            console.log(action.notes)
             delete newState.noteId
+            delete newState.noteErrors
             return Object.assign({}, newState, action.notes);
 
         case RECEIVE_NOTE:
