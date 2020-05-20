@@ -71,11 +71,21 @@ $orange: #ff5a5f;
                 li:hover {
                     color: $blue;
                 }
+                
+                li:active {
+                    color: $blue;
+                    opacity: 60%;
+                }
             }
         }
 
         .devo-li:hover, 
         .profile-li:hover {
+            color: $blue;
+        }
+
+        .devo-li:active, 
+        .profile-li:active {
             color: $blue;
         }
 
@@ -87,7 +97,6 @@ $orange: #ff5a5f;
             display: block;
             z-index: 2;
         }
-
     }
 
     .nav-links li {
