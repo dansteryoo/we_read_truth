@@ -10,6 +10,7 @@ class LogInForm extends React.Component {
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleDemoUser = this.handleDemoUser.bind(this);
     };
 
     componentWillUnmount() {
@@ -23,6 +24,10 @@ class LogInForm extends React.Component {
         this.props.processForm(user)
     }
 
+    handleDemoUser() {
+        this.props.logindemo();
+    }
+    
     handleChange(f) {
         return e => this.setState({
             [f]: e.target.value
@@ -72,7 +77,7 @@ class LogInForm extends React.Component {
                         <button className='form-button' type='submit' value={this.props.formType}>Log In</button>
                     </div>
                 </form>
-
+                <button className='form-demo-button' type='submit' onClick={this.handleDemoUser}>Demo User</button>
             </div>
         );
     }

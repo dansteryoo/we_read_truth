@@ -20,6 +20,8 @@ $skin: #f3ede8;
 $blue: #4ca6ff;
 $green: #00a699;
 $orange: #ff5a5f;
+$pink: #ffc0cb;
+$darkpink: #ff8da1;
 
 //---------------Login Form
 
@@ -76,6 +78,7 @@ $orange: #ff5a5f;
         box-shadow: 0 0 0 1px $orange;
     }
 
+    .form-demo-button,
     .form-button {
         display: flex;
         justify-content: center;
@@ -83,12 +86,23 @@ $orange: #ff5a5f;
         height: 50px;
         margin-top: 24px;
         border-radius: 25px;
-        background-color: black;
         color: white;
         font-size: 18px;
         font-weight: bold;
         letter-spacing: 0.05rem;
         cursor: pointer;
+    }
+
+    .form-button {
+        background-color: black;
+    }
+    .form-demo-button:active,
+    .form-button:active {
+        opacity: 60%;
+    }
+
+    .form-demo-button {
+        background-color: $green;
     }
 }
 

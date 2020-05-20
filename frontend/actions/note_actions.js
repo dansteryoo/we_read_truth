@@ -4,6 +4,7 @@ export const RECEIVE_NOTES = 'RECEIVE_NOTES';
 export const RECEIVE_NOTE = 'RECEIVE_NOTE';
 export const REMOVE_NOTE = 'REMOVE_NOTE';
 export const RECEIVE_NOTE_ERRORS = 'RECEIVE_NOTE_ERRORS';
+export const CLEAR_NOTE_STATE = "CLEAR_NOTE_STATE";
 
 
 export const receiveNotes = (notes) => {
@@ -31,6 +32,12 @@ export const receiveErrors = (errors) => {
     return {
         type: RECEIVE_NOTE_ERRORS,
         errors
+    }
+};
+
+export const clearNoteState = () => {
+    return {
+        type: CLEAR_NOTE_STATE,
     }
 };
 

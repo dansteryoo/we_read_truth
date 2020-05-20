@@ -15,6 +15,10 @@ class NotesPage extends React.Component {
         this.props.fetchNotes()
     };
 
+    componentWillUnmount(){
+        this.props.clearNoteState()
+    }
+
     handleUpdate(noteId) {
         this.props.fetchNote(noteId)
         .then(() => this.props.closeModal())
@@ -23,6 +27,14 @@ class NotesPage extends React.Component {
     render() {
         
         const { currentUser, notes, fetchNote, closeModal, deleteNote } = this.props
+
+        let currentUser_firstName; 
+        if (currentUser === undefined) {
+            currentUser_firstName = 0;
+        } else {
+            currentUser_firstName = currentUser.first_name;
+        };
+        
         if (notes.length === 0) {
             return (
                 <>
@@ -32,7 +44,7 @@ class NotesPage extends React.Component {
                                 &#10005;
                         </div>
                             <div className='notes-page-username'>
-                                <span>{currentUser.first_name}'s Notes</span>
+                                <span>{currentUser_firstName}'s Notes</span>
                             </div>
                             <div className='form-or-separator-notes'>
                                 <hr />
@@ -55,7 +67,7 @@ class NotesPage extends React.Component {
                                 &#10005;
                             </div>
                             <div className='notes-page-username'> 
-                                <span>{currentUser.first_name}'s Notes</span> 
+                                <span>{currentUser_firstName}'s Notes</span> 
                             </div>
                             <div className='form-or-separator-notes'>
                                 <hr />
