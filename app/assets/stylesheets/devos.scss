@@ -47,6 +47,7 @@ $darkpink: #ff8da1;
     }
 }
 
+.daily-devo-li:active,
 .daily-devo-li:hover {
     cursor: pointer;
     font-weight: bold;
@@ -64,4 +65,8 @@ $darkpink: #ff8da1;
         color: $mint;
         text-shadow: 0px 0px 7px $darkgray;
     }
+}
+
+.daily-devo-li:active {
+    opacity: 60%;
 }
