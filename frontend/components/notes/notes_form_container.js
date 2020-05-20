@@ -10,21 +10,21 @@ const mapStateToProps = (state) => {
 
     let noteId;
     let notes;
-    let noteErrors; 
-    
+    let noteErrors;
+
     if (state.notes.noteId !== undefined) {
         noteId = state.notes.noteId;
         notes = [];
     } else {
         noteId = {};
         notes = Object.values(state.notes);
-    } 
+    }
 
     if (state.notes.noteErrors !== undefined) {
         noteErrors = state.notes.noteErrors;
     } else {
         noteErrors = [];
-    } 
+    }
 
     return {
         currentUser: state.users[state.session.id],

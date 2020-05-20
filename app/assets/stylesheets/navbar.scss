@@ -69,24 +69,24 @@ $orange: #ff5a5f;
                 }
 
                 li:hover {
-                    color: $blue;
+                    color: $green;
                 }
                 
                 li:active {
-                    color: $blue;
+                    color: $green;
                     opacity: 60%;
                 }
             }
         }
 
         .devo-li:hover, 
-        .profile-li:hover {
-            color: $blue;
+        .profile-li:hover,
+        .logout-li:hover {
+            color: $green;
         }
 
-        .devo-li:active, 
-        .profile-li:active {
-            color: $blue;
+        .logout-li:active {
+            opacity: 60%;
         }
 
         .devo-li:hover > ul,
@@ -102,7 +102,7 @@ $orange: #ff5a5f;
     .nav-links li {
         color: black;
         font-weight: 500;
-        margin: 14px 100px 0 0;
+        margin: 14px 50px 0 0;
         height: 20px;
         cursor: pointer;
     }

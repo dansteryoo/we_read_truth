@@ -4,7 +4,6 @@ import NavBarContainer from '../nav/navbar_container';
 import NotesFormContainer from '../notes/notes_form_container'
 import MainBody from './main_body'
 
-
 class HomePage extends React.Component {
     constructor(props) {
         super(props);
@@ -16,7 +15,15 @@ class HomePage extends React.Component {
 
         this.toggleSidebar = this.toggleSidebar.bind(this);
         this.handleClick = this.handleClick.bind(this);
-    }
+    };
+
+    componentDidMount() {
+        this.props.clearErrors()
+    };
+
+    componentWillUnmount() {
+        this.props.clearDevoState()
+    };
 
     componentDidUpdate(prevProps) {
         
@@ -30,7 +37,7 @@ class HomePage extends React.Component {
         //         body: body,
         //     })
         // }
-    }
+    };
 
     handleClick(e) {
         e.preventDefault();
@@ -44,9 +51,7 @@ class HomePage extends React.Component {
     toggleSidebar(event) {
         let key = `${event.currentTarget.parentNode.id}Open`;
         this.setState({ [key]: !this.state[key] });
-    }
-
-
+    };
 
     render() {
 

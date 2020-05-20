@@ -34,6 +34,8 @@ class NotesPage extends React.Component {
         } else {
             currentUser_firstName = currentUser.first_name;
         };
+
+        debugger
         
         if (notes.length === 0) {
             return (

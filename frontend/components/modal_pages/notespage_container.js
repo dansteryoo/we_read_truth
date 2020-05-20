@@ -17,7 +17,7 @@ const mapStateToProps = (state) => {
         noteId = {};
         notes = Object.values(state.notes);
     } 
-
+    
     return {
         currentUser: state.users[state.session.id],
         errors: state.errors,

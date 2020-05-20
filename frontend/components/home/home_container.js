@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { closeModal, openModal } from '../../actions/modal_actions';
-import { fetchDevo, fetchDevoBook } from '../../actions/devo_actions'
+import { fetchDevo, fetchDevoBook, clearDevoState } from '../../actions/devo_actions'
 import { clearErrors } from '../../actions/session_actions';
 import HomePage from './home';
 
@@ -29,7 +29,8 @@ const mapDispatchToProps = (dispatch) => ({
     openModal: (formType) => dispatch(openModal(formType)),
     fetchDevoBook: (devoBook) => dispatch(fetchDevoBook(devoBook)),
     fetchDevo: (devoId) => dispatch(fetchDevo(devoId)),
-    clearErrors: () => dispatch(clearErrors())
+    clearErrors: () => dispatch(clearErrors()),
+    clearDevoState: () => dispatch(clearDevoState())
 });
 
 
