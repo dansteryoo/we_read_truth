@@ -821,7 +821,7 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
         "Joel,Amos,Obadiah,Jonah,andMicah": "Joel, Amos, Obadiah, Jonah, & Micah",
         "1&2thessalonians": "1 & 2 Thessalonians",
         "1&2Peter": "1 & 2 Peter",
-        "1&2TimothyandTitus": "1 & 2 Timothy & Titus",
+        "1&2TimothyandTitus": "1 & 2 Timothy, & Titus",
         "ActsoftheApostles": "Acts",
         "1&2Corinthians": "1 & 2 Corinthians",
         "HymnsV": 'Hymns V',
@@ -1363,7 +1363,7 @@ var CategoryListNT = function CategoryListNT(_ref) {
   var NTbookFormat = {
     "1&2thessalonians": "1 & 2 Thessalonians",
     "1&2peter": "1 & 2 Peter",
-    "1&2timothyandtitus": "1 & 2 Timothy & Titus",
+    "1&2timothyandtitus": "1 & 2 Timothy, & Titus",
     "actsoftheapostles": "Acts",
     "1&2corinthians": "1 & 2 Corinthians"
   };

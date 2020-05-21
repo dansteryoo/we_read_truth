@@ -28,7 +28,7 @@ const CategoryListNT = ({ eachDevoTitle, handleClick }) => {
     const NTbookFormat = {
         "1&2thessalonians": "1 & 2 Thessalonians",
         "1&2peter": "1 & 2 Peter",
-        "1&2timothyandtitus": "1 & 2 Timothy & Titus",
+        "1&2timothyandtitus": "1 & 2 Timothy, & Titus",
         "actsoftheapostles": "Acts",
         "1&2corinthians": "1 & 2 Corinthians"
     };
