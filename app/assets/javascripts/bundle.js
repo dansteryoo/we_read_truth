@@ -810,11 +810,79 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var bookTitles = ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1&2Samuel", "1&2Kings", "1&2Chronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalms", "Proverbs:TheWayofWisdom", "Ecclesiastes", "SongofSongs", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel,Amos,Obadiah,Jonah,andMicah", "Nahum,Habakkuk,Zephaniah,andHaggai", "ZechariahandMalachi", "Matthew", "Mark", "Luke", "John", "ActsoftheApostles", "Romans", "1&2Corinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1&2Thessalonians", "1&2TimothyandTitus", "Philemon", "Hebrews", "James", "1&2Peter", "123John", "Jude", "Revelation", "Justice", "HymnsV", "TheSermonontheMount", "Lent2017:YouAreMine", "Advent2018:UntiltheSonofGodAppears", "ThisIstheGospel", "Lent2018:SeetheLord’sSalvation", "MourningandDancing", "2019Wrapped:SheReadsTruthYearinReview", "NamesofGod", "OpenYourBible//Launch-WeekSampler", "InSpirit&inTruth:AStudyofBiblicalWorship", "Advent2016:ChristWasBornforThis", "Lent2016", "Hymns", "TheResurrectedLife", "TheRisenChrist", "Lent2020:HisLoveEndures", "Jesus,KeepMeNearTheCross", "TheBeatitudes", "PsalmsforPrayer", "AttributesofGod", "PsalmsofRest", "TheLifeofMoses", "HymnsIV", "BecauseHeLives", "HymnsII", "TheMiraclesofJesus", "SongsfortheRoad:ThePsalmsofAscent", "Women&MenintheWord:OldTestament", "HymnsIII", "GiveThanks", "MakingRoom:AStudyofBiblicalHospitality", "IAm:StatementsofOurSavior", "WorthyofPraise", "Advent2017:JoytotheWorld", "HoldingTighttoPermanent", "Advent2019:AThrillofHope", "CountdowntoActs", "FruitoftheSpirit", "Advent2015:BornIsTheKing", "TheParablesofJesus", "GoTellItontheMountain", "HymnsofHope", "PsalmsofGratitude"];
+      var bookTitlesFormat = {
+        "ZechariahandMalachi": "Zechariah & Malachi",
+        "Nahum,Habakkuk,Zephaniah,andHaggai": "Nahum, Habakkuk, Zephaniah, & Haggai",
+        "1&2Kings": "1 & 2 Kings",
+        "SongofSongs": "Song of Songs",
+        "Proverbs:TheWayofWisdom": "Proverbs",
+        "1&2Samuel": "1 & 2 Samuel",
+        "Joel,Amos,Obadiah,Jonah,andMicah": "Joel, Amos, Obadiah, Jonah, & Micah",
+        "1&2thessalonians": "1 & 2 Thessalonians",
+        "1&2Peter": "1 & 2 Peter",
+        "1&2TimothyandTitus": "1 & 2 Timothy & Titus",
+        "ActsoftheApostles": "Acts",
+        "1&2Corinthians": "1 & 2 Corinthians",
+        "HymnsV": 'Hymns V',
+        "TheSermonontheMount": 'The Sermon on the Mount',
+        "Lent2017:YouAreMine": 'Lent 2017',
+        "Advent2018:UntiltheSonofGodAppears": 'Advent 2018',
+        "ThisIstheGospel": 'This is the Gospel',
+        "Lent2018:SeetheLord’sSalvation": 'Lent 2018',
+        "MourningandDancing": 'Mourning & Dancing',
+        "2019Wrapped:SheReadsTruthYearinReview": '2019 Wrapped (Year in Review)',
+        "NamesofGod": 'Names of God',
+        "InSpirit&inTruth:AStudyofBiblicalWorship": 'In Spirit & in Truth (Biblical Worship)',
+        "Advent2016:ChristWasBornforThis": 'Advent 2016',
+        "Lent2016": 'Lent 2016',
+        "Hymns": 'Hymns I',
+        "TheResurrectedLife": 'The Resurrected Life',
+        "TheRisenChrist": 'The Risen Christ',
+        "Lent2020:HisLoveEndures": 'Lent 2020',
+        "Jesus,KeepMeNearTheCross": 'Jesus, Keep Me Near The Cross',
+        "TheBeatitudes": 'The Beatitudes',
+        "PsalmsforPrayer": 'Psalms for Prayer',
+        "AttributesofGod": 'Attributes of God',
+        "PsalmsofRest": 'Psalms of Rest',
+        "TheLifeofMoses": 'The Life of Moses',
+        "HymnsIV": 'Hymns IV',
+        "BecauseHeLives": 'Because He Lives',
+        "HymnsII": 'Hymns II',
+        "TheMiraclesofJesus": 'The Miracles of Jesus',
+        "SongsfortheRoad:ThePsalmsofAscent": 'Psalms of Ascent',
+        "Women&MenintheWord:OldTestament": 'Old Testament Women & Men',
+        "HymnsIII": 'Hymns III',
+        "GiveThanks": 'Give Thanks',
+        "MakingRoom:AStudyofBiblicalHospitality": 'Making Room (Biblical Hospitality)',
+        "IAm:StatementsofOurSavior": 'I Am (Statements of Our Savior)',
+        "WorthyofPraise": 'Worthy of Praise',
+        "Advent2017:JoytotheWorld": 'Advent 2017',
+        "HoldingTighttoPermanent": 'Holding Tight to Permanent',
+        "Advent2019:AThrillofHope": 'Advent 2019',
+        "CountdowntoActs": 'Countdown to Acts',
+        "FruitoftheSpirit": 'Fruit of the Spirit',
+        "Advent2015:BornIsTheKing": 'Advent 2015',
+        "TheParablesofJesus": 'The Parables of Jesus',
+        "GoTellItontheMountain": 'Go Tell It on the Mountain',
+        "HymnsofHope": 'Hymns of Hope',
+        "PsalmsofGratitude": 'Psalms of Gratitude'
+      };
+      var book = this.state.book;
+      var devoBookTitle;
+
+      if (bookTitles.includes(book) && bookTitlesFormat[book] === undefined) {
+        devoBookTitle = bookTitles[bookTitles.indexOf(book)];
+      } else if (bookTitles.includes(book) && bookTitlesFormat[book] !== undefined) {
+        devoBookTitle = bookTitlesFormat[book];
+      }
+
+      ;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "sidenav-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "sidenav-title"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, this.state.book)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, devoBookTitle)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "sidenav-ul"
       }, this.props.devoBook.map(function (dailyDevo, i) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sidenav_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
@@ -1345,13 +1413,13 @@ __webpack_require__.r(__webpack_exports__);
 var CategoryListOT = function CategoryListOT(_ref) {
   var eachDevoTitle = _ref.eachDevoTitle,
       handleClick = _ref.handleClick;
-  var OTbooks = ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1&2Samuel", "1&2Kings", "1&2Chronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalms", "Proverbs", "Ecclesiastes", "SongofSongs", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel,Amos,Obadiah,Jonah,andMicah", "Nahum,Habakkuk,Zephaniah,andHaggai", "ZechariahandMalachi"];
+  var OTbooks = ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1&2Samuel", "1&2Kings", "1&2Chronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalms", "Proverbs:TheWayofWisdom", "Ecclesiastes", "SongofSongs", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel,Amos,Obadiah,Jonah,andMicah", "Nahum,Habakkuk,Zephaniah,andHaggai", "ZechariahandMalachi"];
   var OTbookFormat = {
     "zechariahandmalachi": "Zechariah & Malachi",
     "nahum,habakkuk,zephaniah,andhaggai": "Nahum, Habakkuk, Zephaniah, & Haggai",
     "1&2kings": "1 & 2 Kings",
     "songofsongs": "Song of Songs",
-    "proverbs:theWayofwisdom": "Proverbs",
+    "proverbs:thewayofwisdom": "Proverbs",
     "1&2samuel": "1 & 2 Samuel",
     "joel,amos,obadiah,jonah,andmicah": "Joel, Amos, Obadiah, Jonah, & Micah"
   };
@@ -1429,7 +1497,7 @@ var CategoryListOther = function CategoryListOther(_ref) {
     "BecauseHeLives": 'Because He Lives',
     "HymnsII": 'Hymns II',
     "TheMiraclesofJesus": 'The Miracles of Jesus',
-    "SongsfortheRoad:ThePsalmsofAscent": 'The Psalms of Ascent',
+    "SongsfortheRoad:ThePsalmsofAscent": 'Psalms of Ascent',
     "Women&MenintheWord:OldTestament": 'Old Testament Women & Men',
     "HymnsIII": 'Hymns III',
     "GiveThanks": 'Give Thanks',
@@ -3641,6 +3709,44 @@ function _objectWithoutPropertiesLoose(source, excluded) {
 
 /***/ }),
 
+/***/ "./node_modules/@babel/runtime/helpers/inheritsLoose.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/inheritsLoose.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _inheritsLoose(subClass, superClass) {
+  subClass.prototype = Object.create(superClass.prototype);
+  subClass.prototype.constructor = subClass;
+  subClass.__proto__ = superClass;
+}
+
+module.exports = _inheritsLoose;
+
+/***/ }),
+
+/***/ "./node_modules/gud/index.js":
+/*!***********************************!*\
+  !*** ./node_modules/gud/index.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {// @flow
+
+
+var key = '__global_unique_id__';
+
+module.exports = function() {
+  return global[key] = (global[key] || 0) + 1;
+};
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
 /***/ "./node_modules/history/esm/history.js":
 /*!*********************************************!*\
   !*** ./node_modules/history/esm/history.js ***!
@@ -4697,202 +4803,6 @@ function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
 
 module.exports = hoistNonReactStatics;
 
-
-/***/ }),
-
-/***/ "./node_modules/mini-create-react-context/dist/esm/index.js":
-/*!******************************************************************!*\
-  !*** ./node_modules/mini-create-react-context/dist/esm/index.js ***!
-  \******************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(global) {/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inheritsLoose */ "./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var tiny_warning__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tiny-warning */ "./node_modules/tiny-warning/dist/tiny-warning.esm.js");
-
-
-
-
-
-var MAX_SIGNED_31_BIT_INT = 1073741823;
-var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : {};
-
-function getUniqueId() {
-  var key = '__global_unique_id__';
-  return commonjsGlobal[key] = (commonjsGlobal[key] || 0) + 1;
-}
-
-function objectIs(x, y) {
-  if (x === y) {
-    return x !== 0 || 1 / x === 1 / y;
-  } else {
-    return x !== x && y !== y;
-  }
-}
-
-function createEventEmitter(value) {
-  var handlers = [];
-  return {
-    on: function on(handler) {
-      handlers.push(handler);
-    },
-    off: function off(handler) {
-      handlers = handlers.filter(function (h) {
-        return h !== handler;
-      });
-    },
-    get: function get() {
-      return value;
-    },
-    set: function set(newValue, changedBits) {
-      value = newValue;
-      handlers.forEach(function (handler) {
-        return handler(value, changedBits);
-      });
-    }
-  };
-}
-
-function onlyChild(children) {
-  return Array.isArray(children) ? children[0] : children;
-}
-
-function createReactContext(defaultValue, calculateChangedBits) {
-  var _Provider$childContex, _Consumer$contextType;
-
-  var contextProp = '__create-react-context-' + getUniqueId() + '__';
-
-  var Provider = /*#__PURE__*/function (_Component) {
-    Object(_babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_1__["default"])(Provider, _Component);
-
-    function Provider() {
-      var _this;
-
-      _this = _Component.apply(this, arguments) || this;
-      _this.emitter = createEventEmitter(_this.props.value);
-      return _this;
-    }
-
-    var _proto = Provider.prototype;
-
-    _proto.getChildContext = function getChildContext() {
-      var _ref;
-
-      return _ref = {}, _ref[contextProp] = this.emitter, _ref;
-    };
-
-    _proto.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-      if (this.props.value !== nextProps.value) {
-        var oldValue = this.props.value;
-        var newValue = nextProps.value;
-        var changedBits;
-
-        if (objectIs(oldValue, newValue)) {
-          changedBits = 0;
-        } else {
-          changedBits = typeof calculateChangedBits === 'function' ? calculateChangedBits(oldValue, newValue) : MAX_SIGNED_31_BIT_INT;
-
-          if (true) {
-            Object(tiny_warning__WEBPACK_IMPORTED_MODULE_3__["default"])((changedBits & MAX_SIGNED_31_BIT_INT) === changedBits, 'calculateChangedBits: Expected the return value to be a ' + '31-bit integer. Instead received: ' + changedBits);
-          }
-
-          changedBits |= 0;
-
-          if (changedBits !== 0) {
-            this.emitter.set(nextProps.value, changedBits);
-          }
-        }
-      }
-    };
-
-    _proto.render = function render() {
-      return this.props.children;
-    };
-
-    return Provider;
-  }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
-
-  Provider.childContextTypes = (_Provider$childContex = {}, _Provider$childContex[contextProp] = prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.object.isRequired, _Provider$childContex);
-
-  var Consumer = /*#__PURE__*/function (_Component2) {
-    Object(_babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_1__["default"])(Consumer, _Component2);
-
-    function Consumer() {
-      var _this2;
-
-      _this2 = _Component2.apply(this, arguments) || this;
-      _this2.state = {
-        value: _this2.getValue()
-      };
-
-      _this2.onUpdate = function (newValue, changedBits) {
-        var observedBits = _this2.observedBits | 0;
-
-        if ((observedBits & changedBits) !== 0) {
-          _this2.setState({
-            value: _this2.getValue()
-          });
-        }
-      };
-
-      return _this2;
-    }
-
-    var _proto2 = Consumer.prototype;
-
-    _proto2.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-      var observedBits = nextProps.observedBits;
-      this.observedBits = observedBits === undefined || observedBits === null ? MAX_SIGNED_31_BIT_INT : observedBits;
-    };
-
-    _proto2.componentDidMount = function componentDidMount() {
-      if (this.context[contextProp]) {
-        this.context[contextProp].on(this.onUpdate);
-      }
-
-      var observedBits = this.props.observedBits;
-      this.observedBits = observedBits === undefined || observedBits === null ? MAX_SIGNED_31_BIT_INT : observedBits;
-    };
-
-    _proto2.componentWillUnmount = function componentWillUnmount() {
-      if (this.context[contextProp]) {
-        this.context[contextProp].off(this.onUpdate);
-      }
-    };
-
-    _proto2.getValue = function getValue() {
-      if (this.context[contextProp]) {
-        return this.context[contextProp].get();
-      } else {
-        return defaultValue;
-      }
-    };
-
-    _proto2.render = function render() {
-      return onlyChild(this.props.children)(this.state.value);
-    };
-
-    return Consumer;
-  }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
-
-  Consumer.contextTypes = (_Consumer$contextType = {}, _Consumer$contextType[contextProp] = prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.object, _Consumer$contextType);
-  return {
-    Provider: Provider,
-    Consumer: Consumer
-  };
-}
-
-var index = react__WEBPACK_IMPORTED_MODULE_0___default.a.createContext || createReactContext;
-
-/* harmony default export */ __webpack_exports__["default"] = (index);
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
@@ -33149,7 +33059,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __HistoryContext, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter, BrowserRouter, HashRouter, Link, NavLink */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -33158,7 +33068,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HashRouter", function() { return HashRouter; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Link", function() { return Link; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NavLink", function() { return NavLink; });
-/* harmony import */ var react_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-router */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var react_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-router */ "./node_modules/react-router-dom/node_modules/react-router/esm/react-router.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MemoryRouter", function() { return react_router__WEBPACK_IMPORTED_MODULE_0__["MemoryRouter"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Prompt", function() { return react_router__WEBPACK_IMPORTED_MODULE_0__["Prompt"]; });
@@ -33172,8 +33082,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "StaticRouter", function() { return react_router__WEBPACK_IMPORTED_MODULE_0__["StaticRouter"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Switch", function() { return react_router__WEBPACK_IMPORTED_MODULE_0__["Switch"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "__HistoryContext", function() { return react_router__WEBPACK_IMPORTED_MODULE_0__["__HistoryContext"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "__RouterContext", function() { return react_router__WEBPACK_IMPORTED_MODULE_0__["__RouterContext"]; });
 
@@ -33517,11 +33425,208 @@ if (true) {
 
 /***/ }),
 
-/***/ "./node_modules/react-router/esm/react-router.js":
-/*!*******************************************************!*\
-  !*** ./node_modules/react-router/esm/react-router.js ***!
-  \*******************************************************/
-/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __HistoryContext, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter */
+/***/ "./node_modules/react-router-dom/node_modules/mini-create-react-context/dist/esm/index.js":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/react-router-dom/node_modules/mini-create-react-context/dist/esm/index.js ***!
+  \************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_inheritsLoose__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/inheritsLoose */ "./node_modules/@babel/runtime/helpers/inheritsLoose.js");
+/* harmony import */ var _babel_runtime_helpers_inheritsLoose__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inheritsLoose__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var gud__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! gud */ "./node_modules/gud/index.js");
+/* harmony import */ var gud__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(gud__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var tiny_warning__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tiny-warning */ "./node_modules/tiny-warning/dist/tiny-warning.esm.js");
+
+
+
+
+
+
+var MAX_SIGNED_31_BIT_INT = 1073741823;
+
+function objectIs(x, y) {
+  if (x === y) {
+    return x !== 0 || 1 / x === 1 / y;
+  } else {
+    return x !== x && y !== y;
+  }
+}
+
+function createEventEmitter(value) {
+  var handlers = [];
+  return {
+    on: function on(handler) {
+      handlers.push(handler);
+    },
+    off: function off(handler) {
+      handlers = handlers.filter(function (h) {
+        return h !== handler;
+      });
+    },
+    get: function get() {
+      return value;
+    },
+    set: function set(newValue, changedBits) {
+      value = newValue;
+      handlers.forEach(function (handler) {
+        return handler(value, changedBits);
+      });
+    }
+  };
+}
+
+function onlyChild(children) {
+  return Array.isArray(children) ? children[0] : children;
+}
+
+function createReactContext(defaultValue, calculateChangedBits) {
+  var _Provider$childContex, _Consumer$contextType;
+
+  var contextProp = '__create-react-context-' + gud__WEBPACK_IMPORTED_MODULE_3___default()() + '__';
+
+  var Provider =
+  /*#__PURE__*/
+  function (_Component) {
+    _babel_runtime_helpers_inheritsLoose__WEBPACK_IMPORTED_MODULE_1___default()(Provider, _Component);
+
+    function Provider() {
+      var _this;
+
+      _this = _Component.apply(this, arguments) || this;
+      _this.emitter = createEventEmitter(_this.props.value);
+      return _this;
+    }
+
+    var _proto = Provider.prototype;
+
+    _proto.getChildContext = function getChildContext() {
+      var _ref;
+
+      return _ref = {}, _ref[contextProp] = this.emitter, _ref;
+    };
+
+    _proto.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+      if (this.props.value !== nextProps.value) {
+        var oldValue = this.props.value;
+        var newValue = nextProps.value;
+        var changedBits;
+
+        if (objectIs(oldValue, newValue)) {
+          changedBits = 0;
+        } else {
+          changedBits = typeof calculateChangedBits === 'function' ? calculateChangedBits(oldValue, newValue) : MAX_SIGNED_31_BIT_INT;
+
+          if (true) {
+            Object(tiny_warning__WEBPACK_IMPORTED_MODULE_4__["default"])((changedBits & MAX_SIGNED_31_BIT_INT) === changedBits, 'calculateChangedBits: Expected the return value to be a ' + '31-bit integer. Instead received: ' + changedBits);
+          }
+
+          changedBits |= 0;
+
+          if (changedBits !== 0) {
+            this.emitter.set(nextProps.value, changedBits);
+          }
+        }
+      }
+    };
+
+    _proto.render = function render() {
+      return this.props.children;
+    };
+
+    return Provider;
+  }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+  Provider.childContextTypes = (_Provider$childContex = {}, _Provider$childContex[contextProp] = prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.object.isRequired, _Provider$childContex);
+
+  var Consumer =
+  /*#__PURE__*/
+  function (_Component2) {
+    _babel_runtime_helpers_inheritsLoose__WEBPACK_IMPORTED_MODULE_1___default()(Consumer, _Component2);
+
+    function Consumer() {
+      var _this2;
+
+      _this2 = _Component2.apply(this, arguments) || this;
+      _this2.state = {
+        value: _this2.getValue()
+      };
+
+      _this2.onUpdate = function (newValue, changedBits) {
+        var observedBits = _this2.observedBits | 0;
+
+        if ((observedBits & changedBits) !== 0) {
+          _this2.setState({
+            value: _this2.getValue()
+          });
+        }
+      };
+
+      return _this2;
+    }
+
+    var _proto2 = Consumer.prototype;
+
+    _proto2.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+      var observedBits = nextProps.observedBits;
+      this.observedBits = observedBits === undefined || observedBits === null ? MAX_SIGNED_31_BIT_INT : observedBits;
+    };
+
+    _proto2.componentDidMount = function componentDidMount() {
+      if (this.context[contextProp]) {
+        this.context[contextProp].on(this.onUpdate);
+      }
+
+      var observedBits = this.props.observedBits;
+      this.observedBits = observedBits === undefined || observedBits === null ? MAX_SIGNED_31_BIT_INT : observedBits;
+    };
+
+    _proto2.componentWillUnmount = function componentWillUnmount() {
+      if (this.context[contextProp]) {
+        this.context[contextProp].off(this.onUpdate);
+      }
+    };
+
+    _proto2.getValue = function getValue() {
+      if (this.context[contextProp]) {
+        return this.context[contextProp].get();
+      } else {
+        return defaultValue;
+      }
+    };
+
+    _proto2.render = function render() {
+      return onlyChild(this.props.children)(this.state.value);
+    };
+
+    return Consumer;
+  }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+  Consumer.contextTypes = (_Consumer$contextType = {}, _Consumer$contextType[contextProp] = prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.object, _Consumer$contextType);
+  return {
+    Provider: Provider,
+    Consumer: Consumer
+  };
+}
+
+var index = react__WEBPACK_IMPORTED_MODULE_0___default.a.createContext || createReactContext;
+
+/* harmony default export */ __webpack_exports__["default"] = (index);
+
+
+/***/ }),
+
+/***/ "./node_modules/react-router-dom/node_modules/react-router/esm/react-router.js":
+/*!*************************************************************************************!*\
+  !*** ./node_modules/react-router-dom/node_modules/react-router/esm/react-router.js ***!
+  \*************************************************************************************/
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -33533,7 +33638,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Router", function() { return Router; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StaticRouter", function() { return StaticRouter; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Switch", function() { return Switch; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__HistoryContext", function() { return historyContext; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__RouterContext", function() { return context; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "generatePath", function() { return generatePath; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "matchPath", function() { return matchPath; });
@@ -33549,7 +33653,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var history__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! history */ "./node_modules/history/esm/history.js");
 /* harmony import */ var tiny_warning__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tiny-warning */ "./node_modules/tiny-warning/dist/tiny-warning.esm.js");
-/* harmony import */ var mini_create_react_context__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! mini-create-react-context */ "./node_modules/mini-create-react-context/dist/esm/index.js");
+/* harmony import */ var mini_create_react_context__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! mini-create-react-context */ "./node_modules/react-router-dom/node_modules/mini-create-react-context/dist/esm/index.js");
 /* harmony import */ var tiny_invariant__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tiny-invariant */ "./node_modules/tiny-invariant/dist/tiny-invariant.esm.js");
 /* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
 /* harmony import */ var path_to_regexp__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! path-to-regexp */ "./node_modules/path-to-regexp/index.js");
@@ -33580,21 +33684,9 @@ var createNamedContext = function createNamedContext(name) {
   return context;
 };
 
-var historyContext =
-/*#__PURE__*/
-createNamedContext("Router-History");
-
-// TODO: Replace with React.createContext once we can assume React 16+
-
-var createNamedContext$1 = function createNamedContext(name) {
-  var context = Object(mini_create_react_context__WEBPACK_IMPORTED_MODULE_5__["default"])();
-  context.displayName = name;
-  return context;
-};
-
 var context =
 /*#__PURE__*/
-createNamedContext$1("Router");
+createNamedContext("Router");
 
 /**
  * The public API for putting history on context.
@@ -33662,16 +33754,14 @@ function (_React$Component) {
 
   _proto.render = function render() {
     return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(context.Provider, {
+      children: this.props.children || null,
       value: {
         history: this.props.history,
         location: this.state.location,
         match: Router.computeRootMatch(this.state.location.pathname),
         staticContext: this.props.staticContext
       }
-    }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(historyContext.Provider, {
-      children: this.props.children || null,
-      value: this.props.history
-    }));
+    });
   };
 
   return Router;
@@ -34278,7 +34368,7 @@ function useHistory() {
     !(typeof useContext === "function") ?  true ? Object(tiny_invariant__WEBPACK_IMPORTED_MODULE_6__["default"])(false, "You must use React >= 16.8 in order to use useHistory()") : undefined : void 0;
   }
 
-  return useContext(historyContext);
+  return useContext(context).history;
 }
 function useLocation() {
   if (true) {
@@ -34300,9 +34390,7 @@ function useRouteMatch(path) {
     !(typeof useContext === "function") ?  true ? Object(tiny_invariant__WEBPACK_IMPORTED_MODULE_6__["default"])(false, "You must use React >= 16.8 in order to use useRouteMatch()") : undefined : void 0;
   }
 
-  var location = useLocation();
-  var match = useContext(context).match;
-  return path ? matchPath(location.pathname, path) : match;
+  return path ? matchPath(useLocation().pathname, path) : useContext(context).match;
 }
 
 if (true) {
