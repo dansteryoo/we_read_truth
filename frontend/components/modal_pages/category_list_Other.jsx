@@ -77,7 +77,7 @@ const CategoryListOther = ({ eachDevoTitle, handleClick }) => {
         "BecauseHeLives": 'Because He Lives',
         "HymnsII": 'Hymns II',
         "TheMiraclesofJesus": 'The Miracles of Jesus',
-        "SongsfortheRoad:ThePsalmsofAscent": 'The Psalms of Ascent',
+        "SongsfortheRoad:ThePsalmsofAscent": 'Psalms of Ascent',
         "Women&MenintheWord:OldTestament": 'Old Testament Women & Men',
         "HymnsIII": 'Hymns III',
         "GiveThanks": 'Give Thanks',

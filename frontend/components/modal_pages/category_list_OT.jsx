@@ -19,7 +19,7 @@ const CategoryListOT = ({ eachDevoTitle, handleClick }) => {
         "Esther",
         "Job",
         "Psalms",
-        "Proverbs",
+        "Proverbs:TheWayofWisdom",
         "Ecclesiastes",
         "SongofSongs",
         "Isaiah",
@@ -38,7 +38,7 @@ const CategoryListOT = ({ eachDevoTitle, handleClick }) => {
         "nahum,habakkuk,zephaniah,andhaggai": "Nahum, Habakkuk, Zephaniah, & Haggai",
         "1&2kings": "1 & 2 Kings",
         "songofsongs": "Song of Songs",
-        "proverbs:theWayofwisdom" : "Proverbs",
+        "proverbs:thewayofwisdom": "Proverbs",
         "1&2samuel": "1 & 2 Samuel",
         "joel,amos,obadiah,jonah,andmicah": "Joel, Amos, Obadiah, Jonah, & Micah",
     };
