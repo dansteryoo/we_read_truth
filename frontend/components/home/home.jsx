@@ -30,7 +30,6 @@ class HomePage extends React.Component {
     };
 
     componentDidUpdate(prevProps) {
-        
         if (this.props.noteId !== prevProps.noteId) {
             debugger
             // const { id, title, category, tags, body } = this.props.mainBodyDevo;
@@ -41,9 +40,6 @@ class HomePage extends React.Component {
             //     tags: tags,
             //     body: body,
             // })
-
-
-
         }
     };
 
