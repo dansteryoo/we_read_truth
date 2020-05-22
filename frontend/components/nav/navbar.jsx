@@ -63,6 +63,13 @@ class NavBar extends React.Component {
         </div>
 
         <ul className="nav-links">
+          <li className="logout-li">
+            <a href="https://chrome.google.com/webstore/detail/mailto-for-gmail/dgkkmcknielgdhebimdnfahpipajcpjn" target="_blank">Chrome Ext</a>
+          </li>
+          
+          <li className="logout-li">
+            <a href="mailto:dansteryoo@gmail.com?subject=We Read Truth Feedback">Feedback</a>
+          </li>
           <li className="devo-li">
             <a>Devotionals</a>
             <ul className="dropdown-devos">
