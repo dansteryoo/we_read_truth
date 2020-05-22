@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MainBody = ({ mainBodyDevo, esvPassage }) => {
+const MainBody = ({ mainBodyDevo, fetchESVPassage }) => {
 
     if (mainBodyDevo === null) return (<div></div>)
 
@@ -29,7 +29,7 @@ const MainBody = ({ mainBodyDevo, esvPassage }) => {
                         return <li key={i}>{ele.trim()}</li>})
                     }</span>
                     <p>{devoPassages.map((ele, i) => {
-                        return <li key= {i}>{() => esvPassage(ele.trim())}</li>})
+                        return <li key= {i}>{() => fetchESVPassage(ele.trim())}</li>})
                     }</p>
                 </div>
                 <div className="form-or-separator-mainbody-summary">
