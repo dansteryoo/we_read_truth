@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import { closeModal, openModal } from '../../../actions/modal_actions';
 import { fetchDevo } from '../../../actions/devo_actions';
-
 import SideNav from './sidenav';
 
 const mapStateToProps = (state) => {
@@ -13,8 +12,11 @@ const mapStateToProps = (state) => {
         devoBook = Object.values(state.devos.devoBook).filter(ele => {
             return ele.title !== "Weekly Truth" && ele.title !== "Grace Day"
         })
+        if (devoBook[0].gender === "HE") {
+            devoBook.reverse()
+        }
     };
-    
+
     return {
         currentUser: state.users[state.session.id],
         errors: state.errors,

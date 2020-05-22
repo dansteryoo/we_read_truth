@@ -926,6 +926,10 @@ var mapStateToProps = function mapStateToProps(state) {
     devoBook = Object.values(state.devos.devoBook).filter(function (ele) {
       return ele.title !== "Weekly Truth" && ele.title !== "Grace Day";
     });
+
+    if (devoBook[0].gender === "HE") {
+      devoBook.reverse();
+    }
   }
 
   ;
