@@ -8,13 +8,14 @@ class SideNav extends React.Component {
         this.state = {
             book: '',
         }
-    }
+
+        this.handleGetDevo = this.handleGetDevo.bind(this);
+    };
 
     componentDidMount() {
-    }
+    };
 
     componentWillUnmount() {
-        // this.props.clearErrors();
     };
 
     componentDidUpdate(prevProps) {
@@ -25,6 +26,10 @@ class SideNav extends React.Component {
                 })
             }
         }
+    };
+
+    handleGetDevo(devoId) {
+        this.props.fetchDevo(devoId);
     };
     
 
@@ -134,7 +139,7 @@ class SideNav extends React.Component {
             "Proverbs:TheWayofWisdom": "Proverbs",
             "1&2Samuel": "1 & 2 Samuel",
             "Joel,Amos,Obadiah,Jonah,andMicah": "Joel, Amos, Obadiah, Jonah, & Micah",
-            "1&2thessalonians": "1 & 2 Thessalonians",
+            "1&2Thessalonians": "1 & 2 Thessalonians",
             "1&2Peter": "1 & 2 Peter",
             "1&2TimothyandTitus": "1 & 2 Timothy, & Titus",
             "ActsoftheApostles": "Acts",
@@ -205,7 +210,8 @@ class SideNav extends React.Component {
                             this.props.devoBook.map((dailyDevo, i) => (
                                 <SideNavItem
                                     days={i}
-                                    dailyDevoTitle={dailyDevo.title}
+                                    dailyDevo={dailyDevo}
+                                    handleGetDevo={this.handleGetDevo}
                                     key={dailyDevo.id}
                                 />
                             ))

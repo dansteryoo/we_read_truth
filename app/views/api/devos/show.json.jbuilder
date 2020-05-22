@@ -1,5 +1,1 @@
-json.partial! '/api/devos/devo', devos: @devos
-    # json.notes devo.notes do |note| 
-    #   json.note note 
-    #   json.notary note.notary
-    # end
+json.extract! @devos, :id, :gender, :book, :title, :passages, :summary, :img

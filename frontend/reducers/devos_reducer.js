@@ -9,7 +9,7 @@ const devosReducer = (oldState = {}, action) => {
             return Object.assign({}, newState, action.devoBook);
 
         case RECEIVE_DEVO:
-            return Object.assign({}, newState, { [action.devo.id]: action.devo });
+            return Object.assign({}, newState, { mainBodyDevo: action.devo });
 
         case RECEIVE_DEVO_INDEX:
             let devoIndex = (data) => {
