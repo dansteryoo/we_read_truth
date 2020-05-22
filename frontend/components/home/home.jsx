@@ -11,10 +11,14 @@ class HomePage extends React.Component {
         this.state = {
             leftOpen: true,
             rightOpen: true,
+            img: '',
+            title: '',
+            summary: '',
+            passages: [],
         }
 
         this.toggleSidebar = this.toggleSidebar.bind(this);
-        this.handleClick = this.handleClick.bind(this);
+        this.esvPassage = this.esvPassage.bind(this);
     };
 
     componentDidMount() {
@@ -27,25 +31,23 @@ class HomePage extends React.Component {
 
     componentDidUpdate(prevProps) {
         
-        // if (this.props.noteId !== prevProps.noteId) {
-        //     const { id, title, category, tags, body } = this.props.noteId;
-        //     this.setState({
-        //         id: id,
-        //         title: title,
-        //         category: category,
-        //         tags: tags,
-        //         body: body,
-        //     })
-        // }
+        if (this.props.noteId !== prevProps.noteId) {
+            debugger
+            // const { id, title, category, tags, body } = this.props.mainBodyDevo;
+            // this.setState({
+            //     id: id,
+            //     title: title,
+            //     category: category,
+            //     tags: tags,
+            //     body: body,
+            // })
+
+
+
+        }
     };
 
-    handleClick(e) {
-        e.preventDefault();
-        this.setState({
-            day: "",
-            title: "",
-            passage: "",
-        })
+    esvPassage(passage) {
     };
 
     toggleSidebar(event) {
@@ -100,7 +102,9 @@ class HomePage extends React.Component {
                     {/* 
                         MAIN BODY 
                     */}
-                    <MainBody/>
+                    <MainBody 
+                        mainBodyDevo={this.props.mainBodyDevo}
+                        esvPassage={this.esvPassage}/>
                 </div>
             </div>
 
