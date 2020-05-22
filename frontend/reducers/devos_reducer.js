@@ -17,6 +17,7 @@ const devosReducer = (oldState = {}, action) => {
                 Object.values(data).forEach((ele, i) => hash[i] = ele)
                 return hash
             };
+            delete newState.mainBodyDevo
             return Object.assign({}, newState, devoIndex(action.devoIndex));
 
         case CLEAR_DEVO_STATE:

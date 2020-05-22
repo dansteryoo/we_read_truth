@@ -679,7 +679,7 @@ var MainBody = function MainBody(_ref) {
       title = mainBodyDevo.title;
   var devoPassages = passages.split(', ');
   var summaryFormat = summary.split('\n').map(function (item, i) {
-    if (item !== '') {
+    if (item.trim() !== '') {
       if (item.slice(0, 17) !== "Scripture Reading") {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           key: i
@@ -1227,7 +1227,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var mapStateToProps = function mapStateToProps(state) {
-  var allDevosIdxFiltered = Object.values(state.devos).filter(function (ele) {
+  var deleteMainBodyDevo;
+
+  if (state.devos.mainBodyDevo) {
+    deleteMainBodyDevo = Object.values(state.devos).filter(function (ele) {
+      return ele.id === undefined;
+    });
+  } else {
+    deleteMainBodyDevo = Object.values(state.devos);
+  }
+
+  var allDevosIdxFiltered = deleteMainBodyDevo.filter(function (ele) {
     return ele.gender === "HE" || ele.gender === "SHE";
   });
   var allDevosIdx = allDevosIdxFiltered.map(function (each) {
@@ -3101,6 +3111,7 @@ var devosReducer = function devosReducer() {
         return hash;
       };
 
+      delete newState.mainBodyDevo;
       return Object.assign({}, newState, devoIndex(action.devoIndex));
 
     case _actions_devo_actions__WEBPACK_IMPORTED_MODULE_0__["CLEAR_DEVO_STATE"]:
