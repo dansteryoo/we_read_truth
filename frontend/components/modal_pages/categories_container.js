@@ -4,8 +4,18 @@ import { fetchDevoIndex, clearDevoState, fetchDevoBook } from '../../actions/dev
 import CategoriesPage from './categories';
 
 const mapStateToProps = (state) => {
+
+    let deleteMainBodyDevo;
     
-    let allDevosIdxFiltered = Object.values(state.devos).filter(ele => {
+    if (state.devos.mainBodyDevo) {
+        deleteMainBodyDevo = Object.values(state.devos).filter(ele => {
+            return ele.id === undefined
+        })
+    } else {
+        deleteMainBodyDevo = Object.values(state.devos)
+    }
+    
+    let allDevosIdxFiltered = deleteMainBodyDevo.filter(ele => {
         return ele.gender === "HE" || ele.gender === "SHE"
     });
 
@@ -22,7 +32,7 @@ const mapStateToProps = (state) => {
         sheDevoIdx = allDevosIdx.filter(ele => ele.gender === "SHE");
     } else {
         heDevoIdx = allDevosIdx.filter(ele => (
-            ele.gender === "HE" && ele.book.match(state.modal.data)
+            ele.gender === "HE" && ele.book.match(state.modal.data) 
         ));
         sheDevoIdx = allDevosIdx.filter(ele => (
             ele.gender === "SHE" && ele.book.match(state.modal.data)

@@ -9,7 +9,7 @@ const MainBody = ({ mainBodyDevo, fetchESVPassage }) => {
     let devoPassages = passages.split(', ');
 
     let summaryFormat = summary.split('\n').map((item, i) => {
-        if (item !== '') {
+        if (item.trim() !== '') {
             if (item.slice(0, 17) !== "Scripture Reading") {
                 return <p key={i}><br />{item}</p>
             } 
