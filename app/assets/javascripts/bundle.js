@@ -491,7 +491,7 @@ var HomePage = /*#__PURE__*/function (_React$Component) {
       passages: []
     };
     _this.toggleSidebar = _this.toggleSidebar.bind(_assertThisInitialized(_this));
-    _this.esvPassage = _this.esvPassage.bind(_assertThisInitialized(_this));
+    _this.fetchESVPassage = _this.fetchESVPassage.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -508,8 +508,7 @@ var HomePage = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
-      if (this.props.noteId !== prevProps.noteId) {
-        debugger; // const { id, title, category, tags, body } = this.props.mainBodyDevo;
+      if (this.props.noteId !== prevProps.noteId) {// const { id, title, category, tags, body } = this.props.mainBodyDevo;
         // this.setState({
         //     id: id,
         //     title: title,
@@ -520,8 +519,8 @@ var HomePage = /*#__PURE__*/function (_React$Component) {
       }
     }
   }, {
-    key: "esvPassage",
-    value: function esvPassage(passage) {}
+    key: "fetchESVPassage",
+    value: function fetchESVPassage(passage) {}
   }, {
     key: "toggleSidebar",
     value: function toggleSidebar(event) {
@@ -560,7 +559,7 @@ var HomePage = /*#__PURE__*/function (_React$Component) {
         className: "content"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_main_body__WEBPACK_IMPORTED_MODULE_4__["default"], {
         mainBodyDevo: this.props.mainBodyDevo,
-        esvPassage: this.esvPassage
+        esvPassage: this.fetchESVPassage
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "right",
         className: rightOpen
@@ -672,7 +671,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var MainBody = function MainBody(_ref) {
   var mainBodyDevo = _ref.mainBodyDevo,
-      esvPassage = _ref.esvPassage;
+      fetchESVPassage = _ref.fetchESVPassage;
   if (mainBodyDevo === null) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
   var img = mainBodyDevo.img,
       passages = mainBodyDevo.passages,
@@ -704,7 +703,7 @@ var MainBody = function MainBody(_ref) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
       key: i
     }, function () {
-      return esvPassage(ele.trim());
+      return fetchESVPassage(ele.trim());
     });
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "form-or-separator-mainbody-summary"

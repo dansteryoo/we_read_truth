@@ -18,7 +18,7 @@ class HomePage extends React.Component {
         }
 
         this.toggleSidebar = this.toggleSidebar.bind(this);
-        this.esvPassage = this.esvPassage.bind(this);
+        this.fetchESVPassage = this.fetchESVPassage.bind(this);
     };
 
     componentDidMount() {
@@ -31,7 +31,6 @@ class HomePage extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.noteId !== prevProps.noteId) {
-            debugger
             // const { id, title, category, tags, body } = this.props.mainBodyDevo;
             // this.setState({
             //     id: id,
@@ -43,7 +42,7 @@ class HomePage extends React.Component {
         }
     };
 
-    esvPassage(passage) {
+    fetchESVPassage(passage) {
     };
 
     toggleSidebar(event) {
@@ -100,7 +99,7 @@ class HomePage extends React.Component {
                     */}
                     <MainBody 
                         mainBodyDevo={this.props.mainBodyDevo}
-                        esvPassage={this.esvPassage}/>
+                        esvPassage={this.fetchESVPassage}/>
                 </div>
             </div>
 
