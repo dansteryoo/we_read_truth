@@ -26,13 +26,21 @@ $darkpink: #ff8da1;
 
     .devo-main-passages {
         display: flex;
-        justify-content: center;
-        padding: 20px 0 27px;
+        justify-content: left;
+        padding: 30px 0 0;
         
         span {
             font-size: 16px;
             letter-spacing: 0.01rem;
             font-weight: bold;
+        }
+
+        p {
+            font-size: 14px;
+            letter-spacing: 0.01rem;
+            font-weight: 400;
+            line-height: 1.5rem;
+            padding: 0 50px 0 25px;
         }
     }
 
@@ -40,9 +48,10 @@ $darkpink: #ff8da1;
         display: flex;
         justify-content: space-between;
         padding: 0 0 40px;
+        width: 100%;
 
         p {
-            font-size: 16px;
+            font-size: 15px;
             letter-spacing: 0.01rem;
             line-height: 2rem;
         }
@@ -58,11 +67,11 @@ $darkpink: #ff8da1;
         }
     }
 
-    .devo-main-footer {
-        span {
+    // .devo-main-footer {
+    //     span {
             
-        }
-    }
+    //     }
+    // }
 }
 
 .form-or-separator-mainbody-passages hr,

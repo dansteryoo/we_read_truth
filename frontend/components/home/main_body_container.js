@@ -2,10 +2,10 @@ import { connect } from 'react-redux';
 import { closeModal, openModal } from '../../actions/modal_actions';
 import { clearDevoState } from '../../actions/devo_actions'
 import { clearErrors } from '../../actions/session_actions';
-import HomePage from './home';
+import MainBody from './main_body';
 
 const mapStateToProps = (state) => {
-
+    
     return {
         currentUser: state.users[state.session.id],
         errors: state.errors,
@@ -20,4 +20,4 @@ const mapDispatchToProps = (dispatch) => ({
     clearDevoState: () => dispatch(clearDevoState())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default connect(mapStateToProps, mapDispatchToProps)(MainBody);

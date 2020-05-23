@@ -1,8 +1,8 @@
 import React from 'react';
 import SidNavContainer from './sidenav/sidenav_container';
 import NavBarContainer from '../nav/navbar_container';
-import NotesFormContainer from '../notes/notes_form_container'
-import MainBody from './main_body'
+import NotesFormContainer from '../notes/notes_form_container';
+import MainBodyContainer from './main_body_container';
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -11,14 +11,9 @@ class HomePage extends React.Component {
         this.state = {
             leftOpen: true,
             rightOpen: true,
-            img: '',
-            title: '',
-            summary: '',
-            passages: [],
         }
 
         this.toggleSidebar = this.toggleSidebar.bind(this);
-        this.fetchESVPassage = this.fetchESVPassage.bind(this);
     };
 
     componentDidMount() {
@@ -30,24 +25,18 @@ class HomePage extends React.Component {
     };
 
     componentDidUpdate(prevProps) {
-        if (this.props.noteId !== prevProps.noteId) {
-            // const { id, title, category, tags, body } = this.props.mainBodyDevo;
-            // this.setState({
-            //     id: id,
-            //     title: title,
-            //     category: category,
-            //     tags: tags,
-            //     body: body,
-            // })
+        if (this.props.mainBodyDevo !== prevProps.mainBodyDevo) {
         }
-    };
-
-    fetchESVPassage(passage) {
     };
 
     toggleSidebar(event) {
         let key = `${event.currentTarget.parentNode.id}Open`;
         this.setState({ [key]: !this.state[key] });
+    };
+
+    renderMainBody() {
+        if (this.props.mainBodyDevo === null) return (<div></div>)
+        return <MainBodyContainer/>
     };
 
     render() {
@@ -56,9 +45,12 @@ class HomePage extends React.Component {
         let rightOpen = this.state.rightOpen ? 'open' : 'closed';
 
         const { currentUser } = this.props;
+
         
         return (
             <>
+            {/* ---------- TOP NAV  ---------- */}
+
             <NavBarContainer />
             <div id='layout'>
 
@@ -74,9 +66,9 @@ class HomePage extends React.Component {
                         </h3>
                     </div>
                     <div className='left-content'>
-                        {/* 
-                            SIDE NAV
-                        */}
+                    
+                    {/* ---------- SIDE NAV  ---------- */}
+
                         <SidNavContainer/>
 
                     </div>
@@ -94,12 +86,12 @@ class HomePage extends React.Component {
                     </h3>
                 </div>
                 <div className='content'>
-                    {/* 
-                        MAIN BODY 
-                    */}
-                    <MainBody 
-                        mainBodyDevo={this.props.mainBodyDevo}
-                        esvPassage={this.fetchESVPassage}/>
+
+                    {/* ---------- MAIN BODY START ---------- */}
+
+                            {this.renderMainBody()}
+
+                    {/* ---------- MAIN BODY END ---------- */}
                 </div>
             </div>
 
@@ -115,9 +107,9 @@ class HomePage extends React.Component {
                         </h3>
                     </div>
                     <div className='content'>
-                        {/* 
-                            NOTES FORM 
-                        */}
+
+                    {/* ---------- NOTE FORM ---------- */}
+
                         <NotesFormContainer />
                     </div>
                 </div>
