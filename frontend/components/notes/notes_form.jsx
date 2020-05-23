@@ -220,7 +220,7 @@ class NotesForm extends React.Component {
                                 </div>
                                 <div className='button-container'>
                                     <button className='notes-form-submit-button' type='submit'>
-                                        Submit
+                                        Update
                                     </button>
                                 </div>
                             </div>
@@ -282,7 +282,7 @@ class NotesForm extends React.Component {
                                 </div>
                                 <div className='button-container'>
                                     <button className='notes-form-submit-button' type='submit'>
-                                        Submit
+                                        Create
                                     </button>
                                 </div>
                             </div>

@@ -1,48 +1,205 @@
 import React from 'react';
+import axios from 'axios';
+import { ESVAPI, API_URL } from '../../../esv';
 
-const MainBody = ({ mainBodyDevo, fetchESVPassage }) => {
+class MainBody extends React.Component {
+    constructor(props) {
+        super(props);
 
-    if (mainBodyDevo === null) return (<div></div>)
-
-    const { img, passages, summary, title } = mainBodyDevo;
-
-    let devoPassages = passages.split(', ');
-
-    let summaryFormat = summary.split('\n').map((item, i) => {
-        if (item.trim() !== '') {
-            if (item.slice(0, 17) !== "Scripture Reading") {
-                return <p key={i}><br />{item}</p>
-            } 
+        this.state = {
+            id: null,
+            title: '',
+            passages: [],
+            summary: '', 
+            img: '',
+            esvPassage: [],
+            mainBodyChanged: false,
         }
-    });
+
+        this.ESVpassageGetter = this.ESVpassageGetter.bind(this);
+    };
+
+    //---------- ESV.ORG API CALL ----------//
+
+    ESVpassageGetter(passage) {
+        axios.get(API_URL, {
+            crossDomain: true,
+            params: {
+                'q': passage,
+                'include-headings': false,
+                'include-footnotes': false,
+                'include-verse-numbers': false,
+                'include-short-copyright': false,
+                'include-passage-references': false
+            },
+            headers: {
+                'Authorization': ESVAPI,
+            }
+        })
+        .then(res => {
+            if (res.status === 200) {
+                return this.setState({ 
+                    esvPassage: [ 
+                        ...this.state.esvPassage, 
+                        { 
+                        passage: res.config.params.q, 
+                        text: res.data.passages[0] 
+                        }
+                    ]
+                }
+            )
+            } else {
+                return 'Error: Passage not found'
+            }
+        })
+    }
+
+    //---------- REACT LIFE CYCLES ----------//
+
+    componentDidMount() {
+        const { id, img, passages, summary, title } = this.props.mainBodyDevo;
+
+        passages.split(', ').forEach(each => {
+            return this.ESVpassageGetter(each.trim())
+        })
+        
+        this.setState({
+            id: id,
+            title: title,
+            passages: passages,
+            summary: summary,
+            img: img,
+            mainBodyChanged: true,
+        })
+    };
+
+    componentWillUnmount() {
+        this.setState({ 
+            id: null, 
+            mainBodyChanged: false, 
+            esvPassage: [] 
+        })
+    };
+
+    componentDidUpdate(prevProps) {
+
+        if (this.state.mainBodyChanged) {
+            this.setState({ mainBodyChanged: false })
+        }
+
+        if (this.props.mainBodyDevo.id !== prevProps.mainBodyDevo.id) {
+
+            //---------- PREVENTS DUPS in esvPassage ----------//
+
+            this.setState({ esvPassage: [] })
+
+            const { id, img, passages, summary, title } = this.props.mainBodyDevo;
+
+            passages.split(', ').forEach(each => {
+                return this.ESVpassageGetter(each.trim())
+            })
+
+            this.setState({
+                id: id,
+                title: title,
+                passages: passages,
+                summary: summary,
+                img: img,
+                mainBodyChanged: true,
+            })
+        }
+    };
+
+    //---------- RENDER FUNCTIONS ----------//
+
+    renderPassages() {
+
+        const { passages, esvPassage } = this.state; 
+
+        if (passages.length !== 0) {
+            if (esvPassage.length === passages.split(', ').length) {
+
+                function newPassageData (propsPassage, esvText) {
+                    let newHash = [];
+
+                    propsPassage.forEach(ele => {
+                        esvText.forEach(each => {
+                            if (each.passage === ele.trim()) {
+                                newHash.push({
+                                    passage: ele.trim(),
+                                    text: each.text
+                                })
+                            }
+                        })
+                    })
+
+                    return newHash
+                };
+
+                let newEsvData = newPassageData(passages.split(', '), esvPassage);
+
+                return (
+                    newEsvData.map((each, i) => {
+                        let eachText = each.text.split('\n').map((item, i) => {
+                            return <p key={'bible-text' + i + Math.random()}>{item}<br /></p>
+                        });
+
+                        return (
+                            <li key={'esv-passages' + i}>
+                                <span className="bible-passage">{each.passage}</span>
+                                <br />
+                                <br />
+                                {eachText}
+                            </li>
+                        )
+                    })
+                )
+            }
+        }
+    }
+
+    renderSummary() {
+        return (
+            this.state.summary.split('\n').map((item, i) => {
+                if (item.trim() !== '') {
+                    if (item.slice(0, 17) !== "Scripture Reading") {
+                        if (item.slice(0, 5) !== "Text:") {
+                        return <p key={'summary' + i}><br />{item}</p>
+                        }
+                    }
+                }
+            })
+        )
+    }
+
+    render() {
 
         return (
             <div className='devo-main-container'>
                 <div className='devo-main-title'>
-                    <span>{title}</span>
+                    <span>{this.state.title}</span>
                 </div>
                 <div className="form-or-separator-mainbody-passages">
                     <hr />
                 </div>
                 <div className='devo-main-passages'>
-                    <span>{devoPassages.map((ele, i) => {
-                        return <li key={i}>{ele.trim()}</li>})
-                    }</span>
-                    <p>{devoPassages.map((ele, i) => {
-                        return <li key= {i}>{() => fetchESVPassage(ele.trim())}</li>})
-                    }</p>
+                    
+                    <span>{this.renderPassages()}</span>
+
                 </div>
                 <div className="form-or-separator-mainbody-summary">
                     <hr />
                 </div>
                 <div className="devo-main-body">
-                    <p>{summaryFormat}</p>
+
+                    <span>{this.renderSummary()}</span>
+
                 </div>
                 <div className="form-or-separator-mainbody-image">
                     <hr />
                 </div>
                 <div className='devo-main-image'>
-                    <img src={img}/>
+                    <img src={this.state.img}/>
                 </div>
                 <div className='devo-main-footer'>
                     <span>{}</span>
@@ -50,6 +207,6 @@ const MainBody = ({ mainBodyDevo, fetchESVPassage }) => {
             </div>
         )
     };
-
+}
 
 export default MainBody;
