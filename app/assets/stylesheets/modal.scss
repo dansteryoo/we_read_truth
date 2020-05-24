@@ -116,6 +116,7 @@ $darkpink: #ff8da1;
 //------------------Each Note li
 
 .note-li {
+    position: relative;
     box-sizing: border-box;
     background-color: white;
     padding: 15px 20px;
@@ -144,17 +145,42 @@ $darkpink: #ff8da1;
   cursor: default;
 }
 
-// .note-li:active {
-//   opacity: 70%;
-//   box-shadow: 0 0 20px 5px $mint;
-//   cursor: default;
+// .note-container-flip {
+//   position: absolute;
+//   transform-style: preserve-3d;
+//   transition: all 1.0s ease;
 // }
+
+// .flipper {
+//   transform: rotateY(180deg);
+// }
+
+.note-front,
+.note-back {
+  position: absolute;
+  backface-visibility: hidden;
+  transform: rotateY(180deg);
+}
+
+.note-delete-body {
+    display: flex;
+    justify-content: center;
+
+    p {
+      font-size: 20px;
+      font-weight: bold;
+      color: red;
+    }
+}
+
 .note-button-container {
   display: flex;
   justify-content: space-between;
+  width: 218px;
 
   .note-delete,
-  .note-update {
+  .note-update,
+  .note-cancel {
     width: 70px;
     height: 25px;
     color: white;
@@ -170,23 +196,28 @@ $darkpink: #ff8da1;
   .note-delete {
     background-color: $orange;
   }
+
   .note-update {
     background-color: $blue;
   }
 
+  .note-cancel {
+    background-color: $darkgray;
+  }
+
   .note-delete:hover,
-  .note-update:hover {
+  .note-update:hover,
+  .note-cancel:hover {
     box-shadow: 0 2px 6px 2px $lightgray;
   }
 
   .note-delete:active,
-  .note-update:active {
+  .note-update:active,
+  .note-cancel:active {
     opacity: 60%;
     box-shadow: 0 2px 6px 2px $lightgray;
   }
 }
-
-
 
 //------------------Categories Page Modal
 

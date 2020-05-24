@@ -1,35 +1,61 @@
 import React from 'react';
 
-const NotesItem = ({ eachNote, handleUpdate, deleteNote }) => {
-    
+const NotesItem = ({ eachNote, handleUpdate, deleteNote, toggleClass, flipToDelete, noteId }) => {
+
     return (
         <li className='note-li'>
-            <div className='note-title'>
-                <span>Title: </span>{eachNote.title}
-            </div>
-            <div className='note-body'>
-                <span>Preview: </span>{eachNote.body}
-            </div>
-            <div className='note-bottom'>
-                <span>Categories: </span>{eachNote.category}
-                <br/>
-                <span>Tags: </span>{eachNote.tags}
-            </div>
 
-            <div className='note-time'>
-                <span>Created: </span>{new Date(eachNote.created_at).toString().slice(0, 15)}
-                <br/>
-                <span>Updated: </span>{new Date(eachNote.updated_at).toString().slice(0, 15)}
-            </div>
+            {/* ---------- NOTE FRONT ---------- */}
+        <div className='note-container-flip'>
+            <div className={flipToDelete && noteId === eachNote.id ? 'note-back' : null}>
+                <div className='note-title'>
+                    <span>Title: </span>{eachNote.title}
+                </div>
+                <div className='note-body'>
+                    <span>Preview: </span>{eachNote.body}
+                </div>
+                <div className='note-bottom'>
+                    <span>Categories: </span>{eachNote.category}
+                    <br/>
+                    <span>Tags: </span>{eachNote.tags}
+                </div>
 
-            <div className='note-button-container'>
-                <button className='note-delete'  onClick={() => deleteNote(eachNote.id)}>
-                    Delete
-                </button>
-                <button className='note-update' onClick={() => handleUpdate(eachNote.id)}>
-                    Update
-                </button>
+                <div className='note-time'>
+                    <span>Created: </span>{new Date(eachNote.created_at).toString().slice(0, 15)}
+                    <br/>
+                    <span>Updated: </span>{new Date(eachNote.updated_at).toString().slice(0, 15)}
+                </div>
+
+                <div className='note-button-container'>
+                    <button className='note-delete' onClick={() => toggleClass(eachNote.id)}>
+                        Delete
+                    </button>
+                    <button className='note-update' onClick={() => handleUpdate(eachNote.id)}>
+                        Update
+                    </button>
+                </div>
             </div>
+        </div>
+
+            {/* ---------- NOTE BACK ---------- */}
+
+        <div className='note-container-flip'>
+            <div className={flipToDelete && noteId === eachNote.id ? null : 'note-front'}>
+                <div className='note-button-container'>
+                    <button className='note-delete' onClick={() => deleteNote(eachNote.id)}>
+                        Delete
+                    </button>
+                    <button className='note-cancel' onClick={toggleClass}>
+                        Cancel
+                    </button>
+                </div>
+                <br />
+                <br />
+                <div className='note-delete-body'>
+                    <p>Delete Note?</p>
+                </div>
+            </div>
+        </div>
         </li>
     )
 }

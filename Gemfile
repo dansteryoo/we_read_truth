@@ -2,9 +2,7 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.5.1'
-gem 'resolv-ipv6favor'
 gem 'rails_12factor'
-gem 'esv_api'
 gem 'table_print'
 gem 'bcrypt'
 gem 'jquery-rails'
