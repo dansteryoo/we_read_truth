@@ -37,8 +37,7 @@ class NotesPage extends React.Component {
     };
 
     render() {
-        console.log('this.state.noteId')
-        console.log(this.state.noteId)
+
         const { currentUser, notes, fetchNote, closeModal, deleteNote } = this.props
 
         let currentUser_firstName; 
