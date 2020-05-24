@@ -6,9 +6,13 @@ class NotesPage extends React.Component {
         super(props);
 
         this.state = {
+            flipToDelete: false,
+            noteId: '',
         };
 
         this.handleUpdate = this.handleUpdate.bind(this);
+        this.toggleClass = this.toggleClass.bind(this);
+        // this.addActiveClass = this.addActiveClass.bind(this);
     };
 
     componentDidMount() {
@@ -24,8 +28,17 @@ class NotesPage extends React.Component {
         .then(() => this.props.closeModal())
     };
 
+    toggleClass(noteId) {
+        const currentState = this.state.flipToDelete;
+        this.setState({ 
+            flipToDelete: !currentState,
+            noteId: noteId
+        });
+    };
+
     render() {
-    
+        console.log('this.state.noteId')
+        console.log(this.state.noteId)
         const { currentUser, notes, fetchNote, closeModal, deleteNote } = this.props
 
         let currentUser_firstName; 
@@ -77,6 +90,9 @@ class NotesPage extends React.Component {
                                     {notes.map((eachNote) => (
                                         <NotesItem 
                                             handleUpdate={this.handleUpdate}
+                                            toggleClass={this.toggleClass}
+                                            flipToDelete={this.state.flipToDelete}
+                                            noteId={this.state.noteId}
                                             deleteNote={deleteNote}
                                             fetchNote={fetchNote}
                                             eachNote={eachNote} 
