@@ -12,12 +12,12 @@ const NotesItem = ({ eachNote, handleUpdate, deleteNote, toggleClass, flipToDele
                     <span>Title: </span>{eachNote.title}
                 </div>
                 <div className='note-body'>
-                    <span>Preview: </span>{eachNote.body}
+                    <span>Body: </span>{eachNote.body}
                 </div>
                 <div className='note-bottom'>
-                    <span>Categories: </span>{eachNote.category}
+                    <span>Passages: </span>{eachNote.category}
                     <br/>
-                    <span>Tags: </span>{eachNote.tags}
+                    <span>#Day: </span>{eachNote.tags}
                 </div>
 
                 <div className='note-time'>
