@@ -3,11 +3,11 @@ import React from 'react';
 const NotesItem = ({ eachNote, handleUpdate, deleteNote, toggleClass, flipToDelete, noteId }) => {
 
     return (
-        <li className='note-li'>
+        <li className={flipToDelete && noteId === eachNote.id ? 'note-flip' : 'note-li'}>
 
             {/* ---------- NOTE FRONT ---------- */}
-        <div className='note-container-flip'>
-            <div className={flipToDelete && noteId === eachNote.id ? 'note-back' : null}>
+            
+            <div className='note-front'>
                 <div className='note-title'>
                     <span>Title: </span>{eachNote.title}
                 </div>
@@ -35,12 +35,10 @@ const NotesItem = ({ eachNote, handleUpdate, deleteNote, toggleClass, flipToDele
                     </button>
                 </div>
             </div>
-        </div>
 
             {/* ---------- NOTE BACK ---------- */}
-
-        <div className='note-container-flip'>
-            <div className={flipToDelete && noteId === eachNote.id ? null : 'note-front'}>
+            
+            <div className='note-back'>
                 <div className='note-button-container'>
                     <button className='note-delete' onClick={() => deleteNote(eachNote.id)}>
                         Delete
@@ -55,7 +53,6 @@ const NotesItem = ({ eachNote, handleUpdate, deleteNote, toggleClass, flipToDele
                     <p>Delete Note?</p>
                 </div>
             </div>
-        </div>
         </li>
     )
 }

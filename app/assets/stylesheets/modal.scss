@@ -114,18 +114,17 @@ $darkpink: #ff8da1;
 }
 
 //------------------Each Note li
-
+.note-flip, 
 .note-li {
     position: relative;
-    box-sizing: border-box;
-    background-color: white;
+    transform-style: preserve-3d;
+    transform: translateZ(0);
+    transition: all 1.0s ease;
     padding: 15px 20px;
-    border: 1px solid $lightgray;
     border-radius: 10px;
-    box-shadow: 0 2px 6px 0 $lightgray;
     margin: 10px;
-    width: 260px;
-    height: 215px;
+    width: 220px;
+    height: 185px;
 
     span {
       font-weight: bold;
@@ -140,25 +139,33 @@ $darkpink: #ff8da1;
     }
 }
 
-.note-li:hover {
+.note-flip {
+  transform: rotateY(180deg);
+}
+
+.note-front:hover,
+.note-back:hover {
   box-shadow: 0 0 20px 5px $mint;
   cursor: default;
 }
 
-// .note-container-flip {
-//   position: absolute;
-//   transform-style: preserve-3d;
-//   transition: all 1.0s ease;
-// }
-
-// .flipper {
-//   transform: rotateY(180deg);
-// }
-
 .note-front,
 .note-back {
-  position: absolute;
-  backface-visibility: hidden;
+    position: absolute;
+    backface-visibility: hidden;
+    -webkit-backface-visibility:hidden;
+    background-color: white;
+    padding: 15px 20px;
+    border: 1px solid $lightgray;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px 0 $lightgray;
+    width: 220px;
+    height: 185px;
+    top: -1px;
+    left: -1px;
+}
+
+.note-back {
   transform: rotateY(180deg);
 }
 

@@ -30,10 +30,11 @@ class NotesPage extends React.Component {
 
     toggleClass(noteId) {
         const currentState = this.state.flipToDelete;
-        this.setState({ 
+        
+        this.setState({
             flipToDelete: !currentState,
             noteId: noteId
-        });
+        })
     };
 
     render() {
