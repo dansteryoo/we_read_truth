@@ -203,14 +203,14 @@ class NotesForm extends React.Component {
                                 {/* categories and tags */}
 
                                 <div className='notes-form-bottom'>
-                                    <label>Category</label>
+                                    <label>Passages</label>
                                     <input type='text'
                                         className='notes-form-input'
                                         onChange={this.handleChange('category')}
                                         value={this.state.category}
                                     // required   
                                     />
-                                    <label>#Tags</label>
+                                    <label>#Day</label>
                                     <input type='text'
                                         className='notes-form-input'
                                         onChange={this.handleChange('tags')}
@@ -265,14 +265,14 @@ class NotesForm extends React.Component {
                                 {/* categories and tags */}
 
                                 <div className='notes-form-bottom'>
-                                    <label>Category</label>
+                                    <label>Passages</label>
                                     <input type='text'
                                         className='notes-form-input'
                                         value={this.state.category}
                                         onChange={this.handleChange('category')}
                                     // required   
                                     />
-                                    <label>#Tags</label>
+                                    <label>#Day</label>
                                     <input type='text'
                                         className='notes-form-input'
                                         value={this.state.tags}
