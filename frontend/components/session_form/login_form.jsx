@@ -55,7 +55,7 @@ class LogInForm extends React.Component {
                 <form onSubmit={this.handleSubmit} className='form'>
                     {this.renderErrors()}
                     <div className='form'>
-                        <br />
+
                         <input type='text'
                             className='form-input'
                             value={this.state.email}
@@ -64,7 +64,7 @@ class LogInForm extends React.Component {
                             // required
                         />
                         <i id='form-icon-login' className='fas fa-envelope fa-lg'></i>
-                        <br />
+
                         <input type='password'
                             className='form-input'
                             value={this.state.password}
