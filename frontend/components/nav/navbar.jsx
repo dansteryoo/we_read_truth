@@ -45,9 +45,7 @@ class NavBar extends React.Component {
   render() {
     return (
       <nav className="nav-container">
-        <Link to="/" className="nav-home">
           <img src={window.logo} />
-        </Link>
 
         <div className="navsearch">
           <img className='navsearch-icon' src={window.search_icon} height='20' />
