@@ -172,8 +172,8 @@ class MainBody extends React.Component {
                 if (item.trim() !== '') {
                     if (item.slice(0, 17) !== "Scripture Reading") {
                         if (item.slice(0, 5) !== "Text:") {
-                        //---------- REPLACE "BY" with "By" in SHE DEVOS ----------//
-                        return <p key={'summary' + i}><br />{item.replace(/BY/, 'By')}</p>
+                            //---------- REPLACE "BY" with "By" in SHE DEVOS ----------//
+                            return <p key={'summary' + i}><br />{item.replace(/BY/, 'By')}</p>
                         }
                     }
                 }

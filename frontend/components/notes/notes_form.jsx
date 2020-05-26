@@ -175,9 +175,7 @@ class NotesForm extends React.Component {
             return (
                 <>
                     <div className='notes-form-container'>
-                        {
-                            this.renderUpdateErrors()
-                        }
+                        {this.renderUpdateErrors()}
                         <form onSubmit={this.handleUpdate} >
                             <div className='notes-form'>
 

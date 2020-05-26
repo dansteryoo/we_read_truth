@@ -7,11 +7,20 @@ class SignUp extends React.Component {
             email: '',
             password: '',
             firstName: '',
-            lastName: ''
+            lastName: '',
+            passwordMatch: '',
+            passwordMatchError: '',
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
     };
+
+    componentDidUpdate(prevProps) {
+
+        if (this.props.errors !== prevProps.errors) {
+            // this.props.clearErrors();
+        }
+    }
 
     componentWillUnmount() {
         this.props.clearErrors();
@@ -20,11 +29,45 @@ class SignUp extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
 
-        let user = Object.assign({}, this.state);
-        user.first_name = user.firstName
-        user.last_name = user.lastName
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.toLocaleLowerCase().slice(1)
+        };
 
-        this.props.processForm(user)
+        const { email, password, firstName, lastName, passwordMatch } = this.state;
+
+        let user = {
+            email: email.toLocaleLowerCase(),
+            password: password,
+        };
+
+        user.first_name = capitalizeFirstLetter(firstName);
+        user.last_name = capitalizeFirstLetter(lastName);
+        let badPassword = Object.assign(user, { password: 12345 } )
+
+        if (password !== passwordMatch) {
+            if (password.length < 6 || passwordMatch.length < 6) {
+                this.setState({
+                    passwordMatchError: ["Passwords do not match"]
+                })
+                this.props.processForm(badPassword)
+            } else if (password.length < 6 && passwordMatch.length < 6) {
+                this.setState({
+                    passwordMatchError: ["Passwords do not match"]
+                })
+                this.props.processForm(badPassword)
+            } else if (password.length > 5 && passwordMatch.length > 5) {
+                this.setState({
+                    passwordMatchError: ["Passwords do not match"]
+                })
+            }
+        } else if (password === passwordMatch) {
+            this.setState({
+                passwordMatchError: "",
+                password: password
+            })
+
+            this.props.processForm(user)
+        }
     };
 
     handleChange(f) {
@@ -32,6 +75,18 @@ class SignUp extends React.Component {
             [f]: e.target.value
         })
     };
+
+    passwordMatchError() {
+        if (this.state.passwordMatchError.length > 0) {
+            return (
+                <ul className='form-errors-signup'>
+                    {this.state.passwordMatchError.map((error, i) => (
+                        <li key={`error-${i}`}>{error}</li>
+                    ))}
+                </ul>
+            )
+        }
+    }
 
     renderErrors() {
         return (
@@ -48,6 +103,7 @@ class SignUp extends React.Component {
 
         return (
             <div className='form-container-signup'>
+                {this.passwordMatchError()}
                 {this.renderErrors()}
                 <div className='form-title-signup'>Sign up with email</div>
                     <form onSubmit={this.handleSubmit} className='form'>
@@ -96,6 +152,16 @@ class SignUp extends React.Component {
                         // required
                         />
                         <i id='form-icon-login' className='fas fa-lock fa-lg'></i>
+
+                        <input type='password'
+                            className='signup-form-input'
+                            value={this.state.passwordMatch}
+                            placeholder={'Confirm Password'}
+                            onChange={this.handleChange('passwordMatch')}
+                            name='passwordMatch'
+                        // noValidate
+                        // required
+                        />
    
                             <button className='signup-form-button' type='submit' value={this.props.formType}>Sign Up</button>
                         </div>
