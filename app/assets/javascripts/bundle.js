@@ -2810,6 +2810,7 @@ var LogInForm = /*#__PURE__*/function (_React$Component) {
     value: function handleSubmit(e) {
       e.preventDefault();
       var user = Object.assign({}, this.state);
+      user.email = user.email.toLocaleLowerCase();
       this.props.processForm(user);
     }
   }, {
@@ -2998,13 +2999,21 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
       email: '',
       password: '',
       firstName: '',
-      lastName: ''
+      lastName: '',
+      passwordMatch: '',
+      passwordMatchError: ''
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(SignUp, [{
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      if (this.props.errors !== prevProps.errors) {// this.props.clearErrors();
+      }
+    }
+  }, {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
       this.props.clearErrors();
@@ -3013,10 +3022,51 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
-      var user = Object.assign({}, this.state);
-      user.first_name = user.firstName;
-      user.last_name = user.lastName;
-      this.props.processForm(user);
+
+      function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.toLocaleLowerCase().slice(1);
+      }
+
+      ;
+      var _this$state = this.state,
+          email = _this$state.email,
+          password = _this$state.password,
+          firstName = _this$state.firstName,
+          lastName = _this$state.lastName,
+          passwordMatch = _this$state.passwordMatch;
+      var user = {
+        email: email.toLocaleLowerCase(),
+        password: password
+      };
+      user.first_name = capitalizeFirstLetter(firstName);
+      user.last_name = capitalizeFirstLetter(lastName);
+      var badPassword = Object.assign(user, {
+        password: 12345
+      });
+
+      if (password !== passwordMatch) {
+        if (password.length < 6 || passwordMatch.length < 6) {
+          this.setState({
+            passwordMatchError: ["Passwords do not match"]
+          });
+          this.props.processForm(badPassword);
+        } else if (password.length < 6 && passwordMatch.length < 6) {
+          this.setState({
+            passwordMatchError: ["Passwords do not match"]
+          });
+          this.props.processForm(badPassword);
+        } else if (password.length > 5 && passwordMatch.length > 5) {
+          this.setState({
+            passwordMatchError: ["Passwords do not match"]
+          });
+        }
+      } else if (password === passwordMatch) {
+        this.setState({
+          passwordMatchError: "",
+          password: password
+        });
+        this.props.processForm(user);
+      }
     }
   }, {
     key: "handleChange",
@@ -3026,6 +3076,19 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
       return function (e) {
         return _this2.setState(_defineProperty({}, f, e.target.value));
       };
+    }
+  }, {
+    key: "passwordMatchError",
+    value: function passwordMatchError() {
+      if (this.state.passwordMatchError.length > 0) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+          className: "form-errors-signup"
+        }, this.state.passwordMatchError.map(function (error, i) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+            key: "error-".concat(i)
+          }, error);
+        }));
+      }
     }
   }, {
     key: "renderErrors",
@@ -3043,7 +3106,7 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-container-signup"
-      }, this.renderErrors(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.passwordMatchError(), this.renderErrors(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-title-signup"
       }, "Sign up with email"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit,
@@ -3098,6 +3161,15 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         id: "form-icon-login",
         className: "fas fa-lock fa-lg"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "password",
+        className: "signup-form-input",
+        value: this.state.passwordMatch,
+        placeholder: 'Confirm Password',
+        onChange: this.handleChange('passwordMatch'),
+        name: "passwordMatch" // noValidate
+        // required
+
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "signup-form-button",
         type: "submit",
