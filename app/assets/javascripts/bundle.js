@@ -1013,6 +1013,7 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
       book: ''
     };
     _this.handleGetDevo = _this.handleGetDevo.bind(_assertThisInitialized(_this));
+    _this.myRef = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     return _this;
   }
 
@@ -1025,8 +1026,20 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
+      console.log(' prevProps ');
+      console.log(prevProps);
+      console.log(' this.props.devoBook ');
+      console.log(this.props.devoBook);
+      console.log(' this.state.book ');
+      console.log(this.state.book);
+
       if (this.props.devoBook !== prevProps.devoBook) {
         if (this.props.devoBook.length > 0) {
+          //---------- SCROLL TO TOP on render ----------//
+          if (this.props.devoBook[0].book !== this.state.book) {
+            this.myRef.current.scrollTo(0, 0);
+          }
+
           this.setState({
             book: this.props.devoBook[0].book
           });
@@ -1112,7 +1125,8 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
 
       ;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "sidenav-container"
+        className: "sidenav-container",
+        ref: this.myRef
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "sidenav-title"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, devoBookTitle)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {

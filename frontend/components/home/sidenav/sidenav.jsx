@@ -10,6 +10,7 @@ class SideNav extends React.Component {
         }
 
         this.handleGetDevo = this.handleGetDevo.bind(this);
+        this.myRef = React.createRef();
     };
 
     componentDidMount() {
@@ -19,11 +20,24 @@ class SideNav extends React.Component {
     };
 
     componentDidUpdate(prevProps) {
+        console.log(' prevProps ')
+        console.log(prevProps)
+
+        console.log(' this.props.devoBook ')
+        console.log(this.props.devoBook)
+
+        console.log(' this.state.book ')
+        console.log(this.state.book)
+
         if (this.props.devoBook !== prevProps.devoBook) {
+
+
             if (this.props.devoBook.length > 0) {
-                this.setState({
-                    book: this.props.devoBook[0].book
-                })
+                //---------- SCROLL TO TOP on render ----------//
+                if (this.props.devoBook[0].book !== this.state.book) {
+                    this.myRef.current.scrollTo(0, 0);
+                }
+                this.setState({ book: this.props.devoBook[0].book })
             }
         }
     };
@@ -201,7 +215,7 @@ class SideNav extends React.Component {
 
         return (
             <>
-                <div className='sidenav-container'>
+                <div className='sidenav-container' ref={this.myRef}>
                     <div className='sidenav-title'> 
                         <span>{devoBookTitle}</span>
                     </div>
