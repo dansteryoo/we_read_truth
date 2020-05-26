@@ -94,7 +94,6 @@ class MainBody extends React.Component {
         if (this.props.mainBodyDevo.id !== prevProps.mainBodyDevo.id) {
 
             //---------- PREVENTS DUPS in esvPassage ----------//
-
             this.setState({ esvPassage: [] })
 
             const { id, img, passages, summary, title } = this.props.mainBodyDevo;
