@@ -5,7 +5,6 @@ import configureStore from './store/store';
 import 'react-app-polyfill/ie9';
 import 'react-app-polyfill/stable';
 import 'react-app-polyfill/ie11';
-import 'react-app-polyfill/ie10';
 
 document.addEventListener('DOMContentLoaded', () => {
     const root = document.getElementById('root');
