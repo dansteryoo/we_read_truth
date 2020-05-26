@@ -15,16 +15,16 @@ class SignUp extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     };
 
+    componentWillUnmount() {
+        this.props.clearErrors();
+    };
+
     componentDidUpdate(prevProps) {
 
         if (this.props.errors !== prevProps.errors) {
             // this.props.clearErrors();
         }
     }
-
-    componentWillUnmount() {
-        this.props.clearErrors();
-    };
 
     handleSubmit(e) {
         e.preventDefault();
@@ -36,29 +36,42 @@ class SignUp extends React.Component {
         const { email, password, firstName, lastName, passwordMatch } = this.state;
 
         let user = {
-            email: email.toLocaleLowerCase(),
+            email: email.toLowerCase(),
             password: password,
+        };
+
+        let shortPassword = {
+            email: email.toLowerCase(),
+            password: 12345,
         };
 
         user.first_name = capitalizeFirstLetter(firstName);
         user.last_name = capitalizeFirstLetter(lastName);
-        let badPassword = Object.assign(user, { password: 12345 } )
+        shortPassword.first_name = capitalizeFirstLetter(firstName);
+        shortPassword.last_name = capitalizeFirstLetter(lastName);
 
         if (password !== passwordMatch) {
+            this.setState({
+                passwordMatchError: ["Passwords do not match"]
+            })
+
             if (password.length < 6 || passwordMatch.length < 6) {
-                this.setState({
-                    passwordMatchError: ["Passwords do not match"]
-                })
-                this.props.processForm(badPassword)
+
+                this.props.processForm(shortPassword)
             } else if (password.length < 6 && passwordMatch.length < 6) {
-                this.setState({
-                    passwordMatchError: ["Passwords do not match"]
-                })
-                this.props.processForm(badPassword)
+
+                this.props.processForm(shortPassword)
             } else if (password.length > 5 && passwordMatch.length > 5) {
-                this.setState({
-                    passwordMatchError: ["Passwords do not match"]
-                })
+                if (email.length > 0 && firstName.length > 0 && lastName.length > 0) {
+                    console.log('(email.length > 0 && firstName.length > 0 && lastName.length > 0)')
+
+                    this.clearErrors()
+                } else {
+                    console.log('(password.length > 5 && passwordMatch.length > 5)')
+
+                    let longPassword = Object.assign(user, { password: password })
+                    this.props.processForm(longPassword)
+                }
             }
         } else if (password === passwordMatch) {
             this.setState({
@@ -66,9 +79,11 @@ class SignUp extends React.Component {
                 password: password
             })
 
-            this.props.processForm(user)
+            let goodPassword = Object.assign(user, { password: password })
+            this.props.processForm(goodPassword)
         }
     };
+
 
     handleChange(f) {
         return e => this.setState({
@@ -103,8 +118,8 @@ class SignUp extends React.Component {
 
         return (
             <div className='form-container-signup'>
-                {this.passwordMatchError()}
                 {this.renderErrors()}
+                {this.passwordMatchError()}
                 <div className='form-title-signup'>Sign up with email</div>
                     <form onSubmit={this.handleSubmit} className='form'>
                     
