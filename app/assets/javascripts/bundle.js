@@ -3058,10 +3058,14 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
           this.props.processForm(shortPassword);
         } else if (password.length > 5 && passwordMatch.length > 5) {
           if (email.length > 0 && firstName.length > 0 && lastName.length > 0) {
-            console.log('(email.length > 0 && firstName.length > 0 && lastName.length > 0)');
-            this.clearErrors();
-          } else {
-            console.log('(password.length > 5 && passwordMatch.length > 5)');
+            if (this.props.errors[this.props.errors.length - 1] === "Email has already been taken") {
+              this.setState({
+                passwordMatchError: ["Passwords do not match", "Email has already been taken"]
+              });
+            }
+
+            return this.props.clearErrors();
+          } else if (email.length < 1 || firstName.length < 1 || lastName.length < 1) {
             var longPassword = Object.assign(user, {
               password: password
             });
@@ -3117,7 +3121,7 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-container-signup"
-      }, this.renderErrors(), this.passwordMatchError(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.passwordMatchError(), this.renderErrors(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-title-signup"
       }, "Sign up with email"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit,

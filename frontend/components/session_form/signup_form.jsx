@@ -56,18 +56,23 @@ class SignUp extends React.Component {
             })
 
             if (password.length < 6 || passwordMatch.length < 6) {
-
                 this.props.processForm(shortPassword)
+
             } else if (password.length < 6 && passwordMatch.length < 6) {
-
                 this.props.processForm(shortPassword)
-            } else if (password.length > 5 && passwordMatch.length > 5) {
-                if (email.length > 0 && firstName.length > 0 && lastName.length > 0) {
-                    console.log('(email.length > 0 && firstName.length > 0 && lastName.length > 0)')
 
-                    this.clearErrors()
-                } else {
-                    console.log('(password.length > 5 && passwordMatch.length > 5)')
+            } else if (password.length > 5 && passwordMatch.length > 5) {
+
+                if (email.length > 0 && firstName.length > 0 && lastName.length > 0) {
+
+                    if (this.props.errors[this.props.errors.length - 1] === "Email has already been taken") {
+                        this.setState({
+                            passwordMatchError: ["Passwords do not match", "Email has already been taken"],
+                        })
+                    }
+                    return this.props.clearErrors();
+                    
+                } else if (email.length < 1 || firstName.length < 1 || lastName.length < 1) {
 
                     let longPassword = Object.assign(user, { password: password })
                     this.props.processForm(longPassword)
@@ -118,8 +123,8 @@ class SignUp extends React.Component {
 
         return (
             <div className='form-container-signup'>
-                {this.renderErrors()}
                 {this.passwordMatchError()}
+                {this.renderErrors()}
                 <div className='form-title-signup'>Sign up with email</div>
                     <form onSubmit={this.handleSubmit} className='form'>
                     
