@@ -2,7 +2,7 @@
 :root {
   --landscape-width: 25; // % OR vw for responsive window resizing!
   --portrait-width: 80vw;
-  --header-height: 6.2rem;
+  --header-height: 7rem;
   --secs: 0.4s;
   --bg-left: white;
   --bg-right: white;
@@ -116,14 +116,15 @@
   } // <-- Landscape ONLY sidebars
 
   .icon { 
-    position: fixed; 
+    position: fixed;
     z-index: 2;
-    width: var(--header-height); 
-    height: var(--header-height);
-    line-height: var(--header-height); 
-    font-size: var(--header-height);
-    text-align: center; 
-    user-select: none; 
+    margin: 30px 0 0 20px;
+    width: 40px;
+    height: 40px;
+    line-height: 35px;
+    font-size: 90px;
+    text-align: center;
+    user-select: none;
     cursor: pointer;
   }
 
@@ -155,14 +156,15 @@
   } // <-- Landscape ONLY sidebars
 
   .icon { 
-    position: fixed; 
+    position: fixed;
     z-index: 2;
-    width: var(--header-height); 
-    height: var(--header-height);
-    line-height: var(--header-height); 
-    font-size: var(--header-height);
-    text-align: center; 
-    user-select: none; 
+    margin: 30px 30px 0 0;
+    width: 40px;
+    height: 40px;
+    line-height: 35px;
+    font-size: 90px;
+    text-align: center;
+    user-select: none;
     cursor: pointer;
   }
 
