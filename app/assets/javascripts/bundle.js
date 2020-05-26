@@ -710,6 +710,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       mainBodyChanged: false
     };
     _this.ESVpassageGetter = _this.ESVpassageGetter.bind(_assertThisInitialized(_this));
+    _this.myRef = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     return _this;
   }
 
@@ -783,6 +784,9 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
     value: function componentDidUpdate(prevProps) {
       var _this4 = this;
 
+      //---------- SCROLL TO TOP on render ----------//
+      this.myRef.current.scrollTo(0, 0); //---------- PREVENTS MULTIPLE this.setState on update ----------//
+
       if (this.state.mainBodyChanged) {
         this.setState({
           mainBodyChanged: false
@@ -841,10 +845,13 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
           ;
           var newEsvData = newPassageData(passages.split(', '), esvPassage);
           return newEsvData.map(function (each, i) {
-            var eachText = each.text.split('\n').map(function (item, i) {
-              return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-                key: 'bible-text' + i + Math.random()
-              }, item, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null));
+            var eachText = each.text.split('\n').map(function (item, j) {
+              //---------- each.text.split('\n') equals ARRAY of item ----------//
+              if (each.text.split('\n')[j - 1] !== item) {
+                return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+                  key: 'bible-text' + j
+                }, item, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null));
+              }
             });
             return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
               key: 'esv-passages' + i
@@ -874,7 +881,8 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "devo-main-container"
+        className: "devo-main-container",
+        ref: this.myRef
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "devo-main-title"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, this.state.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
