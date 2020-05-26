@@ -869,9 +869,10 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
         if (item.trim() !== '') {
           if (item.slice(0, 17) !== "Scripture Reading") {
             if (item.slice(0, 5) !== "Text:") {
+              //---------- REPLACE "BY" with "By" in SHE DEVOS ----------//
               return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
                 key: 'summary' + i
-              }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), item);
+              }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), item.replace(/BY/, 'By'));
             }
           }
         }
