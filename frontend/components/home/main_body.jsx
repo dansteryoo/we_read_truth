@@ -17,6 +17,7 @@ class MainBody extends React.Component {
         }
 
         this.ESVpassageGetter = this.ESVpassageGetter.bind(this);
+        this.myRef = React.createRef();
     };
 
     //---------- ESV.ORG API CALL ----------//
@@ -82,7 +83,10 @@ class MainBody extends React.Component {
     };
 
     componentDidUpdate(prevProps) {
+        //---------- SCROLL TO TOP on render ----------//
+        this.myRef.current.scrollTo(0, 0);
 
+        //---------- PREVENTS MULTIPLE this.setState on update ----------//
         if (this.state.mainBodyChanged) {
             this.setState({ mainBodyChanged: false })
         }
@@ -140,8 +144,13 @@ class MainBody extends React.Component {
 
                 return (
                     newEsvData.map((each, i) => {
-                        let eachText = each.text.split('\n').map((item, i) => {
-                            return <p key={'bible-text' + i + Math.random()}>{item}<br /></p>
+                        let eachText = each.text.split('\n').map((item, j) => {
+            
+            //---------- each.text.split('\n') equals ARRAY of item ----------//
+            
+                            if (each.text.split('\n')[j - 1] !== item) {
+                                return <p key={'bible-text' + j}>{item}<br /></p>
+                            }
                         });
 
                         return (
@@ -175,7 +184,7 @@ class MainBody extends React.Component {
     render() {
 
         return (
-            <div className='devo-main-container'>
+            <div className='devo-main-container' ref={this.myRef}>
                 <div className='devo-main-title'>
                     <span>{this.state.title}</span>
                 </div>
