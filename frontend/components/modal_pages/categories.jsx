@@ -163,7 +163,7 @@ class CategoriesPage extends React.Component {
                             </ul>
                         </div>
                         <div className="categories-title-she">
-                            <span>Other Books</span>
+                            <span>Themes</span>
                         </div>
                         <div className="categories-Other">
                             <ul className="she-category-ul">
@@ -210,7 +210,7 @@ class CategoriesPage extends React.Component {
                             </ul>
                         </div>
                         <div className="categories-title-he">
-                            <span>Other Books</span>
+                            <span>Themes</span>
                         </div>
                         <div className="categories-Other">
                             <ul className="she-category-ul">
