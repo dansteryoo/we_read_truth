@@ -57,7 +57,7 @@ class HomePage extends React.Component {
             <div id='left' className={leftOpen} >
                 <div className='icon'
                     onClick={this.toggleSidebar} >
-                    &equiv;
+                        <i class="fa fa-bars" aria-hidden="true"></i>
                 </div>
                 <div className={`sidebar ${leftOpen}`} >
                     <div className='left-header'>
@@ -98,7 +98,7 @@ class HomePage extends React.Component {
             <div id='right' className={rightOpen} >
                 <div className='icon'
                     onClick={this.toggleSidebar} >
-                    &equiv;
+                    <i class="fa fa-bars" aria-hidden="true"></i>
                 </div>
                 <div className={`sidebar ${rightOpen}`} >
                     <div className='right-header'>
