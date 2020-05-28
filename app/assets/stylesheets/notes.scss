@@ -116,7 +116,7 @@ $darkpink: #ff8da1;
 .notes-form-submit-button:active,
 .notes-form-delete-button:active {
   opacity: 60%;
-  box-shadow: 0 2px 7px 2px $lightgray;
+  box-shadow: 0 2px 7px 2px $lightgray; //6px bug in chrome? dunno why.
 }
 
 
