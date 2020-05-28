@@ -53,6 +53,11 @@ body {
     height: 84%;
 }
 
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
+
 #root {
     height: 100%;
 }

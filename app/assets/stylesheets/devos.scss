@@ -11,10 +11,13 @@ $pink: #ffc0cb;
 $darkpink: #ff8da1;
 
 .sidenav-container {
-    overflow-y: scroll;
     padding-left: 1.8rem;
     width: 90%;
     height: 70vh;
+
+    overflow: auto;
+    -ms-overflow-style: none; /* IE 11 */
+    scrollbar-width: none; /* Firefox 64 */
 
     .sidenav-title {
         margin-bottom: 10px;
