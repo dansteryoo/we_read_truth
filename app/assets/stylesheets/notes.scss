@@ -79,7 +79,7 @@ $darkpink: #ff8da1;
 .notes-form-textarea:focus,
 .notes-form-input-title:focus {
   outline: none;
-  box-shadow: 0 2px 6px 2px $lightgray;
+  box-shadow: 0 2px 7px 2px $lightgray;
 }
 
 // .notes-form-input:invalid,
@@ -109,16 +109,14 @@ $darkpink: #ff8da1;
 .notes-form-submit-button:hover,
 .notes-form-delete-button:hover {
   display: block;
-  box-shadow: 0 2px 6px 2px $lightgray;
-  -moz-box-shadow: 0 2px 6px 2px $lightgray;          
-  -webkit-box-shadow: 0 2px 6px 2px $lightgray;
+  box-shadow: 0 2px 7px 2px $lightgray;
 }
 
 .notes-form-edit-button:active,
 .notes-form-submit-button:active,
 .notes-form-delete-button:active {
   opacity: 60%;
-  box-shadow: 0 2px 6px 2px $lightgray;
+  box-shadow: 0 2px 7px 2px $lightgray;
 }
 
 
