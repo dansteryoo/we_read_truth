@@ -20,8 +20,7 @@ $darkpink: #ff8da1;
   margin: 0;
   padding: 0;
   z-index: 1;
-  // border-top: solid 0.01rem $lightgray;
-  // border-left: solid 0.01rem $lightgray;
+
   label {
     font-size: 0.8rem;
     margin-left: 12px;
@@ -58,7 +57,7 @@ $darkpink: #ff8da1;
 
 .notes-form-textarea {
     background-color: $skin;
-    height: 33vh;
+    height: 23vh;
     padding: 10px;
     display: flex;
     border-radius: 6px;
@@ -109,7 +108,10 @@ $darkpink: #ff8da1;
 .notes-form-edit-button:hover,
 .notes-form-submit-button:hover,
 .notes-form-delete-button:hover {
+  display: block;
   box-shadow: 0 2px 6px 2px $lightgray;
+  -moz-box-shadow: 0 2px 6px 2px $lightgray;          
+  -webkit-box-shadow: 0 2px 6px 2px $lightgray;
 }
 
 .notes-form-edit-button:active,
