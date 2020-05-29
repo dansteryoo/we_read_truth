@@ -187,12 +187,14 @@ class MainBody extends React.Component {
     }
 
     render() {
-
+        console.log(this.state)
+        console.log(this.props)
         return (
-            <div className='devo-main-container' ref={this.myRef}>
+            <div className='middle-container'>
                 <div className='devo-main-title'>
                     <span>{this.state.title}</span>
                 </div>
+            <div className='devo-main-container' ref={this.myRef}>
                 <div className="form-or-separator-mainbody-passages">
                     <hr />
                 </div>
@@ -219,6 +221,7 @@ class MainBody extends React.Component {
                     <span>{}</span>
                 </div>
             </div>
+        </div>
         )
     };
 }

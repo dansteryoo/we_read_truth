@@ -10,18 +10,13 @@ $orange: #ff5a5f;
 $pink: #ffc0cb;
 $darkpink: #ff8da1;
 
-.sidenav-container {
-    padding-left: 1.8rem;
-    width: 90%;
-    height: 70vh;
-
-    overflow: auto;
-    -ms-overflow-style: none; /* IE 11 */
-    scrollbar-width: none; /* Firefox 64 */
+.left-container {
+    display: flex;
+    flex-direction: column;
 
     .sidenav-title {
-        margin-bottom: 10px;
-        padding-bottom: 20px;
+        margin: 0 0 10px 20px;
+        padding-bottom: 42px;
         border-bottom: 1px solid black;
 
         span {
@@ -29,6 +24,17 @@ $darkpink: #ff8da1;
             font-weight: bold;
         }
     }
+}
+
+.sidenav-container {
+    padding-left: 20px;
+    width: 90%;
+    height: 70vh;
+
+    overflow: auto;
+    -ms-overflow-style: none; /* IE 11 */
+    scrollbar-width: none; /* Firefox 64 */
+
 }
 
 //------------------Each Daily Devo li
