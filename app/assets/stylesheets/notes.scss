@@ -29,7 +29,8 @@ $darkpink: #ff8da1;
 }
 
 .notes-form {
-  padding: 0 20px;
+    padding: 0 20px 40px 0;
+    height: 70vh;
 }
 
 .notes-form-input,
@@ -52,7 +53,7 @@ $darkpink: #ff8da1;
 
 .notes-form-textarea {
     background-color: $skin;
-    height: 23vh;
+    height: 45%;
     padding: 10px;
     display: flex;
     border-radius: 6px;

@@ -205,11 +205,11 @@ class SideNav extends React.Component {
         };
 
         return (
-            <>
+            <div className='left-container'>
+                <div className='sidenav-title'>
+                    <span>{devoBookTitle}</span>
+                </div>
                 <div className='sidenav-container' ref={this.myRef}>
-                    <div className='sidenav-title'> 
-                        <span>{devoBookTitle}</span>
-                    </div>
                     <ul className="sidenav-ul" >
                         {
                             this.props.devoBook.map((dailyDevo, i) => (
@@ -223,7 +223,7 @@ class SideNav extends React.Component {
                         }
                     </ul>
                 </div>
-            </>
+            </div>
         )
     }
 }
