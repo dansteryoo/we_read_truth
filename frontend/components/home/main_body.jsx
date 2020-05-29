@@ -143,11 +143,16 @@ class MainBody extends React.Component {
 
                 return (
                     newEsvData.map((each, i) => {
+            
+            //---------- itemCount TRACKING each item ----------//
+                        let itemCount = []
                         let eachText = each.text.split('\n').map((item, j) => {
             
-            //---------- each.text.split('\n') equals ARRAY of item ----------//
-            
-                            if (each.text.split('\n')[j - 1] !== item) {
+            //---------- itemCount.push STORES each item into itemCount ----------//
+                            itemCount.push(item.trim())
+
+            //---------- checking if prevItem !== current item ----------//
+                            if (itemCount[j - 1] !== item.trim()) {
                                 return <p key={'bible-text' + j}>{item}<br /></p>
                             }
                         });

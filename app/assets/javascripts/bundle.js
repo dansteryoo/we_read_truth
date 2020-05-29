@@ -548,7 +548,7 @@ var HomePage = /*#__PURE__*/function (_React$Component) {
         className: "icon",
         onClick: this.toggleSidebar
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        class: "fa fa-bars",
+        className: "fa fa-bars",
         "aria-hidden": "true"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "sidebar ".concat(leftOpen)
@@ -573,7 +573,7 @@ var HomePage = /*#__PURE__*/function (_React$Component) {
         className: "icon",
         onClick: this.toggleSidebar
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        class: "fa fa-bars",
+        className: "fa fa-bars",
         "aria-hidden": "true"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "sidebar ".concat(rightOpen)
@@ -851,9 +851,13 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
           ;
           var newEsvData = newPassageData(passages.split(', '), esvPassage);
           return newEsvData.map(function (each, i) {
+            //---------- itemCount TRACKING each item ----------//
+            var itemCount = [];
             var eachText = each.text.split('\n').map(function (item, j) {
-              //---------- each.text.split('\n') equals ARRAY of item ----------//
-              if (each.text.split('\n')[j - 1] !== item) {
+              //---------- itemCount.push STORES each item into itemCount ----------//
+              itemCount.push(item.trim()); //---------- checking if prevItem !== current item ----------//
+
+              if (itemCount[j - 1] !== item.trim()) {
                 return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
                   key: 'bible-text' + j
                 }, item, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null));
