@@ -2386,7 +2386,10 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
+      var _this2 = this;
+
       if (this.props.noteId !== prevProps.noteId) {
+        //---------- if this.props.noteId is a NUMBER then populate with update first and render update form ----------//
         if (Number.isInteger(this.props.noteId.id)) {
           var _this$props$noteId = this.props.noteId,
               id = _this$props$noteId.id,
@@ -2402,27 +2405,46 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
             body: body,
             updateForm: true
           });
+        } //---------- if notes array is different from current props to prevProps ----------//
+
+
+        if (this.props.notes.length !== prevProps.notes.length) {
+          //---------- AND if current props array is empty SKIP reset state ----------//
+          if (this.props.notes.length === 0) {
+            return; //---------- AND if current props array is NOT EMPTY then reset state ----------//
+          } else if (!this.props.notes.some(function (ele) {
+            return ele.id === _this2.state.id;
+          })) {
+            this.setState({
+              id: '',
+              title: '',
+              category: '',
+              tags: '',
+              body: '',
+              updateForm: false
+            });
+          }
         }
       }
     }
   }, {
     key: "handleChange",
     value: function handleChange(f) {
-      var _this2 = this;
+      var _this3 = this;
 
       return function (e) {
-        return _this2.setState(_defineProperty({}, f, e.target.value));
+        return _this3.setState(_defineProperty({}, f, e.target.value));
       };
     }
   }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
-      var _this3 = this;
+      var _this4 = this;
 
       e.preventDefault();
       var note = Object.assign({}, this.state);
       this.props.createNote(note).then(function () {
-        _this3.setState({
+        _this4.setState({
           success: true,
           title: '',
           category: '',
@@ -2432,15 +2454,15 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
           updateForm: false
         });
       }).then(function () {
-        return _this3.renderSuccessMsg();
+        return _this4.renderSuccessMsg();
       }).then(function () {
-        return _this3.props.clearNoteState();
+        return _this4.props.clearNoteState();
       });
     }
   }, {
     key: "handleUpdate",
     value: function handleUpdate(e) {
-      var _this4 = this;
+      var _this5 = this;
 
       e.preventDefault();
       var _this$state = this.state,
@@ -2477,7 +2499,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
         }
       } else {
         this.props.updateNote(noteUpdate).then(function () {
-          _this4.setState({
+          _this5.setState({
             updateErrors: '',
             update: true,
             title: '',
@@ -2488,19 +2510,19 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
             updateForm: false
           });
         }).then(function () {
-          return _this4.renderUpdateMsg();
+          return _this5.renderUpdateMsg();
         }).then(function () {
-          return _this4.props.fetchNotes();
+          return _this5.props.fetchNotes();
         });
       }
     }
   }, {
     key: "renderSuccessMsg",
     value: function renderSuccessMsg() {
-      var _this5 = this;
+      var _this6 = this;
 
       window.setTimeout(function () {
-        _this5.setState({
+        _this6.setState({
           success: false
         });
       }, 4000);
@@ -2508,10 +2530,10 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderUpdateMsg",
     value: function renderUpdateMsg() {
-      var _this6 = this;
+      var _this7 = this;
 
       window.setTimeout(function () {
-        _this6.setState({
+        _this7.setState({
           update: false
         });
       }, 4000);

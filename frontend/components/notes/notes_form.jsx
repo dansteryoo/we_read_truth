@@ -29,8 +29,12 @@ class NotesForm extends React.Component {
     };
 
     componentDidUpdate(prevProps) {
+        
         if (this.props.noteId !== prevProps.noteId) {
+
+            //---------- if this.props.noteId is a NUMBER then populate with update first and render update form ----------//
             if (Number.isInteger(this.props.noteId.id)) {
+
                 const { id, title, category, tags, body } = this.props.noteId;
                 this.setState({
                     id: id,
@@ -41,6 +45,27 @@ class NotesForm extends React.Component {
                     updateForm: true,
                 })
             }
+        
+            //---------- if notes array is different from current props to prevProps ----------//
+            if (this.props.notes.length !== prevProps.notes.length) {
+
+                //---------- AND if current props array is empty SKIP reset state ----------//
+                if (this.props.notes.length === 0) {
+                    return 
+
+                //---------- AND if current props array is NOT EMPTY then reset state ----------//
+                } else if (!this.props.notes.some(ele => ele.id === this.state.id)) {
+                    this.setState({
+                        id: '',
+                        title: '',
+                        category: '',
+                        tags: '',
+                        body: '',
+                        updateForm: false,
+                    })
+                } 
+            }
+
         }
     }
 
