@@ -18,7 +18,7 @@ $darkpink: #ff8da1;
   width: 100%;
   height: 100%;
   margin: 0;
-  padding: 0;
+  padding: 0 20px 40px 0;
   z-index: 1;
 
   label {
@@ -29,7 +29,7 @@ $darkpink: #ff8da1;
 }
 
 .notes-form {
-    padding: 0 20px 40px 0;
+    padding-right: 12px;
     height: 70vh;
 
     overflow: auto;
@@ -39,16 +39,15 @@ $darkpink: #ff8da1;
 
 .notes-form-input,
 .notes-form-input-title {
-  background-color: $skin;
-  display: flex;
-  border-radius: 6px;
-  color: $darkgray;
-  width: 92%;
-  border: none;
-  padding: 0 10px;
-  margin: 0 10px 10px;
-  font-size: 12px;
-  height: 30px;
+background-color: $skin;
+display: flex;
+border-radius: 6px;
+color: $darkgray;
+width: 100%;
+border: none;
+margin: 0 10px 10px;
+font-size: 12px;
+height: 30px;
 }
 
 .notes-form-input-title {
@@ -62,7 +61,7 @@ $darkpink: #ff8da1;
     display: flex;
     border-radius: 6px;
     color: $darkgray;
-    width: 98%;
+    width: 100%;
     border: none;
     margin: 0 10px 10px;
     font-size: 0.85rem;
