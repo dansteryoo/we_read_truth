@@ -500,7 +500,9 @@ var HomePage = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this, props);
     _this.state = {
       leftOpen: true,
-      rightOpen: true
+      rightOpen: true,
+      currentUser: null,
+      bookmark: null
     };
     _this.toggleSidebar = _this.toggleSidebar.bind(_assertThisInitialized(_this));
     return _this;
@@ -509,6 +511,9 @@ var HomePage = /*#__PURE__*/function (_React$Component) {
   _createClass(HomePage, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      this.setState({
+        currentUser: this.props.currentUser.id
+      });
       this.props.clearErrors();
     }
   }, {
