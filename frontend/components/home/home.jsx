@@ -11,12 +11,15 @@ class HomePage extends React.Component {
         this.state = {
             leftOpen: true,
             rightOpen: true,
+            currentUser: null,
+            bookmark: null,
         }
 
         this.toggleSidebar = this.toggleSidebar.bind(this);
     };
 
     componentDidMount() {
+        this.setState({ currentUser: this.props.currentUser.id })
         this.props.clearErrors()
     };
 
@@ -45,7 +48,6 @@ class HomePage extends React.Component {
         let rightOpen = this.state.rightOpen ? 'open' : 'closed';
 
         const { currentUser } = this.props;
-
         
         return (
             <>
