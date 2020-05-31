@@ -17,6 +17,7 @@ class MainBody extends React.Component {
         }
 
         this.ESVpassageGetter = this.ESVpassageGetter.bind(this);
+        this.renderDay = this.renderDay.bind(this);
         this.myRef = React.createRef();
     };
 
@@ -186,12 +187,23 @@ class MainBody extends React.Component {
         )
     }
 
+    renderDay() {
+        const { mainBodyDevo } = this.props;
+        return (
+            this.props.devoBook.map((each, i) => {
+                if (each.id === mainBodyDevo.id) {
+                    return i + 1
+                }
+            })
+        )
+    }
+
     render() {
-        console.log(this.state)
-        console.log(this.props)
+
         return (
             <div className='middle-container'>
                 <div className='devo-main-title'>
+                    <span className='devo-main-day'>Day {this.renderDay()}:</span>
                     <span>{this.state.title}</span>
                 </div>
             <div className='devo-main-container' ref={this.myRef}>
