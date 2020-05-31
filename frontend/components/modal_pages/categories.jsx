@@ -135,7 +135,7 @@ class CategoriesPage extends React.Component {
                         &#10005;
                     </div>
 
-                    <section className="categories-section">
+                    <section className="categories-section-she">
                         <div className="categories-title-she">
                             <span>Old Testament</span>
                         </div>
@@ -181,7 +181,7 @@ class CategoriesPage extends React.Component {
                         <hr />
                     </div>
 
-                    <section className="categories-section">
+                    <section className="categories-section-he">
                         <div className="categories-title-he">
                             <span>Old Testament</span>
                         </div>
