@@ -721,6 +721,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       mainBodyChanged: false
     };
     _this.ESVpassageGetter = _this.ESVpassageGetter.bind(_assertThisInitialized(_this));
+    _this.renderDay = _this.renderDay.bind(_assertThisInitialized(_this));
     _this.myRef = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     return _this;
   }
@@ -894,15 +895,25 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "renderDay",
+    value: function renderDay() {
+      var mainBodyDevo = this.props.mainBodyDevo;
+      return this.props.devoBook.map(function (each, i) {
+        if (each.id === mainBodyDevo.id) {
+          return i + 1;
+        }
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
-      console.log(this.state);
-      console.log(this.props);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "middle-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "devo-main-title"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, this.state.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "devo-main-day"
+      }, "Day ", this.renderDay(), ":"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, this.state.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "devo-main-container",
         ref: this.myRef
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -953,10 +964,30 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var mapStateToProps = function mapStateToProps(state) {
+  var devoBook;
+
+  if (state.devos.devoBook === undefined) {
+    devoBook = [];
+  } else {
+    devoBook = Object.values(state.devos.devoBook).filter(function (ele) {
+      return ele.title !== "Weekly Truth" && ele.title !== "Grace Day";
+    });
+
+    if (devoBook[0].gender === "HE") {
+      devoBook.reverse();
+    }
+
+    if (devoBook[0].gender === "SHE" && devoBook[0].book === "Judges") {
+      devoBook.reverse();
+    }
+  }
+
+  ;
   return {
     currentUser: state.users[state.session.id],
     errors: state.errors,
-    mainBodyDevo: state.devos.mainBodyDevo || null
+    mainBodyDevo: state.devos.mainBodyDevo || null,
+    devoBook: devoBook
   };
 };
 

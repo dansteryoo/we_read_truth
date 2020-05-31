@@ -106,9 +106,7 @@ class CategoriesPage extends React.Component {
 
     sortOtherTitles(data) {
         return data
-            .sort((a, b) => {
-                return a.book < b.book ? -1 : 1
-            })
+            .sort((a, b) => a.book < b.book ? -1 : 1)
             .map(ele => ele)
     };
 
