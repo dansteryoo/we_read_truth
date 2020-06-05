@@ -25,6 +25,17 @@ $darkpink: #ff8da1;
             font-size: 20px;
             font-weight: bold;
         }
+
+        #bookmark {
+            font-size: 25px;
+            color: orange;
+            float: right;
+            padding-right: 10px;
+        }
+
+        #bookmark:hover {
+            cursor: pointer;
+        }
     }
 }
 
