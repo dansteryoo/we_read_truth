@@ -84,24 +84,24 @@ class MainBody extends React.Component {
     };
 
     componentDidUpdate(prevProps) {
-        //---------- SCROLL TO TOP on render ----------//
-        this.myRef.current.scrollTo(0, 0);
 
         //---------- PREVENTS MULTIPLE this.setState on update ----------//
         if (this.state.mainBodyChanged) {
-            this.setState({ mainBodyChanged: false })
+            this.setState({ mainBodyChanged: false });
         }
 
         if (this.props.mainBodyDevo.id !== prevProps.mainBodyDevo.id) {
+            //---------- SCROLL TO TOP on render ----------//
+            this.myRef.current.scrollTo(0, 0);
 
             //---------- PREVENTS DUPS in esvPassage ----------//
-            this.setState({ esvPassage: [] })
+            this.setState({ esvPassage: [] });
 
             const { id, img, passages, summary, title } = this.props.mainBodyDevo;
 
             passages.split(', ').forEach(each => {
                 return this.ESVpassageGetter(each.trim())
-            })
+            });
 
             this.setState({
                 id: id,
@@ -110,7 +110,7 @@ class MainBody extends React.Component {
                 summary: summary,
                 img: img,
                 mainBodyChanged: true,
-            })
+            });
         }
     };
 
