@@ -14,11 +14,13 @@ class MainBody extends React.Component {
             img: '',
             esvPassage: [],
             mainBodyChanged: false,
+            bookmark: false
         }
 
         this.ESVpassageGetter = this.ESVpassageGetter.bind(this);
         this.renderDay = this.renderDay.bind(this);
         this.myRef = React.createRef();
+        this.toggleBookmark = this.toggleBookmark.bind(this);
     };
 
     //---------- ESV.ORG API CALL ----------//
@@ -79,7 +81,7 @@ class MainBody extends React.Component {
         this.setState({ 
             id: null, 
             mainBodyChanged: false, 
-            esvPassage: [] 
+            esvPassage: []
         })
     };
 
@@ -198,13 +200,23 @@ class MainBody extends React.Component {
         )
     }
 
-    render() {
+    toggleBookmark() {
+        const currentState = this.state.bookmark;
+        this.setState({ bookmark: !currentState })
+    }
 
+    render() {
+        console.log(this.state.bookmark)
         return (
             <div className='middle-container'>
                 <div className='devo-main-title'>
                     <span className='devo-main-day'>Day {this.renderDay()}:</span>
                     <span>{this.state.title}</span>
+                        <i id='bookmark' 
+                        className={this.state.bookmark ? 'fa fa-bookmark' : 'fa fa-bookmark-o' } 
+                        onClick={() => this.toggleBookmark()} 
+                        aria-hidden="true">
+                        </i>
                 </div>
             <div className='devo-main-container' ref={this.myRef}>
                 <div className="form-or-separator-mainbody-passages">

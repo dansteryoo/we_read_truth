@@ -718,11 +718,13 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       summary: '',
       img: '',
       esvPassage: [],
-      mainBodyChanged: false
+      mainBodyChanged: false,
+      bookmark: false
     };
     _this.ESVpassageGetter = _this.ESVpassageGetter.bind(_assertThisInitialized(_this));
     _this.renderDay = _this.renderDay.bind(_assertThisInitialized(_this));
     _this.myRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
+    _this.toggleBookmark = _this.toggleBookmark.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -905,15 +907,33 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "toggleBookmark",
+    value: function toggleBookmark() {
+      var currentState = this.state.bookmark;
+      this.setState({
+        bookmark: !currentState
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this5 = this;
+
+      console.log(this.state.bookmark);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "middle-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "devo-main-title"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "devo-main-day"
-      }, "Day ", this.renderDay(), ":"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, this.state.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Day ", this.renderDay(), ":"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, this.state.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        id: "bookmark",
+        className: this.state.bookmark ? 'fa fa-bookmark' : 'fa fa-bookmark-o',
+        onClick: function onClick() {
+          return _this5.toggleBookmark();
+        },
+        "aria-hidden": "true"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "devo-main-container",
         ref: this.myRef
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
