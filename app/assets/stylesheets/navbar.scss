@@ -47,64 +47,26 @@ $orange: #ff5a5f;
         list-style: none;
         margin: 28px 0 0 0;
 
-        //------------------Navbar Dropdown
 
-        .devo-li,
-        .profile-li {
-            position: relative;
-
-            .dropdown-devos, 
-            .dropdown-profile {
-                width: 115px;
-                position: absolute;
-                transition: all 0.2s ease;
-                display: none;
-                margin: 0;
-                padding: 0 0 10px 20px;
-                background-color: white;
-
-                li {
-                    clear: both;
-                    width: 100%;
-                }
-
-                li:hover {
-                    color: $green;
-                }
-                
-                li:active {
-                    color: $green;
-                    opacity: 60%;
-                }
-            }
+        li {
+            color: black;
+            font-weight: 600;
+            margin: 14px 50px 0 0;
+            height: 20px;
+            cursor: pointer;
         }
 
         .devo-li:hover, 
-        .profile-li:hover,
+        .notes-li:hover,
         .logout-li:hover {
             color: $green;
         }
 
+        .devo-li:active, 
+        .notes-li:active,
         .logout-li:active {
             opacity: 60%;
         }
-
-        .devo-li:hover > ul,
-        .profile-li:hover > ul,
-        .devo-li ul:hover,
-        .profile-li ul:hover {
-            visibility: visible;
-            display: block;
-            z-index: 2;
-        }
-    }
-
-    .nav-links li {
-        color: black;
-        font-weight: 600;
-        margin: 14px 50px 0 0;
-        height: 20px;
-        cursor: pointer;
     }
 
 
