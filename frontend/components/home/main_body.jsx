@@ -87,12 +87,15 @@ class MainBody extends React.Component {
 
     componentDidUpdate(prevProps) {
 
+        if (this.state.esvPassage.length !== this.state.passages.split(', ').length) return 
+
         //---------- PREVENTS MULTIPLE this.setState on update ----------//
         if (this.state.mainBodyChanged) {
             this.setState({ mainBodyChanged: false });
         }
 
         if (this.props.mainBodyDevo.id !== prevProps.mainBodyDevo.id) {
+
             //---------- SCROLL TO TOP on render ----------//
             this.myRef.current.scrollTo(0, 0);
 
@@ -121,57 +124,41 @@ class MainBody extends React.Component {
     renderPassages() {
 
         const { passages, esvPassage } = this.state; 
+        if (passages.length === 0) return 
 
-        if (passages.length !== 0) {
-            if (esvPassage.length === passages.split(', ').length) {
-
-                function newPassageData (propsPassage, esvText) {
-                    let newHash = [];
-
-                    propsPassage.forEach(ele => {
-                        esvText.forEach(each => {
-                            if (each.passage === ele.trim()) {
-                                newHash.push({
-                                    passage: ele.trim(),
-                                    text: each.text
-                                })
-                            }
-                        })
-                    })
-
-                    return newHash
-                };
-
-                let newEsvData = newPassageData(passages.split(', '), esvPassage);
-
-                return (
-                    newEsvData.map((each, i) => {
-            
-            //---------- itemCount TRACKING each item ----------//
-                        let itemCount = []
-                        let eachText = each.text.split('\n').map((item, j) => {
-            
-            //---------- itemCount.push STORES each item into itemCount ----------//
-                            itemCount.push(item.trim())
-
-            //---------- checking if prevItem !== current item ----------//
-                            if (itemCount[j - 1] !== item.trim()) {
-                                return <p key={'bible-text' + j}>{item}<br /></p>
-                            }
-                        });
-
-                        return (
-                            <li key={'esv-passages' + i}>
-                                <span className="bible-passage">{each.passage}</span>
-                                <br />
-                                <br />
-                                {eachText}
-                            </li>
-                        )
-                    })
-                )
-            }
+        let newEsvData;
+        if (esvPassage.length === passages.split(', ').length) {
+            newEsvData = esvPassage.sort(function(a, b) {
+                return passages.split(', ').indexOf(a.passage) - passages.split(', ').indexOf(b.passage)
+            })
+        } else {
+            newEsvData = []
         }
+
+        return (
+            newEsvData.map((each, i) => {
+        
+        //---------- itemCount TRACKING each item ----------//
+            let itemCount = []
+            let eachText = each.text.split('\n').map((item, j) => {
+        
+        //---------- itemCount.push STORES each item into itemCount ----------//
+                itemCount.push(item.trim())
+        //---------- checking if prevItem !== current item ----------//
+                if (itemCount[j - 1] !== item.trim()) {
+                    return <p key={'bible-text' + j}>{item}<br /></p>
+                }
+            });
+
+            return (
+                <li key={'esv-passages' + i}>
+                    <span className="bible-passage">{each.passage}</span>
+                    <br />
+                    <br />
+                    {eachText}
+                </li>
+            )
+        }))
     }
 
     renderSummary() {
@@ -191,6 +178,7 @@ class MainBody extends React.Component {
 
     renderDay() {
         const { mainBodyDevo } = this.props;
+
         return (
             this.props.devoBook.map((each, i) => {
                 if (each.id === mainBodyDevo.id) {
@@ -206,7 +194,7 @@ class MainBody extends React.Component {
     }
 
     render() {
-        console.log(this.state.bookmark)
+        
         return (
             <div className='middle-container'>
                 <div className='devo-main-title'>
