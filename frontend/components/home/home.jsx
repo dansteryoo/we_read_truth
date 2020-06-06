@@ -24,7 +24,7 @@ class HomePage extends React.Component {
     };
 
     componentWillUnmount() {
-        this.props.clearDevoState()
+        // this.props.clearDevoState()
     };
 
     componentDidUpdate(prevProps) {
