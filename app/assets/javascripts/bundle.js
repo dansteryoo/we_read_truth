@@ -518,8 +518,7 @@ var HomePage = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      this.props.clearDevoState();
+    value: function componentWillUnmount() {// this.props.clearDevoState()
     }
   }, {
     key: "componentDidUpdate",
