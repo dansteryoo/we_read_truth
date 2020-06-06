@@ -872,14 +872,23 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderSummary",
     value: function renderSummary() {
-      return this.state.summary.split('\n').map(function (item, i) {
-        if (item.trim() !== '') {
-          if (item.slice(0, 17) !== "Scripture Reading") {
-            if (item.slice(0, 5) !== "Text:") {
-              //---------- REPLACE "BY" with "By" in SHE DEVOS ----------//
-              return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      var eleCount = [];
+      return this.state.summary.split('\n').map(function (ele, i) {
+        //---------- eleCount.push STORES each item into eleCount ----------//
+        if (ele.slice(0, 17) === "Scripture Reading" || ele.slice(0, 5) === "Text:") {
+          eleCount.push("");
+        } else {
+          eleCount.push(ele.trim());
+        }
+
+        if (eleCount[i - 1] !== ele.trim()) {
+          if (ele.slice(0, 17) !== "Scripture Reading") {
+            if (ele.slice(0, 5) !== "Text:") {
+              console.log(JSON.stringify(ele));
+              debugger;
+              return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
                 key: 'summary' + i
-              }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), item.replace(/BY/, 'By'));
+              }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, ele, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null)));
             }
           }
         }

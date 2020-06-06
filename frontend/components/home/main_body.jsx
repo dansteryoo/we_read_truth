@@ -145,11 +145,12 @@ class MainBody extends React.Component {
         //---------- itemCount.push STORES each item into itemCount ----------//
                 itemCount.push(item.trim())
         //---------- checking if prevItem !== current item ----------//
+
                 if (itemCount[j - 1] !== item.trim()) {
                     return <p key={'bible-text' + j}>{item}<br /></p>
                 }
             });
-
+            
             return (
                 <li key={'esv-passages' + i}>
                     <span className="bible-passage">{each.passage}</span>
@@ -162,13 +163,26 @@ class MainBody extends React.Component {
     }
 
     renderSummary() {
+        let eleCount = []
+
         return (
-            this.state.summary.split('\n').map((item, i) => {
-                if (item.trim() !== '') {
-                    if (item.slice(0, 17) !== "Scripture Reading") {
-                        if (item.slice(0, 5) !== "Text:") {
-                            //---------- REPLACE "BY" with "By" in SHE DEVOS ----------//
-                            return <p key={'summary' + i}><br />{item.replace(/BY/, 'By')}</p>
+            this.state.summary.split('\n').map((ele, i) => {
+
+                //---------- eleCount.push STORES each item into eleCount ----------//
+                if (ele.slice(0, 17) === "Scripture Reading" || ele.slice(0, 5) === "Text:") {
+                    eleCount.push("")
+                } else {
+                    eleCount.push(ele.trim())
+                }
+
+                if (eleCount[i - 1] !== ele.trim()) {
+                    if (ele.slice(0, 17) !== "Scripture Reading") {
+                        if (ele.slice(0, 5) !== "Text:") {
+                            console.log(JSON.stringify(ele))
+                            debugger
+                            return <li key={'summary' + i}>
+                                <p>{ele}<br /></p>
+                                </li>
                         }
                     }
                 }
