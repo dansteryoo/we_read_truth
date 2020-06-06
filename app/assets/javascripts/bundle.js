@@ -798,7 +798,8 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
     value: function componentDidUpdate(prevProps) {
       var _this4 = this;
 
-      //---------- PREVENTS MULTIPLE this.setState on update ----------//
+      if (this.state.esvPassage.length !== this.state.passages.split(', ').length) return; //---------- PREVENTS MULTIPLE this.setState on update ----------//
+
       if (this.state.mainBodyChanged) {
         this.setState({
           mainBodyChanged: false
@@ -838,47 +839,36 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       var _this$state = this.state,
           passages = _this$state.passages,
           esvPassage = _this$state.esvPassage;
+      if (passages.length === 0) return;
+      var newEsvData;
 
-      if (passages.length !== 0) {
-        if (esvPassage.length === passages.split(', ').length) {
-          var newPassageData = function newPassageData(propsPassage, esvText) {
-            var newHash = [];
-            propsPassage.forEach(function (ele) {
-              esvText.forEach(function (each) {
-                if (each.passage === ele.trim()) {
-                  newHash.push({
-                    passage: ele.trim(),
-                    text: each.text
-                  });
-                }
-              });
-            });
-            return newHash;
-          };
-
-          ;
-          var newEsvData = newPassageData(passages.split(', '), esvPassage);
-          return newEsvData.map(function (each, i) {
-            //---------- itemCount TRACKING each item ----------//
-            var itemCount = [];
-            var eachText = each.text.split('\n').map(function (item, j) {
-              //---------- itemCount.push STORES each item into itemCount ----------//
-              itemCount.push(item.trim()); //---------- checking if prevItem !== current item ----------//
-
-              if (itemCount[j - 1] !== item.trim()) {
-                return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-                  key: 'bible-text' + j
-                }, item, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null));
-              }
-            });
-            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-              key: 'esv-passages' + i
-            }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-              className: "bible-passage"
-            }, each.passage), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), eachText);
-          });
-        }
+      if (esvPassage.length === passages.split(', ').length) {
+        newEsvData = esvPassage.sort(function (a, b) {
+          return passages.split(', ').indexOf(a.passage) - passages.split(', ').indexOf(b.passage);
+        });
+      } else {
+        newEsvData = [];
       }
+
+      return newEsvData.map(function (each, i) {
+        //---------- itemCount TRACKING each item ----------//
+        var itemCount = [];
+        var eachText = each.text.split('\n').map(function (item, j) {
+          //---------- itemCount.push STORES each item into itemCount ----------//
+          itemCount.push(item.trim()); //---------- checking if prevItem !== current item ----------//
+
+          if (itemCount[j - 1] !== item.trim()) {
+            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+              key: 'bible-text' + j
+            }, item, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null));
+          }
+        });
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          key: 'esv-passages' + i
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "bible-passage"
+        }, each.passage), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), eachText);
+      });
     }
   }, {
     key: "renderSummary",
@@ -919,7 +909,6 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this5 = this;
 
-      console.log(this.state.bookmark);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "middle-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
