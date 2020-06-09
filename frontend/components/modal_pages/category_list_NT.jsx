@@ -36,17 +36,20 @@ const CategoryListNT = ({ eachDevoTitle, handleClick }) => {
     const lowerCaseTitle = NTbooks.map(ele => ele.toLowerCase());
 
     let NTbook;
-    let fetchBookPayload = {
-        gender: eachDevoTitle.gender,
-        book: NTbooks[lowerCaseTitle.indexOf(eachDevoTitle.book)]
-    }
+    const inBookTitle = lowerCaseTitle.includes(eachDevoTitle.book)
+    const bookTitleUndefined = NTbookFormat[eachDevoTitle.book] === undefined
+    const bookTitle = NTbooks[lowerCaseTitle.indexOf(eachDevoTitle.book)]
 
-    if (lowerCaseTitle.includes(eachDevoTitle.book) && NTbookFormat[eachDevoTitle.book] === undefined) {
-        NTbook = NTbooks[lowerCaseTitle.indexOf(eachDevoTitle.book)]
-        
-    } else if (lowerCaseTitle.includes(eachDevoTitle.book) && NTbookFormat[eachDevoTitle.book] !== undefined) {
+    if (inBookTitle && bookTitleUndefined) {
+        NTbook = bookTitle
+    } else if (inBookTitle && !bookTitleUndefined) {
         NTbook = NTbookFormat[eachDevoTitle.book]
     };
+
+    let fetchBookPayload = {
+        gender: eachDevoTitle.gender,
+        book: bookTitle
+    }
 
     return (
         <li className='category-li'>

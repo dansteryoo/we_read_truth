@@ -25,6 +25,17 @@ $darkpink: #ff8da1;
             font-size: 20px;
             font-weight: bold;
         }
+
+        #bookmark {
+            font-size: 25px;
+            color: orange;
+            float: right;
+            padding-right: 10px;
+        }
+
+        #bookmark:hover {
+            cursor: pointer;
+        }
     }
 }
 
@@ -58,7 +69,7 @@ $darkpink: #ff8da1;
     .devo-main-body {
         display: flex;
         justify-content: space-between;
-        padding: 0 0 40px;
+        padding: 0 0 10px;
         width: 100%;
 
         p {
@@ -77,12 +88,6 @@ $darkpink: #ff8da1;
             height: 80%;
         }
     }
-
-    // .devo-main-footer {
-    //     span {
-            
-    //     }
-    // }
 }
 
 .form-or-separator-mainbody-passages {

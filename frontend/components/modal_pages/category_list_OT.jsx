@@ -46,17 +46,20 @@ const CategoryListOT = ({ eachDevoTitle, handleClick }) => {
     const lowerCaseTitle = OTbooks.map(ele => ele.toLowerCase());
 
     let OTbook;
-    let fetchBookPayload = {
-        gender: eachDevoTitle.gender,
-        book: OTbooks[lowerCaseTitle.indexOf(eachDevoTitle.book)]
-    }
+    const inBookTitle = lowerCaseTitle.includes(eachDevoTitle.book)
+    const bookTitleUndefined = OTbookFormat[eachDevoTitle.book] === undefined
+    const bookTitle = OTbooks[lowerCaseTitle.indexOf(eachDevoTitle.book)]
 
-    if (lowerCaseTitle.includes(eachDevoTitle.book) && OTbookFormat[eachDevoTitle.book] === undefined) {
-        OTbook = OTbooks[lowerCaseTitle.indexOf(eachDevoTitle.book)]
-
-    } else if (lowerCaseTitle.includes(eachDevoTitle.book) && OTbookFormat[eachDevoTitle.book] !== undefined) {
+    if (inBookTitle && bookTitleUndefined) {
+        OTbook = bookTitle
+    } else if (inBookTitle && !bookTitleUndefined) {
         OTbook = OTbookFormat[eachDevoTitle.book]
     };
+
+    let fetchBookPayload = {
+        gender: eachDevoTitle.gender,
+        book: bookTitle
+    }
     
     return (
         <li className='category-li'>

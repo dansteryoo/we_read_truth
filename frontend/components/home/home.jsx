@@ -24,7 +24,7 @@ class HomePage extends React.Component {
     };
 
     componentWillUnmount() {
-        this.props.clearDevoState()
+        // this.props.clearDevoState()
     };
 
     componentDidUpdate(prevProps) {
@@ -59,7 +59,7 @@ class HomePage extends React.Component {
             <div id='left' className={leftOpen} >
                 <div className='icon'
                     onClick={this.toggleSidebar} >
-                            <i className="fa fa-bars" aria-hidden="true"></i>
+                    <i className="fa fa-bars" aria-hidden="true"></i>
                 </div>
                 <div className={`sidebar ${leftOpen}`} >
                     <div className='left-header'>
