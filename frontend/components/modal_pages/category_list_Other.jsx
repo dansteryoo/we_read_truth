@@ -98,16 +98,17 @@ const CategoryListOther = ({ eachDevoTitle, handleClick }) => {
         return hash;
     };
 
-    let otherBook;
+    const inBookTitle = lowerCaseTitle.includes(eachDevoTitle.book) 
+    const bookTitleUndefined = lowerCaseFormat(OTHERbookFormat)[eachDevoTitle.book] === undefined
+    const bookTitle = otherBooks[lowerCaseTitle.indexOf(eachDevoTitle.book)]
+    const bookTitleRender = lowerCaseFormat(OTHERbookFormat)[eachDevoTitle.book]
+
+    let otherBook = inBookTitle && !bookTitleUndefined ? bookTitleRender : null;
+
     let fetchBookPayload = {
         gender: eachDevoTitle.gender,
-        book: otherBooks[lowerCaseTitle.indexOf(eachDevoTitle.book)]
+        book: bookTitle
     }
-
-    if (lowerCaseTitle.includes(eachDevoTitle.book) 
-        && lowerCaseFormat(OTHERbookFormat)[eachDevoTitle.book] !== undefined) {
-        otherBook = lowerCaseFormat(OTHERbookFormat)[eachDevoTitle.book]
-    };
 
     return (
         <li className='category-li'>

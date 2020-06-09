@@ -63,25 +63,15 @@ class NavBar extends React.Component {
         </div>
 
         <ul className="nav-links">
-          <li className="devo-li">
-            <a>Devotionals</a>
-            <ul className="dropdown-devos">
-              <li className="notes-li" onClick={() => this.props.openModal("Categories")}>
-                Categories
-              </li>
-            </ul>
+          <li className="devo-li" onClick={() => this.props.openModal("Categories")}>
+            Devotionals
           </li>
-          <li className="profile-li">
-            <a>Profile</a>
-            <ul className="dropdown-profile">
-              <li className="notes-li" onClick={() => this.props.openModal("Notes")}>
-                Notes
-              </li>
-            </ul>
+          <li className="notes-li" onClick={() => this.props.openModal("Notes")}>
+            Notes
           </li>
           <li className="logout-li" onClick={() => this.props.logout()}>
             Logout
-              </li>
+          </li>
         </ul>
       </nav>
     );

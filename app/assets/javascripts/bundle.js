@@ -518,8 +518,7 @@ var HomePage = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      this.props.clearDevoState();
+    value: function componentWillUnmount() {// this.props.clearDevoState()
     }
   }, {
     key: "componentDidUpdate",
@@ -718,11 +717,13 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       summary: '',
       img: '',
       esvPassage: [],
-      mainBodyChanged: false
+      mainBodyChanged: false,
+      bookmark: false
     };
     _this.ESVpassageGetter = _this.ESVpassageGetter.bind(_assertThisInitialized(_this));
     _this.renderDay = _this.renderDay.bind(_assertThisInitialized(_this));
     _this.myRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
+    _this.toggleBookmark = _this.toggleBookmark.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -796,7 +797,8 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
     value: function componentDidUpdate(prevProps) {
       var _this4 = this;
 
-      //---------- PREVENTS MULTIPLE this.setState on update ----------//
+      if (this.state.esvPassage.length !== this.state.passages.split(', ').length) return; //---------- PREVENTS MULTIPLE this.setState on update ----------//
+
       if (this.state.mainBodyChanged) {
         this.setState({
           mainBodyChanged: false
@@ -836,59 +838,55 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       var _this$state = this.state,
           passages = _this$state.passages,
           esvPassage = _this$state.esvPassage;
+      if (passages.length === 0) return;
+      var newEsvData;
 
-      if (passages.length !== 0) {
-        if (esvPassage.length === passages.split(', ').length) {
-          var newPassageData = function newPassageData(propsPassage, esvText) {
-            var newHash = [];
-            propsPassage.forEach(function (ele) {
-              esvText.forEach(function (each) {
-                if (each.passage === ele.trim()) {
-                  newHash.push({
-                    passage: ele.trim(),
-                    text: each.text
-                  });
-                }
-              });
-            });
-            return newHash;
-          };
-
-          ;
-          var newEsvData = newPassageData(passages.split(', '), esvPassage);
-          return newEsvData.map(function (each, i) {
-            //---------- itemCount TRACKING each item ----------//
-            var itemCount = [];
-            var eachText = each.text.split('\n').map(function (item, j) {
-              //---------- itemCount.push STORES each item into itemCount ----------//
-              itemCount.push(item.trim()); //---------- checking if prevItem !== current item ----------//
-
-              if (itemCount[j - 1] !== item.trim()) {
-                return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-                  key: 'bible-text' + j
-                }, item, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null));
-              }
-            });
-            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-              key: 'esv-passages' + i
-            }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-              className: "bible-passage"
-            }, each.passage), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), eachText);
-          });
-        }
+      if (esvPassage.length === passages.split(', ').length) {
+        newEsvData = esvPassage.sort(function (a, b) {
+          return passages.split(', ').indexOf(a.passage) - passages.split(', ').indexOf(b.passage);
+        });
+      } else {
+        newEsvData = [];
       }
+
+      return newEsvData.map(function (each, i) {
+        //---------- itemCount TRACKING each item ----------//
+        var itemCount = [];
+        var eachText = each.text.split('\n').map(function (item, j) {
+          //---------- itemCount.push STORES each item into itemCount ----------//
+          itemCount.push(item.trim()); //---------- checking if prevItem !== current item ----------//
+
+          if (itemCount[j - 1] !== item.trim()) {
+            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+              key: 'bible-text' + j
+            }, item, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null));
+          }
+        });
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          key: 'esv-passages' + i
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "bible-passage"
+        }, each.passage), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), eachText);
+      });
     }
   }, {
     key: "renderSummary",
     value: function renderSummary() {
-      return this.state.summary.split('\n').map(function (item, i) {
-        if (item.trim() !== '') {
-          if (item.slice(0, 17) !== "Scripture Reading") {
-            if (item.slice(0, 5) !== "Text:") {
-              //---------- REPLACE "BY" with "By" in SHE DEVOS ----------//
-              return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      var eleCount = [];
+      return this.state.summary.split('\n').map(function (ele, i) {
+        //---------- eleCount.push STORES each item into eleCount ----------//
+        if (ele.slice(0, 17) === "Scripture Reading" || ele.slice(0, 5) === "Text:") {
+          eleCount.push("");
+        } else {
+          eleCount.push(ele.trim());
+        }
+
+        if (eleCount[i - 1] !== ele.trim()) {
+          if (ele.slice(0, 17) !== "Scripture Reading") {
+            if (ele.slice(0, 5) !== "Text:") {
+              return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
                 key: 'summary' + i
-              }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), item.replace(/BY/, 'By'));
+              }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, ele, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null)));
             }
           }
         }
@@ -905,15 +903,32 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "toggleBookmark",
+    value: function toggleBookmark() {
+      var currentState = this.state.bookmark;
+      this.setState({
+        bookmark: !currentState
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this5 = this;
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "middle-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "devo-main-title"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "devo-main-day"
-      }, "Day ", this.renderDay(), ":"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, this.state.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Day ", this.renderDay(), ":"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, this.state.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        id: "bookmark",
+        className: this.state.bookmark ? 'fa fa-bookmark' : 'fa fa-bookmark-o',
+        onClick: function onClick() {
+          return _this5.toggleBookmark();
+        },
+        "aria-hidden": "true"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "devo-main-container",
         ref: this.myRef
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1637,18 +1652,21 @@ var CategoryListNT = function CategoryListNT(_ref) {
     return ele.toLowerCase();
   });
   var NTbook;
-  var fetchBookPayload = {
-    gender: eachDevoTitle.gender,
-    book: NTbooks[lowerCaseTitle.indexOf(eachDevoTitle.book)]
-  };
+  var inBookTitle = lowerCaseTitle.includes(eachDevoTitle.book);
+  var bookTitleUndefined = NTbookFormat[eachDevoTitle.book] === undefined;
+  var bookTitle = NTbooks[lowerCaseTitle.indexOf(eachDevoTitle.book)];
 
-  if (lowerCaseTitle.includes(eachDevoTitle.book) && NTbookFormat[eachDevoTitle.book] === undefined) {
-    NTbook = NTbooks[lowerCaseTitle.indexOf(eachDevoTitle.book)];
-  } else if (lowerCaseTitle.includes(eachDevoTitle.book) && NTbookFormat[eachDevoTitle.book] !== undefined) {
+  if (inBookTitle && bookTitleUndefined) {
+    NTbook = bookTitle;
+  } else if (inBookTitle && !bookTitleUndefined) {
     NTbook = NTbookFormat[eachDevoTitle.book];
   }
 
   ;
+  var fetchBookPayload = {
+    gender: eachDevoTitle.gender,
+    book: bookTitle
+  };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "category-li"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -1693,18 +1711,21 @@ var CategoryListOT = function CategoryListOT(_ref) {
     return ele.toLowerCase();
   });
   var OTbook;
-  var fetchBookPayload = {
-    gender: eachDevoTitle.gender,
-    book: OTbooks[lowerCaseTitle.indexOf(eachDevoTitle.book)]
-  };
+  var inBookTitle = lowerCaseTitle.includes(eachDevoTitle.book);
+  var bookTitleUndefined = OTbookFormat[eachDevoTitle.book] === undefined;
+  var bookTitle = OTbooks[lowerCaseTitle.indexOf(eachDevoTitle.book)];
 
-  if (lowerCaseTitle.includes(eachDevoTitle.book) && OTbookFormat[eachDevoTitle.book] === undefined) {
-    OTbook = OTbooks[lowerCaseTitle.indexOf(eachDevoTitle.book)];
-  } else if (lowerCaseTitle.includes(eachDevoTitle.book) && OTbookFormat[eachDevoTitle.book] !== undefined) {
+  if (inBookTitle && bookTitleUndefined) {
+    OTbook = bookTitle;
+  } else if (inBookTitle && !bookTitleUndefined) {
     OTbook = OTbookFormat[eachDevoTitle.book];
   }
 
   ;
+  var fetchBookPayload = {
+    gender: eachDevoTitle.gender,
+    book: bookTitle
+  };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "category-li"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -1796,17 +1817,15 @@ var CategoryListOther = function CategoryListOther(_ref) {
     return hash;
   };
 
-  var otherBook;
+  var inBookTitle = lowerCaseTitle.includes(eachDevoTitle.book);
+  var bookTitleUndefined = lowerCaseFormat(OTHERbookFormat)[eachDevoTitle.book] === undefined;
+  var bookTitle = otherBooks[lowerCaseTitle.indexOf(eachDevoTitle.book)];
+  var bookTitleRender = lowerCaseFormat(OTHERbookFormat)[eachDevoTitle.book];
+  var otherBook = inBookTitle && !bookTitleUndefined ? bookTitleRender : null;
   var fetchBookPayload = {
     gender: eachDevoTitle.gender,
-    book: otherBooks[lowerCaseTitle.indexOf(eachDevoTitle.book)]
+    book: bookTitle
   };
-
-  if (lowerCaseTitle.includes(eachDevoTitle.book) && lowerCaseFormat(OTHERbookFormat)[eachDevoTitle.book] !== undefined) {
-    otherBook = lowerCaseFormat(OTHERbookFormat)[eachDevoTitle.book];
-  }
-
-  ;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "category-li"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -2244,24 +2263,16 @@ var NavBar = /*#__PURE__*/function (_React$Component) {
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "nav-links"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "devo-li"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "Devotionals"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "dropdown-devos"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "notes-li",
+        className: "devo-li",
         onClick: function onClick() {
           return _this3.props.openModal("Categories");
         }
-      }, "Categories"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "profile-li"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "Profile"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "dropdown-profile"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      }, "Devotionals"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "notes-li",
         onClick: function onClick() {
           return _this3.props.openModal("Notes");
         }
-      }, "Notes"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      }, "Notes"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "logout-li",
         onClick: function onClick() {
           return _this3.props.logout();

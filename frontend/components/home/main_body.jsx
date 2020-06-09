@@ -14,11 +14,13 @@ class MainBody extends React.Component {
             img: '',
             esvPassage: [],
             mainBodyChanged: false,
+            bookmark: false
         }
 
         this.ESVpassageGetter = this.ESVpassageGetter.bind(this);
         this.renderDay = this.renderDay.bind(this);
         this.myRef = React.createRef();
+        this.toggleBookmark = this.toggleBookmark.bind(this);
     };
 
     //---------- ESV.ORG API CALL ----------//
@@ -79,11 +81,13 @@ class MainBody extends React.Component {
         this.setState({ 
             id: null, 
             mainBodyChanged: false, 
-            esvPassage: [] 
+            esvPassage: []
         })
     };
 
     componentDidUpdate(prevProps) {
+
+        if (this.state.esvPassage.length !== this.state.passages.split(', ').length) return 
 
         //---------- PREVENTS MULTIPLE this.setState on update ----------//
         if (this.state.mainBodyChanged) {
@@ -91,6 +95,7 @@ class MainBody extends React.Component {
         }
 
         if (this.props.mainBodyDevo.id !== prevProps.mainBodyDevo.id) {
+
             //---------- SCROLL TO TOP on render ----------//
             this.myRef.current.scrollTo(0, 0);
 
@@ -119,67 +124,64 @@ class MainBody extends React.Component {
     renderPassages() {
 
         const { passages, esvPassage } = this.state; 
+        if (passages.length === 0) return 
 
-        if (passages.length !== 0) {
-            if (esvPassage.length === passages.split(', ').length) {
-
-                function newPassageData (propsPassage, esvText) {
-                    let newHash = [];
-
-                    propsPassage.forEach(ele => {
-                        esvText.forEach(each => {
-                            if (each.passage === ele.trim()) {
-                                newHash.push({
-                                    passage: ele.trim(),
-                                    text: each.text
-                                })
-                            }
-                        })
-                    })
-
-                    return newHash
-                };
-
-                let newEsvData = newPassageData(passages.split(', '), esvPassage);
-
-                return (
-                    newEsvData.map((each, i) => {
-            
-            //---------- itemCount TRACKING each item ----------//
-                        let itemCount = []
-                        let eachText = each.text.split('\n').map((item, j) => {
-            
-            //---------- itemCount.push STORES each item into itemCount ----------//
-                            itemCount.push(item.trim())
-
-            //---------- checking if prevItem !== current item ----------//
-                            if (itemCount[j - 1] !== item.trim()) {
-                                return <p key={'bible-text' + j}>{item}<br /></p>
-                            }
-                        });
-
-                        return (
-                            <li key={'esv-passages' + i}>
-                                <span className="bible-passage">{each.passage}</span>
-                                <br />
-                                <br />
-                                {eachText}
-                            </li>
-                        )
-                    })
-                )
-            }
+        let newEsvData;
+        if (esvPassage.length === passages.split(', ').length) {
+            newEsvData = esvPassage.sort(function(a, b) {
+                return passages.split(', ').indexOf(a.passage) - passages.split(', ').indexOf(b.passage)
+            })
+        } else {
+            newEsvData = []
         }
+
+        return (
+            newEsvData.map((each, i) => {
+        
+        //---------- itemCount TRACKING each item ----------//
+            let itemCount = []
+            let eachText = each.text.split('\n').map((item, j) => {
+        
+        //---------- itemCount.push STORES each item into itemCount ----------//
+                itemCount.push(item.trim())
+        //---------- checking if prevItem !== current item ----------//
+
+                if (itemCount[j - 1] !== item.trim()) {
+                    return <p key={'bible-text' + j}>{item}<br /></p>
+                }
+            });
+            
+            return (
+                <li key={'esv-passages' + i}>
+                    <span className="bible-passage">{each.passage}</span>
+                    <br />
+                    <br />
+                    {eachText}
+                </li>
+            )
+        }))
     }
 
     renderSummary() {
+        let eleCount = []
+
         return (
-            this.state.summary.split('\n').map((item, i) => {
-                if (item.trim() !== '') {
-                    if (item.slice(0, 17) !== "Scripture Reading") {
-                        if (item.slice(0, 5) !== "Text:") {
-                            //---------- REPLACE "BY" with "By" in SHE DEVOS ----------//
-                            return <p key={'summary' + i}><br />{item.replace(/BY/, 'By')}</p>
+            this.state.summary.split('\n').map((ele, i) => {
+
+                //---------- eleCount.push STORES each item into eleCount ----------//
+                if (ele.slice(0, 17) === "Scripture Reading" || ele.slice(0, 5) === "Text:") {
+                    eleCount.push("")
+                } else {
+                    eleCount.push(ele.trim())
+                }
+
+                if (eleCount[i - 1] !== ele.trim()) {
+                    if (ele.slice(0, 17) !== "Scripture Reading") {
+                        if (ele.slice(0, 5) !== "Text:") {
+                    
+                            return <li key={'summary' + i}>
+                                <p>{ele}<br /></p>
+                                </li>
                         }
                     }
                 }
@@ -189,6 +191,7 @@ class MainBody extends React.Component {
 
     renderDay() {
         const { mainBodyDevo } = this.props;
+
         return (
             this.props.devoBook.map((each, i) => {
                 if (each.id === mainBodyDevo.id) {
@@ -198,13 +201,23 @@ class MainBody extends React.Component {
         )
     }
 
-    render() {
+    toggleBookmark() {
+        const currentState = this.state.bookmark;
+        this.setState({ bookmark: !currentState })
+    }
 
+    render() {
+        
         return (
             <div className='middle-container'>
                 <div className='devo-main-title'>
                     <span className='devo-main-day'>Day {this.renderDay()}:</span>
                     <span>{this.state.title}</span>
+                        <i id='bookmark' 
+                        className={this.state.bookmark ? 'fa fa-bookmark' : 'fa fa-bookmark-o' } 
+                        onClick={() => this.toggleBookmark()} 
+                        aria-hidden="true">
+                        </i>
                 </div>
             <div className='devo-main-container' ref={this.myRef}>
                 <div className="form-or-separator-mainbody-passages">
