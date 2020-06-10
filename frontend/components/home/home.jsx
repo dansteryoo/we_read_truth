@@ -37,11 +37,6 @@ class HomePage extends React.Component {
         this.setState({ [key]: !this.state[key] });
     };
 
-    renderMainBody() {
-        if (this.props.mainBodyDevo === null) return (<div></div>)
-        return <MainBodyContainer/>
-    };
-
     render() {
 
         let leftOpen = this.state.leftOpen ? 'open' : 'closed';
@@ -52,10 +47,8 @@ class HomePage extends React.Component {
         return (
             <>
             {/* ---------- TOP NAV  ---------- */}
-
             <NavBarContainer />
             <div id='layout'>
-
             <div id='left' className={leftOpen} >
                 <div className='icon'
                     onClick={this.toggleSidebar} >
@@ -68,11 +61,8 @@ class HomePage extends React.Component {
                         </h3>
                     </div>
                     <div className='left-content'>
-                    
                     {/* ---------- SIDE NAV  ---------- */}
-
                         <SidNavContainer/>
-
                     </div>
                 </div>
             </div>
@@ -88,15 +78,11 @@ class HomePage extends React.Component {
                     </h3>
                 </div>
                 <div className='content'>
-
                     {/* ---------- MAIN BODY START ---------- */}
-
-                            {this.renderMainBody()}
-
+                            <MainBodyContainer />
                     {/* ---------- MAIN BODY END ---------- */}
                 </div>
             </div>
-
             <div id='right' className={rightOpen} >
                 <div className='icon'
                     onClick={this.toggleSidebar} >
@@ -109,9 +95,7 @@ class HomePage extends React.Component {
                         </h3>
                     </div>
                     <div className='content'>
-
                     {/* ---------- NOTE FORM ---------- */}
-
                         <NotesFormContainer />
                     </div>
                 </div>
