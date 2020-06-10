@@ -21,6 +21,10 @@ class MainBody extends React.Component {
         this.renderDay = this.renderDay.bind(this);
         this.myRef = React.createRef();
         this.toggleBookmark = this.toggleBookmark.bind(this);
+        this.splitPassages = this.splitPassages.bind(this);
+        this.isMainBodyDevoNull = this.isMainBodyDevoNull.bind(this);
+        this.getCurrentPage = this.getCurrentPage.bind(this);
+        this.setCurrentPage = this.setCurrentPage.bind(this);
     };
 
     //---------- ESV.ORG API CALL ----------//
@@ -58,53 +62,80 @@ class MainBody extends React.Component {
         })
     }
 
+    splitPassages() {
+        return this.state.passages.split(', ')
+    }
+
+    isMainBodyDevoNull() {
+        if (this.props.mainBodyDevo === null) return true 
+        return false
+    }
+
+    getCurrentPage() {
+        return JSON.parse(localStorage.getItem('currentPage'));
+    }
+
+    setCurrentPage() {
+        return localStorage.setItem('currentPage', JSON.stringify(this.state));
+    }
+
     //---------- REACT LIFE CYCLES ----------//
 
     componentDidMount() {
-        const { id, img, passages, summary, title } = this.props.mainBodyDevo;
 
-        passages.split(', ').forEach(each => {
-            return this.ESVpassageGetter(each.trim())
-        })
-        
-        this.setState({
-            id: id,
-            title: title,
-            passages: passages,
-            summary: summary,
-            img: img,
-            mainBodyChanged: true,
-        })
-    };
+        if (this.getCurrentPage()) {
+            this.setState(this.getCurrentPage())
+            
+        } else if (!this.isMainBodyDevoNull()) {
+            const { id, img, passages, summary, title } = this.props.mainBodyDevo;
 
-    componentWillUnmount() {
-        this.setState({ 
-            id: null, 
-            mainBodyChanged: false, 
-            esvPassage: []
-        })
+            if (this.getCurrentPage() && (this.getCurrentPage().id === id)) {
+                this.setState({ bookmark: true });
+            }
+
+            this.splitPassages(passages).forEach(each => {
+                return this.ESVpassageGetter(each.trim())
+            })
+
+            this.setState({
+                id: id,
+                title: title,
+                passages: passages,
+                summary: summary,
+                img: img,
+                mainBodyChanged: true,
+            })
+        }
     };
 
     componentDidUpdate(prevProps) {
-
-        if (this.state.esvPassage.length !== this.state.passages.split(', ').length) return 
+        console.log('update')
+        const { id, mainBodyChanged, bookmark } = this.state;
+        if (this.isMainBodyDevoNull() || prevProps.mainBodyDevo === null) return 
 
         //---------- PREVENTS MULTIPLE this.setState on update ----------//
-        if (this.state.mainBodyChanged) {
+        if (mainBodyChanged) {
             this.setState({ mainBodyChanged: false });
         }
 
+        if (!bookmark && mainBodyChanged) {
+            if (this.getCurrentPage() && 
+                (this.getCurrentPage().id === id || this.getCurrentPage().id === this.state.id)) {
+                this.setState({ bookmark: true });
+            }
+        }
+
         if (this.props.mainBodyDevo.id !== prevProps.mainBodyDevo.id) {
-
-            //---------- SCROLL TO TOP on render ----------//
-            this.myRef.current.scrollTo(0, 0);
-
-            //---------- PREVENTS DUPS in esvPassage ----------//
-            this.setState({ esvPassage: [] });
+            if (bookmark) this.setCurrentPage()
 
             const { id, img, passages, summary, title } = this.props.mainBodyDevo;
 
-            passages.split(', ').forEach(each => {
+            //---------- SCROLL TO TOP on render ----------//
+            this.myRef.current.scrollTo(0, 0);
+            //---------- PREVENTS DUPS in esvPassage ----------//
+            this.setState({ esvPassage: [] });
+
+            this.splitPassages(passages).forEach(each => {
                 return this.ESVpassageGetter(each.trim())
             });
 
@@ -115,6 +146,7 @@ class MainBody extends React.Component {
                 summary: summary,
                 img: img,
                 mainBodyChanged: true,
+                bookmark: false
             });
         }
     };
@@ -122,17 +154,16 @@ class MainBody extends React.Component {
     //---------- RENDER FUNCTIONS ----------//
 
     renderPassages() {
-
         const { passages, esvPassage } = this.state; 
         if (passages.length === 0) return 
 
-        let newEsvData;
-        if (esvPassage.length === passages.split(', ').length) {
+        let newEsvData = []
+        let passagesArray = this.splitPassages(passages)
+
+        if (esvPassage.length === passagesArray.length) {
             newEsvData = esvPassage.sort(function(a, b) {
-                return passages.split(', ').indexOf(a.passage) - passages.split(', ').indexOf(b.passage)
+                return passagesArray.indexOf(a.passage) - passagesArray.indexOf(b.passage)
             })
-        } else {
-            newEsvData = []
         }
 
         return (
@@ -190,11 +221,9 @@ class MainBody extends React.Component {
     }
 
     renderDay() {
-        const { mainBodyDevo } = this.props;
-
         return (
             this.props.devoBook.map((each, i) => {
-                if (each.id === mainBodyDevo.id) {
+                if (each.id === this.state.id) {
                     return i + 1
                 }
             })
@@ -203,11 +232,13 @@ class MainBody extends React.Component {
 
     toggleBookmark() {
         const currentState = this.state.bookmark;
+        !currentState ? this.setCurrentPage() : localStorage.clear();
         this.setState({ bookmark: !currentState })
     }
 
     render() {
-        
+
+        console.log('render')
         return (
             <div className='middle-container'>
                 <div className='devo-main-title'>

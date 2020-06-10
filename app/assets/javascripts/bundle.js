@@ -532,12 +532,6 @@ var HomePage = /*#__PURE__*/function (_React$Component) {
       this.setState(_defineProperty({}, key, !this.state[key]));
     }
   }, {
-    key: "renderMainBody",
-    value: function renderMainBody() {
-      if (this.props.mainBodyDevo === null) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_main_body_container__WEBPACK_IMPORTED_MODULE_4__["default"], null);
-    }
-  }, {
     key: "render",
     value: function render() {
       var leftOpen = this.state.leftOpen ? 'open' : 'closed';
@@ -570,7 +564,7 @@ var HomePage = /*#__PURE__*/function (_React$Component) {
         className: "\n                        title\n                        ".concat('left-' + leftOpen, "\n                        ").concat('right-' + rightOpen, "\n                    ")
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Welcome ", currentUser.first_name, "!"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "content"
-      }, this.renderMainBody())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_main_body_container__WEBPACK_IMPORTED_MODULE_4__["default"], null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "right",
         className: rightOpen
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -724,6 +718,10 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
     _this.renderDay = _this.renderDay.bind(_assertThisInitialized(_this));
     _this.myRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.toggleBookmark = _this.toggleBookmark.bind(_assertThisInitialized(_this));
+    _this.splitPassages = _this.splitPassages.bind(_assertThisInitialized(_this));
+    _this.isMainBodyDevoNull = _this.isMainBodyDevoNull.bind(_assertThisInitialized(_this));
+    _this.getCurrentPage = _this.getCurrentPage.bind(_assertThisInitialized(_this));
+    _this.setCurrentPage = _this.setCurrentPage.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -758,6 +756,27 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
           return 'Error: Passage not found';
         }
       });
+    }
+  }, {
+    key: "splitPassages",
+    value: function splitPassages() {
+      return this.state.passages.split(', ');
+    }
+  }, {
+    key: "isMainBodyDevoNull",
+    value: function isMainBodyDevoNull() {
+      if (this.props.mainBodyDevo === null) return true;
+      return false;
+    }
+  }, {
+    key: "getCurrentPage",
+    value: function getCurrentPage() {
+      return JSON.parse(localStorage.getItem('currentPage'));
+    }
+  }, {
+    key: "setCurrentPage",
+    value: function setCurrentPage() {
+      return localStorage.setItem('currentPage', JSON.stringify(this.state));
     } //---------- REACT LIFE CYCLES ----------//
 
   }, {
@@ -765,61 +784,24 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       var _this3 = this;
 
-      var _this$props$mainBodyD = this.props.mainBodyDevo,
-          id = _this$props$mainBodyD.id,
-          img = _this$props$mainBodyD.img,
-          passages = _this$props$mainBodyD.passages,
-          summary = _this$props$mainBodyD.summary,
-          title = _this$props$mainBodyD.title;
-      passages.split(', ').forEach(function (each) {
-        return _this3.ESVpassageGetter(each.trim());
-      });
-      this.setState({
-        id: id,
-        title: title,
-        passages: passages,
-        summary: summary,
-        img: img,
-        mainBodyChanged: true
-      });
-    }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      this.setState({
-        id: null,
-        mainBodyChanged: false,
-        esvPassage: []
-      });
-    }
-  }, {
-    key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps) {
-      var _this4 = this;
+      if (this.getCurrentPage()) {
+        this.setState(this.getCurrentPage());
+      } else if (!this.isMainBodyDevoNull()) {
+        var _this$props$mainBodyD = this.props.mainBodyDevo,
+            id = _this$props$mainBodyD.id,
+            img = _this$props$mainBodyD.img,
+            passages = _this$props$mainBodyD.passages,
+            summary = _this$props$mainBodyD.summary,
+            title = _this$props$mainBodyD.title;
 
-      if (this.state.esvPassage.length !== this.state.passages.split(', ').length) return; //---------- PREVENTS MULTIPLE this.setState on update ----------//
+        if (this.getCurrentPage() && this.getCurrentPage().id === id) {
+          this.setState({
+            bookmark: true
+          });
+        }
 
-      if (this.state.mainBodyChanged) {
-        this.setState({
-          mainBodyChanged: false
-        });
-      }
-
-      if (this.props.mainBodyDevo.id !== prevProps.mainBodyDevo.id) {
-        //---------- SCROLL TO TOP on render ----------//
-        this.myRef.current.scrollTo(0, 0); //---------- PREVENTS DUPS in esvPassage ----------//
-
-        this.setState({
-          esvPassage: []
-        });
-        var _this$props$mainBodyD2 = this.props.mainBodyDevo,
-            id = _this$props$mainBodyD2.id,
-            img = _this$props$mainBodyD2.img,
-            passages = _this$props$mainBodyD2.passages,
-            summary = _this$props$mainBodyD2.summary,
-            title = _this$props$mainBodyD2.title;
-        passages.split(', ').forEach(function (each) {
-          return _this4.ESVpassageGetter(each.trim());
+        this.splitPassages(passages).forEach(function (each) {
+          return _this3.ESVpassageGetter(each.trim());
         });
         this.setState({
           id: id,
@@ -832,21 +814,74 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       }
     }
   }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      var _this4 = this;
+
+      console.log('update');
+      var _this$state = this.state,
+          id = _this$state.id,
+          mainBodyChanged = _this$state.mainBodyChanged,
+          bookmark = _this$state.bookmark;
+      if (this.isMainBodyDevoNull() || prevProps.mainBodyDevo === null) return; //---------- PREVENTS MULTIPLE this.setState on update ----------//
+
+      if (mainBodyChanged) {
+        this.setState({
+          mainBodyChanged: false
+        });
+      }
+
+      if (!bookmark && mainBodyChanged) {
+        if (this.getCurrentPage() && (this.getCurrentPage().id === id || this.getCurrentPage().id === this.state.id)) {
+          this.setState({
+            bookmark: true
+          });
+        }
+      }
+
+      if (this.props.mainBodyDevo.id !== prevProps.mainBodyDevo.id) {
+        if (bookmark) this.setCurrentPage();
+        var _this$props$mainBodyD2 = this.props.mainBodyDevo,
+            _id = _this$props$mainBodyD2.id,
+            img = _this$props$mainBodyD2.img,
+            passages = _this$props$mainBodyD2.passages,
+            summary = _this$props$mainBodyD2.summary,
+            title = _this$props$mainBodyD2.title; //---------- SCROLL TO TOP on render ----------//
+
+        this.myRef.current.scrollTo(0, 0); //---------- PREVENTS DUPS in esvPassage ----------//
+
+        this.setState({
+          esvPassage: []
+        });
+        this.splitPassages(passages).forEach(function (each) {
+          return _this4.ESVpassageGetter(each.trim());
+        });
+        this.setState({
+          id: _id,
+          title: title,
+          passages: passages,
+          summary: summary,
+          img: img,
+          mainBodyChanged: true,
+          bookmark: false
+        });
+      }
+    }
+  }, {
     key: "renderPassages",
     //---------- RENDER FUNCTIONS ----------//
     value: function renderPassages() {
-      var _this$state = this.state,
-          passages = _this$state.passages,
-          esvPassage = _this$state.esvPassage;
+      var _this$state2 = this.state,
+          passages = _this$state2.passages,
+          esvPassage = _this$state2.esvPassage;
       if (passages.length === 0) return;
-      var newEsvData;
+      var newEsvData = [];
+      var passagesArray = this.splitPassages(passages);
 
-      if (esvPassage.length === passages.split(', ').length) {
+      if (esvPassage.length === passagesArray.length) {
         newEsvData = esvPassage.sort(function (a, b) {
-          return passages.split(', ').indexOf(a.passage) - passages.split(', ').indexOf(b.passage);
+          return passagesArray.indexOf(a.passage) - passagesArray.indexOf(b.passage);
         });
-      } else {
-        newEsvData = [];
       }
 
       return newEsvData.map(function (each, i) {
@@ -895,9 +930,10 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderDay",
     value: function renderDay() {
-      var mainBodyDevo = this.props.mainBodyDevo;
+      var _this5 = this;
+
       return this.props.devoBook.map(function (each, i) {
-        if (each.id === mainBodyDevo.id) {
+        if (each.id === _this5.state.id) {
           return i + 1;
         }
       });
@@ -906,6 +942,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
     key: "toggleBookmark",
     value: function toggleBookmark() {
       var currentState = this.state.bookmark;
+      !currentState ? this.setCurrentPage() : localStorage.clear();
       this.setState({
         bookmark: !currentState
       });
@@ -913,8 +950,9 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this5 = this;
+      var _this6 = this;
 
+      console.log('render');
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "middle-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -925,7 +963,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
         id: "bookmark",
         className: this.state.bookmark ? 'fa fa-bookmark' : 'fa fa-bookmark-o',
         onClick: function onClick() {
-          return _this5.toggleBookmark();
+          return _this6.toggleBookmark();
         },
         "aria-hidden": "true"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
