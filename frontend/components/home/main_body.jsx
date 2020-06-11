@@ -24,11 +24,9 @@ class MainBody extends React.Component {
         this.toggleBookmark = this.toggleBookmark.bind(this);
         this.splitPassages = this.splitPassages.bind(this);
         this.isMainBodyDevoNull = this.isMainBodyDevoNull.bind(this);
-        this.getCurrentPage = this.getCurrentPage.bind(this);
-        this.setCurrentPage = this.setCurrentPage.bind(this);
-        this.removeCurrentPage = this.removeCurrentPage.bind(this);
         this.setBookmark = this.setBookmark.bind(this);
-        this.stringifyCurrentUserId = this.stringifyCurrentUserId.bind(this);
+        this.localStorageFunc = this.localStorageFunc.bind(this);
+
     };
 
     //---------- ESV.ORG API CALL ----------//
@@ -51,15 +49,13 @@ class MainBody extends React.Component {
         .then(res => {
             if (res.status === 200) {
                 return this.setState({ 
-                    esvPassage: [ 
-                        ...this.state.esvPassage, 
+                    esvPassage: [ ...this.state.esvPassage, 
                         { 
                         passage: res.config.params.q, 
                         text: res.data.passages[0] 
                         }
                     ]
-                }
-            )
+                })
             } else {
                 return 'Error: Passage not found'
             }
@@ -69,7 +65,8 @@ class MainBody extends React.Component {
     setBookmark() {
         //---------- SET BOOKMARK TO TRUE ----------//
         if (!this.state.bookmark && this.state.mainBodyChanged) {
-            if (this.getCurrentPage() && this.getCurrentPage().id === this.state.id) {
+            if (this.localStorageFunc('getCurrentPage') 
+                && this.localStorageFunc('getCurrentPage').id === this.state.id) {
                 return this.setState({ bookmark: true })
             }
         }
@@ -84,36 +81,39 @@ class MainBody extends React.Component {
         return false
     }
 
-    stringifyCurrentUserId() {
-        return JSON.stringify(this.props.currentUser.id)
-    }
+    localStorageFunc(condition) {
+        let stringifyCurrentUserId = JSON.stringify(this.props.currentUser.id)
 
-    getCurrentPage() {
-        return JSON.parse(localStorage.getItem(this.stringifyCurrentUserId()));
-    }
+        switch (condition) {
 
-    setCurrentPage() {
-        console.log(this.state)
-        return localStorage.setItem(this.stringifyCurrentUserId(), JSON.stringify(this.state))
-    }
+            case 'getCurrentPage':
+                return JSON.parse(localStorage.getItem(stringifyCurrentUserId))
 
-    removeCurrentPage() {
-        return localStorage.removeItem(this.stringifyCurrentUserId());
+            case 'setCurrentPage':
+                return localStorage.setItem(stringifyCurrentUserId, JSON.stringify(this.state))
+
+            case 'removeCurrentPage':
+                return localStorage.removeItem(stringifyCurrentUserId);
+
+            default:
+                return
+        }
     }
 
     //---------- REACT LIFE CYCLES ----------//
 
     componentDidMount() {
         this.setBookmark()
+        const currentPage = this.localStorageFunc('getCurrentPage')
+
         //---------- IF localStorage EXISTS then setState ----------//
-        if (this.getCurrentPage()) {
-            this.setState({ renderDay: this.getCurrentPage().renderDay })
-            return this.props.fetchDevo(this.getCurrentPage().id);
+        if (currentPage) {
+            this.setState({ renderDay: currentPage.renderDay })
+            return this.props.fetchDevo(currentPage.id);
         }
     };
 
     componentDidUpdate(prevProps) {
-        this.setBookmark()
         if (this.isMainBodyDevoNull()) return 
 
         //---------- SET renderDay to this.state ----------//
@@ -144,6 +144,8 @@ class MainBody extends React.Component {
                 bookmark: false,
             })
         }
+        
+        this.setBookmark()
     };
 
 
@@ -154,7 +156,7 @@ class MainBody extends React.Component {
         if (passages.length === 0) return 
 
         let newEsvData = []
-        let passagesArray = this.splitPassages(passages)
+        const passagesArray = this.splitPassages(passages)
 
         if (esvPassage.length === passagesArray.length) {
             newEsvData = esvPassage.sort(function(a, b) {
@@ -166,13 +168,13 @@ class MainBody extends React.Component {
             newEsvData.map((each, i) => {
         
         //---------- itemCount TRACKING each item ----------//
-            let itemCount = []
+            const itemCount = []
             let eachText = each.text.split('\n').map((item, j) => {
         
         //---------- itemCount.push STORES each item into itemCount ----------//
                 itemCount.push(item.trim())
-        //---------- checking if prevItem !== current item ----------//
 
+        //---------- checking if prevItem !== current item ----------//
                 if (itemCount[j - 1] !== item.trim()) {
                     return <p key={'bible-text' + j}>{item}<br /></p>
                 }
@@ -181,8 +183,7 @@ class MainBody extends React.Component {
             return (
                 <li key={'esv-passages' + i}>
                     <span className="bible-passage">{each.passage}</span>
-                    <br />
-                    <br />
+                    <br /><br />
                     {eachText}
                 </li>
             )
@@ -190,27 +191,23 @@ class MainBody extends React.Component {
     }
 
     renderSummary() {
-        let eleCount = []
+        const eleCount = []
 
         return (
             this.state.summary.split('\n').map((ele, i) => {
+                const scripture = ele.slice(0, 17) === "Scripture Reading"
+                const text = ele.slice(0, 5) === "Text:"
+                const eleCountMatch = eleCount[i - 1] === ele.trim()
 
                 //---------- eleCount.push STORES each item into eleCount ----------//
-                if (ele.slice(0, 17) === "Scripture Reading" || ele.slice(0, 5) === "Text:") {
-                    eleCount.push("")
-                } else {
-                    eleCount.push(ele.trim())
-                }
+                scripture || text
+                    ? eleCount.push("")
+                    : eleCount.push(ele.trim())
 
-                if (eleCount[i - 1] !== ele.trim()) {
-                    if (ele.slice(0, 17) !== "Scripture Reading") {
-                        if (ele.slice(0, 5) !== "Text:") {
-                    
-                            return <li key={'summary' + i}>
-                                <p>{ele}<br /></p>
-                                </li>
-                        }
-                    }
+                if (!eleCountMatch && !scripture && !text) {
+                    return <li key={'summary' + i}>
+                        <p>{ele}<br /></p>
+                        </li>
                 }
             })
         )
@@ -227,15 +224,15 @@ class MainBody extends React.Component {
     }
 
     toggleBookmark() {
-        const currentState = this.state.bookmark;
-        !currentState ? this.setCurrentPage() : this.removeCurrentPage();
-        this.setState({ bookmark: !currentState })
+        const { bookmark } = this.state;
+        !bookmark 
+            ? this.localStorageFunc('setCurrentPage') 
+            : this.localStorageFunc('removeCurrentPage')
+        this.setState({ bookmark: !bookmark })
     }
 
     render() {
-        if (this.isMainBodyDevoNull() && !this.getCurrentPage()) return <div></div>
-
-        console.log('render')
+        if (this.isMainBodyDevoNull() && !this.localStorageFunc('getCurrentPage')) return <div></div>
 
         return (
             <div className='middle-container'>

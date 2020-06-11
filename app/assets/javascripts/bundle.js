@@ -722,11 +722,8 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
     _this.toggleBookmark = _this.toggleBookmark.bind(_assertThisInitialized(_this));
     _this.splitPassages = _this.splitPassages.bind(_assertThisInitialized(_this));
     _this.isMainBodyDevoNull = _this.isMainBodyDevoNull.bind(_assertThisInitialized(_this));
-    _this.getCurrentPage = _this.getCurrentPage.bind(_assertThisInitialized(_this));
-    _this.setCurrentPage = _this.setCurrentPage.bind(_assertThisInitialized(_this));
-    _this.removeCurrentPage = _this.removeCurrentPage.bind(_assertThisInitialized(_this));
     _this.setBookmark = _this.setBookmark.bind(_assertThisInitialized(_this));
-    _this.stringifyCurrentUserId = _this.stringifyCurrentUserId.bind(_assertThisInitialized(_this));
+    _this.localStorageFunc = _this.localStorageFunc.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -767,7 +764,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
     value: function setBookmark() {
       //---------- SET BOOKMARK TO TRUE ----------//
       if (!this.state.bookmark && this.state.mainBodyChanged) {
-        if (this.getCurrentPage() && this.getCurrentPage().id === this.state.id) {
+        if (this.localStorageFunc('getCurrentPage') && this.localStorageFunc('getCurrentPage').id === this.state.id) {
           return this.setState({
             bookmark: true
           });
@@ -786,37 +783,36 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       return false;
     }
   }, {
-    key: "stringifyCurrentUserId",
-    value: function stringifyCurrentUserId() {
-      return JSON.stringify(this.props.currentUser.id);
-    }
-  }, {
-    key: "getCurrentPage",
-    value: function getCurrentPage() {
-      return JSON.parse(localStorage.getItem(this.stringifyCurrentUserId()));
-    }
-  }, {
-    key: "setCurrentPage",
-    value: function setCurrentPage() {
-      console.log(this.state);
-      return localStorage.setItem(this.stringifyCurrentUserId(), JSON.stringify(this.state));
-    }
-  }, {
-    key: "removeCurrentPage",
-    value: function removeCurrentPage() {
-      return localStorage.removeItem(this.stringifyCurrentUserId());
+    key: "localStorageFunc",
+    value: function localStorageFunc(condition) {
+      var stringifyCurrentUserId = JSON.stringify(this.props.currentUser.id);
+
+      switch (condition) {
+        case 'getCurrentPage':
+          return JSON.parse(localStorage.getItem(stringifyCurrentUserId));
+
+        case 'setCurrentPage':
+          return localStorage.setItem(stringifyCurrentUserId, JSON.stringify(this.state));
+
+        case 'removeCurrentPage':
+          return localStorage.removeItem(stringifyCurrentUserId);
+
+        default:
+          return;
+      }
     } //---------- REACT LIFE CYCLES ----------//
 
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.setBookmark(); //---------- IF localStorage EXISTS then setState ----------//
+      this.setBookmark();
+      var currentPage = this.localStorageFunc('getCurrentPage'); //---------- IF localStorage EXISTS then setState ----------//
 
-      if (this.getCurrentPage()) {
+      if (currentPage) {
         this.setState({
-          renderDay: this.getCurrentPage().renderDay
+          renderDay: currentPage.renderDay
         });
-        return this.props.fetchDevo(this.getCurrentPage().id);
+        return this.props.fetchDevo(currentPage.id);
       }
     }
   }, {
@@ -824,7 +820,6 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
     value: function componentDidUpdate(prevProps) {
       var _this3 = this;
 
-      this.setBookmark();
       if (this.isMainBodyDevoNull()) return; //---------- SET renderDay to this.state ----------//
 
       if (this.renderDay() && this.renderDay() !== this.state.renderDay) {
@@ -866,6 +861,8 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
           bookmark: false
         });
       }
+
+      this.setBookmark();
     }
   }, {
     key: "renderPassages",
@@ -909,21 +906,16 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
     value: function renderSummary() {
       var eleCount = [];
       return this.state.summary.split('\n').map(function (ele, i) {
-        //---------- eleCount.push STORES each item into eleCount ----------//
-        if (ele.slice(0, 17) === "Scripture Reading" || ele.slice(0, 5) === "Text:") {
-          eleCount.push("");
-        } else {
-          eleCount.push(ele.trim());
-        }
+        var scripture = ele.slice(0, 17) === "Scripture Reading";
+        var text = ele.slice(0, 5) === "Text:";
+        var eleCountMatch = eleCount[i - 1] === ele.trim(); //---------- eleCount.push STORES each item into eleCount ----------//
 
-        if (eleCount[i - 1] !== ele.trim()) {
-          if (ele.slice(0, 17) !== "Scripture Reading") {
-            if (ele.slice(0, 5) !== "Text:") {
-              return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-                key: 'summary' + i
-              }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, ele, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null)));
-            }
-          }
+        scripture || text ? eleCount.push("") : eleCount.push(ele.trim());
+
+        if (!eleCountMatch && !scripture && !text) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+            key: 'summary' + i
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, ele, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null)));
         }
       });
     }
@@ -943,10 +935,10 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "toggleBookmark",
     value: function toggleBookmark() {
-      var currentState = this.state.bookmark;
-      !currentState ? this.setCurrentPage() : this.removeCurrentPage();
+      var bookmark = this.state.bookmark;
+      !bookmark ? this.localStorageFunc('setCurrentPage') : this.localStorageFunc('removeCurrentPage');
       this.setState({
-        bookmark: !currentState
+        bookmark: !bookmark
       });
     }
   }, {
@@ -954,8 +946,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this5 = this;
 
-      if (this.isMainBodyDevoNull() && !this.getCurrentPage()) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
-      console.log('render');
+      if (this.isMainBodyDevoNull() && !this.localStorageFunc('getCurrentPage')) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "middle-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
