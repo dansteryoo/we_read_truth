@@ -1,5 +1,4 @@
 // sidenav.jsx 
-
 export const allBookTitles = [
     "Genesis",
     "Exodus",
@@ -302,7 +301,7 @@ export const OTbookFormat = {
 };
 
 // category_list_Other.jsx
-export const otherBooks = [
+export const themeBooks = [
     "Justice",
     "HymnsV",
     "TheSermonontheMount",
@@ -342,7 +341,8 @@ export const otherBooks = [
     "PsalmsofGratitude",
 ]
 
-export const OTHERbookFormat = {
+// category_list_Other.jsx
+export const themeBookFormat = {
     "HymnsV": 'Hymns V',
     "TheSermonontheMount": 'The Sermon on the Mount',
     "Lent2017:YouAreMine": 'Lent 2017',

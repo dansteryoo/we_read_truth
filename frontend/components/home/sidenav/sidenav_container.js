@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { closeModal, openModal } from '../../../actions/modal_actions';
-import { fetchDevo } from '../../../actions/devo_actions';
+import { fetchDevo, fetchDevoBook } from '../../../actions/devo_actions';
 import SideNav from './sidenav';
 
 const mapStateToProps = (state) => {
@@ -32,6 +32,7 @@ const mapDispatchToProps = (dispatch) => ({
     closeModal: () => dispatch(closeModal()),
     openModal: (formType) => dispatch(openModal(formType)),
     fetchDevo: (devoId) => dispatch(fetchDevo(devoId)),
+    fetchDevoBook: (book) => dispatch(fetchDevoBook(book))
 });
 
 

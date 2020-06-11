@@ -1,9 +1,9 @@
 import React from 'react';
-import { otherBooks, OTHERbookFormat } from '../home/sidenav/bookTitles'
+import { themeBooks, themeBookFormat } from '../home/bookTitles'
 
-const CategoryListOther = ({ eachDevoTitle, handleClick }) => {
+const CategoryListOther = ({ eachTitle, handleClick }) => {
 
-    const lowerCaseArr = otherBooks.map(ele => ele.toLowerCase());
+    const lowerCaseArr = themeBooks.map(ele => ele.toLowerCase());
 
     const lowerCaseFormat = (data) => {
         let hash = {};
@@ -13,22 +13,22 @@ const CategoryListOther = ({ eachDevoTitle, handleClick }) => {
         return hash;
     };
 
-    const inBookTitle = lowerCaseArr.includes(eachDevoTitle.book) 
-    const isBookTitleDefined = lowerCaseFormat(OTHERbookFormat)[eachDevoTitle.book] !== undefined
-    const bookTitle = otherBooks[lowerCaseArr.indexOf(eachDevoTitle.book)]
-    const bookTitleRender = lowerCaseFormat(OTHERbookFormat)[eachDevoTitle.book]
+    const inBookTitle = lowerCaseArr.includes(eachTitle.book) 
+    const isBookTitleDefined = lowerCaseFormat(themeBookFormat)[eachTitle.book] !== undefined
+    const bookTitle = themeBooks[lowerCaseArr.indexOf(eachTitle.book)]
+    const bookTitleRender = lowerCaseFormat(themeBookFormat)[eachTitle.book]
 
-    let otherBook = inBookTitle && isBookTitleDefined ? bookTitleRender : null;
+    let themeBook = inBookTitle && isBookTitleDefined ? bookTitleRender : null;
 
     let fetchBookPayload = {
-        gender: eachDevoTitle.gender,
+        gender: eachTitle.gender,
         book: bookTitle
     }
 
     return (
         <li className='category-li'>
             <span className='category-title' onClick={(e) => handleClick(fetchBookPayload, e)}>
-                {otherBook}
+                {themeBook}
             </span>
         </li>
     )

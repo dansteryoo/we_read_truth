@@ -85,7 +85,6 @@ class MainBody extends React.Component {
         let stringifyCurrentUserId = JSON.stringify(this.props.currentUser.id)
 
         switch (condition) {
-
             case 'getCurrentPage':
                 return JSON.parse(localStorage.getItem(stringifyCurrentUserId))
 
@@ -147,6 +146,9 @@ class MainBody extends React.Component {
         }
     };
 
+    componentWillUnmount() {
+
+    }
 
     //---------- RENDER FUNCTIONS ----------//
 
