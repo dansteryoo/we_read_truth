@@ -2,7 +2,6 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user, :logged_in?
   skip_before_action :verify_authenticity_token
-  # after_action :set_csrf_cookie
     
 private
 
@@ -33,10 +32,4 @@ private
 
   protected
     
-  # def set_csrf_cookie
-  #     cookies["X-CSRF-Token"] = form_authenticity_token
-  # end
-
-
-
 end

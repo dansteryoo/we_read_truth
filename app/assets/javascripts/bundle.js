@@ -518,7 +518,8 @@ var HomePage = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "componentWillUnmount",
-    value: function componentWillUnmount() {// this.props.clearDevoState()
+    value: function componentWillUnmount() {
+      this.props.clearDevoState();
     }
   }, {
     key: "componentDidUpdate",
@@ -712,7 +713,8 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       img: '',
       esvPassage: [],
       mainBodyChanged: false,
-      bookmark: false
+      bookmark: false,
+      renderDay: ''
     };
     _this.ESVpassageGetter = _this.ESVpassageGetter.bind(_assertThisInitialized(_this));
     _this.renderDay = _this.renderDay.bind(_assertThisInitialized(_this));
@@ -722,6 +724,9 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
     _this.isMainBodyDevoNull = _this.isMainBodyDevoNull.bind(_assertThisInitialized(_this));
     _this.getCurrentPage = _this.getCurrentPage.bind(_assertThisInitialized(_this));
     _this.setCurrentPage = _this.setCurrentPage.bind(_assertThisInitialized(_this));
+    _this.removeCurrentPage = _this.removeCurrentPage.bind(_assertThisInitialized(_this));
+    _this.setBookmark = _this.setBookmark.bind(_assertThisInitialized(_this));
+    _this.stringifyCurrentUserId = _this.stringifyCurrentUserId.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -758,9 +763,21 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "setBookmark",
+    value: function setBookmark() {
+      //---------- SET BOOKMARK TO TRUE ----------//
+      if (!this.state.bookmark && this.state.mainBodyChanged) {
+        if (this.getCurrentPage() && this.getCurrentPage().id === this.state.id) {
+          return this.setState({
+            bookmark: true
+          });
+        }
+      }
+    }
+  }, {
     key: "splitPassages",
-    value: function splitPassages() {
-      return this.state.passages.split(', ');
+    value: function splitPassages(passages) {
+      if (passages.length !== 0) return passages.split(', ');
     }
   }, {
     key: "isMainBodyDevoNull",
@@ -769,84 +786,67 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       return false;
     }
   }, {
+    key: "stringifyCurrentUserId",
+    value: function stringifyCurrentUserId() {
+      return JSON.stringify(this.props.currentUser.id);
+    }
+  }, {
     key: "getCurrentPage",
     value: function getCurrentPage() {
-      return JSON.parse(localStorage.getItem('currentPage'));
+      return JSON.parse(localStorage.getItem(this.stringifyCurrentUserId()));
     }
   }, {
     key: "setCurrentPage",
     value: function setCurrentPage() {
-      return localStorage.setItem('currentPage', JSON.stringify(this.state));
+      console.log(this.state);
+      return localStorage.setItem(this.stringifyCurrentUserId(), JSON.stringify(this.state));
+    }
+  }, {
+    key: "removeCurrentPage",
+    value: function removeCurrentPage() {
+      return localStorage.removeItem(this.stringifyCurrentUserId());
     } //---------- REACT LIFE CYCLES ----------//
 
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      var _this3 = this;
+      this.setBookmark(); //---------- IF localStorage EXISTS then setState ----------//
 
       if (this.getCurrentPage()) {
-        this.setState(this.getCurrentPage());
-      } else if (!this.isMainBodyDevoNull()) {
-        var _this$props$mainBodyD = this.props.mainBodyDevo,
-            id = _this$props$mainBodyD.id,
-            img = _this$props$mainBodyD.img,
-            passages = _this$props$mainBodyD.passages,
-            summary = _this$props$mainBodyD.summary,
-            title = _this$props$mainBodyD.title;
-
-        if (this.getCurrentPage() && this.getCurrentPage().id === id) {
-          this.setState({
-            bookmark: true
-          });
-        }
-
-        this.splitPassages(passages).forEach(function (each) {
-          return _this3.ESVpassageGetter(each.trim());
-        });
         this.setState({
-          id: id,
-          title: title,
-          passages: passages,
-          summary: summary,
-          img: img,
-          mainBodyChanged: true
+          renderDay: this.getCurrentPage().renderDay
         });
+        return this.props.fetchDevo(this.getCurrentPage().id);
       }
     }
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
-      var _this4 = this;
+      var _this3 = this;
 
-      console.log('update');
-      var _this$state = this.state,
-          id = _this$state.id,
-          mainBodyChanged = _this$state.mainBodyChanged,
-          bookmark = _this$state.bookmark;
-      if (this.isMainBodyDevoNull() || prevProps.mainBodyDevo === null) return; //---------- PREVENTS MULTIPLE this.setState on update ----------//
+      this.setBookmark();
+      if (this.isMainBodyDevoNull()) return; //---------- SET renderDay to this.state ----------//
 
-      if (mainBodyChanged) {
+      if (this.renderDay() && this.renderDay() !== this.state.renderDay) {
+        this.setState({
+          renderDay: this.renderDay()
+        });
+      } //---------- PREVENTS MULTIPLE this.setState on update ----------//
+
+
+      if (this.state.mainBodyChanged) {
         this.setState({
           mainBodyChanged: false
         });
       }
 
-      if (!bookmark && mainBodyChanged) {
-        if (this.getCurrentPage() && (this.getCurrentPage().id === id || this.getCurrentPage().id === this.state.id)) {
-          this.setState({
-            bookmark: true
-          });
-        }
-      }
-
-      if (this.props.mainBodyDevo.id !== prevProps.mainBodyDevo.id) {
-        if (bookmark) this.setCurrentPage();
-        var _this$props$mainBodyD2 = this.props.mainBodyDevo,
-            _id = _this$props$mainBodyD2.id,
-            img = _this$props$mainBodyD2.img,
-            passages = _this$props$mainBodyD2.passages,
-            summary = _this$props$mainBodyD2.summary,
-            title = _this$props$mainBodyD2.title; //---------- SCROLL TO TOP on render ----------//
+      if (this.props.mainBodyDevo !== prevProps.mainBodyDevo) {
+        var _this$props$mainBodyD = this.props.mainBodyDevo,
+            id = _this$props$mainBodyD.id,
+            img = _this$props$mainBodyD.img,
+            passages = _this$props$mainBodyD.passages,
+            summary = _this$props$mainBodyD.summary,
+            title = _this$props$mainBodyD.title; //---------- SCROLL TO TOP on render ----------//
 
         this.myRef.current.scrollTo(0, 0); //---------- PREVENTS DUPS in esvPassage ----------//
 
@@ -854,10 +854,10 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
           esvPassage: []
         });
         this.splitPassages(passages).forEach(function (each) {
-          return _this4.ESVpassageGetter(each.trim());
+          return _this3.ESVpassageGetter(each.trim());
         });
         this.setState({
-          id: _id,
+          id: id,
           title: title,
           passages: passages,
           summary: summary,
@@ -871,9 +871,9 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
     key: "renderPassages",
     //---------- RENDER FUNCTIONS ----------//
     value: function renderPassages() {
-      var _this$state2 = this.state,
-          passages = _this$state2.passages,
-          esvPassage = _this$state2.esvPassage;
+      var _this$state = this.state,
+          passages = _this$state.passages,
+          esvPassage = _this$state.esvPassage;
       if (passages.length === 0) return;
       var newEsvData = [];
       var passagesArray = this.splitPassages(passages);
@@ -930,19 +930,21 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderDay",
     value: function renderDay() {
-      var _this5 = this;
+      var _this4 = this;
 
-      return this.props.devoBook.map(function (each, i) {
-        if (each.id === _this5.state.id) {
-          return i + 1;
+      var renderDay;
+      this.props.devoBook.forEach(function (each, i) {
+        if (each.id === _this4.state.id) {
+          renderDay = i + 1;
         }
       });
+      return renderDay;
     }
   }, {
     key: "toggleBookmark",
     value: function toggleBookmark() {
       var currentState = this.state.bookmark;
-      !currentState ? this.setCurrentPage() : localStorage.clear();
+      !currentState ? this.setCurrentPage() : this.removeCurrentPage();
       this.setState({
         bookmark: !currentState
       });
@@ -950,8 +952,9 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this6 = this;
+      var _this5 = this;
 
+      if (this.isMainBodyDevoNull() && !this.getCurrentPage()) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
       console.log('render');
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "middle-container"
@@ -959,11 +962,11 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
         className: "devo-main-title"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "devo-main-day"
-      }, "Day ", this.renderDay(), ":"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, this.state.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+      }, "Day ", this.state.renderDay, ":"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, this.state.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         id: "bookmark",
         className: this.state.bookmark ? 'fa fa-bookmark' : 'fa fa-bookmark-o',
         onClick: function onClick() {
-          return _this6.toggleBookmark();
+          return _this5.toggleBookmark();
         },
         "aria-hidden": "true"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1055,8 +1058,8 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     clearErrors: function clearErrors() {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_3__["clearErrors"])());
     },
-    clearDevoState: function clearDevoState() {
-      return dispatch(Object(_actions_devo_actions__WEBPACK_IMPORTED_MODULE_2__["clearDevoState"])());
+    fetchDevo: function fetchDevo(devoId) {
+      return dispatch(Object(_actions_devo_actions__WEBPACK_IMPORTED_MODULE_2__["fetchDevo"])(devoId));
     }
   };
 };
