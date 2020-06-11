@@ -714,7 +714,8 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       esvPassage: [],
       mainBodyChanged: false,
       bookmark: false,
-      renderDay: ''
+      renderDay: '',
+      bookTitle: ''
     };
     _this.ESVpassageGetter = _this.ESVpassageGetter.bind(_assertThisInitialized(_this));
     _this.renderDay = _this.renderDay.bind(_assertThisInitialized(_this));
@@ -1057,6 +1058,158 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 /***/ }),
 
+/***/ "./frontend/components/home/sidenav/bookTitles.js":
+/*!********************************************************!*\
+  !*** ./frontend/components/home/sidenav/bookTitles.js ***!
+  \********************************************************/
+/*! exports provided: allBookTitles, allBookTitlesFormat, bibleBooks, NTbooks, NTbookFormat, OTbooks, OTbookFormat, otherBooks, OTHERbookFormat */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "allBookTitles", function() { return allBookTitles; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "allBookTitlesFormat", function() { return allBookTitlesFormat; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "bibleBooks", function() { return bibleBooks; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NTbooks", function() { return NTbooks; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NTbookFormat", function() { return NTbookFormat; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OTbooks", function() { return OTbooks; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OTbookFormat", function() { return OTbookFormat; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "otherBooks", function() { return otherBooks; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OTHERbookFormat", function() { return OTHERbookFormat; });
+// sidenav.jsx 
+var allBookTitles = ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1&2Samuel", "1&2Kings", "1&2Chronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalms", "Proverbs:TheWayofWisdom", "Ecclesiastes", "SongofSongs", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel,Amos,Obadiah,Jonah,andMicah", "Nahum,Habakkuk,Zephaniah,andHaggai", "ZechariahandMalachi", "Matthew", "Mark", "Luke", "John", "ActsoftheApostles", "Romans", "1&2Corinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1&2Thessalonians", "1&2TimothyandTitus", "Philemon", "Hebrews", "James", "1&2Peter", "123John", "Jude", "Revelation", "Justice", "HymnsV", "TheSermonontheMount", "Lent2017:YouAreMine", "Advent2018:UntiltheSonofGodAppears", "ThisIstheGospel", "Lent2018:SeetheLord’sSalvation", "MourningandDancing", "2019Wrapped:SheReadsTruthYearinReview", "NamesofGod", "OpenYourBible//Launch-WeekSampler", "InSpirit&inTruth:AStudyofBiblicalWorship", "Advent2016:ChristWasBornforThis", "Lent2016", "Hymns", "TheResurrectedLife", "TheRisenChrist", "Lent2020:HisLoveEndures", "Jesus,KeepMeNearTheCross", "TheBeatitudes", "PsalmsforPrayer", "AttributesofGod", "PsalmsofRest", "TheLifeofMoses", "HymnsIV", "BecauseHeLives", "HymnsII", "TheMiraclesofJesus", "SongsfortheRoad:ThePsalmsofAscent", "Women&MenintheWord:OldTestament", "HymnsIII", "GiveThanks", "MakingRoom:AStudyofBiblicalHospitality", "IAm:StatementsofOurSavior", "WorthyofPraise", "Advent2017:JoytotheWorld", "HoldingTighttoPermanent", "Advent2019:AThrillofHope", "CountdowntoActs", "FruitoftheSpirit", "Advent2015:BornIsTheKing", "TheParablesofJesus", "GoTellItontheMountain", "HymnsofHope", "PsalmsofGratitude"]; // sidenav.jsx 
+
+var allBookTitlesFormat = {
+  "ZechariahandMalachi": "Zechariah & Malachi",
+  "Nahum,Habakkuk,Zephaniah,andHaggai": "Nahum, Habakkuk, Zephaniah, & Haggai",
+  "1&2Kings": "1 & 2 Kings",
+  "SongofSongs": "Song of Songs",
+  "Proverbs:TheWayofWisdom": "Proverbs",
+  "1&2Samuel": "1 & 2 Samuel",
+  "Joel,Amos,Obadiah,Jonah,andMicah": "Joel, Amos, Obadiah, Jonah, & Micah",
+  "1&2Thessalonians": "1 & 2 Thessalonians",
+  "1&2Peter": "1 & 2 Peter",
+  "1&2TimothyandTitus": "1 & 2 Timothy, & Titus",
+  "ActsoftheApostles": "Acts",
+  "1&2Corinthians": "1 & 2 Corinthians",
+  "HymnsV": 'Hymns V',
+  "TheSermonontheMount": 'The Sermon on the Mount',
+  "Lent2017:YouAreMine": 'Lent 2017',
+  "Advent2018:UntiltheSonofGodAppears": 'Advent 2018',
+  "ThisIstheGospel": 'This is the Gospel',
+  "Lent2018:SeetheLord’sSalvation": 'Lent 2018',
+  "MourningandDancing": 'Mourning & Dancing',
+  "2019Wrapped:SheReadsTruthYearinReview": '2019 Wrapped (Year in Review)',
+  "NamesofGod": 'Names of God',
+  "InSpirit&inTruth:AStudyofBiblicalWorship": 'In Spirit & in Truth (Biblical Worship)',
+  "Advent2016:ChristWasBornforThis": 'Advent 2016',
+  "Lent2016": 'Lent 2016',
+  "Hymns": 'Hymns I',
+  "TheResurrectedLife": 'The Resurrected Life',
+  "TheRisenChrist": 'The Risen Christ',
+  "Lent2020:HisLoveEndures": 'Lent 2020',
+  "Jesus,KeepMeNearTheCross": 'Jesus, Keep Me Near The Cross',
+  "TheBeatitudes": 'The Beatitudes',
+  "PsalmsforPrayer": 'Psalms for Prayer',
+  "AttributesofGod": 'Attributes of God',
+  "PsalmsofRest": 'Psalms of Rest',
+  "TheLifeofMoses": 'The Life of Moses',
+  "HymnsIV": 'Hymns IV',
+  "BecauseHeLives": 'Because He Lives',
+  "HymnsII": 'Hymns II',
+  "TheMiraclesofJesus": 'The Miracles of Jesus',
+  "SongsfortheRoad:ThePsalmsofAscent": 'Psalms of Ascent',
+  "Women&MenintheWord:OldTestament": 'Old Testament Women & Men',
+  "HymnsIII": 'Hymns III',
+  "GiveThanks": 'Give Thanks',
+  "MakingRoom:AStudyofBiblicalHospitality": 'Making Room (Biblical Hospitality)',
+  "IAm:StatementsofOurSavior": 'I Am (Statements of Our Savior)',
+  "WorthyofPraise": 'Worthy of Praise',
+  "Advent2017:JoytotheWorld": 'Advent 2017',
+  "HoldingTighttoPermanent": 'Holding Tight to Permanent',
+  "Advent2019:AThrillofHope": 'Advent 2019',
+  "CountdowntoActs": 'Countdown to Acts',
+  "FruitoftheSpirit": 'Fruit of the Spirit',
+  "Advent2015:BornIsTheKing": 'Advent 2015',
+  "TheParablesofJesus": 'The Parables of Jesus',
+  "GoTellItontheMountain": 'Go Tell It on the Mountain',
+  "HymnsofHope": 'Hymns of Hope',
+  "PsalmsofGratitude": 'Psalms of Gratitude'
+}; // categories.jsx 
+
+var bibleBooks = ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1&2Samuel", "SecondSamuel", "1&2Kings", "SecondKings", "1&2Chronicles", "SecondChronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalm", "Proverbs:TheWayofWisdom", "Ecclesiastes", "SongofSongs", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel,Amos,Obadiah,Jonah,andMicah", "Amos", "Obadiah", "Jonah", "Micah", "Nahum,Habakkuk,Zephaniah,andHaggai", "Habakkuk", "Zephaniah", "Haggai", "ZechariahandMalachi", "Malachi", "Matthew", "Mark", "Luke", "John", "ActsoftheApostles", "Romans", "1&2Corinthians", "SecondCorinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1&2Thessalonians", "SecondThessalonians", "1&2TimothyandTitus", "SecondTimothy", "Titus", "Philemon", "Hebrews", "James", "1&2Peter", "SecondPeter", "123John", "SecondJohn", "ThirdJohn", "Jude", "Revelation"]; // category_list_NT.jsx
+
+var NTbooks = ["Matthew", "Mark", "Luke", "John", "ActsoftheApostles", "Romans", "1&2Corinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1&2Thessalonians", "1&2TimothyandTitus", "Philemon", "Hebrews", "James", "1&2Peter", "123John", "Jude", "Revelation"]; // category_list_NT.jsx
+
+var NTbookFormat = {
+  "1&2thessalonians": "1 & 2 Thessalonians",
+  "1&2peter": "1 & 2 Peter",
+  "1&2timothyandtitus": "1 & 2 Timothy, & Titus",
+  "actsoftheapostles": "Acts",
+  "1&2corinthians": "1 & 2 Corinthians"
+}; // category_list_OT.jsx
+
+var OTbooks = ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1&2Samuel", "1&2Kings", "1&2Chronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalms", "Proverbs:TheWayofWisdom", "Ecclesiastes", "SongofSongs", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel,Amos,Obadiah,Jonah,andMicah", "Nahum,Habakkuk,Zephaniah,andHaggai", "ZechariahandMalachi"]; // category_list_OT.jsx
+
+var OTbookFormat = {
+  "zechariahandmalachi": "Zechariah & Malachi",
+  "nahum,habakkuk,zephaniah,andhaggai": "Nahum, Habakkuk, Zephaniah, & Haggai",
+  "1&2kings": "1 & 2 Kings",
+  "songofsongs": "Song of Songs",
+  "proverbs:thewayofwisdom": "Proverbs",
+  "1&2samuel": "1 & 2 Samuel",
+  "joel,amos,obadiah,jonah,andmicah": "Joel, Amos, Obadiah, Jonah, & Micah"
+}; // category_list_Other.jsx
+
+var otherBooks = ["Justice", "HymnsV", "TheSermonontheMount", "ThisIstheGospel", "MourningandDancing", "NamesofGod", "OpenYourBible//Launch-WeekSampler", "InSpirit&inTruth:AStudyofBiblicalWorship", "Hymns", "TheResurrectedLife", "TheRisenChrist", "Lent2020:HisLoveEndures", "Jesus,KeepMeNearTheCross", "TheBeatitudes", "PsalmsforPrayer", "AttributesofGod", "PsalmsofRest", "TheLifeofMoses", "HymnsIV", "BecauseHeLives", "HymnsII", "TheMiraclesofJesus", "SongsfortheRoad:ThePsalmsofAscent", "Women&MenintheWord:OldTestament", "HymnsIII", "GiveThanks", "MakingRoom:AStudyofBiblicalHospitality", "IAm:StatementsofOurSavior", "WorthyofPraise", "HoldingTighttoPermanent", "Advent2019:AThrillofHope", "CountdowntoActs", "FruitoftheSpirit", "TheParablesofJesus", "GoTellItontheMountain", "HymnsofHope", "PsalmsofGratitude"];
+var OTHERbookFormat = {
+  "HymnsV": 'Hymns V',
+  "TheSermonontheMount": 'The Sermon on the Mount',
+  "Lent2017:YouAreMine": 'Lent 2017',
+  "Advent2018:UntiltheSonofGodAppears": 'Advent 2018',
+  "ThisIstheGospel": 'This is the Gospel',
+  "Lent2018:SeetheLord’sSalvation": 'Lent 2018',
+  "MourningandDancing": 'Mourning & Dancing',
+  "2019Wrapped:SheReadsTruthYearinReview": '2019 Wrapped (Year in Review)',
+  "NamesofGod": 'Names of God',
+  "InSpirit&inTruth:AStudyofBiblicalWorship": 'In Spirit & in Truth (Biblical Worship)',
+  "Advent2016:ChristWasBornforThis": 'Advent 2016',
+  "Lent2016": 'Lent 2016',
+  "Hymns": 'Hymns I',
+  "TheResurrectedLife": 'The Resurrected Life',
+  "TheRisenChrist": 'The Risen Christ',
+  "Lent2020:HisLoveEndures": 'Lent 2020',
+  "Jesus,KeepMeNearTheCross": 'Jesus, Keep Me Near The Cross',
+  "TheBeatitudes": 'The Beatitudes',
+  "PsalmsforPrayer": 'Psalms for Prayer',
+  "AttributesofGod": 'Attributes of God',
+  "PsalmsofRest": 'Psalms of Rest',
+  "TheLifeofMoses": 'The Life of Moses',
+  "HymnsIV": 'Hymns IV',
+  "BecauseHeLives": 'Because He Lives',
+  "HymnsII": 'Hymns II',
+  "TheMiraclesofJesus": 'The Miracles of Jesus',
+  "SongsfortheRoad:ThePsalmsofAscent": 'Psalms of Ascent',
+  "Women&MenintheWord:OldTestament": 'Old Testament Women & Men',
+  "HymnsIII": 'Hymns III',
+  "GiveThanks": 'Give Thanks',
+  "MakingRoom:AStudyofBiblicalHospitality": 'MakingRoom (Biblical Hospitality)',
+  "IAm:StatementsofOurSavior": 'I Am (Statements of Our Savior)',
+  "WorthyofPraise": 'Worthy of Praise',
+  "Advent2017:JoytotheWorld": 'Advent 2017',
+  "HoldingTighttoPermanent": 'Holding Tight to Permanent',
+  "Advent2019:AThrillofHope": 'Advent 2019',
+  "CountdowntoActs": 'Countdown to Acts',
+  "FruitoftheSpirit": 'Fruit of the Spirit',
+  "Advent2015:BornIsTheKing": 'Advent 2015',
+  "TheParablesofJesus": 'The Parables of Jesus',
+  "GoTellItontheMountain": 'Go Tell It on the Mountain',
+  "HymnsofHope": 'Hymns of Hope',
+  "PsalmsofGratitude": 'Psalms of Gratitude'
+};
+
+/***/ }),
+
 /***/ "./frontend/components/home/sidenav/sidenav.jsx":
 /*!******************************************************!*\
   !*** ./frontend/components/home/sidenav/sidenav.jsx ***!
@@ -1069,6 +1222,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _sidenav_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sidenav_item */ "./frontend/components/home/sidenav/sidenav_item.jsx");
+/* harmony import */ var _bookTitles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./bookTitles */ "./frontend/components/home/sidenav/bookTitles.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1094,6 +1248,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var SideNav = /*#__PURE__*/function (_React$Component) {
   _inherits(SideNav, _React$Component);
 
@@ -1110,28 +1265,37 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
     };
     _this.handleGetDevo = _this.handleGetDevo.bind(_assertThisInitialized(_this));
     _this.myRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
+    _this.renderDevoBookTitle = _this.renderDevoBookTitle.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(SideNav, [{
     key: "componentDidMount",
-    value: function componentDidMount() {}
+    value: function componentDidMount() {// let stringifyCurrentUserId = JSON.stringify(this.props.currentUser.id)
+      // const currentPage = JSON.parse(localStorage.getItem(stringifyCurrentUserId))
+      // //---------- IF localStorage EXISTS then setState ----------//
+      // if (currentPage) {
+      //     this.setState({ book: currentPage.book })
+      //     return this.props.fetchDevo(currentPage.id);
+      // }
+    }
   }, {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {}
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
-      if (this.props.devoBook !== prevProps.devoBook) {
-        if (this.props.devoBook.length > 0) {
-          //---------- SCROLL TO TOP on render ----------//
-          if (this.props.devoBook[0].book !== this.state.book) {
+      var devoBook = this.props.devoBook;
+
+      if (devoBook !== prevProps.devoBook) {
+        if (devoBook.length > 0) {
+          this.setState({
+            book: devoBook[0].book
+          }); //---------- SCROLL TO TOP on render ----------//
+
+          if (devoBook[0].book !== this.state.book) {
             this.myRef.current.scrollTo(0, 0);
           }
-
-          this.setState({
-            book: this.props.devoBook[0].book
-          });
         }
       }
     }
@@ -1141,83 +1305,34 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
       this.props.fetchDevo(devoId);
     }
   }, {
+    key: "renderDevoBookTitle",
+    value: function renderDevoBookTitle() {
+      var book = this.state.book;
+      var isBookInBookTitles = _bookTitles__WEBPACK_IMPORTED_MODULE_2__["allBookTitles"].includes(book);
+      var isBookTitleDefined = _bookTitles__WEBPACK_IMPORTED_MODULE_2__["allBookTitlesFormat"][book] !== undefined;
+      var devoBookTitle;
+
+      if (isBookInBookTitles && !isBookTitleDefined) {
+        devoBookTitle = _bookTitles__WEBPACK_IMPORTED_MODULE_2__["allBookTitles"][_bookTitles__WEBPACK_IMPORTED_MODULE_2__["allBookTitles"].indexOf(book)];
+      } else if (isBookInBookTitles && isBookTitleDefined) {
+        devoBookTitle = _bookTitles__WEBPACK_IMPORTED_MODULE_2__["allBookTitlesFormat"][book];
+      }
+
+      return devoBookTitle;
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
 
-      var bookTitles = ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1&2Samuel", "1&2Kings", "1&2Chronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalms", "Proverbs:TheWayofWisdom", "Ecclesiastes", "SongofSongs", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel,Amos,Obadiah,Jonah,andMicah", "Nahum,Habakkuk,Zephaniah,andHaggai", "ZechariahandMalachi", "Matthew", "Mark", "Luke", "John", "ActsoftheApostles", "Romans", "1&2Corinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1&2Thessalonians", "1&2TimothyandTitus", "Philemon", "Hebrews", "James", "1&2Peter", "123John", "Jude", "Revelation", "Justice", "HymnsV", "TheSermonontheMount", "Lent2017:YouAreMine", "Advent2018:UntiltheSonofGodAppears", "ThisIstheGospel", "Lent2018:SeetheLord’sSalvation", "MourningandDancing", "2019Wrapped:SheReadsTruthYearinReview", "NamesofGod", "OpenYourBible//Launch-WeekSampler", "InSpirit&inTruth:AStudyofBiblicalWorship", "Advent2016:ChristWasBornforThis", "Lent2016", "Hymns", "TheResurrectedLife", "TheRisenChrist", "Lent2020:HisLoveEndures", "Jesus,KeepMeNearTheCross", "TheBeatitudes", "PsalmsforPrayer", "AttributesofGod", "PsalmsofRest", "TheLifeofMoses", "HymnsIV", "BecauseHeLives", "HymnsII", "TheMiraclesofJesus", "SongsfortheRoad:ThePsalmsofAscent", "Women&MenintheWord:OldTestament", "HymnsIII", "GiveThanks", "MakingRoom:AStudyofBiblicalHospitality", "IAm:StatementsofOurSavior", "WorthyofPraise", "Advent2017:JoytotheWorld", "HoldingTighttoPermanent", "Advent2019:AThrillofHope", "CountdowntoActs", "FruitoftheSpirit", "Advent2015:BornIsTheKing", "TheParablesofJesus", "GoTellItontheMountain", "HymnsofHope", "PsalmsofGratitude"];
-      var bookTitlesFormat = {
-        "ZechariahandMalachi": "Zechariah & Malachi",
-        "Nahum,Habakkuk,Zephaniah,andHaggai": "Nahum, Habakkuk, Zephaniah, & Haggai",
-        "1&2Kings": "1 & 2 Kings",
-        "SongofSongs": "Song of Songs",
-        "Proverbs:TheWayofWisdom": "Proverbs",
-        "1&2Samuel": "1 & 2 Samuel",
-        "Joel,Amos,Obadiah,Jonah,andMicah": "Joel, Amos, Obadiah, Jonah, & Micah",
-        "1&2Thessalonians": "1 & 2 Thessalonians",
-        "1&2Peter": "1 & 2 Peter",
-        "1&2TimothyandTitus": "1 & 2 Timothy, & Titus",
-        "ActsoftheApostles": "Acts",
-        "1&2Corinthians": "1 & 2 Corinthians",
-        "HymnsV": 'Hymns V',
-        "TheSermonontheMount": 'The Sermon on the Mount',
-        "Lent2017:YouAreMine": 'Lent 2017',
-        "Advent2018:UntiltheSonofGodAppears": 'Advent 2018',
-        "ThisIstheGospel": 'This is the Gospel',
-        "Lent2018:SeetheLord’sSalvation": 'Lent 2018',
-        "MourningandDancing": 'Mourning & Dancing',
-        "2019Wrapped:SheReadsTruthYearinReview": '2019 Wrapped (Year in Review)',
-        "NamesofGod": 'Names of God',
-        "InSpirit&inTruth:AStudyofBiblicalWorship": 'In Spirit & in Truth (Biblical Worship)',
-        "Advent2016:ChristWasBornforThis": 'Advent 2016',
-        "Lent2016": 'Lent 2016',
-        "Hymns": 'Hymns I',
-        "TheResurrectedLife": 'The Resurrected Life',
-        "TheRisenChrist": 'The Risen Christ',
-        "Lent2020:HisLoveEndures": 'Lent 2020',
-        "Jesus,KeepMeNearTheCross": 'Jesus, Keep Me Near The Cross',
-        "TheBeatitudes": 'The Beatitudes',
-        "PsalmsforPrayer": 'Psalms for Prayer',
-        "AttributesofGod": 'Attributes of God',
-        "PsalmsofRest": 'Psalms of Rest',
-        "TheLifeofMoses": 'The Life of Moses',
-        "HymnsIV": 'Hymns IV',
-        "BecauseHeLives": 'Because He Lives',
-        "HymnsII": 'Hymns II',
-        "TheMiraclesofJesus": 'The Miracles of Jesus',
-        "SongsfortheRoad:ThePsalmsofAscent": 'Psalms of Ascent',
-        "Women&MenintheWord:OldTestament": 'Old Testament Women & Men',
-        "HymnsIII": 'Hymns III',
-        "GiveThanks": 'Give Thanks',
-        "MakingRoom:AStudyofBiblicalHospitality": 'Making Room (Biblical Hospitality)',
-        "IAm:StatementsofOurSavior": 'I Am (Statements of Our Savior)',
-        "WorthyofPraise": 'Worthy of Praise',
-        "Advent2017:JoytotheWorld": 'Advent 2017',
-        "HoldingTighttoPermanent": 'Holding Tight to Permanent',
-        "Advent2019:AThrillofHope": 'Advent 2019',
-        "CountdowntoActs": 'Countdown to Acts',
-        "FruitoftheSpirit": 'Fruit of the Spirit',
-        "Advent2015:BornIsTheKing": 'Advent 2015',
-        "TheParablesofJesus": 'The Parables of Jesus',
-        "GoTellItontheMountain": 'Go Tell It on the Mountain',
-        "HymnsofHope": 'Hymns of Hope',
-        "PsalmsofGratitude": 'Psalms of Gratitude'
-      };
-      var book = this.state.book;
-      var devoBookTitle;
-
-      if (bookTitles.includes(book) && bookTitlesFormat[book] === undefined) {
-        devoBookTitle = bookTitles[bookTitles.indexOf(book)];
-      } else if (bookTitles.includes(book) && bookTitlesFormat[book] !== undefined) {
-        devoBookTitle = bookTitlesFormat[book];
-      }
-
-      ;
+      console.log(this.state);
+      console.log(this.props);
+      console.log('sidenav RENDER');
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "left-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "sidenav-title"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, devoBookTitle)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, this.renderDevoBookTitle())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "sidenav-container",
         ref: this.myRef
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
@@ -1350,6 +1465,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _category_list_OT__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./category_list_OT */ "./frontend/components/modal_pages/category_list_OT.jsx");
 /* harmony import */ var _category_list_NT__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./category_list_NT */ "./frontend/components/modal_pages/category_list_NT.jsx");
 /* harmony import */ var _category_list_Other__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./category_list_Other */ "./frontend/components/modal_pages/category_list_Other.jsx");
+/* harmony import */ var _home_sidenav_bookTitles__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../home/sidenav/bookTitles */ "./frontend/components/home/sidenav/bookTitles.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1377,6 +1493,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var CategoriesPage = /*#__PURE__*/function (_React$Component) {
   _inherits(CategoriesPage, _React$Component);
 
@@ -1389,7 +1506,7 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      bibleBooks: ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1&2Samuel", "SecondSamuel", "1&2Kings", "SecondKings", "1&2Chronicles", "SecondChronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalm", "Proverbs:TheWayofWisdom", "Ecclesiastes", "SongofSongs", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel,Amos,Obadiah,Jonah,andMicah", "Amos", "Obadiah", "Jonah", "Micah", "Nahum,Habakkuk,Zephaniah,andHaggai", "Habakkuk", "Zephaniah", "Haggai", "ZechariahandMalachi", "Malachi", "Matthew", "Mark", "Luke", "John", "ActsoftheApostles", "Romans", "1&2Corinthians", "SecondCorinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1&2Thessalonians", "SecondThessalonians", "1&2TimothyandTitus", "SecondTimothy", "Titus", "Philemon", "Hebrews", "James", "1&2Peter", "SecondPeter", "123John", "SecondJohn", "ThirdJohn", "Jude", "Revelation"]
+      cat: ''
     };
     _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
     _this.sortBibleTitles = _this.sortBibleTitles.bind(_assertThisInitialized(_this));
@@ -1410,12 +1527,11 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
     // this.props.sheDevoIndex.sort((a, b) => this.state.bibleBooks.indexOf(a.book) - this.state.bibleBooks.indexOf(b.book))
     // sort titles by bible order 
     value: function sortBibleTitles(data) {
-      var bibleBooks = this.state.bibleBooks;
-      var lowerCaseTitle = bibleBooks.map(function (ele) {
+      var lowerCaseArr = _home_sidenav_bookTitles__WEBPACK_IMPORTED_MODULE_4__["bibleBooks"].map(function (ele) {
         return ele.toLowerCase();
       });
       return data.sort(function (a, b) {
-        return lowerCaseTitle.indexOf(a.book) - lowerCaseTitle.indexOf(b.book);
+        return lowerCaseArr.indexOf(a.book) - lowerCaseArr.indexOf(b.book);
       }).map(function (ele) {
         return ele;
       });
@@ -1665,31 +1781,25 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _home_sidenav_bookTitles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../home/sidenav/bookTitles */ "./frontend/components/home/sidenav/bookTitles.js");
+
 
 
 var CategoryListNT = function CategoryListNT(_ref) {
   var eachDevoTitle = _ref.eachDevoTitle,
       handleClick = _ref.handleClick;
-  var NTbooks = ["Matthew", "Mark", "Luke", "John", "ActsoftheApostles", "Romans", "1&2Corinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1&2Thessalonians", "1&2TimothyandTitus", "Philemon", "Hebrews", "James", "1&2Peter", "123John", "Jude", "Revelation"];
-  var NTbookFormat = {
-    "1&2thessalonians": "1 & 2 Thessalonians",
-    "1&2peter": "1 & 2 Peter",
-    "1&2timothyandtitus": "1 & 2 Timothy, & Titus",
-    "actsoftheapostles": "Acts",
-    "1&2corinthians": "1 & 2 Corinthians"
-  };
-  var lowerCaseTitle = NTbooks.map(function (ele) {
+  var lowerCaseArr = _home_sidenav_bookTitles__WEBPACK_IMPORTED_MODULE_1__["NTbooks"].map(function (ele) {
     return ele.toLowerCase();
   });
+  var inBookTitle = lowerCaseArr.includes(eachDevoTitle.book);
+  var isbookTitleDefined = _home_sidenav_bookTitles__WEBPACK_IMPORTED_MODULE_1__["NTbookFormat"][eachDevoTitle.book] !== undefined;
+  var bookTitle = _home_sidenav_bookTitles__WEBPACK_IMPORTED_MODULE_1__["NTbooks"][lowerCaseArr.indexOf(eachDevoTitle.book)];
   var NTbook;
-  var inBookTitle = lowerCaseTitle.includes(eachDevoTitle.book);
-  var bookTitleUndefined = NTbookFormat[eachDevoTitle.book] === undefined;
-  var bookTitle = NTbooks[lowerCaseTitle.indexOf(eachDevoTitle.book)];
 
-  if (inBookTitle && bookTitleUndefined) {
+  if (inBookTitle && !isbookTitleDefined) {
     NTbook = bookTitle;
-  } else if (inBookTitle && !bookTitleUndefined) {
-    NTbook = NTbookFormat[eachDevoTitle.book];
+  } else if (inBookTitle && isbookTitleDefined) {
+    NTbook = _home_sidenav_bookTitles__WEBPACK_IMPORTED_MODULE_1__["NTbookFormat"][eachDevoTitle.book];
   }
 
   ;
@@ -1722,33 +1832,25 @@ var CategoryListNT = function CategoryListNT(_ref) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _home_sidenav_bookTitles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../home/sidenav/bookTitles */ "./frontend/components/home/sidenav/bookTitles.js");
+
 
 
 var CategoryListOT = function CategoryListOT(_ref) {
   var eachDevoTitle = _ref.eachDevoTitle,
       handleClick = _ref.handleClick;
-  var OTbooks = ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1&2Samuel", "1&2Kings", "1&2Chronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalms", "Proverbs:TheWayofWisdom", "Ecclesiastes", "SongofSongs", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel,Amos,Obadiah,Jonah,andMicah", "Nahum,Habakkuk,Zephaniah,andHaggai", "ZechariahandMalachi"];
-  var OTbookFormat = {
-    "zechariahandmalachi": "Zechariah & Malachi",
-    "nahum,habakkuk,zephaniah,andhaggai": "Nahum, Habakkuk, Zephaniah, & Haggai",
-    "1&2kings": "1 & 2 Kings",
-    "songofsongs": "Song of Songs",
-    "proverbs:thewayofwisdom": "Proverbs",
-    "1&2samuel": "1 & 2 Samuel",
-    "joel,amos,obadiah,jonah,andmicah": "Joel, Amos, Obadiah, Jonah, & Micah"
-  };
-  var lowerCaseTitle = OTbooks.map(function (ele) {
+  var lowerCaseArr = _home_sidenav_bookTitles__WEBPACK_IMPORTED_MODULE_1__["OTbooks"].map(function (ele) {
     return ele.toLowerCase();
   });
+  var inBookTitle = lowerCaseArr.includes(eachDevoTitle.book);
+  var isBookTitleDefined = _home_sidenav_bookTitles__WEBPACK_IMPORTED_MODULE_1__["OTbookFormat"][eachDevoTitle.book] !== undefined;
+  var bookTitle = _home_sidenav_bookTitles__WEBPACK_IMPORTED_MODULE_1__["OTbooks"][lowerCaseArr.indexOf(eachDevoTitle.book)];
   var OTbook;
-  var inBookTitle = lowerCaseTitle.includes(eachDevoTitle.book);
-  var bookTitleUndefined = OTbookFormat[eachDevoTitle.book] === undefined;
-  var bookTitle = OTbooks[lowerCaseTitle.indexOf(eachDevoTitle.book)];
 
-  if (inBookTitle && bookTitleUndefined) {
+  if (inBookTitle && !isBookTitleDefined) {
     OTbook = bookTitle;
-  } else if (inBookTitle && !bookTitleUndefined) {
-    OTbook = OTbookFormat[eachDevoTitle.book];
+  } else if (inBookTitle && isBookTitleDefined) {
+    OTbook = _home_sidenav_bookTitles__WEBPACK_IMPORTED_MODULE_1__["OTbookFormat"][eachDevoTitle.book];
   }
 
   ;
@@ -1781,58 +1883,14 @@ var CategoryListOT = function CategoryListOT(_ref) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _home_sidenav_bookTitles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../home/sidenav/bookTitles */ "./frontend/components/home/sidenav/bookTitles.js");
+
 
 
 var CategoryListOther = function CategoryListOther(_ref) {
   var eachDevoTitle = _ref.eachDevoTitle,
       handleClick = _ref.handleClick;
-  var otherBooks = ["Justice", "HymnsV", "TheSermonontheMount", "ThisIstheGospel", "MourningandDancing", "NamesofGod", "OpenYourBible//Launch-WeekSampler", "InSpirit&inTruth:AStudyofBiblicalWorship", "Hymns", "TheResurrectedLife", "TheRisenChrist", "Lent2020:HisLoveEndures", "Jesus,KeepMeNearTheCross", "TheBeatitudes", "PsalmsforPrayer", "AttributesofGod", "PsalmsofRest", "TheLifeofMoses", "HymnsIV", "BecauseHeLives", "HymnsII", "TheMiraclesofJesus", "SongsfortheRoad:ThePsalmsofAscent", "Women&MenintheWord:OldTestament", "HymnsIII", "GiveThanks", "MakingRoom:AStudyofBiblicalHospitality", "IAm:StatementsofOurSavior", "WorthyofPraise", "HoldingTighttoPermanent", "Advent2019:AThrillofHope", "CountdowntoActs", "FruitoftheSpirit", "TheParablesofJesus", "GoTellItontheMountain", "HymnsofHope", "PsalmsofGratitude"];
-  var OTHERbookFormat = {
-    "HymnsV": 'Hymns V',
-    "TheSermonontheMount": 'The Sermon on the Mount',
-    "Lent2017:YouAreMine": 'Lent 2017',
-    "Advent2018:UntiltheSonofGodAppears": 'Advent 2018',
-    "ThisIstheGospel": 'This is the Gospel',
-    "Lent2018:SeetheLord’sSalvation": 'Lent 2018',
-    "MourningandDancing": 'Mourning & Dancing',
-    "2019Wrapped:SheReadsTruthYearinReview": '2019 Wrapped (Year in Review)',
-    "NamesofGod": 'Names of God',
-    "InSpirit&inTruth:AStudyofBiblicalWorship": 'In Spirit & in Truth (Biblical Worship)',
-    "Advent2016:ChristWasBornforThis": 'Advent 2016',
-    "Lent2016": 'Lent 2016',
-    "Hymns": 'Hymns I',
-    "TheResurrectedLife": 'The Resurrected Life',
-    "TheRisenChrist": 'The Risen Christ',
-    "Lent2020:HisLoveEndures": 'Lent 2020',
-    "Jesus,KeepMeNearTheCross": 'Jesus, Keep Me Near The Cross',
-    "TheBeatitudes": 'The Beatitudes',
-    "PsalmsforPrayer": 'Psalms for Prayer',
-    "AttributesofGod": 'Attributes of God',
-    "PsalmsofRest": 'Psalms of Rest',
-    "TheLifeofMoses": 'The Life of Moses',
-    "HymnsIV": 'Hymns IV',
-    "BecauseHeLives": 'Because He Lives',
-    "HymnsII": 'Hymns II',
-    "TheMiraclesofJesus": 'The Miracles of Jesus',
-    "SongsfortheRoad:ThePsalmsofAscent": 'Psalms of Ascent',
-    "Women&MenintheWord:OldTestament": 'Old Testament Women & Men',
-    "HymnsIII": 'Hymns III',
-    "GiveThanks": 'Give Thanks',
-    "MakingRoom:AStudyofBiblicalHospitality": 'MakingRoom (Biblical Hospitality)',
-    "IAm:StatementsofOurSavior": 'I Am (Statements of Our Savior)',
-    "WorthyofPraise": 'Worthy of Praise',
-    "Advent2017:JoytotheWorld": 'Advent 2017',
-    "HoldingTighttoPermanent": 'Holding Tight to Permanent',
-    "Advent2019:AThrillofHope": 'Advent 2019',
-    "CountdowntoActs": 'Countdown to Acts',
-    "FruitoftheSpirit": 'Fruit of the Spirit',
-    "Advent2015:BornIsTheKing": 'Advent 2015',
-    "TheParablesofJesus": 'The Parables of Jesus',
-    "GoTellItontheMountain": 'Go Tell It on the Mountain',
-    "HymnsofHope": 'Hymns of Hope',
-    "PsalmsofGratitude": 'Psalms of Gratitude'
-  };
-  var lowerCaseTitle = otherBooks.map(function (ele) {
+  var lowerCaseArr = _home_sidenav_bookTitles__WEBPACK_IMPORTED_MODULE_1__["otherBooks"].map(function (ele) {
     return ele.toLowerCase();
   });
 
@@ -1847,11 +1905,11 @@ var CategoryListOther = function CategoryListOther(_ref) {
     return hash;
   };
 
-  var inBookTitle = lowerCaseTitle.includes(eachDevoTitle.book);
-  var bookTitleUndefined = lowerCaseFormat(OTHERbookFormat)[eachDevoTitle.book] === undefined;
-  var bookTitle = otherBooks[lowerCaseTitle.indexOf(eachDevoTitle.book)];
-  var bookTitleRender = lowerCaseFormat(OTHERbookFormat)[eachDevoTitle.book];
-  var otherBook = inBookTitle && !bookTitleUndefined ? bookTitleRender : null;
+  var inBookTitle = lowerCaseArr.includes(eachDevoTitle.book);
+  var isBookTitleDefined = lowerCaseFormat(_home_sidenav_bookTitles__WEBPACK_IMPORTED_MODULE_1__["OTHERbookFormat"])[eachDevoTitle.book] !== undefined;
+  var bookTitle = _home_sidenav_bookTitles__WEBPACK_IMPORTED_MODULE_1__["otherBooks"][lowerCaseArr.indexOf(eachDevoTitle.book)];
+  var bookTitleRender = lowerCaseFormat(_home_sidenav_bookTitles__WEBPACK_IMPORTED_MODULE_1__["OTHERbookFormat"])[eachDevoTitle.book];
+  var otherBook = inBookTitle && isBookTitleDefined ? bookTitleRender : null;
   var fetchBookPayload = {
     gender: eachDevoTitle.gender,
     book: bookTitle

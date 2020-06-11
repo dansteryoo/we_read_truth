@@ -15,7 +15,8 @@ class MainBody extends React.Component {
             esvPassage: [],
             mainBodyChanged: false,
             bookmark: false,
-            renderDay: ''
+            renderDay: '',
+            bookTitle: ''
         }
 
         this.ESVpassageGetter = this.ESVpassageGetter.bind(this);

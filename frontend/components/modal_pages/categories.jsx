@@ -2,80 +2,14 @@ import React from "react";
 import CategoryListOT from "./category_list_OT";
 import CategoryListNT from "./category_list_NT";
 import CategoryListOther from "./category_list_Other";
+import { bibleBooks } from '../home/sidenav/bookTitles'
 
 class CategoriesPage extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            bibleBooks: [
-            "Genesis",
-            "Exodus",
-            "Leviticus",
-            "Numbers",
-            "Deuteronomy",
-            "Joshua",
-            "Judges",
-            "Ruth",
-            "1&2Samuel",
-            "SecondSamuel",
-            "1&2Kings",
-            "SecondKings",
-            "1&2Chronicles",
-            "SecondChronicles",
-            "Ezra",
-            "Nehemiah",
-            "Esther",
-            "Job",
-            "Psalm",
-            "Proverbs:TheWayofWisdom",
-            "Ecclesiastes",
-            "SongofSongs",
-            "Isaiah",
-            "Jeremiah",
-            "Lamentations",
-            "Ezekiel",
-            "Daniel",
-            "Hosea",
-            "Joel,Amos,Obadiah,Jonah,andMicah",
-            "Amos",
-            "Obadiah",
-            "Jonah",
-            "Micah",
-            "Nahum,Habakkuk,Zephaniah,andHaggai",
-            "Habakkuk",
-            "Zephaniah",
-            "Haggai",
-            "ZechariahandMalachi",
-            "Malachi",
-            "Matthew",
-            "Mark",
-            "Luke",
-            "John",
-            "ActsoftheApostles",
-            "Romans",
-            "1&2Corinthians",
-            "SecondCorinthians",
-            "Galatians",
-            "Ephesians",
-            "Philippians",
-            "Colossians",
-            "1&2Thessalonians",
-            "SecondThessalonians",
-            "1&2TimothyandTitus",
-            "SecondTimothy",
-            "Titus",
-            "Philemon",
-            "Hebrews",
-            "James",
-            "1&2Peter",
-            "SecondPeter",
-            "123John",
-            "SecondJohn",
-            "ThirdJohn",
-            "Jude",
-            "Revelation"
-            ]
+            cat: ''
         };
 
         this.handleClick = this.handleClick.bind(this);
@@ -94,10 +28,9 @@ class CategoriesPage extends React.Component {
     // sort titles by bible order 
 
     sortBibleTitles(data) {
-        const { bibleBooks } = this.state
-        const lowerCaseTitle = bibleBooks.map(ele => ele.toLowerCase());
+        const lowerCaseArr = bibleBooks.map(ele => ele.toLowerCase());
         return data
-            .sort((a, b) => lowerCaseTitle.indexOf(a.book) - lowerCaseTitle.indexOf(b.book))
+            .sort((a, b) => lowerCaseArr.indexOf(a.book) - lowerCaseArr.indexOf(b.book))
             .map(ele => ele)
     };
 
