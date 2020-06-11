@@ -77,8 +77,7 @@ class MainBody extends React.Component {
     }
 
     isMainBodyDevoNull() {
-        if (this.props.mainBodyDevo === null) return true 
-        return false
+        return this.props.mainBodyDevo === null
     }
 
     localStorageFunc(condition) {
@@ -114,6 +113,7 @@ class MainBody extends React.Component {
     };
 
     componentDidUpdate(prevProps) {
+        this.setBookmark()
         if (this.isMainBodyDevoNull()) return 
 
         //---------- SET renderDay to this.state ----------//
@@ -144,8 +144,6 @@ class MainBody extends React.Component {
                 bookmark: false,
             })
         }
-        
-        this.setBookmark()
     };
 
 

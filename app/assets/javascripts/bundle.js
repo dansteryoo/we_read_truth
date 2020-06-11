@@ -779,8 +779,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "isMainBodyDevoNull",
     value: function isMainBodyDevoNull() {
-      if (this.props.mainBodyDevo === null) return true;
-      return false;
+      return this.props.mainBodyDevo === null;
     }
   }, {
     key: "localStorageFunc",
@@ -820,6 +819,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
     value: function componentDidUpdate(prevProps) {
       var _this3 = this;
 
+      this.setBookmark();
       if (this.isMainBodyDevoNull()) return; //---------- SET renderDay to this.state ----------//
 
       if (this.renderDay() && this.renderDay() !== this.state.renderDay) {
@@ -861,8 +861,6 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
           bookmark: false
         });
       }
-
-      this.setBookmark();
     }
   }, {
     key: "renderPassages",
