@@ -1,22 +1,22 @@
 import React from 'react';
-import { OTbooks, OTbookFormat } from '../home/sidenav/bookTitles'
+import { OTbooks, OTbookFormat } from '../home/bookTitles'
 
-const CategoryListOT = ({ eachDevoTitle, handleClick }) => {
+const CategoryListOT = ({ eachTitle, handleClick }) => {
 
     const lowerCaseArr = OTbooks.map(ele => ele.toLowerCase());
-    const inBookTitle = lowerCaseArr.includes(eachDevoTitle.book)
-    const isBookTitleDefined = OTbookFormat[eachDevoTitle.book] !== undefined
-    const bookTitle = OTbooks[lowerCaseArr.indexOf(eachDevoTitle.book)]
+    const inBookTitle = lowerCaseArr.includes(eachTitle.book)
+    const isBookTitleDefined = OTbookFormat[eachTitle.book] !== undefined
+    const bookTitle = OTbooks[lowerCaseArr.indexOf(eachTitle.book)]
 
     let OTbook;
     if (inBookTitle && !isBookTitleDefined) {
         OTbook = bookTitle
     } else if (inBookTitle && isBookTitleDefined) {
-        OTbook = OTbookFormat[eachDevoTitle.book]
+        OTbook = OTbookFormat[eachTitle.book]
     };
 
     let fetchBookPayload = {
-        gender: eachDevoTitle.gender,
+        gender: eachTitle.gender,
         book: bookTitle
     }
     

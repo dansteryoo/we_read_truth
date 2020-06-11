@@ -1,6 +1,6 @@
 import React from 'react';
 import SideNavItem from './sidenav_item'
-import { allBookTitles, allBookTitlesFormat } from './bookTitles'
+import { allBookTitles, allBookTitlesFormat } from '../bookTitles'
 
 class SideNav extends React.Component {
     constructor(props) {
@@ -8,6 +8,7 @@ class SideNav extends React.Component {
 
         this.state = {
             book: '',
+            bookmark: false
         }
 
         this.handleGetDevo = this.handleGetDevo.bind(this);
@@ -15,17 +16,31 @@ class SideNav extends React.Component {
         this.renderDevoBookTitle = this.renderDevoBookTitle.bind(this);
     };
 
+
     componentDidMount() {
-        // let stringifyCurrentUserId = JSON.stringify(this.props.currentUser.id)
-        // const currentPage = JSON.parse(localStorage.getItem(stringifyCurrentUserId))
-        // //---------- IF localStorage EXISTS then setState ----------//
-        // if (currentPage) {
-        //     this.setState({ book: currentPage.book })
-        //     return this.props.fetchDevo(currentPage.id);
-        // }
+        let userId = JSON.stringify(this.props.currentUser.id)
+        const currentPayload = JSON.parse(localStorage.getItem(userId + 'payload'))
+        const currentPage = JSON.parse(localStorage.getItem(userId))
+
+        if (currentPage && currentPayload) {
+            let payload = currentPayload;
+            if (currentPayload.book.includes("&")) {
+                payload = {
+                    gender: currentPayload.gender,
+                    book: currentPayload.book.replace("&", "%26")
+                }
+            }
+            return this.props.fetchDevoBook(payload)
+        }
     };
 
     componentWillUnmount() {
+        let userId = JSON.stringify(this.props.currentUser.id)
+        const currentPage = JSON.parse(localStorage.getItem(userId))
+
+        if (!currentPage) {
+            return localStorage.removeItem(userId + 'payload');
+        }
     };
 
     componentDidUpdate(prevProps) {
@@ -64,12 +79,6 @@ class SideNav extends React.Component {
     
 
     render() {
-        console.log(this.state);
-        console.log(this.props);
-        
-        console.log('sidenav RENDER')
-
-       
 
         return (
             <div className='left-container'>
