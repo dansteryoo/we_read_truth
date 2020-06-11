@@ -14,6 +14,15 @@ class User < ApplicationRecord
         class_name: :Note,
         dependent: :destroy
 
+    has_many :bookmark,
+        primary_key: :id,
+        foreign_key: :user_id,
+        class_name: :Bookmark
+
+    has_many :devo, 
+        through: :bookmark,
+        source: :Devo
+
     attr_reader :password
 
     def self.find_by_credentials(email, password)

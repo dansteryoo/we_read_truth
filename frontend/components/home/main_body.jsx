@@ -14,7 +14,8 @@ class MainBody extends React.Component {
             img: '',
             esvPassage: [],
             mainBodyChanged: false,
-            bookmark: false
+            bookmark: false,
+            renderDay: ''
         }
 
         this.ESVpassageGetter = this.ESVpassageGetter.bind(this);
@@ -25,6 +26,9 @@ class MainBody extends React.Component {
         this.isMainBodyDevoNull = this.isMainBodyDevoNull.bind(this);
         this.getCurrentPage = this.getCurrentPage.bind(this);
         this.setCurrentPage = this.setCurrentPage.bind(this);
+        this.removeCurrentPage = this.removeCurrentPage.bind(this);
+        this.setBookmark = this.setBookmark.bind(this);
+        this.stringifyCurrentUserId = this.stringifyCurrentUserId.bind(this);
     };
 
     //---------- ESV.ORG API CALL ----------//
@@ -62,8 +66,17 @@ class MainBody extends React.Component {
         })
     }
 
-    splitPassages() {
-        return this.state.passages.split(', ')
+    setBookmark() {
+        //---------- SET BOOKMARK TO TRUE ----------//
+        if (!this.state.bookmark && this.state.mainBodyChanged) {
+            if (this.getCurrentPage() && this.getCurrentPage().id === this.state.id) {
+                return this.setState({ bookmark: true })
+            }
+        }
+    }
+
+    splitPassages(passages) {
+        if (passages.length !== 0) return passages.split(', ')
     }
 
     isMainBodyDevoNull() {
@@ -71,85 +84,68 @@ class MainBody extends React.Component {
         return false
     }
 
+    stringifyCurrentUserId() {
+        return JSON.stringify(this.props.currentUser.id)
+    }
+
     getCurrentPage() {
-        return JSON.parse(localStorage.getItem('currentPage'));
+        return JSON.parse(localStorage.getItem(this.stringifyCurrentUserId()));
     }
 
     setCurrentPage() {
-        return localStorage.setItem('currentPage', JSON.stringify(this.state));
+        console.log(this.state)
+        return localStorage.setItem(this.stringifyCurrentUserId(), JSON.stringify(this.state))
+    }
+
+    removeCurrentPage() {
+        return localStorage.removeItem(this.stringifyCurrentUserId());
     }
 
     //---------- REACT LIFE CYCLES ----------//
 
     componentDidMount() {
-
+        this.setBookmark()
+        //---------- IF localStorage EXISTS then setState ----------//
         if (this.getCurrentPage()) {
-            this.setState(this.getCurrentPage())
-            
-        } else if (!this.isMainBodyDevoNull()) {
-            const { id, img, passages, summary, title } = this.props.mainBodyDevo;
-
-            if (this.getCurrentPage() && (this.getCurrentPage().id === id)) {
-                this.setState({ bookmark: true });
-            }
-
-            this.splitPassages(passages).forEach(each => {
-                return this.ESVpassageGetter(each.trim())
-            })
-
-            this.setState({
-                id: id,
-                title: title,
-                passages: passages,
-                summary: summary,
-                img: img,
-                mainBodyChanged: true,
-            })
+            this.setState({ renderDay: this.getCurrentPage().renderDay })
+            return this.props.fetchDevo(this.getCurrentPage().id);
         }
     };
 
     componentDidUpdate(prevProps) {
-        console.log('update')
-        const { id, mainBodyChanged, bookmark } = this.state;
-        if (this.isMainBodyDevoNull() || prevProps.mainBodyDevo === null) return 
+        this.setBookmark()
+        if (this.isMainBodyDevoNull()) return 
 
+        //---------- SET renderDay to this.state ----------//
+        if (this.renderDay() && this.renderDay() !== this.state.renderDay) {
+            this.setState({ renderDay: this.renderDay() })
+        }
         //---------- PREVENTS MULTIPLE this.setState on update ----------//
-        if (mainBodyChanged) {
+        if (this.state.mainBodyChanged) {
             this.setState({ mainBodyChanged: false });
         }
 
-        if (!bookmark && mainBodyChanged) {
-            if (this.getCurrentPage() && 
-                (this.getCurrentPage().id === id || this.getCurrentPage().id === this.state.id)) {
-                this.setState({ bookmark: true });
-            }
-        }
-
-        if (this.props.mainBodyDevo.id !== prevProps.mainBodyDevo.id) {
-            if (bookmark) this.setCurrentPage()
-
+        if (this.props.mainBodyDevo !== prevProps.mainBodyDevo) {
             const { id, img, passages, summary, title } = this.props.mainBodyDevo;
 
             //---------- SCROLL TO TOP on render ----------//
             this.myRef.current.scrollTo(0, 0);
+
             //---------- PREVENTS DUPS in esvPassage ----------//
             this.setState({ esvPassage: [] });
-
+            
             this.splitPassages(passages).forEach(each => {
                 return this.ESVpassageGetter(each.trim())
             });
 
             this.setState({
-                id: id,
-                title: title,
-                passages: passages,
-                summary: summary,
-                img: img,
+                id, title, passages, summary, img,
                 mainBodyChanged: true,
-                bookmark: false
-            });
+                bookmark: false,
+            })
         }
     };
+
 
     //---------- RENDER FUNCTIONS ----------//
 
@@ -221,28 +217,30 @@ class MainBody extends React.Component {
     }
 
     renderDay() {
-        return (
-            this.props.devoBook.map((each, i) => {
+        let renderDay; 
+            this.props.devoBook.forEach((each, i) => {
                 if (each.id === this.state.id) {
-                    return i + 1
+                    renderDay = i + 1
                 }
             })
-        )
+        return renderDay
     }
 
     toggleBookmark() {
         const currentState = this.state.bookmark;
-        !currentState ? this.setCurrentPage() : localStorage.clear();
+        !currentState ? this.setCurrentPage() : this.removeCurrentPage();
         this.setState({ bookmark: !currentState })
     }
 
     render() {
+        if (this.isMainBodyDevoNull() && !this.getCurrentPage()) return <div></div>
 
         console.log('render')
+
         return (
             <div className='middle-container'>
                 <div className='devo-main-title'>
-                    <span className='devo-main-day'>Day {this.renderDay()}:</span>
+                    <span className='devo-main-day'>Day {this.state.renderDay}:</span>
                     <span>{this.state.title}</span>
                         <i id='bookmark' 
                         className={this.state.bookmark ? 'fa fa-bookmark' : 'fa fa-bookmark-o' } 
