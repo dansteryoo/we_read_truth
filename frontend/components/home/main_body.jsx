@@ -14,13 +14,21 @@ class MainBody extends React.Component {
             img: '',
             esvPassage: [],
             mainBodyChanged: false,
-            bookmark: false
+            bookmark: false,
+            renderDay: ''
         }
 
         this.ESVpassageGetter = this.ESVpassageGetter.bind(this);
         this.renderDay = this.renderDay.bind(this);
         this.myRef = React.createRef();
         this.toggleBookmark = this.toggleBookmark.bind(this);
+        this.splitPassages = this.splitPassages.bind(this);
+        this.isMainBodyDevoNull = this.isMainBodyDevoNull.bind(this);
+        this.getCurrentPage = this.getCurrentPage.bind(this);
+        this.setCurrentPage = this.setCurrentPage.bind(this);
+        this.removeCurrentPage = this.removeCurrentPage.bind(this);
+        this.setBookmark = this.setBookmark.bind(this);
+        this.stringifyCurrentUserId = this.stringifyCurrentUserId.bind(this);
     };
 
     //---------- ESV.ORG API CALL ----------//
@@ -58,81 +66,100 @@ class MainBody extends React.Component {
         })
     }
 
+    setBookmark() {
+        //---------- SET BOOKMARK TO TRUE ----------//
+        if (!this.state.bookmark && this.state.mainBodyChanged) {
+            if (this.getCurrentPage() && this.getCurrentPage().id === this.state.id) {
+                return this.setState({ bookmark: true })
+            }
+        }
+    }
+
+    splitPassages(passages) {
+        if (passages.length !== 0) return passages.split(', ')
+    }
+
+    isMainBodyDevoNull() {
+        if (this.props.mainBodyDevo === null) return true 
+        return false
+    }
+
+    stringifyCurrentUserId() {
+        return JSON.stringify(this.props.currentUser.id)
+    }
+
+    getCurrentPage() {
+        return JSON.parse(localStorage.getItem(this.stringifyCurrentUserId()));
+    }
+
+    setCurrentPage() {
+        console.log(this.state)
+        return localStorage.setItem(this.stringifyCurrentUserId(), JSON.stringify(this.state))
+    }
+
+    removeCurrentPage() {
+        return localStorage.removeItem(this.stringifyCurrentUserId());
+    }
+
     //---------- REACT LIFE CYCLES ----------//
 
     componentDidMount() {
-        const { id, img, passages, summary, title } = this.props.mainBodyDevo;
-
-        passages.split(', ').forEach(each => {
-            return this.ESVpassageGetter(each.trim())
-        })
-        
-        this.setState({
-            id: id,
-            title: title,
-            passages: passages,
-            summary: summary,
-            img: img,
-            mainBodyChanged: true,
-        })
-    };
-
-    componentWillUnmount() {
-        this.setState({ 
-            id: null, 
-            mainBodyChanged: false, 
-            esvPassage: []
-        })
+        this.setBookmark()
+        //---------- IF localStorage EXISTS then setState ----------//
+        if (this.getCurrentPage()) {
+            this.setState({ renderDay: this.getCurrentPage().renderDay })
+            return this.props.fetchDevo(this.getCurrentPage().id);
+        }
     };
 
     componentDidUpdate(prevProps) {
+        this.setBookmark()
+        if (this.isMainBodyDevoNull()) return 
 
-        if (this.state.esvPassage.length !== this.state.passages.split(', ').length) return 
-
+        //---------- SET renderDay to this.state ----------//
+        if (this.renderDay() && this.renderDay() !== this.state.renderDay) {
+            this.setState({ renderDay: this.renderDay() })
+        }
         //---------- PREVENTS MULTIPLE this.setState on update ----------//
         if (this.state.mainBodyChanged) {
             this.setState({ mainBodyChanged: false });
         }
 
-        if (this.props.mainBodyDevo.id !== prevProps.mainBodyDevo.id) {
+        if (this.props.mainBodyDevo !== prevProps.mainBodyDevo) {
+            const { id, img, passages, summary, title } = this.props.mainBodyDevo;
 
             //---------- SCROLL TO TOP on render ----------//
             this.myRef.current.scrollTo(0, 0);
 
             //---------- PREVENTS DUPS in esvPassage ----------//
             this.setState({ esvPassage: [] });
-
-            const { id, img, passages, summary, title } = this.props.mainBodyDevo;
-
-            passages.split(', ').forEach(each => {
+            
+            this.splitPassages(passages).forEach(each => {
                 return this.ESVpassageGetter(each.trim())
             });
 
             this.setState({
-                id: id,
-                title: title,
-                passages: passages,
-                summary: summary,
-                img: img,
+                id, title, passages, summary, img,
                 mainBodyChanged: true,
-            });
+                bookmark: false,
+            })
         }
     };
+
 
     //---------- RENDER FUNCTIONS ----------//
 
     renderPassages() {
-
         const { passages, esvPassage } = this.state; 
         if (passages.length === 0) return 
 
-        let newEsvData;
-        if (esvPassage.length === passages.split(', ').length) {
+        let newEsvData = []
+        let passagesArray = this.splitPassages(passages)
+
+        if (esvPassage.length === passagesArray.length) {
             newEsvData = esvPassage.sort(function(a, b) {
-                return passages.split(', ').indexOf(a.passage) - passages.split(', ').indexOf(b.passage)
+                return passagesArray.indexOf(a.passage) - passagesArray.indexOf(b.passage)
             })
-        } else {
-            newEsvData = []
         }
 
         return (
@@ -190,28 +217,30 @@ class MainBody extends React.Component {
     }
 
     renderDay() {
-        const { mainBodyDevo } = this.props;
-
-        return (
-            this.props.devoBook.map((each, i) => {
-                if (each.id === mainBodyDevo.id) {
-                    return i + 1
+        let renderDay; 
+            this.props.devoBook.forEach((each, i) => {
+                if (each.id === this.state.id) {
+                    renderDay = i + 1
                 }
             })
-        )
+        return renderDay
     }
 
     toggleBookmark() {
         const currentState = this.state.bookmark;
+        !currentState ? this.setCurrentPage() : this.removeCurrentPage();
         this.setState({ bookmark: !currentState })
     }
 
     render() {
-        
+        if (this.isMainBodyDevoNull() && !this.getCurrentPage()) return <div></div>
+
+        console.log('render')
+
         return (
             <div className='middle-container'>
                 <div className='devo-main-title'>
-                    <span className='devo-main-day'>Day {this.renderDay()}:</span>
+                    <span className='devo-main-day'>Day {this.state.renderDay}:</span>
                     <span>{this.state.title}</span>
                         <i id='bookmark' 
                         className={this.state.bookmark ? 'fa fa-bookmark' : 'fa fa-bookmark-o' } 

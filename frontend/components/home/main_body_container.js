@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { closeModal, openModal } from '../../actions/modal_actions';
-import { clearDevoState } from '../../actions/devo_actions'
+import { fetchDevo } from '../../actions/devo_actions';
 import { clearErrors } from '../../actions/session_actions';
 import MainBody from './main_body';
 
@@ -33,7 +33,7 @@ const mapDispatchToProps = (dispatch) => ({
     closeModal: () => dispatch(closeModal()),
     openModal: (formType) => dispatch(openModal(formType)),
     clearErrors: () => dispatch(clearErrors()),
-    clearDevoState: () => dispatch(clearDevoState())
+    fetchDevo: (devoId) => dispatch(fetchDevo(devoId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainBody);
