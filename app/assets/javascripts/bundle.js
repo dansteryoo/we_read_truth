@@ -2760,7 +2760,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
           onChange: this.handleChange('category'),
           value: this.state.category // required   
 
-        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "#Day"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Day#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "text",
           className: "notes-form-input",
           onChange: this.handleChange('tags'),
@@ -2799,7 +2799,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
           value: this.state.category,
           onChange: this.handleChange('category') // required   
 
-        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "#Day"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Day#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "text",
           className: "notes-form-input",
           value: this.state.tags,

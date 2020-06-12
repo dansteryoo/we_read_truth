@@ -223,7 +223,7 @@ class NotesForm extends React.Component {
                                         value={this.state.category}
                                     // required   
                                     />
-                                    <label>#Day</label>
+                                    <label>Day#</label>
                                     <input type='text'
                                         className='notes-form-input'
                                         onChange={this.handleChange('tags')}
@@ -285,7 +285,7 @@ class NotesForm extends React.Component {
                                         onChange={this.handleChange('category')}
                                     // required   
                                     />
-                                    <label>#Day</label>
+                                    <label>Day#</label>
                                     <input type='text'
                                         className='notes-form-input'
                                         value={this.state.tags}
