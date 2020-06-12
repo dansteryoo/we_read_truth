@@ -1,8 +1,15 @@
 import React from 'react';
+const ERRORS = [
+    "Title can't be blank", // 0 Title
+    "Body can't be blank", // 1 Body
+    "Book can't be blank", // 2 Book
+    "Day can't be blank", // 3 Day
+    "Day must only be a number" // 4 Number
+]
 
 class NotesForm extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
 
         this.state = {
             id: '',
@@ -12,21 +19,20 @@ class NotesForm extends React.Component {
             body: '',
             update: false,
             success: false,
-            updateErrors: '',
+            updateErrors: [],
             updateForm: false
         }
 
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleUpdate = this.handleUpdate.bind(this);
-    };
+        this.handleSubmit = this.handleSubmit.bind(this)
+    }
 
     componentDidMount() {
-        this.props.fetchNotes();
-    };
+        this.props.fetchNotes()
+    }
 
     componentWillUnmount() {
-        this.props.clearErrors();
-    };
+        this.props.clearErrors()
+    }
 
     componentDidUpdate(prevProps) {
         
@@ -34,7 +40,7 @@ class NotesForm extends React.Component {
 
             //---------- if this.props.noteId is a NUMBER then populate with update first and render update form ----------//
             if (Number.isInteger(this.props.noteId.id)) {
-                const { id, title, category, tags, body } = this.props.noteId;
+                const { id, title, category, tags, body } = this.props.noteId
 
                 this.setState({
                     id, title, category, tags, body, 
@@ -46,7 +52,7 @@ class NotesForm extends React.Component {
             if (this.props.notes.length !== prevProps.notes.length) {
 
                 //---------- AND if current props array is empty SKIP reset state ----------//
-                if (this.props.notes.length === 0) return 
+                if (this.props.notes.length < 1) return 
 
                 //---------- AND if current props array is NOT EMPTY then reset state ----------//
                 if (!this.props.notes.some(ele => ele.id === this.state.id)) {
@@ -68,53 +74,53 @@ class NotesForm extends React.Component {
         return e => this.setState({
             [f]: e.target.value
         })
-    };
+    }
 
     handleSubmit(e) {
-        e.preventDefault();
+        e.preventDefault()
 
-        let note = Object.assign({}, this.state);
+        const { id, title, category, tags, body } = this.state
+        let noteUpdate = { id, title, category, tags, body }
+        let note = { title, category, tags, body }
+        
+        const trimmerLength = (word) => word.trim().length
+        const blankTitle = trimmerLength(title) < 1
+        const blankBody = trimmerLength(body) < 1
+        const blankBook = trimmerLength(category) < 1
+        const blankDay = trimmerLength(tags) < 1
+        const dayIsNumber = (tags) => {
+            if (Number.isInteger(parseInt(tags.trim()))) return true
+            return false
+        }
 
-        this.props.createNote(note)
-            .then(() => {
-                this.setState({
-                    success: true,
-                    title: '',
-                    category: '',
-                    tags: '',
-                    body: '',
-                    id: '',
-                    updateForm: false,
-                })
-            })
-            .then(() => this.renderSuccessMsg())
-            .then(() => this.props.clearNoteState())
-    };
+        if (blankTitle || blankBody || blankBook || blankDay || !dayIsNumber(tags)) {
+            let errorsArr = []
 
-    handleUpdate(e) {
-        e.preventDefault();
-
-        const { id, title, category, tags, body } = this.state;
-        let noteUpdate = { id, title, category, tags, body };
-
-        const trimmerLength = (word) => word.trim().length;
-        const blankTitle = trimmerLength(title) === 0; 
-        const blankBody = trimmerLength(body) === 0;
-
-        if (blankTitle || blankBody) {
-            if (blankTitle && !blankBody) {
-                this.setState({
-                    updateErrors: ["Title can't be blank"]
-                })
-            } else if (blankBody && !blankTitle) {
-                this.setState({
-                    updateErrors: ["Body can't be blank"]
-                })
-            } else {
-                this.setState({
-                    updateErrors: ["Title can't be blank", "Body can't be blank"]
+            if (blankTitle) errorsArr.push(ERRORS[0]) // Title is blank
+            if (blankBody) errorsArr.push(ERRORS[1]) // Body is blank
+            if (blankBook) errorsArr.push(ERRORS[2]) // Book is blank
+            if (blankDay) errorsArr.push(ERRORS[3]) // Day is blank
+            if (!dayIsNumber(tags) && !blankDay) errorsArr.push(ERRORS[4])  // Day is !number
+            if (errorsArr.length > 0) {
+                return this.setState({
+                    updateErrors: errorsArr
                 })
             }
+        } else if (id.length < 1) {
+            this.props.createNote(note)
+                .then(() => {
+                    this.setState({
+                        success: true,
+                        title: '',
+                        category: '',
+                        tags: '',
+                        body: '',
+                        id: '',
+                        updateForm: false,
+                    })
+                })
+                .then(() => this.renderSuccessMsg())
+                .then(() => this.props.clearNoteState())
         } else {
             this.props.updateNote(noteUpdate)
                 .then(() => {
@@ -128,43 +134,46 @@ class NotesForm extends React.Component {
                         id: '',
                         updateForm: false,
                     })
-                }).then(() => this.renderUpdateMsg())
+                })
+                .then(() => this.renderUpdateMsg())
                 .then(() => this.props.fetchNotes())
         }
-    };
+    }
 
     renderSuccessMsg() {
         window.setTimeout(() => {
             this.setState({ success: false })
         }, 4000)
-    };
+    }
 
     renderUpdateMsg() {
         window.setTimeout(() => {
             this.setState({ update: false })
         }, 4000)
-    };
+    }
 
     renderErrors() {
-        return (
-            <ul className='form-errors-notes'>
-                {this.props.noteErrors.map((error, i) => (
-                    <li key={`error-${i}`}>{error}</li>
-                ))}
-            </ul>
-        )
-    };
+        const { updateErrors } = this.state
 
-    renderUpdateErrors() {
-        if (this.state.updateErrors.length > 0) {
-            return (
-                <ul className='form-errors-notes'>
-                    {this.state.updateErrors.map((error, i) => (
-                        <li key={`error-${i}`}>{error}</li>
-                    ))}
-                </ul>
-            )
+        const errorsHash = {
+            title: '',
+            body: '',
+            book: '',
+            day: '',
+            number: ''
         }
+
+        if (updateErrors.length < 1) return errorsHash
+
+        updateErrors.forEach(err => {
+            if (ERRORS.indexOf(err) === 0) errorsHash.title = err
+            if (ERRORS.indexOf(err) === 1) errorsHash.body = err
+            if (ERRORS.indexOf(err) === 2) errorsHash.book = err
+            if (ERRORS.indexOf(err) === 3) errorsHash.day = err
+            if (ERRORS.indexOf(err) === 4) errorsHash.number = err
+        })
+
+        return errorsHash
     }
 
     render() { 
@@ -188,10 +197,8 @@ class NotesForm extends React.Component {
             return (
                 <>
                     <div className='notes-form-container'>
-                        {
-                            this.renderUpdateErrors()
-                        }
-                        <form onSubmit={this.handleUpdate} >
+
+                        <form onSubmit={this.handleSubmit} >
                             <div className='notes-form'>
 
                                 {/* title */}
@@ -202,7 +209,9 @@ class NotesForm extends React.Component {
                                     value={this.state.title}
                                 // required
                                 />
-
+                                <div className='form-errors-notes'>
+                                    {this.renderErrors().title}
+                                </div>
                                 {/* body */}
                                 <label>Body</label>
                                 <textarea
@@ -212,9 +221,10 @@ class NotesForm extends React.Component {
                                     value={this.state.body}
                                 // required
                                 />
-
+                                <div className='form-errors-notes'>
+                                    {this.renderErrors().body}
+                                </div>
                                 {/* categories and tags */}
-
                                 <div className='notes-form-bottom'>
                                     <label>Book</label>
                                     <input type='text'
@@ -223,6 +233,9 @@ class NotesForm extends React.Component {
                                         value={this.state.category}
                                     // required   
                                     />
+                                    <div className='form-errors-notes'>
+                                        {this.renderErrors().book}
+                                    </div>
                                     <label>Day#</label>
                                     <input type='text'
                                         className='notes-form-input'
@@ -230,6 +243,10 @@ class NotesForm extends React.Component {
                                         value={this.state.tags}
                                     // required   
                                     />
+                                    <div className='form-errors-notes'>
+                                        {this.renderErrors().day}
+                                        {this.renderErrors().number}
+                                    </div>
                                 </div>
                                 <div className='button-container'>
                                     <button className='notes-form-submit-button' type='submit'>
@@ -242,7 +259,7 @@ class NotesForm extends React.Component {
                         <br />
                     </div>
                 </>
-            );
+            )
 
             //----------- Create Form -----------//
 
@@ -250,9 +267,6 @@ class NotesForm extends React.Component {
             return (
                 <>
                     <div className='notes-form-container'>
-                        {
-                            this.renderErrors()
-                        }
                         <form onSubmit={this.handleSubmit} >
                             <div className='notes-form'>
 
@@ -264,7 +278,9 @@ class NotesForm extends React.Component {
                                     onChange={this.handleChange('title')}
                                 // required
                                 />
-
+                                <div className='form-errors-notes'>
+                                    {this.renderErrors().title}
+                                </div>
                                 {/* body */}
                                 <label>Body</label>
                                 <textarea
@@ -274,24 +290,32 @@ class NotesForm extends React.Component {
                                     onChange={this.handleChange('body')}
                                 // required
                                 />
-
+                                <div className='form-errors-notes'>
+                                    {this.renderErrors().body}
+                                </div>
                                 {/* categories and tags */}
-
                                 <div className='notes-form-bottom'>
-                                    <label>Book</label>
-                                    <input type='text'
-                                        className='notes-form-input'
-                                        value={this.state.category}
-                                        onChange={this.handleChange('category')}
-                                    // required   
-                                    />
-                                    <label>Day#</label>
-                                    <input type='text'
-                                        className='notes-form-input'
-                                        value={this.state.tags}
-                                        onChange={this.handleChange('tags')}
-                                    // required   
-                                    />
+                                <label>Book</label>
+                                <input type='text'
+                                    className='notes-form-input'
+                                    value={this.state.category}
+                                    onChange={this.handleChange('category')}
+                                // required   
+                                />
+                                <div className='form-errors-notes'>
+                                    {this.renderErrors().book}
+                                </div>
+                                <label>Day#</label>
+                                <input type='text'
+                                    className='notes-form-input'
+                                    value={this.state.tags}
+                                    onChange={this.handleChange('tags')}
+                                // required   
+                                />
+                                <div className='form-errors-notes'>
+                                    {this.renderErrors().day}
+                                    {this.renderErrors().number}
+                                </div>
                                 </div>
                                 <div className='button-container'>
                                     <button className='notes-form-submit-button' type='submit'>
@@ -304,7 +328,7 @@ class NotesForm extends React.Component {
                         <br />
                     </div>
                 </>
-            );
+            )
         }
     }
 }
