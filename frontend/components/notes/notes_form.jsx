@@ -34,14 +34,10 @@ class NotesForm extends React.Component {
 
             //---------- if this.props.noteId is a NUMBER then populate with update first and render update form ----------//
             if (Number.isInteger(this.props.noteId.id)) {
-
                 const { id, title, category, tags, body } = this.props.noteId;
+
                 this.setState({
-                    id: id,
-                    title: title,
-                    category: category,
-                    tags: tags,
-                    body: body,
+                    id, title, category, tags, body, 
                     updateForm: true,
                 })
             }
@@ -50,11 +46,10 @@ class NotesForm extends React.Component {
             if (this.props.notes.length !== prevProps.notes.length) {
 
                 //---------- AND if current props array is empty SKIP reset state ----------//
-                if (this.props.notes.length === 0) {
-                    return 
+                if (this.props.notes.length === 0) return 
 
                 //---------- AND if current props array is NOT EMPTY then reset state ----------//
-                } else if (!this.props.notes.some(ele => ele.id === this.state.id)) {
+                if (!this.props.notes.some(ele => ele.id === this.state.id)) {
                     this.setState({
                         id: '',
                         title: '',
@@ -100,25 +95,18 @@ class NotesForm extends React.Component {
         e.preventDefault();
 
         const { id, title, category, tags, body } = this.state;
+        let noteUpdate = { id, title, category, tags, body };
 
-        let noteUpdate = {
-            id: id,
-            title: title,
-            category: category,
-            tags: tags,
-            body: body,
-        };
+        const trimmerLength = (word) => word.trim().length;
+        const blankTitle = trimmerLength(title) === 0; 
+        const blankBody = trimmerLength(body) === 0;
 
-        const trimmerLength = (word) => {
-            return word.trim().length;
-        }
-
-        if (trimmerLength(title) === 0 || trimmerLength(body) === 0) {
-            if (trimmerLength(title) === 0 && trimmerLength(body) !== 0) {
+        if (blankTitle || blankBody) {
+            if (blankTitle && !blankBody) {
                 this.setState({
                     updateErrors: ["Title can't be blank"]
                 })
-            } else if (trimmerLength(body) === 0 && trimmerLength(title) !== 0) {
+            } else if (blankBody && !blankTitle) {
                 this.setState({
                     updateErrors: ["Body can't be blank"]
                 })
@@ -200,7 +188,9 @@ class NotesForm extends React.Component {
             return (
                 <>
                     <div className='notes-form-container'>
-                        {this.renderUpdateErrors()}
+                        {
+                            this.renderUpdateErrors()
+                        }
                         <form onSubmit={this.handleUpdate} >
                             <div className='notes-form'>
 
@@ -226,14 +216,14 @@ class NotesForm extends React.Component {
                                 {/* categories and tags */}
 
                                 <div className='notes-form-bottom'>
-                                    <label>Passages</label>
+                                    <label>Book</label>
                                     <input type='text'
                                         className='notes-form-input'
                                         onChange={this.handleChange('category')}
                                         value={this.state.category}
                                     // required   
                                     />
-                                    <label>#Day</label>
+                                    <label>Day#</label>
                                     <input type='text'
                                         className='notes-form-input'
                                         onChange={this.handleChange('tags')}
@@ -288,14 +278,14 @@ class NotesForm extends React.Component {
                                 {/* categories and tags */}
 
                                 <div className='notes-form-bottom'>
-                                    <label>Passages</label>
+                                    <label>Book</label>
                                     <input type='text'
                                         className='notes-form-input'
                                         value={this.state.category}
                                         onChange={this.handleChange('category')}
                                     // required   
                                     />
-                                    <label>#Day</label>
+                                    <label>Day#</label>
                                     <input type='text'
                                         className='notes-form-input'
                                         value={this.state.tags}

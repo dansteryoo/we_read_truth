@@ -1972,19 +1972,29 @@ var NotesItem = function NotesItem(_ref) {
       toggleClass = _ref.toggleClass,
       flipToDelete = _ref.flipToDelete,
       noteId = _ref.noteId;
+
+  var formateDate = function formateDate(date) {
+    var fullDate = new Date(date).toString();
+    var day = fullDate.slice(0, 3);
+    var month = fullDate.slice(4, 7);
+    var num = fullDate.slice(8, 10);
+    var year = fullDate.slice(11, 15);
+    return "".concat(day, " - ").concat(month, " ").concat(num, ", ").concat(year);
+  };
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: flipToDelete && noteId === eachNote.id ? 'note-flip' : 'note-li'
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "note-front"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "note-title"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Title: "), eachNote.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "note-body"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Body: "), eachNote.body), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "note-bottom"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Passages: "), eachNote.category, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "#Day: "), eachNote.tags), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, " Book: "), eachNote.category), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "note-title"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Day ", eachNote.tags, ": "), eachNote.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "note-body"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Preview: "), eachNote.body), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "note-time"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Created: "), new Date(eachNote.created_at).toString().slice(0, 15), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Updated: "), new Date(eachNote.updated_at).toString().slice(0, 15)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Created: "), formateDate(eachNote.created_at), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Updated: "), formateDate(eachNote.updated_at)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "note-button-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     className: "note-delete",
@@ -2070,8 +2080,7 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       noteId: ''
     };
     _this.handleUpdate = _this.handleUpdate.bind(_assertThisInitialized(_this));
-    _this.toggleClass = _this.toggleClass.bind(_assertThisInitialized(_this)); // this.addActiveClass = this.addActiveClass.bind(this);
-
+    _this.toggleClass = _this.toggleClass.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -2090,6 +2099,7 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
     value: function handleUpdate(noteId) {
       var _this2 = this;
 
+      console.log(noteId);
       this.props.fetchNote(noteId).then(function () {
         return _this2.props.closeModal();
       });
@@ -2097,9 +2107,9 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "toggleClass",
     value: function toggleClass(noteId) {
-      var currentState = this.state.flipToDelete;
+      var flipToDelete = this.state.flipToDelete;
       this.setState({
-        flipToDelete: !currentState,
+        flipToDelete: !flipToDelete,
         noteId: noteId
       });
     }
@@ -2114,15 +2124,7 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
           fetchNote = _this$props.fetchNote,
           closeModal = _this$props.closeModal,
           deleteNote = _this$props.deleteNote;
-      var currentUser_firstName;
-
-      if (currentUser === undefined) {
-        currentUser_firstName = 0;
-      } else {
-        currentUser_firstName = currentUser.first_name;
-      }
-
-      ;
+      var currentUser_firstName = currentUser.first_name || "Demo";
 
       if (notes.length === 0) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2565,9 +2567,9 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
 
         if (this.props.notes.length !== prevProps.notes.length) {
           //---------- AND if current props array is empty SKIP reset state ----------//
-          if (this.props.notes.length === 0) {
-            return; //---------- AND if current props array is NOT EMPTY then reset state ----------//
-          } else if (!this.props.notes.some(function (ele) {
+          if (this.props.notes.length === 0) return; //---------- AND if current props array is NOT EMPTY then reset state ----------//
+
+          if (!this.props.notes.some(function (ele) {
             return ele.id === _this2.state.id;
           })) {
             this.setState({
@@ -2638,12 +2640,15 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
         return word.trim().length;
       };
 
-      if (trimmerLength(title) === 0 || trimmerLength(body) === 0) {
-        if (trimmerLength(title) === 0 && trimmerLength(body) !== 0) {
+      var blankTitle = trimmerLength(title) === 0;
+      var blankBody = trimmerLength(body) === 0;
+
+      if (blankTitle || blankBody) {
+        if (blankTitle && !blankBody) {
           this.setState({
             updateErrors: ["Title can't be blank"]
           });
-        } else if (trimmerLength(body) === 0 && trimmerLength(title) !== 0) {
+        } else if (blankBody && !blankTitle) {
           this.setState({
             updateErrors: ["Body can't be blank"]
           });
@@ -2749,13 +2754,13 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
 
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-form-bottom"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Passages"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Book"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "text",
           className: "notes-form-input",
           onChange: this.handleChange('category'),
           value: this.state.category // required   
 
-        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "#Day"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Day#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "text",
           className: "notes-form-input",
           onChange: this.handleChange('tags'),
@@ -2788,13 +2793,13 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
 
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-form-bottom"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Passages"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Book"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "text",
           className: "notes-form-input",
           value: this.state.category,
           onChange: this.handleChange('category') // required   
 
-        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "#Day"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Day#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "text",
           className: "notes-form-input",
           value: this.state.tags,
