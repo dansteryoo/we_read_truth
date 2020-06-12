@@ -24,7 +24,6 @@ class NotesPage extends React.Component {
     }
 
     handleUpdate(noteId) {
-        console.log(noteId)
         this.props.fetchNote(noteId)
         .then(() => this.props.closeModal())
     };
@@ -61,7 +60,7 @@ class NotesPage extends React.Component {
 
         const { notes, fetchNote, deleteNote } = this.props
 
-        if (notes.length === 0) {
+        if (notes.length < 1) {
             return (
                 <>
                     <div className='notes-page-container'>
