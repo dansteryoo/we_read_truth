@@ -154,7 +154,7 @@ class MainBody extends React.Component {
 
     renderPassages() {
         const { passages, esvPassage } = this.state; 
-        if (passages.length === 0) return 
+        if (passages.length < 1) return 
 
         let newEsvData = []
         const passagesArray = this.splitPassages(passages)
