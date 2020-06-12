@@ -12,6 +12,7 @@ class NotesPage extends React.Component {
 
         this.handleUpdate = this.handleUpdate.bind(this);
         this.toggleClass = this.toggleClass.bind(this);
+        this.renderModalTop = this.renderModalTop.bind(this);
     };
 
     componentDidMount() {
@@ -37,26 +38,37 @@ class NotesPage extends React.Component {
         })
     };
 
+    renderModalTop() {
+        const { currentUser, closeModal } = this.props
+        let currentUser_firstName = currentUser.first_name || "Demo"
+
+        return (
+            <div className='notes-modal-top'>
+                <div className='form-closing-x' onClick={() => closeModal()}>
+                    &#10005;
+                            </div>
+                <div className='notes-page-username'>
+                    <span>{currentUser_firstName}'s Notes</span>
+                </div>
+                <div className='form-or-separator-notes'>
+                    <hr />
+                </div>
+            </div>
+        )
+    }
+
     render() {
 
-        const { currentUser, notes, fetchNote, closeModal, deleteNote } = this.props
+        const { notes, fetchNote, deleteNote } = this.props
 
-        let currentUser_firstName = currentUser.first_name || "Demo"
-        
         if (notes.length === 0) {
             return (
                 <>
                     <div className='notes-page-container'>
+                        {
+                            this.renderModalTop()
+                        }
                         <div className='notes-page-content'>
-                            <div className='form-closing-x' onClick={() => closeModal()}>
-                                &#10005;
-                        </div>
-                            <div className='notes-page-username'>
-                                <span>{currentUser_firstName}'s Notes</span>
-                            </div>
-                            <div className='form-or-separator-notes'>
-                                <hr />
-                            </div>
                             <section className='notes-page-section'>
                                 <div className='notes-page-section-empty'>
                                     <span>You don't have any notes.</span>
@@ -70,16 +82,10 @@ class NotesPage extends React.Component {
             return (
                 <>
                     <div className='notes-page-container'>
+                        {
+                            this.renderModalTop()
+                        }
                         <div className='notes-page-content'>
-                            <div className='form-closing-x' onClick={() => closeModal()}>
-                                &#10005;
-                            </div>
-                            <div className='notes-page-username'> 
-                                <span>{currentUser_firstName}'s Notes</span> 
-                            </div>
-                            <div className='form-or-separator-notes'>
-                                <hr />
-                            </div>
                             <section className='notes-page-section'>
                                 <ul className="notes-page-ul">
                                     {notes.map((eachNote) => (

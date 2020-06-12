@@ -2081,6 +2081,7 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
     };
     _this.handleUpdate = _this.handleUpdate.bind(_assertThisInitialized(_this));
     _this.toggleClass = _this.toggleClass.bind(_assertThisInitialized(_this));
+    _this.renderModalTop = _this.renderModalTop.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -2114,33 +2115,41 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "renderModalTop",
+    value: function renderModalTop() {
+      var _this$props = this.props,
+          currentUser = _this$props.currentUser,
+          closeModal = _this$props.closeModal;
+      var currentUser_firstName = currentUser.first_name || "Demo";
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "notes-modal-top"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-closing-x",
+        onClick: function onClick() {
+          return closeModal();
+        }
+      }, "\u2715"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "notes-page-username"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, currentUser_firstName, "'s Notes")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-or-separator-notes"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)));
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this3 = this;
 
-      var _this$props = this.props,
-          currentUser = _this$props.currentUser,
-          notes = _this$props.notes,
-          fetchNote = _this$props.fetchNote,
-          closeModal = _this$props.closeModal,
-          deleteNote = _this$props.deleteNote;
-      var currentUser_firstName = currentUser.first_name || "Demo";
+      var _this$props2 = this.props,
+          notes = _this$props2.notes,
+          fetchNote = _this$props2.fetchNote,
+          deleteNote = _this$props2.deleteNote;
 
       if (notes.length === 0) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-page-container"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, this.renderModalTop(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-page-content"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "form-closing-x",
-          onClick: function onClick() {
-            return closeModal();
-          }
-        }, "\u2715"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "notes-page-username"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, currentUser_firstName, "'s Notes")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "form-or-separator-notes"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
           className: "notes-page-section"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-page-section-empty"
@@ -2148,18 +2157,9 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       } else {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-page-container"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, this.renderModalTop(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-page-content"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "form-closing-x",
-          onClick: function onClick() {
-            return closeModal();
-          }
-        }, "\u2715"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "notes-page-username"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, currentUser_firstName, "'s Notes")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "form-or-separator-notes"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
           className: "notes-page-section"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           className: "notes-page-ul"
