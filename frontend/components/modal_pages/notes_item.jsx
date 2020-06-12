@@ -2,28 +2,35 @@ import React from 'react';
 
 const NotesItem = ({ eachNote, handleUpdate, deleteNote, toggleClass, flipToDelete, noteId }) => {
 
+    const formateDate = (date) => {
+        let fullDate = new Date(date).toString()
+        let day = fullDate.slice(0, 3)
+        let month = fullDate.slice(4, 7)
+        let num = fullDate.slice(8, 10)
+        let year = fullDate.slice(11, 15)
+        return `${day} - ${month} ${num}, ${year}`
+    }
+    
     return (
         <li className={flipToDelete && noteId === eachNote.id ? 'note-flip' : 'note-li'}>
 
             {/* ---------- NOTE FRONT ---------- */}
             
             <div className='note-front'>
+                <div className='note-bottom'>
+                    <span> Book: </span>{eachNote.category}
+                </div>
                 <div className='note-title'>
-                    <span>Title: </span>{eachNote.title}
+                    <span>Day {eachNote.tags}: </span> 
+                    {eachNote.title}
                 </div>
                 <div className='note-body'>
-                    <span>Body: </span>{eachNote.body}
+                    <span>Preview: </span>{eachNote.body}
                 </div>
-                <div className='note-bottom'>
-                    <span>Passages: </span>{eachNote.category}
-                    <br/>
-                    <span>#Day: </span>{eachNote.tags}
-                </div>
-
                 <div className='note-time'>
-                    <span>Created: </span>{new Date(eachNote.created_at).toString().slice(0, 15)}
+                    <span>Created: </span>{formateDate(eachNote.created_at)}
                     <br/>
-                    <span>Updated: </span>{new Date(eachNote.updated_at).toString().slice(0, 15)}
+                    <span>Updated: </span>{formateDate(eachNote.updated_at)}
                 </div>
 
                 <div className='note-button-container'>

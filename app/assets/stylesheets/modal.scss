@@ -134,11 +134,25 @@ $darkpink: #ff8da1;
     }
 
     .note-title,
-    .note-body,
     .note-bottom {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+
+    .note-body {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;  
+      overflow: hidden;
+    }
+
+    .note-time {
+      font-size: 11px;
+      
+      span {
+        font-size: 12px;
+      }
     }
 }
 
