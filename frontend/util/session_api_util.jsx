@@ -1,29 +1,29 @@
 
-export const signup = (user) => (
-    $.ajax({
+export const signup = (user) => {
+    return $.ajax({
         url: `/api/users`,
         method: 'POST',
         data: { user }
     })
-);
+};
 
-export const login = (user) => (
-    $.ajax({
+export const login = (user) => {
+    return $.ajax({
         url: `/api/session`,
         method: 'POST',
         data: { user }
     })
-);
+};
 
-export const logout = () => (
-    $.ajax({
+export const logout = () => {
+    return $.ajax({
         url: `/api/session`,
         method: 'DELETE'
     })
-);
+};
 
-export const logindemo = () => (
-    $.ajax({
+export const logindemo = () => {
+    return $.ajax({
         method: 'POST',
         url: `/api/session`,
         data: {
@@ -33,7 +33,7 @@ export const logindemo = () => (
             }
         }
     })
-);
+};
 
 
 export const fetchUsers = () => (
