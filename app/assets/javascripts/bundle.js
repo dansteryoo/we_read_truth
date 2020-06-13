@@ -2096,7 +2096,9 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
   _createClass(NotesPage, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchNotes();
+      this.props.fetchNotes().then(this.setState({
+        notes: this.props.notes
+      }));
     }
   }, {
     key: "componentWillUnmount",
