@@ -9,7 +9,9 @@ class NotesPage extends React.Component {
             flipToDelete: false,
             noteId: '',
             search: '',
-            notes: false
+            notes: [],
+            searchNotes: [],
+            checked: false
         };
 
         this.handleUpdate = this.handleUpdate.bind(this);
@@ -17,7 +19,6 @@ class NotesPage extends React.Component {
         this.handleCheck = this.handleCheck.bind(this);
         this.toggleClass = this.toggleClass.bind(this);
         this.renderModalTop = this.renderModalTop.bind(this);
-        this.sortNotes = this.sortNotes.bind(this);
     };
 
     componentDidMount() {
@@ -50,64 +51,37 @@ class NotesPage extends React.Component {
     }
 
     handleCheck(e) {
-        let myCheckbox = document.getElementsByName("checkbox");
         const checkbox = e.target.value
+        if (checkbox) this.setState({ checked: this.state.checked })
 
+        let myCheckbox = document.getElementsByName("checkbox");
         myCheckbox.forEach(ele => {
             if (checkbox !== ele.value) return ele.checked = false;
         }) 
 
-        const { notes } = this.props
+        const { notes } = this.state
+            let sortNotes;
+            switch (checkbox) {
+                case 'byBook':
+                    sortNotes = notes
+                        .sort((a, b) => a.category.toLowerCase() < b.category.toLowerCase() ? -1 : 1)
+                        .map(ele => ele)
+                    return this.setState({ notes: sortNotes })
 
-        let sortNotes;
-        switch (checkbox) {
-            case 'byBook':
-                sortNotes = notes
-                    .sort((a, b) => a.category.toLowerCase() < b.category.toLowerCase() ? -1 : 1)
-                    .map(ele => ele)
-                return this.setState({ notes: sortNotes })
+                case 'byCreated':
+                    sortNotes = notes
+                        .sort((a, b) => a.created_at < b.created_at ? -1 : 1)
+                        .map(ele => ele)
+                    return this.setState({ notes: sortNotes })
 
-            case 'byCreated':
-                sortNotes = notes.sort((a, b) => a.created_at < b.created_at ? -1 : 1)
-                    .map(ele => ele)
-                return this.setState({ notes: sortNotes })
+                case 'byUpdated':
+                    sortNotes = notes
+                        .sort((a, b) => a.updated_at < b.updated_at ? -1 : 1)
+                        .map(ele => ele)
+                    return this.setState({ notes: sortNotes })
 
-            case 'byUpdated':
-                sortNotes = notes.sort((a, b) => a.updated_at < b.updated_at ? -1 : 1)
-                    .map(ele => ele)
-                return this.setState({ notes: sortNotes })
-
-            default:
-                return this.setState({ notes })
-        }
-    }
-
-    sortNotes(e) {
-        e.preventDefault();
-        const { notes } = this.props 
-    
-        let sortNotes; 
-        console.log(e)
-        debugger
-        switch (e.target.value) {
-            case 'byBook':
-                sortNotes = notes
-                    .sort((a, b) => a.category.toLowerCase() < b.category.toLowerCase() ? -1 : 1)
-                    .map(ele => ele)
-                return this.setState({ notes: sortNotes })
-
-            case 'byCreated':
-                sortNotes = notes.sort((a, b) => a.created_at < b.created_at ? -1 : 1)
-                    .map(ele => ele)
-                return this.setState({ notes: sortNotes })
-
-            case 'byUpdated':
-                sortNotes = notes.sort((a, b) => a.updated_at < b.updated_at ? -1 : 1)
-                    .map(ele => ele)
-                return this.setState({ notes: sortNotes })
-
-            default:
-                return this.setState({ notes })
+                default:
+                    return this.setState({ notes })
         }
     }
 
@@ -126,9 +100,11 @@ class NotesPage extends React.Component {
         const sortNotes = this.props.notes.filter(each => {
             let sortTitles = each.title.toLowerCase().match(searchData)
             let sortBody = each.body.toLowerCase().match(searchData)
-            return sortTitles || sortBody 
-         });
+            let sortBook = each.category.toLowerCase().match(searchData)
 
+            if (sortTitles || sortBody || sortBook) return each 
+         });
+         
         return this.setState({ notes: sortNotes })
     }
 
@@ -187,7 +163,7 @@ class NotesPage extends React.Component {
     render() {
 
         const { notes, fetchNote, deleteNote } = this.props
-        let renderNotes = this.state.notes || notes 
+        let renderNotes = this.state.notes.length < 1 ? notes : this.state.notes
 
         if (notes.length < 1) {
             return (
