@@ -3243,16 +3243,15 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
-      if (this.props.errors !== prevProps.errors) {}
+      if (this.props.errors !== prevProps.errors) {
+        console.log('update');
+        debugger;
+      }
     }
   }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
-      this.props.clearErrors();
-      this.setState({
-        stateErrors: []
-      });
       var _this$state = this.state,
           stateErrors = _this$state.stateErrors,
           email = _this$state.email,
@@ -3260,6 +3259,7 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
           firstName = _this$state.firstName,
           lastName = _this$state.lastName,
           passwordMatch = _this$state.passwordMatch;
+      this.props.clearErrors();
 
       var trimmerLength = function trimmerLength(word) {
         return word.trim().length;
@@ -3306,7 +3306,14 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
       user.first_name = capitalizeFirstLetter(firstName);
       user.last_name = capitalizeFirstLetter(lastName);
       user.password = password.toLocaleLowerCase();
-      if (stateErrors.length < 1) return this.props.processForm(user);
+      console.log('processFORM');
+
+      if (stateErrors.length < 2) {
+        this.setState({
+          stateErrors: []
+        });
+        return this.props.processForm(user);
+      }
     }
   }, {
     key: "handleChange",
@@ -3320,8 +3327,22 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderErrors",
     value: function renderErrors() {
-      var stateErrors = this.state.stateErrors;
       var errors = this.props.errors;
+      var _this$state2 = this.state,
+          stateErrors = _this$state2.stateErrors,
+          email = _this$state2.email,
+          password = _this$state2.password,
+          firstName = _this$state2.firstName,
+          lastName = _this$state2.lastName,
+          passwordMatch = _this$state2.passwordMatch;
+
+      var trimmerLength = function trimmerLength(word) {
+        return word.trim().length;
+      };
+
+      var blankEmail = trimmerLength(email) < 1;
+      var blankFirst = trimmerLength(firstName) < 1;
+      var blankLast = trimmerLength(lastName) < 1;
       var errorsHash = {
         emailBlank: '',
         emailInvalid: '',
@@ -3342,7 +3363,13 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
       errors.forEach(function (err) {
         if (ERRORS.indexOf(err) === 1) errorsHash.emailInvalid = err;
         if (ERRORS.indexOf(err) === 2) errorsHash.emailTaken = err;
+        if (ERRORS.indexOf(err) === 5) errorsHash.pwShort = err;
       });
+      if (!blankEmail) delete errorsHash.emailBlank;
+      if (!blankFirst) delete errorsHash.firstName;
+      if (!blankLast) delete errorsHash.lastName;
+      if (password.length > 5) delete errorsHash.pwShort;
+      if (password === passwordMatch) delete errorsHash.pwNoMatch;
       return errorsHash;
     }
   }, {
