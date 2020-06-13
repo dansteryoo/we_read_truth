@@ -33,9 +33,6 @@ class SignUp extends React.Component {
     componentDidUpdate(prevProps) {
 
         if (this.props.errors !== prevProps.errors) {
-            console.log('update')
-
-            debugger
         }
     }
 
@@ -76,12 +73,11 @@ class SignUp extends React.Component {
         user.first_name = capitalizeFirstLetter(firstName)
         user.last_name = capitalizeFirstLetter(lastName)
         user.password = password.toLocaleLowerCase()
-        console.log('processFORM')
+
         if (stateErrors.length < 2) {
-            this.setState({ stateErrors: [] })
             return this.props.processForm(user) 
         }
-}
+    }
 
 
     handleChange(f) {

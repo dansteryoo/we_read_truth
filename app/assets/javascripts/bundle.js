@@ -3243,10 +3243,7 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
-      if (this.props.errors !== prevProps.errors) {
-        console.log('update');
-        debugger;
-      }
+      if (this.props.errors !== prevProps.errors) {}
     }
   }, {
     key: "handleSubmit",
@@ -3306,12 +3303,8 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
       user.first_name = capitalizeFirstLetter(firstName);
       user.last_name = capitalizeFirstLetter(lastName);
       user.password = password.toLocaleLowerCase();
-      console.log('processFORM');
 
       if (stateErrors.length < 2) {
-        this.setState({
-          stateErrors: []
-        });
         return this.props.processForm(user);
       }
     }
