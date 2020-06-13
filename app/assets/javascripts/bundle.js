@@ -2730,6 +2730,31 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
         if (ERRORS.indexOf(err) === 3) errorsHash.day = err;
         if (ERRORS.indexOf(err) === 4) errorsHash.number = err;
       });
+      var _this$state2 = this.state,
+          title = _this$state2.title,
+          category = _this$state2.category,
+          tags = _this$state2.tags,
+          body = _this$state2.body;
+
+      var trimmerLength = function trimmerLength(word) {
+        return word.trim().length;
+      };
+
+      var blankTitle = trimmerLength(title) < 1;
+      var blankBody = trimmerLength(body) < 1;
+      var blankBook = trimmerLength(category) < 1;
+      var blankDay = trimmerLength(tags) < 1;
+
+      var dayIsNumber = function dayIsNumber(tags) {
+        if (Number.isInteger(parseInt(tags.trim()))) return true;
+        return false;
+      };
+
+      if (!blankTitle) errorsHash.title = '';
+      if (!blankBody) errorsHash.body = '';
+      if (!blankBook) errorsHash.book = '';
+      if (!blankDay) errorsHash.day = '';
+      if (dayIsNumber(tags)) errorsHash.number = '';
       return errorsHash;
     }
   }, {
@@ -3243,10 +3268,7 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
-      if (this.props.errors !== prevProps.errors) {
-        console.log('update');
-        debugger;
-      }
+      if (this.props.errors !== prevProps.errors) {}
     }
   }, {
     key: "handleSubmit",
@@ -3306,12 +3328,8 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
       user.first_name = capitalizeFirstLetter(firstName);
       user.last_name = capitalizeFirstLetter(lastName);
       user.password = password.toLocaleLowerCase();
-      console.log('processFORM');
 
       if (stateErrors.length < 2) {
-        this.setState({
-          stateErrors: []
-        });
         return this.props.processForm(user);
       }
     }
@@ -3365,11 +3383,11 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
         if (ERRORS.indexOf(err) === 2) errorsHash.emailTaken = err;
         if (ERRORS.indexOf(err) === 5) errorsHash.pwShort = err;
       });
-      if (!blankEmail) delete errorsHash.emailBlank;
-      if (!blankFirst) delete errorsHash.firstName;
-      if (!blankLast) delete errorsHash.lastName;
-      if (password.length > 5) delete errorsHash.pwShort;
-      if (password === passwordMatch) delete errorsHash.pwNoMatch;
+      if (!blankEmail) errorsHash.emailBlank = '';
+      if (!blankFirst) errorsHash.firstName = '';
+      if (!blankLast) errorsHash.lastName = '';
+      if (password.length > 5) errorsHash.pwShort = '';
+      if (password === passwordMatch) errorsHash.pwNoMatch = '';
       return errorsHash;
     }
   }, {
