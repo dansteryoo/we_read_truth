@@ -2730,6 +2730,31 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
         if (ERRORS.indexOf(err) === 3) errorsHash.day = err;
         if (ERRORS.indexOf(err) === 4) errorsHash.number = err;
       });
+      var _this$state2 = this.state,
+          title = _this$state2.title,
+          category = _this$state2.category,
+          tags = _this$state2.tags,
+          body = _this$state2.body;
+
+      var trimmerLength = function trimmerLength(word) {
+        return word.trim().length;
+      };
+
+      var blankTitle = trimmerLength(title) < 1;
+      var blankBody = trimmerLength(body) < 1;
+      var blankBook = trimmerLength(category) < 1;
+      var blankDay = trimmerLength(tags) < 1;
+
+      var dayIsNumber = function dayIsNumber(tags) {
+        if (Number.isInteger(parseInt(tags.trim()))) return true;
+        return false;
+      };
+
+      if (!blankTitle) errorsHash.title = '';
+      if (!blankBody) errorsHash.body = '';
+      if (!blankBook) errorsHash.book = '';
+      if (!blankDay) errorsHash.day = '';
+      if (dayIsNumber(tags)) errorsHash.number = '';
       return errorsHash;
     }
   }, {
