@@ -23,6 +23,7 @@ class NotesPage extends React.Component {
 
     componentDidMount() {
         this.props.fetchNotes()
+        .then(this.setState({ notes: this.props.notes }))
     };
 
     componentWillUnmount(){
