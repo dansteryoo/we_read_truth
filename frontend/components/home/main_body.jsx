@@ -156,14 +156,27 @@ class MainBody extends React.Component {
         const { passages, esvPassage } = this.state; 
         if (passages.length < 1) return 
 
-        let newEsvData = []
+        let esvSortMatch = []
         const passagesArray = this.splitPassages(passages)
 
         if (esvPassage.length === passagesArray.length) {
-            newEsvData = esvPassage.sort(function(a, b) {
+            esvSortMatch = esvPassage.sort(function(a, b) {
                 return passagesArray.indexOf(a.passage) - passagesArray.indexOf(b.passage)
             })
         }
+
+
+        let newEsvData = esvSortMatch.filter((ele, i) => {
+            if (ele.text === undefined) {
+                console.log(`ESV PASSAGE ERROR IN: 
+                    index(${i}), 
+                    passage(${JSON.stringify(ele.passage)}), 
+                    text(${JSON.stringify(ele.text)})`
+                )
+                return 
+            }
+            return ele
+        })
 
         return (
             newEsvData.map((each, i) => {
