@@ -24,7 +24,7 @@ class NavBar extends React.Component {
       // return values.filter((each) => each.match(result));
     };
 
-    this.props.openModal("Categories", match(this.state.search.toLowerCase()))
+    this.props.openModal('Categories', match(this.state.search.toLowerCase()))
   }
 
   componentDidMount() {
@@ -44,32 +44,32 @@ class NavBar extends React.Component {
 
   render() {
     return (
-      <nav className="nav-container">
-        <div className="nav-home">
+      <nav className='nav-container'>
+        <div className='nav-home'>
           <img src={window.logo} />
         </div>
 
-        <div className="navsearch">
+        <div className='navsearch'>
           <img className='navsearch-icon' src={window.search_icon} height='20' />
-          <form onSubmit={this.handleSubmit} className="navbar-search-form">
+          <form onSubmit={this.handleSubmit} className='navbar-search-form'>
             <input
-              className="navsearch-input"
-              type="text"
-              placeholder="Search.."
+              className='navsearch-input'
+              type='text'
+              placeholder='Search..'
               value={this.state.search}
-              onChange={this.handleChange("search")}
+              onChange={this.handleChange('search')}
             />
           </form>
         </div>
 
-        <ul className="nav-links">
-          <li className="devo-li" onClick={() => this.props.openModal("Categories")}>
+        <ul className='nav-links'>
+          <li className='devo-li' onClick={() => this.props.openModal('Categories')}>
             Devotionals
           </li>
-          <li className="notes-li" onClick={() => this.props.openModal("Notes")}>
+          <li className='notes-li' onClick={() => this.props.openModal('Notes')}>
             Notes
           </li>
-          <li className="logout-li" onClick={() => this.props.logout()}>
+          <li className='logout-li' onClick={() => this.props.logout()}>
             Logout
           </li>
         </ul>
