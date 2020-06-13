@@ -1978,7 +1978,6 @@ var NotesItem = function NotesItem(_ref) {
       handleUpdate = _ref.handleUpdate,
       deleteNote = _ref.deleteNote,
       toggleClass = _ref.toggleClass,
-      flipToDelete = _ref.flipToDelete,
       noteId = _ref.noteId;
 
   var formateDate = function formateDate(date) {
@@ -1990,8 +1989,13 @@ var NotesItem = function NotesItem(_ref) {
     return "".concat(day, " - ").concat(month, " ").concat(num, ", ").concat(year);
   };
 
+  var renderFlipCard = function renderFlipCard() {
+    if (noteId !== eachNote.id) return 'note-li';
+    return 'note-flip';
+  };
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-    className: flipToDelete && noteId === eachNote.id ? 'note-flip' : 'note-li'
+    className: renderFlipCard()
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "note-front"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2086,7 +2090,6 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      flipToDelete: false,
       noteId: '',
       search: '',
       notes: [],
@@ -2125,9 +2128,7 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "toggleClass",
     value: function toggleClass(noteId) {
-      var flipToDelete = this.state.flipToDelete;
       this.setState({
-        flipToDelete: !flipToDelete,
         noteId: noteId
       });
     }

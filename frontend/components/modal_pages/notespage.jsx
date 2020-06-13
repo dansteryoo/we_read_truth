@@ -6,25 +6,24 @@ class NotesPage extends React.Component {
         super(props);
 
         this.state = {
-            flipToDelete: false,
             noteId: '',
             search: '',
             notes: [],
             searchNotes: [],
             checked: false
-        };
+        }
 
         this.handleUpdate = this.handleUpdate.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
         this.handleCheck = this.handleCheck.bind(this);
         this.toggleClass = this.toggleClass.bind(this);
         this.renderModalTop = this.renderModalTop.bind(this);
-    };
+    }
 
     componentDidMount() {
         this.props.fetchNotes()
         .then(this.setState({ notes: this.props.notes }))
-    };
+    }
 
     componentWillUnmount(){
         this.props.clearNoteState()
@@ -33,22 +32,14 @@ class NotesPage extends React.Component {
     handleUpdate(noteId) {
         this.props.fetchNote(noteId)
         .then(() => this.props.closeModal())
-    };
+    }
 
     toggleClass(noteId) {
-        const { flipToDelete } = this.state;
-        
-        this.setState({
-            flipToDelete: !flipToDelete,
-            noteId: noteId
-        })
-    };
+        this.setState({ noteId })
+    }
 
     handleChange(f) {
-        return (e) =>
-            this.setState({
-                [f]: e.target.value,
-            });
+        return (e) => this.setState({ [f]: e.target.value })
     }
 
     handleCheck(e) {

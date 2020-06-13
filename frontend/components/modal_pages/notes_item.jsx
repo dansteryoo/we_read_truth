@@ -1,6 +1,6 @@
 import React from 'react';
 
-const NotesItem = ({ eachNote, handleUpdate, deleteNote, toggleClass, flipToDelete, noteId }) => {
+const NotesItem = ({ eachNote, handleUpdate, deleteNote, toggleClass, noteId }) => {
 
     const formateDate = (date) => {
         let fullDate = new Date(date).toString()
@@ -10,9 +10,14 @@ const NotesItem = ({ eachNote, handleUpdate, deleteNote, toggleClass, flipToDele
         let year = fullDate.slice(11, 15)
         return `${day} - ${month} ${num}, ${year}`
     }
-    
+
+    const renderFlipCard = () => {
+        if (noteId !== eachNote.id) return 'note-li'
+        return 'note-flip'
+    }
+
     return (
-        <li className={flipToDelete && noteId === eachNote.id ? 'note-flip' : 'note-li'}>
+        <li className={renderFlipCard()}>
 
             {/* ---------- NOTE FRONT ---------- */}
             
