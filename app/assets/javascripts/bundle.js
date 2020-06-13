@@ -1027,15 +1027,23 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
           passages = _this$state.passages,
           esvPassage = _this$state.esvPassage;
       if (passages.length < 1) return;
-      var newEsvData = [];
+      var esvSortMatch = [];
       var passagesArray = this.splitPassages(passages);
 
       if (esvPassage.length === passagesArray.length) {
-        newEsvData = esvPassage.sort(function (a, b) {
+        esvSortMatch = esvPassage.sort(function (a, b) {
           return passagesArray.indexOf(a.passage) - passagesArray.indexOf(b.passage);
         });
       }
 
+      var newEsvData = esvSortMatch.filter(function (ele, i) {
+        if (ele.text === undefined) {
+          console.log("ESV PASSAGE ERROR IN: \n                    index(".concat(i, "), \n                    passage(").concat(JSON.stringify(ele.passage), "), \n                    text(").concat(JSON.stringify(ele.text), ")"));
+          return;
+        }
+
+        return ele;
+      });
       return newEsvData.map(function (each, i) {
         //---------- itemCount TRACKING each item ----------//
         var itemCount = [];
