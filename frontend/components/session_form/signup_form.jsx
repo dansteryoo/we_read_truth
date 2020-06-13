@@ -1,8 +1,18 @@
 import React from 'react';
+const ERRORS = [
+    "Email can't be blank", // 0 Blank email
+    "Email is invalid", // 1 Email !valid 
+    "Email has already been taken", // 2 Email taken
+    "First name can't be blank", // 3 First name blank
+    "Last name can't be blank", // 4 Last name blank
+    "Password is too short (minimum is 6 characters)", // 5 PW too short
+    "Passwords do not match", // 6 PW !match
+]
 
 class SignUp extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
             email: '',
             password: '',
@@ -10,6 +20,7 @@ class SignUp extends React.Component {
             lastName: '',
             passwordMatch: '',
             passwordMatchError: '',
+            stateErrors: []
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -22,72 +33,51 @@ class SignUp extends React.Component {
     componentDidUpdate(prevProps) {
 
         if (this.props.errors !== prevProps.errors) {
-            // this.props.clearErrors();
         }
     }
 
     handleSubmit(e) {
         e.preventDefault();
 
-        function capitalizeFirstLetter(string) {
-            return string.charAt(0).toUpperCase() + string.toLocaleLowerCase().slice(1)
-        };
+        const { stateErrors, email, password, firstName, lastName, passwordMatch } = this.state;
+        this.props.clearErrors()
 
-        const { email, password, firstName, lastName, passwordMatch } = this.state;
-
-        let user = {
-            email: email.toLowerCase(),
-            password: password,
-        };
-
-        let shortPassword = {
-            email: email.toLowerCase(),
-            password: 12345,
-        };
-
-        user.first_name = capitalizeFirstLetter(firstName);
-        user.last_name = capitalizeFirstLetter(lastName);
-        shortPassword.first_name = capitalizeFirstLetter(firstName);
-        shortPassword.last_name = capitalizeFirstLetter(lastName);
-
-        if (password !== passwordMatch) {
-            this.setState({
-                passwordMatchError: ["Passwords do not match"]
-            })
-
-            if (password.length < 6 || passwordMatch.length < 6) {
-                this.props.processForm(shortPassword)
-
-            } else if (password.length < 6 && passwordMatch.length < 6) {
-                this.props.processForm(shortPassword)
-
-            } else if (password.length > 5 && passwordMatch.length > 5) {
-
-                if (email.length > 0 && firstName.length > 0 && lastName.length > 0) {
-
-                    if (this.props.errors[this.props.errors.length - 1] === "Email has already been taken") {
-                        this.setState({
-                            passwordMatchError: ["Passwords do not match", "Email has already been taken"],
-                        })
-                    }
-                    return this.props.clearErrors();
-                    
-                } else if (email.length < 1 || firstName.length < 1 || lastName.length < 1) {
-
-                    let longPassword = Object.assign(user, { password: password })
-                    this.props.processForm(longPassword)
-                }
-            }
-        } else if (password === passwordMatch) {
-            this.setState({
-                passwordMatchError: "",
-                password: password
-            })
-
-            let goodPassword = Object.assign(user, { password: password })
-            this.props.processForm(goodPassword)
+        const trimmerLength = (word) => word.trim().length
+        const blankEmail = trimmerLength(email) < 1
+        const blankFirst = trimmerLength(firstName) < 1
+        const blankLast = trimmerLength(lastName) < 1
+        const blankPassword = trimmerLength(password) < 1
+        const isPasswordMatch = () => {
+            return password === passwordMatch
         }
-    };
+
+        if (blankEmail || blankFirst || blankLast || blankPassword || !isPasswordMatch()) {
+            let errorsArr = []
+
+            if (blankEmail) errorsArr.push(ERRORS[0]) // 0 Blank email
+            if (blankFirst) errorsArr.push(ERRORS[3]) // 3 First name blank
+            if (blankLast) errorsArr.push(ERRORS[4]) // 4 Last name blank
+            if (password.length < 5) errorsArr.push(ERRORS[5]) // 5 PW too short
+            if (!isPasswordMatch() && !errorsArr.includes(ERRORS[5])) errorsArr.push(ERRORS[6]) // 6 PW !match
+            if (errorsArr.length > 0) {
+                return this.setState({
+                    stateErrors: errorsArr
+                })
+            }
+        }
+
+        const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase() 
+                                                    + string.toLocaleLowerCase().slice(1)
+
+        let user = { email, password, firstName, lastName }
+        user.first_name = capitalizeFirstLetter(firstName)
+        user.last_name = capitalizeFirstLetter(lastName)
+        user.password = password.toLocaleLowerCase()
+
+        if (stateErrors.length < 2) {
+            return this.props.processForm(user) 
+        }
+    }
 
 
     handleChange(f) {
@@ -96,35 +86,54 @@ class SignUp extends React.Component {
         })
     };
 
-    passwordMatchError() {
-        if (this.state.passwordMatchError.length > 0) {
-            return (
-                <ul className='form-errors-signup'>
-                    {this.state.passwordMatchError.map((error, i) => (
-                        <li key={`error-${i}`}>{error}</li>
-                    ))}
-                </ul>
-            )
-        }
-    }
-
     renderErrors() {
-        return (
-            <ul className='form-errors-signup'>
-                {this.props.errors.map((error, i) => (
-                    <li key={`error-${i}`}>{error}</li>
-                ))}
-            </ul>
-        );
+        const { errors } = this.props 
+        const { stateErrors, email, password, firstName, lastName, passwordMatch } = this.state;
+
+        const trimmerLength = (word) => word.trim().length
+        const blankEmail = trimmerLength(email) < 1
+        const blankFirst = trimmerLength(firstName) < 1
+        const blankLast = trimmerLength(lastName) < 1
+
+        const errorsHash = {
+            emailBlank: '',
+            emailInvalid: '',
+            emailTaken: '',
+            firstName: '',
+            lastName: '',
+            pwShort: '',
+            pwNoMatch: '',
+        }
+
+        if (errors.length < 1 && stateErrors.length < 1) return errorsHash
+
+        stateErrors.forEach(err => {
+            if (ERRORS.indexOf(err) === 0) errorsHash.emailBlank = err
+            if (ERRORS.indexOf(err) === 3) errorsHash.firstName = err
+            if (ERRORS.indexOf(err) === 4) errorsHash.lastName = err
+            if (ERRORS.indexOf(err) === 5) errorsHash.pwShort = err
+            if (ERRORS.indexOf(err) === 6) errorsHash.pwNoMatch = err
+        })
+
+        errors.forEach(err => {
+            if (ERRORS.indexOf(err) === 1) errorsHash.emailInvalid = err
+            if (ERRORS.indexOf(err) === 2) errorsHash.emailTaken = err
+            if (ERRORS.indexOf(err) === 5) errorsHash.pwShort = err
+        })
+
+        if (!blankEmail) errorsHash.emailBlank = ''
+        if (!blankFirst) errorsHash.firstName = ''
+        if (!blankLast) errorsHash.lastName = ''
+        if (password.length > 5) errorsHash.pwShort = ''
+        if (password === passwordMatch) errorsHash.pwNoMatch = ''
+
+        return errorsHash
     }
 
     render() {
 
-
         return (
             <div className='form-container-signup'>
-                {this.passwordMatchError()}
-                {this.renderErrors()}
                 <div className='form-title-signup'>Sign up with email</div>
                     <form onSubmit={this.handleSubmit} className='form'>
                     
@@ -138,7 +147,12 @@ class SignUp extends React.Component {
                         // noValidate
                         // required
                         />
-                        <i id='form-icon-login' className='fas fa-envelope fa-lg'></i>
+                        <div className='form-errors-signup-email'>
+                            {this.renderErrors().emailBlank}
+                            {this.renderErrors().emailInvalid}
+                            {this.renderErrors().emailTaken}
+                            <i id='email' className='fas fa-envelope fa-lg'></i>
+                        </div>
                         
                         <input type='text'
                             className='signup-form-input'
@@ -149,7 +163,10 @@ class SignUp extends React.Component {
                         // noValidate
                         // required
                         />
-                        <i id='form-icon-login' className='fas fa-user fa-lg'></i>
+                        <div className='form-errors-signup-first'>
+                            {this.renderErrors().firstName}
+                            <i id='first' className='fas fa-user fa-lg'></i>
+                        </div>
                         
                         <input type='text'
                             className='signup-form-input'
@@ -160,7 +177,10 @@ class SignUp extends React.Component {
                         // noValidate
                         // required
                         />
-                        <i id='form-icon-login' className='fas fa-user fa-lg'></i>
+                        <div className='form-errors-signup-last'>
+                            {this.renderErrors().lastName}
+                            <i id='last' className='fas fa-user fa-lg'></i>
+                        </div>
                         
                         <input type='password'
                             className='signup-form-input'
@@ -171,7 +191,10 @@ class SignUp extends React.Component {
                         // noValidate
                         // required
                         />
-                        <i id='form-icon-login' className='fas fa-lock fa-lg'></i>
+                        <div className='form-errors-signup-password'>
+                            {this.renderErrors().pwShort}
+                            <i id='password' className='fas fa-lock fa-lg'></i>
+                        </div>
 
                         <input type='password'
                             className='signup-form-input'
@@ -182,7 +205,9 @@ class SignUp extends React.Component {
                         // noValidate
                         // required
                         />
-   
+                        <div className='form-errors-signup-password'>
+                            {this.renderErrors().pwNoMatch}
+                        </div>
                             <button className='signup-form-button' type='submit' value={this.props.formType}>Sign Up</button>
                         </div>
                     </form>

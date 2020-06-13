@@ -1026,7 +1026,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       var _this$state = this.state,
           passages = _this$state.passages,
           esvPassage = _this$state.esvPassage;
-      if (passages.length === 0) return;
+      if (passages.length < 1) return;
       var newEsvData = [];
       var passagesArray = this.splitPassages(passages);
 
@@ -2041,6 +2041,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _notes_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./notes_item */ "./frontend/components/modal_pages/notes_item.jsx");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -2077,10 +2079,16 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this, props);
     _this.state = {
       flipToDelete: false,
-      noteId: ''
+      noteId: '',
+      search: '',
+      notes: false
     };
     _this.handleUpdate = _this.handleUpdate.bind(_assertThisInitialized(_this));
+    _this.handleSearch = _this.handleSearch.bind(_assertThisInitialized(_this));
+    _this.handleCheck = _this.handleCheck.bind(_assertThisInitialized(_this));
     _this.toggleClass = _this.toggleClass.bind(_assertThisInitialized(_this));
+    _this.renderModalTop = _this.renderModalTop.bind(_assertThisInitialized(_this));
+    _this.sortNotes = _this.sortNotes.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -2099,7 +2107,6 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
     value: function handleUpdate(noteId) {
       var _this2 = this;
 
-      console.log(noteId);
       this.props.fetchNote(noteId).then(function () {
         return _this2.props.closeModal();
       });
@@ -2114,33 +2121,207 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
-    key: "render",
-    value: function render() {
+    key: "handleChange",
+    value: function handleChange(f) {
       var _this3 = this;
 
+      return function (e) {
+        return _this3.setState(_defineProperty({}, f, e.target.value));
+      };
+    }
+  }, {
+    key: "handleCheck",
+    value: function handleCheck(e) {
+      var myCheckbox = document.getElementsByName("checkbox");
+      var checkbox = e.target.value;
+      myCheckbox.forEach(function (ele) {
+        if (checkbox !== ele.value) return ele.checked = false;
+      });
+      var notes = this.props.notes;
+      var sortNotes;
+
+      switch (checkbox) {
+        case 'byBook':
+          sortNotes = notes.sort(function (a, b) {
+            return a.category.toLowerCase() < b.category.toLowerCase() ? -1 : 1;
+          }).map(function (ele) {
+            return ele;
+          });
+          return this.setState({
+            notes: sortNotes
+          });
+
+        case 'byCreated':
+          sortNotes = notes.sort(function (a, b) {
+            return a.created_at < b.created_at ? -1 : 1;
+          }).map(function (ele) {
+            return ele;
+          });
+          return this.setState({
+            notes: sortNotes
+          });
+
+        case 'byUpdated':
+          sortNotes = notes.sort(function (a, b) {
+            return a.updated_at < b.updated_at ? -1 : 1;
+          }).map(function (ele) {
+            return ele;
+          });
+          return this.setState({
+            notes: sortNotes
+          });
+
+        default:
+          return this.setState({
+            notes: notes
+          });
+      }
+    }
+  }, {
+    key: "sortNotes",
+    value: function sortNotes(e) {
+      e.preventDefault();
+      var notes = this.props.notes;
+      var sortNotes;
+      console.log(e);
+      debugger;
+
+      switch (e.target.value) {
+        case 'byBook':
+          sortNotes = notes.sort(function (a, b) {
+            return a.category.toLowerCase() < b.category.toLowerCase() ? -1 : 1;
+          }).map(function (ele) {
+            return ele;
+          });
+          return this.setState({
+            notes: sortNotes
+          });
+
+        case 'byCreated':
+          sortNotes = notes.sort(function (a, b) {
+            return a.created_at < b.created_at ? -1 : 1;
+          }).map(function (ele) {
+            return ele;
+          });
+          return this.setState({
+            notes: sortNotes
+          });
+
+        case 'byUpdated':
+          sortNotes = notes.sort(function (a, b) {
+            return a.updated_at < b.updated_at ? -1 : 1;
+          }).map(function (ele) {
+            return ele;
+          });
+          return this.setState({
+            notes: sortNotes
+          });
+
+        default:
+          return this.setState({
+            notes: notes
+          });
+      }
+    }
+  }, {
+    key: "handleSearch",
+    value: function handleSearch(e) {
+      e.preventDefault();
+
+      var searchMatch = function searchMatch(search) {
+        var input = Array.from(search).reduce(function (a, v, i) {
+          return "".concat(a, "[^").concat(search.substring(i), "]*?").concat(v);
+        }, '');
+        return new RegExp(input);
+      };
+
+      var searchData = searchMatch(this.state.search.toLowerCase());
+      var sortNotes = this.props.notes.filter(function (each) {
+        var sortTitles = each.title.toLowerCase().match(searchData);
+        var sortBody = each.body.toLowerCase().match(searchData);
+        return sortTitles || sortBody;
+      });
+      return this.setState({
+        notes: sortNotes
+      });
+    }
+  }, {
+    key: "renderModalTop",
+    value: function renderModalTop() {
       var _this$props = this.props,
           currentUser = _this$props.currentUser,
-          notes = _this$props.notes,
-          fetchNote = _this$props.fetchNote,
-          closeModal = _this$props.closeModal,
-          deleteNote = _this$props.deleteNote;
-      var currentUser_firstName = currentUser.first_name || "Demo";
+          closeModal = _this$props.closeModal;
+      var currentUser_firstName = currentUser.first_name || 'Demo';
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "notes-modal-top"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "notes-page-username"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, currentUser_firstName, "'s Notes")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "notes-search"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        onSubmit: this.handleSearch,
+        className: "notes-bar-search-form"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "notes-search-input",
+        type: "text",
+        placeholder: "Search..",
+        value: this.state.search,
+        onChange: this.handleChange('search')
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "checkbox-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "container"
+      }, "By Book", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "checkbox",
+        name: "checkbox",
+        value: "byBook",
+        onChange: this.handleCheck
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "checkmark"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "container"
+      }, "By Created", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "checkbox",
+        name: "checkbox",
+        value: "byCreated",
+        onChange: this.handleCheck
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "checkmark"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "container"
+      }, "By Updated", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "checkbox",
+        name: "checkbox",
+        value: "byUpdated",
+        onChange: this.handleCheck
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "checkmark"
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-closing-x",
+        onClick: function onClick() {
+          return closeModal();
+        }
+      }, "\u2715"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-or-separator-notes"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this4 = this;
 
-      if (notes.length === 0) {
+      var _this$props2 = this.props,
+          notes = _this$props2.notes,
+          fetchNote = _this$props2.fetchNote,
+          deleteNote = _this$props2.deleteNote;
+      var renderNotes = this.state.notes || notes;
+
+      if (notes.length < 1) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-page-container"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, this.renderModalTop(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-page-content"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "form-closing-x",
-          onClick: function onClick() {
-            return closeModal();
-          }
-        }, "\u2715"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "notes-page-username"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, currentUser_firstName, "'s Notes")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "form-or-separator-notes"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
           className: "notes-page-section"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-page-section-empty"
@@ -2148,27 +2329,18 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       } else {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-page-container"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, this.renderModalTop(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-page-content"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "form-closing-x",
-          onClick: function onClick() {
-            return closeModal();
-          }
-        }, "\u2715"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "notes-page-username"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, currentUser_firstName, "'s Notes")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "form-or-separator-notes"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
           className: "notes-page-section"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           className: "notes-page-ul"
-        }, notes.map(function (eachNote) {
+        }, renderNotes.map(function (eachNote) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_notes_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
-            handleUpdate: _this3.handleUpdate,
-            toggleClass: _this3.toggleClass,
-            flipToDelete: _this3.state.flipToDelete,
-            noteId: _this3.state.noteId,
+            handleUpdate: _this4.handleUpdate,
+            toggleClass: _this4.toggleClass,
+            flipToDelete: _this4.state.flipToDelete,
+            noteId: _this4.state.noteId,
             deleteNote: deleteNote,
             fetchNote: fetchNote,
             eachNote: eachNote,
@@ -2327,7 +2499,7 @@ var NavBar = /*#__PURE__*/function (_React$Component) {
         return new RegExp(input); // return values.filter((each) => each.match(result));
       };
 
-      this.props.openModal("Categories", match(this.state.search.toLowerCase()));
+      this.props.openModal('Categories', match(this.state.search.toLowerCase()));
     }
   }, {
     key: "componentDidMount",
@@ -2373,18 +2545,18 @@ var NavBar = /*#__PURE__*/function (_React$Component) {
         type: "text",
         placeholder: "Search..",
         value: this.state.search,
-        onChange: this.handleChange("search")
+        onChange: this.handleChange('search')
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "nav-links"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "devo-li",
         onClick: function onClick() {
-          return _this3.props.openModal("Categories");
+          return _this3.props.openModal('Categories');
         }
       }, "Devotionals"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "notes-li",
         onClick: function onClick() {
-          return _this3.props.openModal("Notes");
+          return _this3.props.openModal('Notes');
         }
       }, "Notes"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "logout-li",
@@ -2502,6 +2674,12 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 
+var ERRORS = ["Title can't be blank", // 0 Title
+"Body can't be blank", // 1 Body
+"Book can't be blank", // 2 Book
+"Day can't be blank", // 3 Day
+"Day must only be a number" // 4 Number
+];
 
 var NotesForm = /*#__PURE__*/function (_React$Component) {
   _inherits(NotesForm, _React$Component);
@@ -2522,11 +2700,10 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       body: '',
       update: false,
       success: false,
-      updateErrors: '',
+      updateErrors: [],
       updateForm: false
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
-    _this.handleUpdate = _this.handleUpdate.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -2567,7 +2744,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
 
         if (this.props.notes.length !== prevProps.notes.length) {
           //---------- AND if current props array is empty SKIP reset state ----------//
-          if (this.props.notes.length === 0) return; //---------- AND if current props array is NOT EMPTY then reset state ----------//
+          if (this.props.notes.length < 1) return; //---------- AND if current props array is NOT EMPTY then reset state ----------//
 
           if (!this.props.notes.some(function (ele) {
             return ele.id === _this2.state.id;
@@ -2599,29 +2776,6 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       var _this4 = this;
 
       e.preventDefault();
-      var note = Object.assign({}, this.state);
-      this.props.createNote(note).then(function () {
-        _this4.setState({
-          success: true,
-          title: '',
-          category: '',
-          tags: '',
-          body: '',
-          id: '',
-          updateForm: false
-        });
-      }).then(function () {
-        return _this4.renderSuccessMsg();
-      }).then(function () {
-        return _this4.props.clearNoteState();
-      });
-    }
-  }, {
-    key: "handleUpdate",
-    value: function handleUpdate(e) {
-      var _this5 = this;
-
-      e.preventDefault();
       var _this$state = this.state,
           id = _this$state.id,
           title = _this$state.title,
@@ -2635,31 +2789,63 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
         tags: tags,
         body: body
       };
+      var note = {
+        title: title,
+        category: category,
+        tags: tags,
+        body: body
+      };
 
       var trimmerLength = function trimmerLength(word) {
         return word.trim().length;
       };
 
-      var blankTitle = trimmerLength(title) === 0;
-      var blankBody = trimmerLength(body) === 0;
+      var blankTitle = trimmerLength(title) < 1;
+      var blankBody = trimmerLength(body) < 1;
+      var blankBook = trimmerLength(category) < 1;
+      var blankDay = trimmerLength(tags) < 1;
 
-      if (blankTitle || blankBody) {
-        if (blankTitle && !blankBody) {
-          this.setState({
-            updateErrors: ["Title can't be blank"]
-          });
-        } else if (blankBody && !blankTitle) {
-          this.setState({
-            updateErrors: ["Body can't be blank"]
-          });
-        } else {
-          this.setState({
-            updateErrors: ["Title can't be blank", "Body can't be blank"]
+      var dayIsNumber = function dayIsNumber(tags) {
+        if (Number.isInteger(parseInt(tags.trim()))) return true;
+        return false;
+      };
+
+      if (blankTitle || blankBody || blankBook || blankDay || !dayIsNumber(tags)) {
+        var errorsArr = [];
+        if (blankTitle) errorsArr.push(ERRORS[0]); // Title is blank
+
+        if (blankBody) errorsArr.push(ERRORS[1]); // Body is blank
+
+        if (blankBook) errorsArr.push(ERRORS[2]); // Book is blank
+
+        if (blankDay) errorsArr.push(ERRORS[3]); // Day is blank
+
+        if (!dayIsNumber(tags) && !blankDay) errorsArr.push(ERRORS[4]); // Day is !number
+
+        if (errorsArr.length > 0) {
+          return this.setState({
+            updateErrors: errorsArr
           });
         }
+      } else if (id.length < 1) {
+        this.props.createNote(note).then(function () {
+          _this4.setState({
+            success: true,
+            title: '',
+            category: '',
+            tags: '',
+            body: '',
+            id: '',
+            updateForm: false
+          });
+        }).then(function () {
+          return _this4.renderSuccessMsg();
+        }).then(function () {
+          return _this4.props.clearNoteState();
+        });
       } else {
         this.props.updateNote(noteUpdate).then(function () {
-          _this5.setState({
+          _this4.setState({
             updateErrors: '',
             update: true,
             title: '',
@@ -2670,19 +2856,19 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
             updateForm: false
           });
         }).then(function () {
-          return _this5.renderUpdateMsg();
+          return _this4.renderUpdateMsg();
         }).then(function () {
-          return _this5.props.fetchNotes();
+          return _this4.props.fetchNotes();
         });
       }
     }
   }, {
     key: "renderSuccessMsg",
     value: function renderSuccessMsg() {
-      var _this6 = this;
+      var _this5 = this;
 
       window.setTimeout(function () {
-        _this6.setState({
+        _this5.setState({
           success: false
         });
       }, 4000);
@@ -2690,10 +2876,10 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderUpdateMsg",
     value: function renderUpdateMsg() {
-      var _this7 = this;
+      var _this6 = this;
 
       window.setTimeout(function () {
-        _this7.setState({
+        _this6.setState({
           update: false
         });
       }, 4000);
@@ -2701,26 +2887,48 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderErrors",
     value: function renderErrors() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "form-errors-notes"
-      }, this.props.noteErrors.map(function (error, i) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          key: "error-".concat(i)
-        }, error);
-      }));
-    }
-  }, {
-    key: "renderUpdateErrors",
-    value: function renderUpdateErrors() {
-      if (this.state.updateErrors.length > 0) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-          className: "form-errors-notes"
-        }, this.state.updateErrors.map(function (error, i) {
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-            key: "error-".concat(i)
-          }, error);
-        }));
-      }
+      var updateErrors = this.state.updateErrors;
+      var errorsHash = {
+        title: '',
+        body: '',
+        book: '',
+        day: '',
+        number: ''
+      };
+      if (updateErrors.length < 1) return errorsHash;
+      updateErrors.forEach(function (err) {
+        if (ERRORS.indexOf(err) === 0) errorsHash.title = err;
+        if (ERRORS.indexOf(err) === 1) errorsHash.body = err;
+        if (ERRORS.indexOf(err) === 2) errorsHash.book = err;
+        if (ERRORS.indexOf(err) === 3) errorsHash.day = err;
+        if (ERRORS.indexOf(err) === 4) errorsHash.number = err;
+      });
+      var _this$state2 = this.state,
+          title = _this$state2.title,
+          category = _this$state2.category,
+          tags = _this$state2.tags,
+          body = _this$state2.body;
+
+      var trimmerLength = function trimmerLength(word) {
+        return word.trim().length;
+      };
+
+      var blankTitle = trimmerLength(title) < 1;
+      var blankBody = trimmerLength(body) < 1;
+      var blankBook = trimmerLength(category) < 1;
+      var blankDay = trimmerLength(tags) < 1;
+
+      var dayIsNumber = function dayIsNumber(tags) {
+        if (Number.isInteger(parseInt(tags.trim()))) return true;
+        return false;
+      };
+
+      if (!blankTitle) errorsHash.title = '';
+      if (!blankBody) errorsHash.body = '';
+      if (!blankBook) errorsHash.book = '';
+      if (!blankDay) errorsHash.day = '';
+      if (dayIsNumber(tags)) errorsHash.number = '';
+      return errorsHash;
     }
   }, {
     key: "render",
@@ -2736,8 +2944,8 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       } else if (this.state.updateForm) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-form-container"
-        }, this.renderUpdateErrors(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-          onSubmit: this.handleUpdate
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+          onSubmit: this.handleSubmit
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-form"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Title"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -2746,13 +2954,17 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
           onChange: this.handleChange('title'),
           value: this.state.title // required
 
-        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Body"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "form-errors-notes"
+        }, this.renderErrors().title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Body"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
           className: "notes-form-textarea",
           placeholder: 'Enter note here..',
           onChange: this.handleChange('body'),
           value: this.state.body // required
 
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "form-errors-notes"
+        }, this.renderErrors().body), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-form-bottom"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Book"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "text",
@@ -2760,13 +2972,17 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
           onChange: this.handleChange('category'),
           value: this.state.category // required   
 
-        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Day#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "form-errors-notes"
+        }, this.renderErrors().book), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Day#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "text",
           className: "notes-form-input",
           onChange: this.handleChange('tags'),
           value: this.state.tags // required   
 
-        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "form-errors-notes"
+        }, this.renderErrors().day, this.renderErrors().number)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "button-container"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "notes-form-submit-button",
@@ -2775,7 +2991,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       } else {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-form-container"
-        }, this.renderErrors(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
           onSubmit: this.handleSubmit
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-form"
@@ -2785,13 +3001,17 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
           value: this.state.title,
           onChange: this.handleChange('title') // required
 
-        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Body"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "form-errors-notes"
+        }, this.renderErrors().title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Body"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
           className: "notes-form-textarea",
           value: this.state.body,
           placeholder: 'Enter note here..',
           onChange: this.handleChange('body') // required
 
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "form-errors-notes"
+        }, this.renderErrors().body), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-form-bottom"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Book"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "text",
@@ -2799,13 +3019,17 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
           value: this.state.category,
           onChange: this.handleChange('category') // required   
 
-        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Day#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "form-errors-notes"
+        }, this.renderErrors().book), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Day#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "text",
           className: "notes-form-input",
           value: this.state.tags,
           onChange: this.handleChange('tags') // required   
 
-        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "form-errors-notes"
+        }, this.renderErrors().day, this.renderErrors().number)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "button-container"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "notes-form-submit-button",
@@ -3176,6 +3400,14 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 
+var ERRORS = ["Email can't be blank", // 0 Blank email
+"Email is invalid", // 1 Email !valid 
+"Email has already been taken", // 2 Email taken
+"First name can't be blank", // 3 First name blank
+"Last name can't be blank", // 4 Last name blank
+"Password is too short (minimum is 6 characters)", // 5 PW too short
+"Passwords do not match" // 6 PW !match
+];
 
 var SignUp = /*#__PURE__*/function (_React$Component) {
   _inherits(SignUp, _React$Component);
@@ -3194,7 +3426,8 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
       firstName: '',
       lastName: '',
       passwordMatch: '',
-      passwordMatchError: ''
+      passwordMatchError: '',
+      stateErrors: []
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     return _this;
@@ -3208,72 +3441,69 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
-      if (this.props.errors !== prevProps.errors) {// this.props.clearErrors();
-      }
+      if (this.props.errors !== prevProps.errors) {}
     }
   }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
-
-      function capitalizeFirstLetter(string) {
-        return string.charAt(0).toUpperCase() + string.toLocaleLowerCase().slice(1);
-      }
-
-      ;
       var _this$state = this.state,
+          stateErrors = _this$state.stateErrors,
           email = _this$state.email,
           password = _this$state.password,
           firstName = _this$state.firstName,
           lastName = _this$state.lastName,
           passwordMatch = _this$state.passwordMatch;
-      var user = {
-        email: email.toLowerCase(),
-        password: password
+      this.props.clearErrors();
+
+      var trimmerLength = function trimmerLength(word) {
+        return word.trim().length;
       };
-      var shortPassword = {
-        email: email.toLowerCase(),
-        password: 12345
+
+      var blankEmail = trimmerLength(email) < 1;
+      var blankFirst = trimmerLength(firstName) < 1;
+      var blankLast = trimmerLength(lastName) < 1;
+      var blankPassword = trimmerLength(password) < 1;
+
+      var isPasswordMatch = function isPasswordMatch() {
+        return password === passwordMatch;
+      };
+
+      if (blankEmail || blankFirst || blankLast || blankPassword || !isPasswordMatch()) {
+        var errorsArr = [];
+        if (blankEmail) errorsArr.push(ERRORS[0]); // 0 Blank email
+
+        if (blankFirst) errorsArr.push(ERRORS[3]); // 3 First name blank
+
+        if (blankLast) errorsArr.push(ERRORS[4]); // 4 Last name blank
+
+        if (password.length < 5) errorsArr.push(ERRORS[5]); // 5 PW too short
+
+        if (!isPasswordMatch() && !errorsArr.includes(ERRORS[5])) errorsArr.push(ERRORS[6]); // 6 PW !match
+
+        if (errorsArr.length > 0) {
+          return this.setState({
+            stateErrors: errorsArr
+          });
+        }
+      }
+
+      var capitalizeFirstLetter = function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.toLocaleLowerCase().slice(1);
+      };
+
+      var user = {
+        email: email,
+        password: password,
+        firstName: firstName,
+        lastName: lastName
       };
       user.first_name = capitalizeFirstLetter(firstName);
       user.last_name = capitalizeFirstLetter(lastName);
-      shortPassword.first_name = capitalizeFirstLetter(firstName);
-      shortPassword.last_name = capitalizeFirstLetter(lastName);
+      user.password = password.toLocaleLowerCase();
 
-      if (password !== passwordMatch) {
-        this.setState({
-          passwordMatchError: ["Passwords do not match"]
-        });
-
-        if (password.length < 6 || passwordMatch.length < 6) {
-          this.props.processForm(shortPassword);
-        } else if (password.length < 6 && passwordMatch.length < 6) {
-          this.props.processForm(shortPassword);
-        } else if (password.length > 5 && passwordMatch.length > 5) {
-          if (email.length > 0 && firstName.length > 0 && lastName.length > 0) {
-            if (this.props.errors[this.props.errors.length - 1] === "Email has already been taken") {
-              this.setState({
-                passwordMatchError: ["Passwords do not match", "Email has already been taken"]
-              });
-            }
-
-            return this.props.clearErrors();
-          } else if (email.length < 1 || firstName.length < 1 || lastName.length < 1) {
-            var longPassword = Object.assign(user, {
-              password: password
-            });
-            this.props.processForm(longPassword);
-          }
-        }
-      } else if (password === passwordMatch) {
-        this.setState({
-          passwordMatchError: "",
-          password: password
-        });
-        var goodPassword = Object.assign(user, {
-          password: password
-        });
-        this.props.processForm(goodPassword);
+      if (stateErrors.length < 2) {
+        return this.props.processForm(user);
       }
     }
   }, {
@@ -3286,35 +3516,59 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
       };
     }
   }, {
-    key: "passwordMatchError",
-    value: function passwordMatchError() {
-      if (this.state.passwordMatchError.length > 0) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-          className: "form-errors-signup"
-        }, this.state.passwordMatchError.map(function (error, i) {
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-            key: "error-".concat(i)
-          }, error);
-        }));
-      }
-    }
-  }, {
     key: "renderErrors",
     value: function renderErrors() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "form-errors-signup"
-      }, this.props.errors.map(function (error, i) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          key: "error-".concat(i)
-        }, error);
-      }));
+      var errors = this.props.errors;
+      var _this$state2 = this.state,
+          stateErrors = _this$state2.stateErrors,
+          email = _this$state2.email,
+          password = _this$state2.password,
+          firstName = _this$state2.firstName,
+          lastName = _this$state2.lastName,
+          passwordMatch = _this$state2.passwordMatch;
+
+      var trimmerLength = function trimmerLength(word) {
+        return word.trim().length;
+      };
+
+      var blankEmail = trimmerLength(email) < 1;
+      var blankFirst = trimmerLength(firstName) < 1;
+      var blankLast = trimmerLength(lastName) < 1;
+      var errorsHash = {
+        emailBlank: '',
+        emailInvalid: '',
+        emailTaken: '',
+        firstName: '',
+        lastName: '',
+        pwShort: '',
+        pwNoMatch: ''
+      };
+      if (errors.length < 1 && stateErrors.length < 1) return errorsHash;
+      stateErrors.forEach(function (err) {
+        if (ERRORS.indexOf(err) === 0) errorsHash.emailBlank = err;
+        if (ERRORS.indexOf(err) === 3) errorsHash.firstName = err;
+        if (ERRORS.indexOf(err) === 4) errorsHash.lastName = err;
+        if (ERRORS.indexOf(err) === 5) errorsHash.pwShort = err;
+        if (ERRORS.indexOf(err) === 6) errorsHash.pwNoMatch = err;
+      });
+      errors.forEach(function (err) {
+        if (ERRORS.indexOf(err) === 1) errorsHash.emailInvalid = err;
+        if (ERRORS.indexOf(err) === 2) errorsHash.emailTaken = err;
+        if (ERRORS.indexOf(err) === 5) errorsHash.pwShort = err;
+      });
+      if (!blankEmail) errorsHash.emailBlank = '';
+      if (!blankFirst) errorsHash.firstName = '';
+      if (!blankLast) errorsHash.lastName = '';
+      if (password.length > 5) errorsHash.pwShort = '';
+      if (password === passwordMatch) errorsHash.pwNoMatch = '';
+      return errorsHash;
     }
   }, {
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-container-signup"
-      }, this.passwordMatchError(), this.renderErrors(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-title-signup"
       }, "Sign up with email"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit,
@@ -3330,10 +3584,12 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
         name: "email" // noValidate
         // required
 
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        id: "form-icon-login",
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-errors-signup-email"
+      }, this.renderErrors().emailBlank, this.renderErrors().emailInvalid, this.renderErrors().emailTaken, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        id: "email",
         className: "fas fa-envelope fa-lg"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         className: "signup-form-input",
         value: this.state.firstName,
@@ -3342,10 +3598,12 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
         name: "firstName" // noValidate
         // required
 
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        id: "form-icon-login",
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-errors-signup-first"
+      }, this.renderErrors().firstName, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        id: "first",
         className: "fas fa-user fa-lg"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         className: "signup-form-input",
         value: this.state.lastName,
@@ -3354,10 +3612,12 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
         name: "lastName" // noValidate
         // required
 
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        id: "form-icon-login",
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-errors-signup-last"
+      }, this.renderErrors().lastName, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        id: "last",
         className: "fas fa-user fa-lg"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "password",
         className: "signup-form-input",
         value: this.state.password,
@@ -3366,10 +3626,12 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
         name: "password" // noValidate
         // required
 
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        id: "form-icon-login",
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-errors-signup-password"
+      }, this.renderErrors().pwShort, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        id: "password",
         className: "fas fa-lock fa-lg"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "password",
         className: "signup-form-input",
         value: this.state.passwordMatch,
@@ -3378,7 +3640,9 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
         name: "passwordMatch" // noValidate
         // required
 
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-errors-signup-password"
+      }, this.renderErrors().pwNoMatch), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "signup-form-button",
         type: "submit",
         value: this.props.formType
