@@ -173,6 +173,24 @@ class NotesForm extends React.Component {
             if (ERRORS.indexOf(err) === 4) errorsHash.number = err
         })
 
+        const { title, category, tags, body } = this.state
+
+        const trimmerLength = (word) => word.trim().length
+        const blankTitle = trimmerLength(title) < 1
+        const blankBody = trimmerLength(body) < 1
+        const blankBook = trimmerLength(category) < 1
+        const blankDay = trimmerLength(tags) < 1
+        const dayIsNumber = (tags) => {
+            if (Number.isInteger(parseInt(tags.trim()))) return true
+            return false
+        }
+
+        if (!blankTitle) errorsHash.title = ''
+        if (!blankBody) errorsHash.body = ''
+        if (!blankBook) errorsHash.book = ''
+        if (!blankDay) errorsHash.day = ''
+        if (dayIsNumber(tags)) errorsHash.number = ''
+
         return errorsHash
     }
 
