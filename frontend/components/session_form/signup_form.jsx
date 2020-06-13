@@ -121,11 +121,11 @@ class SignUp extends React.Component {
             if (ERRORS.indexOf(err) === 5) errorsHash.pwShort = err
         })
 
-        if (!blankEmail) delete errorsHash.emailBlank
-        if (!blankFirst) delete errorsHash.firstName
-        if (!blankLast) delete errorsHash.lastName
-        if (password.length > 5) delete errorsHash.pwShort
-        if (password === passwordMatch) delete errorsHash.pwNoMatch
+        if (!blankEmail) errorsHash.emailBlank = ''
+        if (!blankFirst) errorsHash.firstName = ''
+        if (!blankLast) errorsHash.lastName = ''
+        if (password.length > 5) errorsHash.pwShort = ''
+        if (password === passwordMatch) errorsHash.pwNoMatch = ''
 
         return errorsHash
     }
