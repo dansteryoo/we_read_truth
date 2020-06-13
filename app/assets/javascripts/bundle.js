@@ -2081,14 +2081,15 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       flipToDelete: false,
       noteId: '',
       search: '',
-      notes: false
+      notes: [],
+      searchNotes: [],
+      checked: false
     };
     _this.handleUpdate = _this.handleUpdate.bind(_assertThisInitialized(_this));
     _this.handleSearch = _this.handleSearch.bind(_assertThisInitialized(_this));
     _this.handleCheck = _this.handleCheck.bind(_assertThisInitialized(_this));
     _this.toggleClass = _this.toggleClass.bind(_assertThisInitialized(_this));
     _this.renderModalTop = _this.renderModalTop.bind(_assertThisInitialized(_this));
-    _this.sortNotes = _this.sortNotes.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -2132,61 +2133,18 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleCheck",
     value: function handleCheck(e) {
-      var myCheckbox = document.getElementsByName("checkbox");
       var checkbox = e.target.value;
+      if (checkbox) this.setState({
+        checked: this.state.checked
+      });
+      var myCheckbox = document.getElementsByName("checkbox");
       myCheckbox.forEach(function (ele) {
         if (checkbox !== ele.value) return ele.checked = false;
       });
-      var notes = this.props.notes;
+      var notes = this.state.notes;
       var sortNotes;
 
       switch (checkbox) {
-        case 'byBook':
-          sortNotes = notes.sort(function (a, b) {
-            return a.category.toLowerCase() < b.category.toLowerCase() ? -1 : 1;
-          }).map(function (ele) {
-            return ele;
-          });
-          return this.setState({
-            notes: sortNotes
-          });
-
-        case 'byCreated':
-          sortNotes = notes.sort(function (a, b) {
-            return a.created_at < b.created_at ? -1 : 1;
-          }).map(function (ele) {
-            return ele;
-          });
-          return this.setState({
-            notes: sortNotes
-          });
-
-        case 'byUpdated':
-          sortNotes = notes.sort(function (a, b) {
-            return a.updated_at < b.updated_at ? -1 : 1;
-          }).map(function (ele) {
-            return ele;
-          });
-          return this.setState({
-            notes: sortNotes
-          });
-
-        default:
-          return this.setState({
-            notes: notes
-          });
-      }
-    }
-  }, {
-    key: "sortNotes",
-    value: function sortNotes(e) {
-      e.preventDefault();
-      var notes = this.props.notes;
-      var sortNotes;
-      console.log(e);
-      debugger;
-
-      switch (e.target.value) {
         case 'byBook':
           sortNotes = notes.sort(function (a, b) {
             return a.category.toLowerCase() < b.category.toLowerCase() ? -1 : 1;
@@ -2239,7 +2197,8 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       var sortNotes = this.props.notes.filter(function (each) {
         var sortTitles = each.title.toLowerCase().match(searchData);
         var sortBody = each.body.toLowerCase().match(searchData);
-        return sortTitles || sortBody;
+        var sortBook = each.category.toLowerCase().match(searchData);
+        if (sortTitles || sortBody || sortBook) return each;
       });
       return this.setState({
         notes: sortNotes
@@ -2314,7 +2273,7 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
           notes = _this$props2.notes,
           fetchNote = _this$props2.fetchNote,
           deleteNote = _this$props2.deleteNote;
-      var renderNotes = this.state.notes || notes;
+      var renderNotes = this.state.notes.length < 1 ? notes : this.state.notes;
 
       if (notes.length < 1) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
