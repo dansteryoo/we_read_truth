@@ -23,7 +23,7 @@ class NotesForm extends React.Component {
             updateForm: false
         }
 
-        this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount() {

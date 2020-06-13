@@ -2041,6 +2041,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _notes_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./notes_item */ "./frontend/components/modal_pages/notes_item.jsx");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -2077,11 +2079,16 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this, props);
     _this.state = {
       flipToDelete: false,
-      noteId: ''
+      noteId: '',
+      search: '',
+      notes: false
     };
     _this.handleUpdate = _this.handleUpdate.bind(_assertThisInitialized(_this));
+    _this.handleSearch = _this.handleSearch.bind(_assertThisInitialized(_this));
+    _this.handleCheck = _this.handleCheck.bind(_assertThisInitialized(_this));
     _this.toggleClass = _this.toggleClass.bind(_assertThisInitialized(_this));
     _this.renderModalTop = _this.renderModalTop.bind(_assertThisInitialized(_this));
+    _this.sortNotes = _this.sortNotes.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -2114,34 +2121,200 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "handleChange",
+    value: function handleChange(f) {
+      var _this3 = this;
+
+      return function (e) {
+        return _this3.setState(_defineProperty({}, f, e.target.value));
+      };
+    }
+  }, {
+    key: "handleCheck",
+    value: function handleCheck(e) {
+      var myCheckbox = document.getElementsByName("checkbox");
+      var checkbox = e.target.value;
+      myCheckbox.forEach(function (ele) {
+        if (checkbox !== ele.value) return ele.checked = false;
+      });
+      var notes = this.props.notes;
+      var sortNotes;
+
+      switch (checkbox) {
+        case 'byBook':
+          sortNotes = notes.sort(function (a, b) {
+            return a.category.toLowerCase() < b.category.toLowerCase() ? -1 : 1;
+          }).map(function (ele) {
+            return ele;
+          });
+          return this.setState({
+            notes: sortNotes
+          });
+
+        case 'byCreated':
+          sortNotes = notes.sort(function (a, b) {
+            return a.created_at < b.created_at ? -1 : 1;
+          }).map(function (ele) {
+            return ele;
+          });
+          return this.setState({
+            notes: sortNotes
+          });
+
+        case 'byUpdated':
+          sortNotes = notes.sort(function (a, b) {
+            return a.updated_at < b.updated_at ? -1 : 1;
+          }).map(function (ele) {
+            return ele;
+          });
+          return this.setState({
+            notes: sortNotes
+          });
+
+        default:
+          return this.setState({
+            notes: notes
+          });
+      }
+    }
+  }, {
+    key: "sortNotes",
+    value: function sortNotes(e) {
+      e.preventDefault();
+      var notes = this.props.notes;
+      var sortNotes;
+      console.log(e);
+      debugger;
+
+      switch (e.target.value) {
+        case 'byBook':
+          sortNotes = notes.sort(function (a, b) {
+            return a.category.toLowerCase() < b.category.toLowerCase() ? -1 : 1;
+          }).map(function (ele) {
+            return ele;
+          });
+          return this.setState({
+            notes: sortNotes
+          });
+
+        case 'byCreated':
+          sortNotes = notes.sort(function (a, b) {
+            return a.created_at < b.created_at ? -1 : 1;
+          }).map(function (ele) {
+            return ele;
+          });
+          return this.setState({
+            notes: sortNotes
+          });
+
+        case 'byUpdated':
+          sortNotes = notes.sort(function (a, b) {
+            return a.updated_at < b.updated_at ? -1 : 1;
+          }).map(function (ele) {
+            return ele;
+          });
+          return this.setState({
+            notes: sortNotes
+          });
+
+        default:
+          return this.setState({
+            notes: notes
+          });
+      }
+    }
+  }, {
+    key: "handleSearch",
+    value: function handleSearch(e) {
+      e.preventDefault();
+
+      var searchMatch = function searchMatch(search) {
+        var input = Array.from(search).reduce(function (a, v, i) {
+          return "".concat(a, "[^").concat(search.substring(i), "]*?").concat(v);
+        }, '');
+        return new RegExp(input);
+      };
+
+      var searchData = searchMatch(this.state.search.toLowerCase());
+      var sortNotes = this.props.notes.filter(function (each) {
+        var sortTitles = each.title.toLowerCase().match(searchData);
+        var sortBody = each.body.toLowerCase().match(searchData);
+        return sortTitles || sortBody;
+      });
+      return this.setState({
+        notes: sortNotes
+      });
+    }
+  }, {
     key: "renderModalTop",
     value: function renderModalTop() {
       var _this$props = this.props,
           currentUser = _this$props.currentUser,
           closeModal = _this$props.closeModal;
-      var currentUser_firstName = currentUser.first_name || "Demo";
+      var currentUser_firstName = currentUser.first_name || 'Demo';
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "notes-modal-top"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "notes-page-username"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, currentUser_firstName, "'s Notes")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "notes-search"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        onSubmit: this.handleSearch,
+        className: "notes-bar-search-form"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "notes-search-input",
+        type: "text",
+        placeholder: "Search..",
+        value: this.state.search,
+        onChange: this.handleChange('search')
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "checkbox-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "container"
+      }, "By Book", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "checkbox",
+        name: "checkbox",
+        value: "byBook",
+        onChange: this.handleCheck
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "checkmark"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "container"
+      }, "By Created", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "checkbox",
+        name: "checkbox",
+        value: "byCreated",
+        onChange: this.handleCheck
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "checkmark"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "container"
+      }, "By Updated", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "checkbox",
+        name: "checkbox",
+        value: "byUpdated",
+        onChange: this.handleCheck
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "checkmark"
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-closing-x",
         onClick: function onClick() {
           return closeModal();
         }
       }, "\u2715"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "notes-page-username"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, currentUser_firstName, "'s Notes")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-or-separator-notes"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)));
     }
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       var _this$props2 = this.props,
           notes = _this$props2.notes,
           fetchNote = _this$props2.fetchNote,
           deleteNote = _this$props2.deleteNote;
+      var renderNotes = this.state.notes || notes;
 
       if (notes.length < 1) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2162,12 +2335,12 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
           className: "notes-page-section"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           className: "notes-page-ul"
-        }, notes.map(function (eachNote) {
+        }, renderNotes.map(function (eachNote) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_notes_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
-            handleUpdate: _this3.handleUpdate,
-            toggleClass: _this3.toggleClass,
-            flipToDelete: _this3.state.flipToDelete,
-            noteId: _this3.state.noteId,
+            handleUpdate: _this4.handleUpdate,
+            toggleClass: _this4.toggleClass,
+            flipToDelete: _this4.state.flipToDelete,
+            noteId: _this4.state.noteId,
             deleteNote: deleteNote,
             fetchNote: fetchNote,
             eachNote: eachNote,
@@ -2326,7 +2499,7 @@ var NavBar = /*#__PURE__*/function (_React$Component) {
         return new RegExp(input); // return values.filter((each) => each.match(result));
       };
 
-      this.props.openModal("Categories", match(this.state.search.toLowerCase()));
+      this.props.openModal('Categories', match(this.state.search.toLowerCase()));
     }
   }, {
     key: "componentDidMount",
@@ -2372,18 +2545,18 @@ var NavBar = /*#__PURE__*/function (_React$Component) {
         type: "text",
         placeholder: "Search..",
         value: this.state.search,
-        onChange: this.handleChange("search")
+        onChange: this.handleChange('search')
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "nav-links"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "devo-li",
         onClick: function onClick() {
-          return _this3.props.openModal("Categories");
+          return _this3.props.openModal('Categories');
         }
       }, "Devotionals"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "notes-li",
         onClick: function onClick() {
-          return _this3.props.openModal("Notes");
+          return _this3.props.openModal('Notes');
         }
       }, "Notes"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "logout-li",
