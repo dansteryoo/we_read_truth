@@ -63,6 +63,7 @@ class NotesForm extends React.Component {
                         tags: '',
                         body: '',
                         updateForm: false,
+                        updateErrors: [],
                     })
                 } 
             }
@@ -71,9 +72,7 @@ class NotesForm extends React.Component {
     }
 
     handleChange(f) {
-        return e => this.setState({
-            [f]: e.target.value
-        })
+        return e => this.setState({ [f]: e.target.value })
     }
 
     handleSubmit(e) {
@@ -82,15 +81,20 @@ class NotesForm extends React.Component {
         const { id, title, category, tags, body } = this.state
         let noteUpdate = { id, title, category, tags, body }
         let note = { title, category, tags, body }
-        
+
         const trimmerLength = (word) => word.trim().length
         const blankTitle = trimmerLength(title) < 1
         const blankBody = trimmerLength(body) < 1
         const blankBook = trimmerLength(category) < 1
         const blankDay = trimmerLength(tags) < 1
         const dayIsNumber = (tags) => {
-            if (Number.isInteger(parseInt(tags.trim()))) return true
-            return false
+            let splitStr = tags.trim().split('')
+
+            for (let i = 0; i < splitStr.length; i++) {
+                const each = splitStr[i]
+                if (/^[a-zA-Z]*$/.test(each)) return false
+            }
+            return true
         }
 
         if (blankTitle || blankBody || blankBook || blankDay || !dayIsNumber(tags)) {
@@ -101,11 +105,11 @@ class NotesForm extends React.Component {
             if (blankBook) errorsArr.push(ERRORS[2]) // Book is blank
             if (blankDay) errorsArr.push(ERRORS[3]) // Day is blank
             if (!dayIsNumber(tags) && !blankDay) errorsArr.push(ERRORS[4])  // Day is !number
+            
             if (errorsArr.length > 0) {
-                return this.setState({
-                    updateErrors: errorsArr
-                })
+                return this.setState({ updateErrors: errorsArr })
             }
+
         } else if (id.length < 1) {
             this.props.createNote(note)
                 .then(() => {
@@ -117,15 +121,16 @@ class NotesForm extends React.Component {
                         body: '',
                         id: '',
                         updateForm: false,
+                        updateErrors: [],
                     })
                 })
                 .then(() => this.renderSuccessMsg())
                 .then(() => this.props.clearNoteState())
+
         } else {
             this.props.updateNote(noteUpdate)
                 .then(() => {
                     this.setState({
-                        updateErrors: '',
                         update: true,
                         title: '',
                         category: '',
@@ -133,6 +138,7 @@ class NotesForm extends React.Component {
                         body: '',
                         id: '',
                         updateForm: false,
+                        updateErrors: [],
                     })
                 })
                 .then(() => this.renderUpdateMsg())
@@ -180,9 +186,15 @@ class NotesForm extends React.Component {
         const blankBody = trimmerLength(body) < 1
         const blankBook = trimmerLength(category) < 1
         const blankDay = trimmerLength(tags) < 1
+
         const dayIsNumber = (tags) => {
-            if (Number.isInteger(parseInt(tags.trim()))) return true
-            return false
+            let splitStr = tags.trim().split('')
+            
+            for (let i = 0; i < splitStr.length; i++) {
+                const each = splitStr[i]
+                if (/^[a-zA-Z]*$/.test(each)) return false 
+            }
+            return true
         }
 
         if (!blankTitle) errorsHash.title = ''
