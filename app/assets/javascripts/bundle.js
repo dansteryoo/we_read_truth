@@ -2093,7 +2093,6 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       noteId: '',
       search: '',
       notes: [],
-      searchNotes: [],
       checked: false
     };
     _this.handleUpdate = _this.handleUpdate.bind(_assertThisInitialized(_this));
@@ -2115,6 +2114,15 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
       this.props.clearNoteState();
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      if (this.props !== prevProps) {
+        this.setState({
+          notes: this.props.notes
+        });
+      }
     }
   }, {
     key: "handleUpdate",
@@ -2725,7 +2733,8 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
               category: '',
               tags: '',
               body: '',
-              updateForm: false
+              updateForm: false,
+              updateErrors: []
             });
           }
         }
@@ -2776,8 +2785,14 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       var blankDay = trimmerLength(tags) < 1;
 
       var dayIsNumber = function dayIsNumber(tags) {
-        if (Number.isInteger(parseInt(tags.trim()))) return true;
-        return false;
+        var splitStr = tags.trim().split('');
+
+        for (var i = 0; i < splitStr.length; i++) {
+          var each = splitStr[i];
+          if (/^[a-zA-Z]*$/.test(each)) return false;
+        }
+
+        return true;
       };
 
       if (blankTitle || blankBody || blankBook || blankDay || !dayIsNumber(tags)) {
@@ -2806,7 +2821,8 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
             tags: '',
             body: '',
             id: '',
-            updateForm: false
+            updateForm: false,
+            updateErrors: []
           });
         }).then(function () {
           return _this4.renderSuccessMsg();
@@ -2816,14 +2832,14 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       } else {
         this.props.updateNote(noteUpdate).then(function () {
           _this4.setState({
-            updateErrors: '',
             update: true,
             title: '',
             category: '',
             tags: '',
             body: '',
             id: '',
-            updateForm: false
+            updateForm: false,
+            updateErrors: []
           });
         }).then(function () {
           return _this4.renderUpdateMsg();
@@ -2889,8 +2905,14 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       var blankDay = trimmerLength(tags) < 1;
 
       var dayIsNumber = function dayIsNumber(tags) {
-        if (Number.isInteger(parseInt(tags.trim()))) return true;
-        return false;
+        var splitStr = tags.trim().split('');
+
+        for (var i = 0; i < splitStr.length; i++) {
+          var each = splitStr[i];
+          if (/^[a-zA-Z]*$/.test(each)) return false;
+        }
+
+        return true;
       };
 
       if (!blankTitle) errorsHash.title = '';
