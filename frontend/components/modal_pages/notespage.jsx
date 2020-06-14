@@ -9,7 +9,6 @@ class NotesPage extends React.Component {
             noteId: '',
             search: '',
             notes: [],
-            searchNotes: [],
             checked: false
         }
 

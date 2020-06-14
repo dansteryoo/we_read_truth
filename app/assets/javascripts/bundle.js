@@ -2093,7 +2093,6 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       noteId: '',
       search: '',
       notes: [],
-      searchNotes: [],
       checked: false
     };
     _this.handleUpdate = _this.handleUpdate.bind(_assertThisInitialized(_this));
