@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import { ESVAPI, API_URL } from '../../../esv';
 
 class MainBody extends React.Component {
     constructor(props) {
@@ -27,13 +26,14 @@ class MainBody extends React.Component {
         this.isMainBodyDevoNull = this.isMainBodyDevoNull.bind(this);
         this.setBookmark = this.setBookmark.bind(this);
         this.localStorageFunc = this.localStorageFunc.bind(this);
-
     };
 
     //---------- ESV.ORG API CALL ----------//
 
     ESVpassageGetter(passage) {
-        axios.get(API_URL, {
+
+        console.log(window.esvAPIKey)
+        axios.get('https://api.esv.org/v3/passage/text/?', {
             crossDomain: true,
             params: {
                 'q': passage,
@@ -44,7 +44,7 @@ class MainBody extends React.Component {
                 'include-passage-references': false
             },
             headers: {
-                'Authorization': ESVAPI,
+                'Authorization': window.esvAPIKey,
             }
         })
         .then(res => {

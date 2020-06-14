@@ -86,22 +86,6 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./esv.js":
-/*!****************!*\
-  !*** ./esv.js ***!
-  \****************/
-/*! exports provided: ESVAPI, API_URL */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ESVAPI", function() { return ESVAPI; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "API_URL", function() { return API_URL; });
-var ESVAPI = '8847e83d643fea43bad15dc598fb9effcc69e292';
-var API_URL = 'https://api.esv.org/v3/passage/text/?';
-
-/***/ }),
-
 /***/ "./frontend/actions/devo_actions.js":
 /*!******************************************!*\
   !*** ./frontend/actions/devo_actions.js ***!
@@ -808,7 +792,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _esv__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../esv */ "./esv.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
@@ -842,7 +825,6 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
 
 
 
@@ -887,7 +869,8 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
     value: function ESVpassageGetter(passage) {
       var _this2 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(_esv__WEBPACK_IMPORTED_MODULE_2__["API_URL"], {
+      console.log(window.esvAPIKey);
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('https://api.esv.org/v3/passage/text/?', {
         crossDomain: true,
         params: {
           'q': passage,
@@ -898,7 +881,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
           'include-passage-references': false
         },
         headers: {
-          'Authorization': _esv__WEBPACK_IMPORTED_MODULE_2__["ESVAPI"]
+          'Authorization': window.esvAPIKey
         }
       }).then(function (res) {
         if (res.status === 200) {
