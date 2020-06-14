@@ -8,7 +8,6 @@ class SideNav extends React.Component {
 
         this.state = {
             book: '',
-            bookmark: false
         }
 
         this.handleGetDevo = this.handleGetDevo.bind(this);
@@ -19,32 +18,32 @@ class SideNav extends React.Component {
 
     componentDidMount() {
         let userId = JSON.stringify(this.props.currentUser.id)
-        const currentPayload = JSON.parse(localStorage.getItem(userId + 'payload'))
         const currentPage = JSON.parse(localStorage.getItem(userId))
 
-        if (currentPage && currentPayload) {
-            let payload = currentPayload;
-            if (currentPayload.book.includes("&")) {
+        let payload = currentPage;
+
+        if (currentPage) {
+            if (currentPage.book.includes("&")) {
                 payload = {
-                    gender: currentPayload.gender,
-                    book: currentPayload.book.replace("&", "%26")
+                    gender: currentPage.gender,
+                    book: currentPage.book.replace("&", "%26")
+                }
+            } else {
+                payload = {
+                    gender: currentPage.gender,
+                    book: currentPage.book
                 }
             }
             return this.props.fetchDevoBook(payload)
         }
-    };
+    }
 
-    componentWillUnmount() {
-        let userId = JSON.stringify(this.props.currentUser.id)
-        const currentPage = JSON.parse(localStorage.getItem(userId))
-
-        if (!currentPage) {
-            return localStorage.removeItem(userId + 'payload');
-        }
-    };
+    // componentWillUnmount() {
+    // };
 
     componentDidUpdate(prevProps) {
         const { devoBook } = this.props;
+
         if (devoBook !== prevProps.devoBook) {
             if (devoBook.length > 0) {
                 this.setState({ book: devoBook[0].book })
