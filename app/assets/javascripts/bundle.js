@@ -2686,6 +2686,22 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
   }
 
   _createClass(NotesForm, [{
+    key: "dayIsNumber",
+    value: function dayIsNumber(tags) {
+      var splitStr = tags.trim().split('');
+
+      for (var i = 0; i < splitStr.length; i++) {
+        if (/^[a-zA-Z]*$/.test(splitStr[i])) return false;
+      }
+
+      return true;
+    }
+  }, {
+    key: "isTrimmedBlank",
+    value: function isTrimmedBlank(word) {
+      return word.trim().length < 1;
+    }
+  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.fetchNotes();
@@ -2774,28 +2790,12 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
         tags: tags,
         body: body
       };
+      var blankTitle = this.isTrimmedBlank(title);
+      var blankBody = this.isTrimmedBlank(body);
+      var blankBook = this.isTrimmedBlank(category);
+      var blankDay = this.isTrimmedBlank(tags);
 
-      var trimmerLength = function trimmerLength(word) {
-        return word.trim().length;
-      };
-
-      var blankTitle = trimmerLength(title) < 1;
-      var blankBody = trimmerLength(body) < 1;
-      var blankBook = trimmerLength(category) < 1;
-      var blankDay = trimmerLength(tags) < 1;
-
-      var dayIsNumber = function dayIsNumber(tags) {
-        var splitStr = tags.trim().split('');
-
-        for (var i = 0; i < splitStr.length; i++) {
-          var each = splitStr[i];
-          if (/^[a-zA-Z]*$/.test(each)) return false;
-        }
-
-        return true;
-      };
-
-      if (blankTitle || blankBody || blankBook || blankDay || !dayIsNumber(tags)) {
+      if (blankTitle || blankBody || blankBook || blankDay || !this.dayIsNumber(tags)) {
         var errorsArr = [];
         if (blankTitle) errorsArr.push(ERRORS[0]); // Title is blank
 
@@ -2805,7 +2805,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
 
         if (blankDay) errorsArr.push(ERRORS[3]); // Day is blank
 
-        if (!dayIsNumber(tags) && !blankDay) errorsArr.push(ERRORS[4]); // Day is !number
+        if (!this.dayIsNumber(tags) && !blankDay) errorsArr.push(ERRORS[4]); // Day is !number
 
         if (errorsArr.length > 0) {
           return this.setState({
@@ -2894,32 +2894,15 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
           category = _this$state2.category,
           tags = _this$state2.tags,
           body = _this$state2.body;
-
-      var trimmerLength = function trimmerLength(word) {
-        return word.trim().length;
-      };
-
-      var blankTitle = trimmerLength(title) < 1;
-      var blankBody = trimmerLength(body) < 1;
-      var blankBook = trimmerLength(category) < 1;
-      var blankDay = trimmerLength(tags) < 1;
-
-      var dayIsNumber = function dayIsNumber(tags) {
-        var splitStr = tags.trim().split('');
-
-        for (var i = 0; i < splitStr.length; i++) {
-          var each = splitStr[i];
-          if (/^[a-zA-Z]*$/.test(each)) return false;
-        }
-
-        return true;
-      };
-
+      var blankTitle = this.isTrimmedBlank(title);
+      var blankBody = this.isTrimmedBlank(body);
+      var blankBook = this.isTrimmedBlank(category);
+      var blankDay = this.isTrimmedBlank(tags);
       if (!blankTitle) errorsHash.title = '';
       if (!blankBody) errorsHash.body = '';
       if (!blankBook) errorsHash.book = '';
       if (!blankDay) errorsHash.day = '';
-      if (dayIsNumber(tags)) errorsHash.number = '';
+      if (this.dayIsNumber(tags)) errorsHash.number = '';
       return errorsHash;
     }
   }, {

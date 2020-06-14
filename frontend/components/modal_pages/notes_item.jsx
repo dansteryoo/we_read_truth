@@ -3,11 +3,11 @@ import React from 'react';
 const NotesItem = ({ eachNote, handleUpdate, deleteNote, toggleClass, noteId }) => {
 
     const formateDate = (date) => {
-        let fullDate = new Date(date).toString()
-        let day = fullDate.slice(0, 3)
-        let month = fullDate.slice(4, 7)
-        let num = fullDate.slice(8, 10)
-        let year = fullDate.slice(11, 15)
+        const fullDate = new Date(date).toString()
+        const day = fullDate.slice(0, 3)
+        const month = fullDate.slice(4, 7)
+        const num = fullDate.slice(8, 10)
+        const year = fullDate.slice(11, 15)
         return `${day} - ${month} ${num}, ${year}`
     }
 
