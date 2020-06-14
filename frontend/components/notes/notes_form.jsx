@@ -26,6 +26,19 @@ class NotesForm extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    dayIsNumber(tags) {
+        let splitStr = tags.trim().split('')
+
+        for (let i = 0; i < splitStr.length; i++) {
+            if (/^[a-zA-Z]*$/.test(splitStr[i])) return false
+        }
+        return true
+    }
+
+    isTrimmedBlank(word) {
+        return word.trim().length < 1
+    }
+
     componentDidMount() {
         this.props.fetchNotes()
     }
@@ -41,11 +54,7 @@ class NotesForm extends React.Component {
             //---------- if this.props.noteId is a NUMBER then populate with update first and render update form ----------//
             if (Number.isInteger(this.props.noteId.id)) {
                 const { id, title, category, tags, body } = this.props.noteId
-
-                this.setState({
-                    id, title, category, tags, body, 
-                    updateForm: true,
-                })
+                this.setState({ id, title, category, tags, body, updateForm: true })
             }
         
             //---------- if notes array is different from current props to prevProps ----------//
@@ -82,29 +91,19 @@ class NotesForm extends React.Component {
         let noteUpdate = { id, title, category, tags, body }
         let note = { title, category, tags, body }
 
-        const trimmerLength = (word) => word.trim().length
-        const blankTitle = trimmerLength(title) < 1
-        const blankBody = trimmerLength(body) < 1
-        const blankBook = trimmerLength(category) < 1
-        const blankDay = trimmerLength(tags) < 1
-        const dayIsNumber = (tags) => {
-            let splitStr = tags.trim().split('')
+        const blankTitle = this.isTrimmedBlank(title)
+        const blankBody = this.isTrimmedBlank(body)
+        const blankBook = this.isTrimmedBlank(category)
+        const blankDay = this.isTrimmedBlank(tags)
 
-            for (let i = 0; i < splitStr.length; i++) {
-                const each = splitStr[i]
-                if (/^[a-zA-Z]*$/.test(each)) return false
-            }
-            return true
-        }
-
-        if (blankTitle || blankBody || blankBook || blankDay || !dayIsNumber(tags)) {
+        if (blankTitle || blankBody || blankBook || blankDay || !this.dayIsNumber(tags)) {
             let errorsArr = []
 
             if (blankTitle) errorsArr.push(ERRORS[0]) // Title is blank
             if (blankBody) errorsArr.push(ERRORS[1]) // Body is blank
             if (blankBook) errorsArr.push(ERRORS[2]) // Book is blank
             if (blankDay) errorsArr.push(ERRORS[3]) // Day is blank
-            if (!dayIsNumber(tags) && !blankDay) errorsArr.push(ERRORS[4])  // Day is !number
+            if (!this.dayIsNumber(tags) && !blankDay) errorsArr.push(ERRORS[4])  // Day is !number
             
             if (errorsArr.length > 0) {
                 return this.setState({ updateErrors: errorsArr })
@@ -181,27 +180,16 @@ class NotesForm extends React.Component {
 
         const { title, category, tags, body } = this.state
 
-        const trimmerLength = (word) => word.trim().length
-        const blankTitle = trimmerLength(title) < 1
-        const blankBody = trimmerLength(body) < 1
-        const blankBook = trimmerLength(category) < 1
-        const blankDay = trimmerLength(tags) < 1
-
-        const dayIsNumber = (tags) => {
-            let splitStr = tags.trim().split('')
-            
-            for (let i = 0; i < splitStr.length; i++) {
-                const each = splitStr[i]
-                if (/^[a-zA-Z]*$/.test(each)) return false 
-            }
-            return true
-        }
+        const blankTitle = this.isTrimmedBlank(title)
+        const blankBody = this.isTrimmedBlank(body)
+        const blankBook = this.isTrimmedBlank(category)
+        const blankDay = this.isTrimmedBlank(tags)
 
         if (!blankTitle) errorsHash.title = ''
         if (!blankBody) errorsHash.body = ''
         if (!blankBook) errorsHash.book = ''
         if (!blankDay) errorsHash.day = ''
-        if (dayIsNumber(tags)) errorsHash.number = ''
+        if (this.dayIsNumber(tags)) errorsHash.number = ''
 
         return errorsHash
     }
@@ -279,7 +267,8 @@ class NotesForm extends React.Component {
                                     </div>
                                 </div>
                                 <div className='button-container'>
-                                    <button className='notes-form-submit-button' type='submit'>
+                                    <button className='notes-form-submit-button' 
+                                    type='submit'>
                                         Update
                                     </button>
                                 </div>
