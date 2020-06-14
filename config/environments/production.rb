@@ -38,6 +38,18 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Sendfile' # for Apache
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
 
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.default_url_options = { host: "wereadtruth.herokuapp.com" }
+  # SMTP settings for gmail
+  config.action_mailer.smtp_settings = {
+    :address              => "smtp.gmail.com",
+    :port                 => 587,
+    :user_name            => "wereadtruth.app@gmail.com",
+    :password             => Rails.application.credentials.gmail_pw[:auth],
+    :authentication       => "plain",
+    :enable_starttls_auto => true
+  }
+
   # Store uploaded files on the local file system (see config/storage.yml for options)
   config.active_storage.service = :local
 
