@@ -45,6 +45,7 @@ class CategoriesPage extends React.Component {
 
     handleClick(devoBookPayload, e) {
         e.preventDefault();
+        
         let payload = devoBookPayload;
         if (devoBookPayload.book.includes("&")) {
             payload = {
@@ -53,8 +54,6 @@ class CategoriesPage extends React.Component {
             }
         }
 
-        let stringifyCurrentUserId = JSON.stringify(this.props.currentUser.id)
-        localStorage.setItem(stringifyCurrentUserId + 'payload', JSON.stringify(payload))
         this.props.fetchDevoBook(payload)
             .then(() => this.props.closeModal());
     };

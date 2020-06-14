@@ -6,6 +6,8 @@ class MainBody extends React.Component {
         super(props);
 
         this.state = {
+            gender: '',
+            book: '',
             id: null,
             title: '',
             passages: [],
@@ -15,7 +17,6 @@ class MainBody extends React.Component {
             mainBodyChanged: false,
             bookmark: false,
             renderDay: '',
-            bookTitle: ''
         }
 
         this.ESVpassageGetter = this.ESVpassageGetter.bind(this);
@@ -32,7 +33,6 @@ class MainBody extends React.Component {
 
     ESVpassageGetter(passage) {
 
-        console.log(window.esvAPIKey)
         axios.get('https://api.esv.org/v3/passage/text/?', {
             crossDomain: true,
             params: {
@@ -82,17 +82,17 @@ class MainBody extends React.Component {
     }
 
     localStorageFunc(condition) {
-        let stringifyCurrentUserId = JSON.stringify(this.props.currentUser.id)
+        let userId = JSON.stringify(this.props.currentUser.id)
 
         switch (condition) {
             case 'getCurrentPage':
-                return JSON.parse(localStorage.getItem(stringifyCurrentUserId))
+                return JSON.parse(localStorage.getItem(userId))
 
             case 'setCurrentPage':
-                return localStorage.setItem(stringifyCurrentUserId, JSON.stringify(this.state))
+                return localStorage.setItem(userId, JSON.stringify(this.state))
 
             case 'removeCurrentPage':
-                return localStorage.removeItem(stringifyCurrentUserId);
+                return localStorage.removeItem(userId);
 
             default:
                 return
@@ -126,7 +126,7 @@ class MainBody extends React.Component {
         }
 
         if (this.props.mainBodyDevo !== prevProps.mainBodyDevo) {
-            const { id, img, passages, summary, title } = this.props.mainBodyDevo;
+            const { id, img, passages, summary, title, gender, book } = this.props.mainBodyDevo;
 
             //---------- SCROLL TO TOP on render ----------//
             this.myRef.current.scrollTo(0, 0);
@@ -139,7 +139,7 @@ class MainBody extends React.Component {
             });
 
             this.setState({
-                id, title, passages, summary, img,
+                id, img, passages, summary, title, gender, book,
                 mainBodyChanged: true,
                 bookmark: false,
             })
@@ -165,7 +165,7 @@ class MainBody extends React.Component {
             })
         }
 
-
+        //---------- CATCH undefined ESV API returns ----------//
         let newEsvData = esvSortMatch.filter((ele, i) => {
             if (ele.text === undefined) {
                 console.log(`ESV PASSAGE ERROR IN: 

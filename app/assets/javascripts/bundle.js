@@ -841,6 +841,8 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
+      gender: '',
+      book: '',
       id: null,
       title: '',
       passages: [],
@@ -849,8 +851,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       esvPassage: [],
       mainBodyChanged: false,
       bookmark: false,
-      renderDay: '',
-      bookTitle: ''
+      renderDay: ''
     };
     _this.ESVpassageGetter = _this.ESVpassageGetter.bind(_assertThisInitialized(_this));
     _this.renderDay = _this.renderDay.bind(_assertThisInitialized(_this));
@@ -869,7 +870,6 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
     value: function ESVpassageGetter(passage) {
       var _this2 = this;
 
-      console.log(window.esvAPIKey);
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('https://api.esv.org/v3/passage/text/?', {
         crossDomain: true,
         params: {
@@ -921,17 +921,17 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "localStorageFunc",
     value: function localStorageFunc(condition) {
-      var stringifyCurrentUserId = JSON.stringify(this.props.currentUser.id);
+      var userId = JSON.stringify(this.props.currentUser.id);
 
       switch (condition) {
         case 'getCurrentPage':
-          return JSON.parse(localStorage.getItem(stringifyCurrentUserId));
+          return JSON.parse(localStorage.getItem(userId));
 
         case 'setCurrentPage':
-          return localStorage.setItem(stringifyCurrentUserId, JSON.stringify(this.state));
+          return localStorage.setItem(userId, JSON.stringify(this.state));
 
         case 'removeCurrentPage':
-          return localStorage.removeItem(stringifyCurrentUserId);
+          return localStorage.removeItem(userId);
 
         default:
           return;
@@ -978,7 +978,9 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
             img = _this$props$mainBodyD.img,
             passages = _this$props$mainBodyD.passages,
             summary = _this$props$mainBodyD.summary,
-            title = _this$props$mainBodyD.title; //---------- SCROLL TO TOP on render ----------//
+            title = _this$props$mainBodyD.title,
+            gender = _this$props$mainBodyD.gender,
+            book = _this$props$mainBodyD.book; //---------- SCROLL TO TOP on render ----------//
 
         this.myRef.current.scrollTo(0, 0); //---------- PREVENTS DUPS in esvPassage ----------//
 
@@ -990,10 +992,12 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
         });
         this.setState({
           id: id,
-          title: title,
+          img: img,
           passages: passages,
           summary: summary,
-          img: img,
+          title: title,
+          gender: gender,
+          book: book,
           mainBodyChanged: true,
           bookmark: false
         });
@@ -1017,7 +1021,8 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
         esvSortMatch = esvPassage.sort(function (a, b) {
           return passagesArray.indexOf(a.passage) - passagesArray.indexOf(b.passage);
         });
-      }
+      } //---------- CATCH undefined ESV API returns ----------//
+
 
       var newEsvData = esvSortMatch.filter(function (ele, i) {
         if (ele.text === undefined) {
@@ -1256,8 +1261,7 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      book: '',
-      bookmark: false
+      book: ''
     };
     _this.handleGetDevo = _this.handleGetDevo.bind(_assertThisInitialized(_this));
     _this.myRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
@@ -1269,32 +1273,27 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       var userId = JSON.stringify(this.props.currentUser.id);
-      var currentPayload = JSON.parse(localStorage.getItem(userId + 'payload'));
       var currentPage = JSON.parse(localStorage.getItem(userId));
+      var payload = currentPage;
 
-      if (currentPage && currentPayload) {
-        var payload = currentPayload;
-
-        if (currentPayload.book.includes("&")) {
+      if (currentPage) {
+        if (currentPage.book.includes("&")) {
           payload = {
-            gender: currentPayload.gender,
-            book: currentPayload.book.replace("&", "%26")
+            gender: currentPage.gender,
+            book: currentPage.book.replace("&", "%26")
+          };
+        } else {
+          payload = {
+            gender: currentPage.gender,
+            book: currentPage.book
           };
         }
 
         return this.props.fetchDevoBook(payload);
       }
-    }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      var userId = JSON.stringify(this.props.currentUser.id);
-      var currentPage = JSON.parse(localStorage.getItem(userId));
+    } // componentWillUnmount() {
+    // };
 
-      if (!currentPage) {
-        return localStorage.removeItem(userId + 'payload');
-      }
-    }
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
@@ -1575,8 +1574,6 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
         };
       }
 
-      var stringifyCurrentUserId = JSON.stringify(this.props.currentUser.id);
-      localStorage.setItem(stringifyCurrentUserId + 'payload', JSON.stringify(payload));
       this.props.fetchDevoBook(payload).then(function () {
         return _this2.props.closeModal();
       });
