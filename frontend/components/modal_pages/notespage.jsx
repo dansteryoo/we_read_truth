@@ -24,8 +24,14 @@ class NotesPage extends React.Component {
         .then(this.setState({ notes: this.props.notes }))
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         this.props.clearNoteState()
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props !== prevProps) {
+            this.setState({ notes: this.props.notes })
+        }
     }
 
     handleUpdate(noteId) {
