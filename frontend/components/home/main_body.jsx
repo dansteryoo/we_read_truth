@@ -25,8 +25,6 @@ class MainBody extends React.Component {
         this.toggleBookmark = this.toggleBookmark.bind(this);
         this.splitPassages = this.splitPassages.bind(this);
         this.isMainBodyDevoNull = this.isMainBodyDevoNull.bind(this);
-        this.setBookmark = this.setBookmark.bind(this);
-        this.localStorageFunc = this.localStorageFunc.bind(this);
     };
 
     //---------- ESV.ORG API CALL ----------//
@@ -63,16 +61,6 @@ class MainBody extends React.Component {
         })
     }
 
-    setBookmark() {
-        //---------- SET BOOKMARK TO TRUE ----------//
-        if (!this.state.bookmark && this.state.mainBodyChanged) {
-            if (this.localStorageFunc('getCurrentPage') 
-                && this.localStorageFunc('getCurrentPage').id === this.state.id) {
-                return this.setState({ bookmark: true })
-            }
-        }
-    }
-
     splitPassages(passages) {
         if (passages.length !== 0) return passages.split(', ')
     }
@@ -81,39 +69,22 @@ class MainBody extends React.Component {
         return this.props.mainBodyDevo === null
     }
 
-    localStorageFunc(condition) {
-        let userId = JSON.stringify(this.props.currentUser.id)
-
-        switch (condition) {
-            case 'getCurrentPage':
-                return JSON.parse(localStorage.getItem(userId))
-
-            case 'setCurrentPage':
-                return localStorage.setItem(userId, JSON.stringify(this.state))
-
-            case 'removeCurrentPage':
-                return localStorage.removeItem(userId);
-
-            default:
-                return
-        }
-    }
-
     //---------- REACT LIFE CYCLES ----------//
 
     componentDidMount() {
-        this.setBookmark()
-        const currentPage = this.localStorageFunc('getCurrentPage')
+        const { bookmark } = this.props.currentUser
 
         //---------- IF localStorage EXISTS then setState ----------//
-        if (currentPage) {
-            this.setState({ renderDay: currentPage.renderDay })
-            return this.props.fetchDevo(currentPage.id);
+        if (bookmark) {
+            return this.props.fetchDevo(bookmark.devo_id)
+                .then(() => this.setState({ 
+                    renderDay: bookmark.render_day,
+                    bookmark: true 
+                }))
         }
     };
 
     componentDidUpdate(prevProps) {
-        this.setBookmark()
         if (this.isMainBodyDevoNull()) return 
 
         //---------- SET renderDay to this.state ----------//
@@ -239,14 +210,11 @@ class MainBody extends React.Component {
 
     toggleBookmark() {
         const { bookmark } = this.state;
-        !bookmark 
-            ? this.localStorageFunc('setCurrentPage') 
-            : this.localStorageFunc('removeCurrentPage')
-        this.setState({ bookmark: !bookmark })
+        if (!bookmark) return this.setState({ bookmark: !bookmark })
     }
 
     render() {
-        if (this.isMainBodyDevoNull() && !this.localStorageFunc('getCurrentPage')) return <div></div>
+        if (this.isMainBodyDevoNull()) return <div></div>
 
         return (
             <div className='middle-container'>

@@ -1,16 +1,9 @@
 
 
-export const createBookmark = (bookmark) => {
+export const updateBookmark = (bookmark) => {
     return $.ajax({
         url: `api/bookmarks/`,
-        method: 'POST',
+        method: 'PATCH',
         data: { bookmark }
-    })
-};
-
-export const deleteBookmark = (bookmarkId) => {
-    return $.ajax({
-        url: `api/bookmarks/${bookmarkId}`,
-        method: 'DELETE'
     })
 };

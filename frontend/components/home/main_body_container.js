@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import { closeModal, openModal } from '../../actions/modal_actions';
 import { fetchDevo } from '../../actions/devo_actions';
 import { clearErrors } from '../../actions/session_actions';
+import { updateBookmark } from '../../util/bookmark_api_util';
 import MainBody from './main_body';
 
 const mapStateToProps = (state) => {
@@ -34,6 +35,7 @@ const mapDispatchToProps = (dispatch) => ({
     openModal: (formType) => dispatch(openModal(formType)),
     clearErrors: () => dispatch(clearErrors()),
     fetchDevo: (devoId) => dispatch(fetchDevo(devoId)),
+    updateBookmark: (bookmark) => updateBookmark(bookmark)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainBody);

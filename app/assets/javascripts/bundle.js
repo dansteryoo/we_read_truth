@@ -859,8 +859,6 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
     _this.toggleBookmark = _this.toggleBookmark.bind(_assertThisInitialized(_this));
     _this.splitPassages = _this.splitPassages.bind(_assertThisInitialized(_this));
     _this.isMainBodyDevoNull = _this.isMainBodyDevoNull.bind(_assertThisInitialized(_this));
-    _this.setBookmark = _this.setBookmark.bind(_assertThisInitialized(_this));
-    _this.localStorageFunc = _this.localStorageFunc.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -897,18 +895,6 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
-    key: "setBookmark",
-    value: function setBookmark() {
-      //---------- SET BOOKMARK TO TRUE ----------//
-      if (!this.state.bookmark && this.state.mainBodyChanged) {
-        if (this.localStorageFunc('getCurrentPage') && this.localStorageFunc('getCurrentPage').id === this.state.id) {
-          return this.setState({
-            bookmark: true
-          });
-        }
-      }
-    }
-  }, {
     key: "splitPassages",
     value: function splitPassages(passages) {
       if (passages.length !== 0) return passages.split(', ');
@@ -917,46 +903,29 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
     key: "isMainBodyDevoNull",
     value: function isMainBodyDevoNull() {
       return this.props.mainBodyDevo === null;
-    }
-  }, {
-    key: "localStorageFunc",
-    value: function localStorageFunc(condition) {
-      var userId = JSON.stringify(this.props.currentUser.id);
-
-      switch (condition) {
-        case 'getCurrentPage':
-          return JSON.parse(localStorage.getItem(userId));
-
-        case 'setCurrentPage':
-          return localStorage.setItem(userId, JSON.stringify(this.state));
-
-        case 'removeCurrentPage':
-          return localStorage.removeItem(userId);
-
-        default:
-          return;
-      }
     } //---------- REACT LIFE CYCLES ----------//
 
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.setBookmark();
-      var currentPage = this.localStorageFunc('getCurrentPage'); //---------- IF localStorage EXISTS then setState ----------//
+      var _this3 = this;
 
-      if (currentPage) {
-        this.setState({
-          renderDay: currentPage.renderDay
+      var bookmark = this.props.currentUser.bookmark; //---------- IF localStorage EXISTS then setState ----------//
+
+      if (bookmark) {
+        return this.props.fetchDevo(bookmark.devo_id).then(function () {
+          return _this3.setState({
+            renderDay: bookmark.render_day,
+            bookmark: true
+          });
         });
-        return this.props.fetchDevo(currentPage.id);
       }
     }
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
-      var _this3 = this;
+      var _this4 = this;
 
-      this.setBookmark();
       if (this.isMainBodyDevoNull()) return; //---------- SET renderDay to this.state ----------//
 
       if (this.renderDay() && this.renderDay() !== this.state.renderDay) {
@@ -988,7 +957,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
           esvPassage: []
         });
         this.splitPassages(passages).forEach(function (each) {
-          return _this3.ESVpassageGetter(each.trim());
+          return _this4.ESVpassageGetter(each.trim());
         });
         this.setState({
           id: id,
@@ -1073,11 +1042,11 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderDay",
     value: function renderDay() {
-      var _this4 = this;
+      var _this5 = this;
 
       var renderDay;
       this.props.devoBook.forEach(function (each, i) {
-        if (each.id === _this4.state.id) {
+        if (each.id === _this5.state.id) {
           renderDay = i + 1;
         }
       });
@@ -1087,17 +1056,16 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
     key: "toggleBookmark",
     value: function toggleBookmark() {
       var bookmark = this.state.bookmark;
-      !bookmark ? this.localStorageFunc('setCurrentPage') : this.localStorageFunc('removeCurrentPage');
-      this.setState({
+      if (!bookmark) return this.setState({
         bookmark: !bookmark
       });
     }
   }, {
     key: "render",
     value: function render() {
-      var _this5 = this;
+      var _this6 = this;
 
-      if (this.isMainBodyDevoNull() && !this.localStorageFunc('getCurrentPage')) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
+      if (this.isMainBodyDevoNull()) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "middle-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1108,7 +1076,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
         id: "bookmark",
         className: this.state.bookmark ? 'fa fa-bookmark' : 'fa fa-bookmark-o',
         onClick: function onClick() {
-          return _this5.toggleBookmark();
+          return _this6.toggleBookmark();
         },
         "aria-hidden": "true"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1154,7 +1122,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
 /* harmony import */ var _actions_devo_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/devo_actions */ "./frontend/actions/devo_actions.js");
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
-/* harmony import */ var _main_body__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./main_body */ "./frontend/components/home/main_body.jsx");
+/* harmony import */ var _util_bookmark_api_util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../util/bookmark_api_util */ "./frontend/util/bookmark_api_util.jsx");
+/* harmony import */ var _main_body__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./main_body */ "./frontend/components/home/main_body.jsx");
+
 
 
 
@@ -1202,11 +1172,14 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     fetchDevo: function fetchDevo(devoId) {
       return dispatch(Object(_actions_devo_actions__WEBPACK_IMPORTED_MODULE_2__["fetchDevo"])(devoId));
+    },
+    updateBookmark: function updateBookmark(bookmark) {
+      return Object(_util_bookmark_api_util__WEBPACK_IMPORTED_MODULE_4__["updateBookmark"])(bookmark);
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_main_body__WEBPACK_IMPORTED_MODULE_4__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_main_body__WEBPACK_IMPORTED_MODULE_5__["default"]));
 
 /***/ }),
 
@@ -4165,6 +4138,28 @@ var configureStore = function configureStore() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (configureStore);
+
+/***/ }),
+
+/***/ "./frontend/util/bookmark_api_util.jsx":
+/*!*********************************************!*\
+  !*** ./frontend/util/bookmark_api_util.jsx ***!
+  \*********************************************/
+/*! exports provided: updateBookmark */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateBookmark", function() { return updateBookmark; });
+var updateBookmark = function updateBookmark(bookmark) {
+  return $.ajax({
+    url: "api/bookmarks/",
+    method: 'PATCH',
+    data: {
+      bookmark: bookmark
+    }
+  });
+};
 
 /***/ }),
 

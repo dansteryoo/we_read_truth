@@ -19,20 +19,16 @@ class User < ApplicationRecord
         foreign_key: :user_id,
         class_name: :Bookmark
 
-
     attr_reader :password
 
     def self.find_by_credentials(email, password)
         user = User.find_by(email: email)
-        debugger
         return nil if user.nil?
-        debugger
         user.is_password?(password) ? user : nil
     end
 
     def is_password?(password)
         BCrypt::Password.new(self.password_digest).is_password?(password)
-        debugger
     end
     
     def password=(password)
