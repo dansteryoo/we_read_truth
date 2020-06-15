@@ -1,10 +1,10 @@
 class CreateNotes < ActiveRecord::Migration[5.2]
   def change
     create_table :notes do |t|
-      t.text :title
-      t.text :body, null: false
-      t.text :category
-      t.text :tags
+      t.string :title, null: false
+      t.string :body, null: false
+      t.text :category, null: false
+      t.integer :day, null: false
       t.integer :notary_id, null: false
       
       t.timestamps

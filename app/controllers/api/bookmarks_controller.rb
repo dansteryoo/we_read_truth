@@ -1,30 +1,30 @@
 class Api::BookmarksController < ApplicationController
     before_action :require_logged_in!
 
-    def create
-        @bookmark = Bookmark.new(note_params)
-        @bookmark.user_id = current_user.id
+    def update
+        @bookmark = Bookmark.where(user_id: params[:user_id])
 
-        if @bookmark.save
-            render :show
-        else
-            render json: @bookmark.errors.full_messages, status: 422
-        end
-    end
+        if @bookmark == []
+        @bookmark = Bookmark.new(bookmark_params)
 
-    def destroy
-        @notes = Note.find(params[:id])
+            if @bookmark.save
+                render :show
+            else
+                render json: @bookmark.errors.full_messages, status: 422
+            end
+        else 
         @bookmark.destroy 
-        
-        if @bookmark.destroy 
-            render json: :show
+
+            if @bookmark.destroy 
+                render json: :show
+            end
         end
     end
 
 private
 
-    def note_params
-        params.require(:bookmark).permit(:user_id, :devo_id)
+    def bookmark_params
+        params.require(:bookmark).permit(:user_id, :devo_id, :render_day)
     end
 
 end
