@@ -3183,6 +3183,7 @@ var LogInForm = /*#__PURE__*/function (_React$Component) {
       e.preventDefault();
       var user = Object.assign({}, this.state);
       user.email = user.email.toLocaleLowerCase();
+      user.password = user.password.toLocaleLowerCase();
       this.props.processForm(user);
     }
   }, {
