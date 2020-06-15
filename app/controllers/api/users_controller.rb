@@ -1,6 +1,6 @@
 class Api::UsersController < ApplicationController
 
-    before_action :require_logged_in!, only: [:index, :show]
+    before_action :require_logged_in!
 
     def index
         @user = User.all
@@ -13,7 +13,7 @@ class Api::UsersController < ApplicationController
 
     def create
         @user = User.new(user_params)
-        
+        debugger
         if @user.save
             log_in!(@user)
             render :show

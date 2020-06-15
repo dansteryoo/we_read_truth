@@ -3447,15 +3447,15 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
         return string.charAt(0).toUpperCase() + string.toLocaleLowerCase().slice(1);
       };
 
+      var newFirst = capitalizeFirstLetter(firstName);
+      var newLast = capitalizeFirstLetter(lastName);
+      var newPassword = password.toLocaleLowerCase();
       var user = {
         email: email,
-        password: password,
-        firstName: firstName,
-        lastName: lastName
+        password: newPassword,
+        first_name: newFirst,
+        last_name: newLast
       };
-      user.first_name = capitalizeFirstLetter(firstName);
-      user.last_name = capitalizeFirstLetter(lastName);
-      user.password = password.toLocaleLowerCase();
 
       if (stateErrors.length < 2) {
         return this.props.processForm(user);
