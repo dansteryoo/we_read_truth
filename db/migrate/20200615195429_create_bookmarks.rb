@@ -4,7 +4,11 @@ class CreateBookmarks < ActiveRecord::Migration[5.2]
       t.integer :user_id, null: false
       t.integer :devo_id, null: false
       t.integer :render_day, null: false
+<<<<<<< HEAD:db/migrate/20200615195429_create_bookmarks.rb
       
+=======
+
+>>>>>>> dev:db/migrate/20200611000536_create_bookmarks.rb
       t.timestamps
     end
 
