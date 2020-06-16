@@ -25,6 +25,7 @@ class MainBody extends React.Component {
         this.toggleBookmark = this.toggleBookmark.bind(this);
         this.splitPassages = this.splitPassages.bind(this);
         this.isMainBodyDevoNull = this.isMainBodyDevoNull.bind(this);
+        this.checkUserBookmark = this.checkUserBookmark.bind(this);
     };
 
     //---------- ESV.ORG API CALL ----------//
@@ -69,20 +70,34 @@ class MainBody extends React.Component {
         return this.props.mainBodyDevo === null
     }
 
+    checkUserBookmark() {
+        const { bookmark } = this.props.currentUser
+        return bookmark !== undefined && bookmark !== null
+    }
+
+
     //---------- REACT LIFE CYCLES ----------//
 
     componentDidMount() {
-        const { bookmark } = this.props.currentUser
+        const { bookmark, currentUser } = this.props
 
-        //---------- IF localStorage EXISTS then setState ----------//
-        if (bookmark) {
+        if (this.checkUserBookmark()) {
+            return this.props.fetchDevo(currentUser.bookmark.devo_id)
+                .then(() => this.setState({
+                    renderDay: currentUser.bookmark.render_day,
+                    bookmark: true
+                }))
+        } else if (currentUser.id === bookmark.user_id) {
+            //---------- THEN fetch devo and setState ----------//
             return this.props.fetchDevo(bookmark.devo_id)
                 .then(() => this.setState({ 
                     renderDay: bookmark.render_day,
                     bookmark: true 
                 }))
+        } else {
+            return this.props.fetchBookmark()
         }
-    };
+    }
 
     componentDidUpdate(prevProps) {
         if (this.isMainBodyDevoNull()) return 
@@ -93,10 +108,16 @@ class MainBody extends React.Component {
         }
         //---------- PREVENTS MULTIPLE this.setState on update ----------//
         if (this.state.mainBodyChanged) {
-            this.setState({ mainBodyChanged: false });
+            this.props.fetchBookmark()
+            this.setState({ mainBodyChanged: false })
         }
 
-        if (this.props.mainBodyDevo !== prevProps.mainBodyDevo) {
+        if (prevProps.bookmark.id !== this.props.bookmark.id) {
+            return this.props.fetchBookmark()
+        }
+
+        //---------- UPDATES new mainBodyDevo ----------//
+        if (prevProps.mainBodyDevo !==  this.props.mainBodyDevo) {
             const { id, img, passages, summary, title, gender, book } = this.props.mainBodyDevo;
 
             //---------- SCROLL TO TOP on render ----------//
@@ -111,11 +132,14 @@ class MainBody extends React.Component {
 
             this.setState({
                 id, img, passages, summary, title, gender, book,
-                mainBodyChanged: true,
-                bookmark: false,
+                mainBodyChanged: true
             })
+
+            id === this.props.bookmark.devo_id
+                ? this.setState({ bookmark: true })
+                : this.setState({ bookmark: false })
         }
-    };
+    }
 
     componentWillUnmount() {
 
@@ -209,24 +233,28 @@ class MainBody extends React.Component {
     }
 
     toggleBookmark() {
-        const { bookmark, id, renderDay } = this.state;
+        const { bookmark, id, renderDay, gender, book } = this.state
+        const { currentUser, createBookmark } = this.props
 
         let bookmarkData = {
-            user_id: this.props.currentUser.id, 
+            user_id: currentUser.id, 
             devo_id: id,
-            render_day: renderDay
+            render_day: renderDay,
+            gender, book,
         }
-        console.log(bookmarkData)
-        console.log(this.state)
-        console.log(this.props.currentUser)
+        
+        !bookmark
+        ? createBookmark(bookmarkData)
+        : deleteBookmark(this.props.bookmark.id)
 
-        this.props.updateBookmark(bookmarkData)
         this.setState({ bookmark: !bookmark })
     }
 
     render() {
         if (this.isMainBodyDevoNull()) return <div></div>
-
+        console.log(this.state);
+        console.log(this.props.bookmark)
+        
         return (
             <div className='middle-container'>
                 <div className='devo-main-title'>

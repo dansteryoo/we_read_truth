@@ -5,11 +5,12 @@ import { clearErrors } from '../../actions/session_actions';
 import HomePage from './home';
 
 const mapStateToProps = (state) => {
-
+    
     return {
         currentUser: state.users[state.session.id],
         errors: state.errors,
-        mainBodyDevo: state.devos.mainBodyDevo || null
+        mainBodyDevo: state.devos.mainBodyDevo || null,
+        bookmark: state.bookmark
     }
 };
 
@@ -17,7 +18,7 @@ const mapDispatchToProps = (dispatch) => ({
     closeModal: () => dispatch(closeModal()),
     openModal: (formType) => dispatch(openModal(formType)),
     clearErrors: () => dispatch(clearErrors()),
-    clearDevoState: () => dispatch(clearDevoState())
+    clearDevoState: () => dispatch(clearDevoState()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

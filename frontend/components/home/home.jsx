@@ -43,7 +43,7 @@ class HomePage extends React.Component {
         let rightOpen = this.state.rightOpen ? 'open' : 'closed';
 
         const { currentUser } = this.props;
-        
+
         return (
             <>
             {/* ---------- TOP NAV  ---------- */}
@@ -79,7 +79,7 @@ class HomePage extends React.Component {
                 </div>
                 <div className='content'>
                     {/* ---------- MAIN BODY START ---------- */}
-                            <MainBodyContainer />
+                            <MainBodyContainer/>
                     {/* ---------- MAIN BODY END ---------- */}
                 </div>
             </div>
@@ -102,7 +102,7 @@ class HomePage extends React.Component {
             </div>
 
       </div>
-      </>
+    </>
     );
   }
 }

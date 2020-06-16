@@ -1,6 +1,6 @@
 class Bookmark < ApplicationRecord
 
-    validates :user_id, :devo_id, :render_day, presence: true 
+    validates :user_id, :devo_id, :render_day, :gender, :book, presence: true 
 
     belongs_to :user,
         primary_key: :id,

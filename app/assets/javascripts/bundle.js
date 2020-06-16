@@ -86,6 +86,62 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./frontend/actions/bookmark_actions.js":
+/*!**********************************************!*\
+  !*** ./frontend/actions/bookmark_actions.js ***!
+  \**********************************************/
+/*! exports provided: RECEIVE_BOOKMARK, REMOVE_BOOKMARK, receiveBookmark, removeBookmark, fetchBookmark, createBookmark, deleteBookmark */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_BOOKMARK", function() { return RECEIVE_BOOKMARK; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_BOOKMARK", function() { return REMOVE_BOOKMARK; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveBookmark", function() { return receiveBookmark; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeBookmark", function() { return removeBookmark; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchBookmark", function() { return fetchBookmark; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createBookmark", function() { return createBookmark; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteBookmark", function() { return deleteBookmark; });
+/* harmony import */ var _util_bookmark_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/bookmark_api_util */ "./frontend/util/bookmark_api_util.jsx");
+
+var RECEIVE_BOOKMARK = 'RECEIVE_BOOKMARK';
+var REMOVE_BOOKMARK = 'REMOVE_BOOKMARK';
+var receiveBookmark = function receiveBookmark(bookmark) {
+  return {
+    type: RECEIVE_BOOKMARK,
+    bookmark: bookmark
+  };
+};
+var removeBookmark = function removeBookmark(bookmarkId) {
+  return {
+    type: REMOVE_BOOKMARK,
+    bookmarkId: bookmarkId
+  };
+};
+var fetchBookmark = function fetchBookmark() {
+  return function (dispatch) {
+    return _util_bookmark_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchBookmark"]().then(function (bookmark) {
+      return dispatch(receiveBookmark(bookmark));
+    });
+  };
+};
+var createBookmark = function createBookmark(bookmark) {
+  return function (dispatch) {
+    return _util_bookmark_api_util__WEBPACK_IMPORTED_MODULE_0__["createBookmark"](bookmark).then(function (bookmark) {
+      return dispatch(receiveBookmark(bookmark));
+    });
+  };
+};
+var deleteBookmark = function deleteBookmark(bookmarkId) {
+  return function (dispatch) {
+    return _util_bookmark_api_util__WEBPACK_IMPORTED_MODULE_0__["deleteBookmark"](bookmarkId).then(function () {
+      return dispatch(removeBookmark(bookmarkId));
+    });
+  };
+};
+
+/***/ }),
+
 /***/ "./frontend/actions/devo_actions.js":
 /*!******************************************!*\
   !*** ./frontend/actions/devo_actions.js ***!
@@ -426,10 +482,10 @@ var App = function App() {
 
 /***/ }),
 
-/***/ "./frontend/components/home/bookTitles.js":
-/*!************************************************!*\
-  !*** ./frontend/components/home/bookTitles.js ***!
-  \************************************************/
+/***/ "./frontend/components/home/function_helpers/bookTitles.js":
+/*!*****************************************************************!*\
+  !*** ./frontend/components/home/function_helpers/bookTitles.js ***!
+  \*****************************************************************/
 /*! exports provided: allBookTitles, allBookTitlesFormat, bibleBooks, NTbooks, NTbookFormat, OTbooks, OTbookFormat, themeBooks, themeBookFormat */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -754,7 +810,8 @@ var mapStateToProps = function mapStateToProps(state) {
   return {
     currentUser: state.users[state.session.id],
     errors: state.errors,
-    mainBodyDevo: state.devos.mainBodyDevo || null
+    mainBodyDevo: state.devos.mainBodyDevo || null,
+    bookmark: state.bookmark
   };
 };
 
@@ -859,6 +916,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
     _this.toggleBookmark = _this.toggleBookmark.bind(_assertThisInitialized(_this));
     _this.splitPassages = _this.splitPassages.bind(_assertThisInitialized(_this));
     _this.isMainBodyDevoNull = _this.isMainBodyDevoNull.bind(_assertThisInitialized(_this));
+    _this.checkUserBookmark = _this.checkUserBookmark.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -903,6 +961,12 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
     key: "isMainBodyDevoNull",
     value: function isMainBodyDevoNull() {
       return this.props.mainBodyDevo === null;
+    }
+  }, {
+    key: "checkUserBookmark",
+    value: function checkUserBookmark() {
+      var bookmark = this.props.currentUser.bookmark;
+      return bookmark !== undefined && bookmark !== null;
     } //---------- REACT LIFE CYCLES ----------//
 
   }, {
@@ -910,15 +974,27 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       var _this3 = this;
 
-      var bookmark = this.props.currentUser.bookmark; //---------- IF localStorage EXISTS then setState ----------//
+      var _this$props = this.props,
+          bookmark = _this$props.bookmark,
+          currentUser = _this$props.currentUser;
 
-      if (bookmark) {
+      if (this.checkUserBookmark()) {
+        return this.props.fetchDevo(currentUser.bookmark.devo_id).then(function () {
+          return _this3.setState({
+            renderDay: currentUser.bookmark.render_day,
+            bookmark: true
+          });
+        });
+      } else if (currentUser.id === bookmark.user_id) {
+        //---------- THEN fetch devo and setState ----------//
         return this.props.fetchDevo(bookmark.devo_id).then(function () {
           return _this3.setState({
             renderDay: bookmark.render_day,
             bookmark: true
           });
         });
+      } else {
+        return this.props.fetchBookmark();
       }
     }
   }, {
@@ -936,12 +1012,18 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
 
 
       if (this.state.mainBodyChanged) {
+        this.props.fetchBookmark();
         this.setState({
           mainBodyChanged: false
         });
       }
 
-      if (this.props.mainBodyDevo !== prevProps.mainBodyDevo) {
+      if (prevProps.bookmark.id !== this.props.bookmark.id) {
+        return this.props.fetchBookmark();
+      } //---------- UPDATES new mainBodyDevo ----------//
+
+
+      if (prevProps.mainBodyDevo !== this.props.mainBodyDevo) {
         var _this$props$mainBodyD = this.props.mainBodyDevo,
             id = _this$props$mainBodyD.id,
             img = _this$props$mainBodyD.img,
@@ -967,7 +1049,11 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
           title: title,
           gender: gender,
           book: book,
-          mainBodyChanged: true,
+          mainBodyChanged: true
+        });
+        id === this.props.bookmark.devo_id ? this.setState({
+          bookmark: true
+        }) : this.setState({
           bookmark: false
         });
       }
@@ -1058,16 +1144,20 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       var _this$state2 = this.state,
           bookmark = _this$state2.bookmark,
           id = _this$state2.id,
-          renderDay = _this$state2.renderDay;
+          renderDay = _this$state2.renderDay,
+          gender = _this$state2.gender,
+          book = _this$state2.book;
+      var _this$props2 = this.props,
+          currentUser = _this$props2.currentUser,
+          createBookmark = _this$props2.createBookmark;
       var bookmarkData = {
-        user_id: this.props.currentUser.id,
+        user_id: currentUser.id,
         devo_id: id,
-        render_day: renderDay
+        render_day: renderDay,
+        gender: gender,
+        book: book
       };
-      console.log(bookmarkData);
-      console.log(this.state);
-      console.log(this.props.currentUser);
-      this.props.updateBookmark(bookmarkData);
+      !bookmark ? createBookmark(bookmarkData) : deleteBookmark(this.props.bookmark.id);
       this.setState({
         bookmark: !bookmark
       });
@@ -1078,6 +1168,8 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       var _this6 = this;
 
       if (this.isMainBodyDevoNull()) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
+      console.log(this.state);
+      console.log(this.props.bookmark);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "middle-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1134,7 +1226,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
 /* harmony import */ var _actions_devo_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/devo_actions */ "./frontend/actions/devo_actions.js");
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
-/* harmony import */ var _util_bookmark_api_util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../util/bookmark_api_util */ "./frontend/util/bookmark_api_util.jsx");
+/* harmony import */ var _actions_bookmark_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/bookmark_actions */ "./frontend/actions/bookmark_actions.js");
 /* harmony import */ var _main_body__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./main_body */ "./frontend/components/home/main_body.jsx");
 
 
@@ -1167,7 +1259,8 @@ var mapStateToProps = function mapStateToProps(state) {
     currentUser: state.users[state.session.id],
     errors: state.errors,
     mainBodyDevo: state.devos.mainBodyDevo || null,
-    devoBook: devoBook
+    devoBook: devoBook,
+    bookmark: state.bookmark
   };
 };
 
@@ -1185,8 +1278,14 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     fetchDevo: function fetchDevo(devoId) {
       return dispatch(Object(_actions_devo_actions__WEBPACK_IMPORTED_MODULE_2__["fetchDevo"])(devoId));
     },
-    updateBookmark: function updateBookmark(bookmark) {
-      return Object(_util_bookmark_api_util__WEBPACK_IMPORTED_MODULE_4__["updateBookmark"])(bookmark);
+    createBookmark: function createBookmark(bookmark) {
+      return dispatch(Object(_actions_bookmark_actions__WEBPACK_IMPORTED_MODULE_4__["createBookmark"])(bookmark));
+    },
+    fetchBookmark: function fetchBookmark() {
+      return dispatch(Object(_actions_bookmark_actions__WEBPACK_IMPORTED_MODULE_4__["fetchBookmark"])());
+    },
+    deleteBookmark: function deleteBookmark(bookmarkId) {
+      return dispatch(Object(_actions_bookmark_actions__WEBPACK_IMPORTED_MODULE_4__["deleteBookmark"])(bookmarkId));
     }
   };
 };
@@ -1207,7 +1306,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _sidenav_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sidenav_item */ "./frontend/components/home/sidenav/sidenav_item.jsx");
-/* harmony import */ var _bookTitles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../bookTitles */ "./frontend/components/home/bookTitles.js");
+/* harmony import */ var _function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../function_helpers/bookTitles */ "./frontend/components/home/function_helpers/bookTitles.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1251,30 +1350,59 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
     _this.handleGetDevo = _this.handleGetDevo.bind(_assertThisInitialized(_this));
     _this.myRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.renderDevoBookTitle = _this.renderDevoBookTitle.bind(_assertThisInitialized(_this));
+    _this.checkUserBookmark = _this.checkUserBookmark.bind(_assertThisInitialized(_this));
+    _this.setPayload = _this.setPayload.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(SideNav, [{
+    key: "checkUserBookmark",
+    value: function checkUserBookmark() {
+      var bookmark = this.props.currentUser.bookmark;
+      return bookmark !== undefined && bookmark !== null;
+    }
+  }, {
+    key: "setPayload",
+    value: function setPayload(data) {
+      var payload;
+
+      if (data.book.includes("&")) {
+        payload = {
+          gender: data.gender,
+          book: data.book.replace("&", "%26")
+        };
+      } else {
+        payload = {
+          gender: data.gender,
+          book: data.book
+        };
+      }
+
+      return payload;
+    }
+  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      var userId = JSON.stringify(this.props.currentUser.id);
-      var currentPage = JSON.parse(localStorage.getItem(userId));
-      var payload = currentPage;
+      var _this2 = this;
 
-      if (currentPage) {
-        if (currentPage.book.includes("&")) {
-          payload = {
-            gender: currentPage.gender,
-            book: currentPage.book.replace("&", "%26")
-          };
-        } else {
-          payload = {
-            gender: currentPage.gender,
-            book: currentPage.book
-          };
-        }
+      var _this$props = this.props,
+          bookmark = _this$props.bookmark,
+          currentUser = _this$props.currentUser;
 
-        return this.props.fetchDevoBook(payload);
+      if (this.checkUserBookmark()) {
+        var userPayload = this.setPayload(currentUser.bookmark);
+        return this.props.fetchDevoBook(userPayload).then(function () {
+          return _this2.setState({
+            book: currentUser.bookmark.book
+          });
+        });
+      } else if (currentUser.id === bookmark.user_id) {
+        var propsPayload = this.setPayload(bookmark);
+        return this.props.fetchDevoBook(propsPayload).then(function () {
+          return _this2.setState({
+            book: bookmark.book
+          });
+        });
       }
     } // componentWillUnmount() {
     // };
@@ -1305,14 +1433,14 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
     key: "renderDevoBookTitle",
     value: function renderDevoBookTitle() {
       var book = this.state.book;
-      var isBookInBookTitles = _bookTitles__WEBPACK_IMPORTED_MODULE_2__["allBookTitles"].includes(book);
-      var isBookTitleDefined = _bookTitles__WEBPACK_IMPORTED_MODULE_2__["allBookTitlesFormat"][book] !== undefined;
+      var isBookInBookTitles = _function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__["allBookTitles"].includes(book);
+      var isBookTitleDefined = _function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__["allBookTitlesFormat"][book] !== undefined;
       var devoBookTitle;
 
       if (isBookInBookTitles && !isBookTitleDefined) {
-        devoBookTitle = _bookTitles__WEBPACK_IMPORTED_MODULE_2__["allBookTitles"][_bookTitles__WEBPACK_IMPORTED_MODULE_2__["allBookTitles"].indexOf(book)];
+        devoBookTitle = _function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__["allBookTitles"][_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__["allBookTitles"].indexOf(book)];
       } else if (isBookInBookTitles && isBookTitleDefined) {
-        devoBookTitle = _bookTitles__WEBPACK_IMPORTED_MODULE_2__["allBookTitlesFormat"][book];
+        devoBookTitle = _function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__["allBookTitlesFormat"][book];
       }
 
       return devoBookTitle;
@@ -1320,7 +1448,7 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "left-container"
@@ -1335,7 +1463,7 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sidenav_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
           days: i,
           dailyDevo: dailyDevo,
-          handleGetDevo: _this2.handleGetDevo,
+          handleGetDevo: _this3.handleGetDevo,
           key: dailyDevo.id
         });
       }))));
@@ -1361,7 +1489,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
 /* harmony import */ var _actions_devo_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../actions/devo_actions */ "./frontend/actions/devo_actions.js");
-/* harmony import */ var _sidenav__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./sidenav */ "./frontend/components/home/sidenav/sidenav.jsx");
+/* harmony import */ var _util_bookmark_api_util__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../util/bookmark_api_util */ "./frontend/util/bookmark_api_util.jsx");
+/* harmony import */ var _sidenav__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./sidenav */ "./frontend/components/home/sidenav/sidenav.jsx");
+
 
 
 
@@ -1390,7 +1520,8 @@ var mapStateToProps = function mapStateToProps(state) {
   return {
     currentUser: state.users[state.session.id],
     errors: state.errors,
-    devoBook: devoBook
+    devoBook: devoBook,
+    bookmark: state.bookmark
   };
 };
 
@@ -1407,11 +1538,17 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     fetchDevoBook: function fetchDevoBook(book) {
       return dispatch(Object(_actions_devo_actions__WEBPACK_IMPORTED_MODULE_2__["fetchDevoBook"])(book));
+    },
+    createBookmark: function createBookmark(bookmark) {
+      return dispatch(Object(_util_bookmark_api_util__WEBPACK_IMPORTED_MODULE_3__["createBookmark"])(bookmark));
+    },
+    fetchBookmark: function fetchBookmark() {
+      return dispatch(Object(_util_bookmark_api_util__WEBPACK_IMPORTED_MODULE_3__["fetchBookmark"])());
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_sidenav__WEBPACK_IMPORTED_MODULE_3__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_sidenav__WEBPACK_IMPORTED_MODULE_4__["default"]));
 
 /***/ }),
 
@@ -1462,7 +1599,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _category_list_OT__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./category_list_OT */ "./frontend/components/modal_pages/category_list_OT.jsx");
 /* harmony import */ var _category_list_NT__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./category_list_NT */ "./frontend/components/modal_pages/category_list_NT.jsx");
 /* harmony import */ var _category_list_Other__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./category_list_Other */ "./frontend/components/modal_pages/category_list_Other.jsx");
-/* harmony import */ var _home_bookTitles__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../home/bookTitles */ "./frontend/components/home/bookTitles.js");
+/* harmony import */ var _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../home/function_helpers/bookTitles */ "./frontend/components/home/function_helpers/bookTitles.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1524,7 +1661,7 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
     // this.props.sheDevoIndex.sort((a, b) => this.state.bibleBooks.indexOf(a.book) - this.state.bibleBooks.indexOf(b.book))
     // sort titles by bible order 
     value: function sortBibleTitles(data) {
-      var lowerCaseArr = _home_bookTitles__WEBPACK_IMPORTED_MODULE_4__["bibleBooks"].map(function (ele) {
+      var lowerCaseArr = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_4__["bibleBooks"].map(function (ele) {
         return ele.toLowerCase();
       });
       return data.sort(function (a, b) {
@@ -1778,25 +1915,25 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _home_bookTitles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../home/bookTitles */ "./frontend/components/home/bookTitles.js");
+/* harmony import */ var _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../home/function_helpers/bookTitles */ "./frontend/components/home/function_helpers/bookTitles.js");
 
 
 
 var CategoryListNT = function CategoryListNT(_ref) {
   var eachTitle = _ref.eachTitle,
       handleClick = _ref.handleClick;
-  var lowerCaseArr = _home_bookTitles__WEBPACK_IMPORTED_MODULE_1__["NTbooks"].map(function (ele) {
+  var lowerCaseArr = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["NTbooks"].map(function (ele) {
     return ele.toLowerCase();
   });
   var inBookTitle = lowerCaseArr.includes(eachTitle.book);
-  var isbookTitleDefined = _home_bookTitles__WEBPACK_IMPORTED_MODULE_1__["NTbookFormat"][eachTitle.book] !== undefined;
-  var bookTitle = _home_bookTitles__WEBPACK_IMPORTED_MODULE_1__["NTbooks"][lowerCaseArr.indexOf(eachTitle.book)];
+  var isbookTitleDefined = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["NTbookFormat"][eachTitle.book] !== undefined;
+  var bookTitle = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["NTbooks"][lowerCaseArr.indexOf(eachTitle.book)];
   var NTbook;
 
   if (inBookTitle && !isbookTitleDefined) {
     NTbook = bookTitle;
   } else if (inBookTitle && isbookTitleDefined) {
-    NTbook = _home_bookTitles__WEBPACK_IMPORTED_MODULE_1__["NTbookFormat"][eachTitle.book];
+    NTbook = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["NTbookFormat"][eachTitle.book];
   }
 
   ;
@@ -1829,25 +1966,25 @@ var CategoryListNT = function CategoryListNT(_ref) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _home_bookTitles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../home/bookTitles */ "./frontend/components/home/bookTitles.js");
+/* harmony import */ var _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../home/function_helpers/bookTitles */ "./frontend/components/home/function_helpers/bookTitles.js");
 
 
 
 var CategoryListOT = function CategoryListOT(_ref) {
   var eachTitle = _ref.eachTitle,
       handleClick = _ref.handleClick;
-  var lowerCaseArr = _home_bookTitles__WEBPACK_IMPORTED_MODULE_1__["OTbooks"].map(function (ele) {
+  var lowerCaseArr = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["OTbooks"].map(function (ele) {
     return ele.toLowerCase();
   });
   var inBookTitle = lowerCaseArr.includes(eachTitle.book);
-  var isBookTitleDefined = _home_bookTitles__WEBPACK_IMPORTED_MODULE_1__["OTbookFormat"][eachTitle.book] !== undefined;
-  var bookTitle = _home_bookTitles__WEBPACK_IMPORTED_MODULE_1__["OTbooks"][lowerCaseArr.indexOf(eachTitle.book)];
+  var isBookTitleDefined = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["OTbookFormat"][eachTitle.book] !== undefined;
+  var bookTitle = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["OTbooks"][lowerCaseArr.indexOf(eachTitle.book)];
   var OTbook;
 
   if (inBookTitle && !isBookTitleDefined) {
     OTbook = bookTitle;
   } else if (inBookTitle && isBookTitleDefined) {
-    OTbook = _home_bookTitles__WEBPACK_IMPORTED_MODULE_1__["OTbookFormat"][eachTitle.book];
+    OTbook = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["OTbookFormat"][eachTitle.book];
   }
 
   ;
@@ -1880,14 +2017,14 @@ var CategoryListOT = function CategoryListOT(_ref) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _home_bookTitles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../home/bookTitles */ "./frontend/components/home/bookTitles.js");
+/* harmony import */ var _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../home/function_helpers/bookTitles */ "./frontend/components/home/function_helpers/bookTitles.js");
 
 
 
 var CategoryListOther = function CategoryListOther(_ref) {
   var eachTitle = _ref.eachTitle,
       handleClick = _ref.handleClick;
-  var lowerCaseArr = _home_bookTitles__WEBPACK_IMPORTED_MODULE_1__["themeBooks"].map(function (ele) {
+  var lowerCaseArr = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["themeBooks"].map(function (ele) {
     return ele.toLowerCase();
   });
 
@@ -1903,9 +2040,9 @@ var CategoryListOther = function CategoryListOther(_ref) {
   };
 
   var inBookTitle = lowerCaseArr.includes(eachTitle.book);
-  var isBookTitleDefined = lowerCaseFormat(_home_bookTitles__WEBPACK_IMPORTED_MODULE_1__["themeBookFormat"])[eachTitle.book] !== undefined;
-  var bookTitle = _home_bookTitles__WEBPACK_IMPORTED_MODULE_1__["themeBooks"][lowerCaseArr.indexOf(eachTitle.book)];
-  var bookTitleRender = lowerCaseFormat(_home_bookTitles__WEBPACK_IMPORTED_MODULE_1__["themeBookFormat"])[eachTitle.book];
+  var isBookTitleDefined = lowerCaseFormat(_home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["themeBookFormat"])[eachTitle.book] !== undefined;
+  var bookTitle = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["themeBooks"][lowerCaseArr.indexOf(eachTitle.book)];
+  var bookTitleRender = lowerCaseFormat(_home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["themeBookFormat"])[eachTitle.book];
   var themeBook = inBookTitle && isBookTitleDefined ? bookTitleRender : null;
   var fetchBookPayload = {
     gender: eachTitle.gender,
@@ -2665,7 +2802,6 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "isTrimmedBlank",
     value: function isTrimmedBlank(word) {
-      debugger;
       return word.trim().length < 1;
     }
   }, {
@@ -3470,8 +3606,6 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
         pwNoMatch: ''
       };
       if (errors.length < 1 && stateErrors.length < 1) return errorsHash;
-      console.log(errors, stateErrors);
-      debugger;
       stateErrors.forEach(function (err) {
         if (ERRORS.indexOf(err) === 0) errorsHash.emailBlank = err;
         if (ERRORS.indexOf(err) === 3) errorsHash.firstName = err;
@@ -3837,6 +3971,43 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /***/ }),
 
+/***/ "./frontend/reducers/bookmark_reducer.js":
+/*!***********************************************!*\
+  !*** ./frontend/reducers/bookmark_reducer.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_bookmark_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/bookmark_actions */ "./frontend/actions/bookmark_actions.js");
+
+
+var bookmarkReducer = function bookmarkReducer() {
+  var oldState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(oldState);
+  var newState = Object.assign({}, oldState);
+
+  switch (action.type) {
+    case _actions_bookmark_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_BOOKMARK"]:
+      if (action.bookmark.bookmark[0] === undefined) return oldState;
+      return Object.assign({}, newState, action.bookmark.bookmark[0]);
+
+    case _actions_bookmark_actions__WEBPACK_IMPORTED_MODULE_0__["REMOVE_BOOKMARK"]:
+      debugger;
+      delete newState[action.bookmark.bookmark[0]];
+      return Object.assign({}, newState, action.bookmark.bookmark[0]);
+
+    default:
+      return oldState;
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (bookmarkReducer);
+
+/***/ }),
+
 /***/ "./frontend/reducers/devos_reducer.js":
 /*!********************************************!*\
   !*** ./frontend/reducers/devos_reducer.js ***!
@@ -3987,6 +4158,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _users_reducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./users_reducer */ "./frontend/reducers/users_reducer.js");
 /* harmony import */ var _devos_reducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./devos_reducer */ "./frontend/reducers/devos_reducer.js");
 /* harmony import */ var _notes_reducer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./notes_reducer */ "./frontend/reducers/notes_reducer.js");
+/* harmony import */ var _bookmark_reducer__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./bookmark_reducer */ "./frontend/reducers/bookmark_reducer.js");
+
 
 
 
@@ -4000,7 +4173,8 @@ var RootReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])(
   errors: _session_errors_reducer__WEBPACK_IMPORTED_MODULE_2__["default"],
   modal: _modal_reducer__WEBPACK_IMPORTED_MODULE_3__["default"],
   devos: _devos_reducer__WEBPACK_IMPORTED_MODULE_5__["default"],
-  notes: _notes_reducer__WEBPACK_IMPORTED_MODULE_6__["default"]
+  notes: _notes_reducer__WEBPACK_IMPORTED_MODULE_6__["default"],
+  bookmark: _bookmark_reducer__WEBPACK_IMPORTED_MODULE_7__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (RootReducer);
 
@@ -4144,19 +4318,33 @@ var configureStore = function configureStore() {
 /*!*********************************************!*\
   !*** ./frontend/util/bookmark_api_util.jsx ***!
   \*********************************************/
-/*! exports provided: updateBookmark */
+/*! exports provided: createBookmark, deleteBookmark, fetchBookmark */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateBookmark", function() { return updateBookmark; });
-var updateBookmark = function updateBookmark(bookmarkData) {
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createBookmark", function() { return createBookmark; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteBookmark", function() { return deleteBookmark; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchBookmark", function() { return fetchBookmark; });
+var createBookmark = function createBookmark(bookmark) {
   return $.ajax({
     url: "api/bookmarks/",
     method: 'POST',
     data: {
-      bookmarkData: bookmarkData
+      bookmark: bookmark
     }
+  });
+};
+var deleteBookmark = function deleteBookmark(bookmarkId) {
+  return $.ajax({
+    url: "api/bookmarks/".concat(bookmarkId),
+    method: 'DELETE'
+  });
+};
+var fetchBookmark = function fetchBookmark() {
+  return $.ajax({
+    url: "api/bookmarks/",
+    method: 'GET'
   });
 };
 

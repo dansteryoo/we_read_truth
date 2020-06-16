@@ -37,7 +37,6 @@ class NotesForm extends React.Component {
     }
 
     isTrimmedBlank(word) {
-        debugger
         return word.trim().length < 1
     }
 

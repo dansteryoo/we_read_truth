@@ -1,5 +1,5 @@
 import React from 'react';
-import { OTbooks, OTbookFormat } from '../home/bookTitles'
+import { OTbooks, OTbookFormat } from '../home/function_helpers/bookTitles'
 
 const CategoryListOT = ({ eachTitle, handleClick }) => {
 

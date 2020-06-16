@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(version: 2020_06_15_195429) do
     t.integer "user_id", null: false
     t.integer "devo_id", null: false
     t.integer "render_day", null: false
+    t.string "gender", null: false
+    t.string "book", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["devo_id"], name: "index_bookmarks_on_devo_id"

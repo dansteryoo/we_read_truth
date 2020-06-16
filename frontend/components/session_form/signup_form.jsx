@@ -101,8 +101,7 @@ class SignUp extends React.Component {
         }
 
         if (errors.length < 1 && stateErrors.length < 1) return errorsHash
-        console.log(errors, stateErrors)
-        debugger
+        
         stateErrors.forEach(err => {
             if (ERRORS.indexOf(err) === 0) errorsHash.emailBlank = err
             if (ERRORS.indexOf(err) === 3) errorsHash.firstName = err

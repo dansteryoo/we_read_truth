@@ -1,5 +1,5 @@
 import React from 'react';
-import { themeBooks, themeBookFormat } from '../home/bookTitles'
+import { themeBooks, themeBookFormat } from '../home/function_helpers/bookTitles'
 
 const CategoryListOther = ({ eachTitle, handleClick }) => {
 

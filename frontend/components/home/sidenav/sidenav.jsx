@@ -1,6 +1,6 @@
 import React from 'react';
 import SideNavItem from './sidenav_item'
-import { allBookTitles, allBookTitlesFormat } from '../bookTitles'
+import { allBookTitles, allBookTitlesFormat } from '../function_helpers/bookTitles'
 
 class SideNav extends React.Component {
     constructor(props) {
@@ -13,28 +13,47 @@ class SideNav extends React.Component {
         this.handleGetDevo = this.handleGetDevo.bind(this);
         this.myRef = React.createRef();
         this.renderDevoBookTitle = this.renderDevoBookTitle.bind(this);
-    };
+        this.checkUserBookmark = this.checkUserBookmark.bind(this);
+        this.setPayload = this.setPayload.bind(this);
+    }
 
+    checkUserBookmark() {
+        const { bookmark } = this.props.currentUser
+        return bookmark !== undefined && bookmark !== null
+    }
+
+    setPayload(data) {
+        let payload;
+
+        if (data.book.includes("&")) {
+            payload = {
+                gender: data.gender,
+                book: data.book.replace("&", "%26")
+            }
+        } else {
+            payload = {
+                gender: data.gender,
+                book: data.book
+            }
+        }
+
+        return payload
+    }
 
     componentDidMount() {
-        let userId = JSON.stringify(this.props.currentUser.id)
-        const currentPage = JSON.parse(localStorage.getItem(userId))
+        const { bookmark, currentUser } = this.props
 
-        let payload = currentPage;
+        if (this.checkUserBookmark()) {
+            let userPayload = this.setPayload(currentUser.bookmark)
 
-        if (currentPage) {
-            if (currentPage.book.includes("&")) {
-                payload = {
-                    gender: currentPage.gender,
-                    book: currentPage.book.replace("&", "%26")
-                }
-            } else {
-                payload = {
-                    gender: currentPage.gender,
-                    book: currentPage.book
-                }
-            }
-            return this.props.fetchDevoBook(payload)
+            return this.props.fetchDevoBook(userPayload)
+                .then(() => this.setState({ book: currentUser.bookmark.book }))
+
+        } else if (currentUser.id === bookmark.user_id) {
+            let propsPayload = this.setPayload(bookmark)
+            
+            return this.props.fetchDevoBook(propsPayload)
+                .then(() => this.setState({ book: bookmark.book }))
         }
     }
 
@@ -50,15 +69,15 @@ class SideNav extends React.Component {
 
                 //---------- SCROLL TO TOP on render ----------//
                 if (devoBook[0].book !== this.state.book) {
-                    this.myRef.current.scrollTo(0, 0);
+                    this.myRef.current.scrollTo(0, 0)
                 }
             }
         }
-    };
+    }
 
     handleGetDevo(devoId) {
-        this.props.fetchDevo(devoId);
-    };
+        this.props.fetchDevo(devoId)
+    }
 
     renderDevoBookTitle () {
         const { book } = this.state;
@@ -75,7 +94,6 @@ class SideNav extends React.Component {
 
         return devoBookTitle
     }
-    
 
     render() {
 

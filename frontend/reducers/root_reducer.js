@@ -5,6 +5,7 @@ import ModalReducer from './modal_reducer';
 import UsersReducer from './users_reducer';
 import DevosReducer from './devos_reducer';
 import NotesReducer from './notes_reducer';
+import BookmarkReducer from './bookmark_reducer';
 
 
 const RootReducer = combineReducers({
@@ -14,6 +15,7 @@ const RootReducer = combineReducers({
     modal: ModalReducer,
     devos: DevosReducer,
     notes: NotesReducer,
+    bookmark: BookmarkReducer
 });
 
 export default RootReducer;

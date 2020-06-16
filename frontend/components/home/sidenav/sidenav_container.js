@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { closeModal, openModal } from '../../../actions/modal_actions';
 import { fetchDevo, fetchDevoBook } from '../../../actions/devo_actions';
+import { createBookmark, fetchBookmark } from '../../../util/bookmark_api_util';
 import SideNav from './sidenav';
 
 const mapStateToProps = (state) => {
@@ -23,7 +24,8 @@ const mapStateToProps = (state) => {
     return {
         currentUser: state.users[state.session.id],
         errors: state.errors,
-        devoBook: devoBook
+        devoBook: devoBook,
+        bookmark: state.bookmark
     }
 };
 
@@ -32,7 +34,9 @@ const mapDispatchToProps = (dispatch) => ({
     closeModal: () => dispatch(closeModal()),
     openModal: (formType) => dispatch(openModal(formType)),
     fetchDevo: (devoId) => dispatch(fetchDevo(devoId)),
-    fetchDevoBook: (book) => dispatch(fetchDevoBook(book))
+    fetchDevoBook: (book) => dispatch(fetchDevoBook(book)),
+    createBookmark: (bookmark) => dispatch(createBookmark(bookmark)),
+    fetchBookmark: () => dispatch(fetchBookmark())
 });
 
 
