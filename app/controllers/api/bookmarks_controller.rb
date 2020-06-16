@@ -1,12 +1,12 @@
 class Api::BookmarksController < ApplicationController
     before_action :require_logged_in!
 
-    def update
+    def create
         @bookmark = Bookmark.where(user_id: params[:user_id])
-
+        debugger
         if @bookmark == []
         @bookmark = Bookmark.new(bookmark_params)
-
+            debugger
             if @bookmark.save
                 render :show
             else

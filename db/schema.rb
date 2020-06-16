@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(version: 2020_06_15_195429) do
     t.string "title", null: false
     t.text "body", null: false
     t.string "category", null: false
-    t.integer "day", null: false
+    t.string "day", null: false
     t.integer "notary_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

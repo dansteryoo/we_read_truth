@@ -4,7 +4,7 @@ class CreateNotes < ActiveRecord::Migration[5.2]
       t.string :title, null: false
       t.text :body, null: false
       t.string :category, null: false
-      t.integer :day, null: false
+      t.string :day, null: false
       t.integer :notary_id, null: false
       
       t.timestamps

@@ -851,7 +851,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       esvPassage: [],
       mainBodyChanged: false,
       bookmark: false,
-      renderDay: ''
+      renderDay: null
     };
     _this.ESVpassageGetter = _this.ESVpassageGetter.bind(_assertThisInitialized(_this));
     _this.renderDay = _this.renderDay.bind(_assertThisInitialized(_this));
@@ -1055,8 +1055,20 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "toggleBookmark",
     value: function toggleBookmark() {
-      var bookmark = this.state.bookmark;
-      if (!bookmark) return this.setState({
+      var _this$state2 = this.state,
+          bookmark = _this$state2.bookmark,
+          id = _this$state2.id,
+          renderDay = _this$state2.renderDay;
+      var bookmarkData = {
+        user_id: this.props.currentUser.id,
+        devo_id: id,
+        render_day: renderDay
+      };
+      console.log(bookmarkData);
+      console.log(this.state);
+      console.log(this.props.currentUser);
+      this.props.updateBookmark(bookmarkData);
+      this.setState({
         bookmark: !bookmark
       });
     }
@@ -1955,7 +1967,7 @@ var NotesItem = function NotesItem(_ref) {
     className: "note-bottom"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, " Book: "), eachNote.category), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "note-title"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Day ", eachNote.tags, ": "), eachNote.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Day ", eachNote.day, ": "), eachNote.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "note-body"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Preview: "), eachNote.body), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "note-time"
@@ -2627,7 +2639,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       id: '',
       title: '',
       category: '',
-      tags: '',
+      day: '',
       body: '',
       update: false,
       success: false,
@@ -2635,13 +2647,14 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       updateForm: false
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.isTrimmedBlank = _this.isTrimmedBlank.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(NotesForm, [{
     key: "dayIsNumber",
-    value: function dayIsNumber(tags) {
-      var splitStr = tags.trim().split('');
+    value: function dayIsNumber(day) {
+      var splitStr = day.trim().split('');
 
       for (var i = 0; i < splitStr.length; i++) {
         if (/^[a-zA-Z]*$/.test(splitStr[i])) return false;
@@ -2652,6 +2665,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "isTrimmedBlank",
     value: function isTrimmedBlank(word) {
+      debugger;
       return word.trim().length < 1;
     }
   }, {
@@ -2676,13 +2690,13 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
               id = _this$props$noteId.id,
               title = _this$props$noteId.title,
               category = _this$props$noteId.category,
-              tags = _this$props$noteId.tags,
+              day = _this$props$noteId.day,
               body = _this$props$noteId.body;
           this.setState({
             id: id,
             title: title,
             category: category,
-            tags: tags,
+            day: day,
             body: body,
             updateForm: true
           });
@@ -2693,6 +2707,8 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
           //---------- AND if current props array is empty SKIP reset state ----------//
           if (this.props.notes.length < 1) return; //---------- AND if current props array is NOT EMPTY then reset state ----------//
 
+          console.log(this.props.notes);
+
           if (!this.props.notes.some(function (ele) {
             return ele.id === _this2.state.id;
           })) {
@@ -2700,7 +2716,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
               id: '',
               title: '',
               category: '',
-              tags: '',
+              day: '',
               body: '',
               updateForm: false,
               updateErrors: []
@@ -2728,37 +2744,33 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
           id = _this$state.id,
           title = _this$state.title,
           category = _this$state.category,
-          tags = _this$state.tags,
+          day = _this$state.day,
           body = _this$state.body;
       var noteUpdate = {
         id: id,
         title: title,
         category: category,
-        tags: tags,
+        day: day,
         body: body
       };
       var note = {
         title: title,
         category: category,
-        tags: tags,
+        day: day,
         body: body
       };
-      var blankTitle = this.isTrimmedBlank(title);
-      var blankBody = this.isTrimmedBlank(body);
-      var blankBook = this.isTrimmedBlank(category);
-      var blankDay = this.isTrimmedBlank(tags);
 
-      if (blankTitle || blankBody || blankBook || blankDay || !this.dayIsNumber(tags)) {
+      if (this.isTrimmedBlank(title) || this.isTrimmedBlank(body) || this.isTrimmedBlank(category) || this.isTrimmedBlank(day) || !this.dayIsNumber(day)) {
         var errorsArr = [];
-        if (blankTitle) errorsArr.push(ERRORS[0]); // Title is blank
+        if (this.isTrimmedBlank(title)) errorsArr.push(ERRORS[0]); // Title is blank
 
-        if (blankBody) errorsArr.push(ERRORS[1]); // Body is blank
+        if (this.isTrimmedBlank(body)) errorsArr.push(ERRORS[1]); // Body is blank
 
-        if (blankBook) errorsArr.push(ERRORS[2]); // Book is blank
+        if (this.isTrimmedBlank(category)) errorsArr.push(ERRORS[2]); // Book is blank
 
-        if (blankDay) errorsArr.push(ERRORS[3]); // Day is blank
+        if (this.isTrimmedBlank(day)) errorsArr.push(ERRORS[3]); // Day is blank
 
-        if (!this.dayIsNumber(tags) && !blankDay) errorsArr.push(ERRORS[4]); // Day is !number
+        if (!this.dayIsNumber(day) && !this.isTrimmedBlank(day)) errorsArr.push(ERRORS[4]); // Day is !number
 
         if (errorsArr.length > 0) {
           return this.setState({
@@ -2771,7 +2783,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
             success: true,
             title: '',
             category: '',
-            tags: '',
+            day: '',
             body: '',
             id: '',
             updateForm: false,
@@ -2788,7 +2800,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
             update: true,
             title: '',
             category: '',
-            tags: '',
+            day: '',
             body: '',
             id: '',
             updateForm: false,
@@ -2845,17 +2857,13 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       var _this$state2 = this.state,
           title = _this$state2.title,
           category = _this$state2.category,
-          tags = _this$state2.tags,
+          day = _this$state2.day,
           body = _this$state2.body;
-      var blankTitle = this.isTrimmedBlank(title);
-      var blankBody = this.isTrimmedBlank(body);
-      var blankBook = this.isTrimmedBlank(category);
-      var blankDay = this.isTrimmedBlank(tags);
-      if (!blankTitle) errorsHash.title = '';
-      if (!blankBody) errorsHash.body = '';
-      if (!blankBook) errorsHash.book = '';
-      if (!blankDay) errorsHash.day = '';
-      if (this.dayIsNumber(tags)) errorsHash.number = '';
+      if (!this.isTrimmedBlank(title)) errorsHash.title = '';
+      if (!this.isTrimmedBlank(body)) errorsHash.body = '';
+      if (!this.isTrimmedBlank(category)) errorsHash.book = '';
+      if (!this.isTrimmedBlank(day)) errorsHash.day = '';
+      if (this.dayIsNumber(day)) errorsHash.number = '';
       return errorsHash;
     }
   }, {
@@ -2905,8 +2913,8 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
         }, this.renderErrors().book), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Day#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "text",
           className: "notes-form-input",
-          onChange: this.handleChange('tags'),
-          value: this.state.tags // required   
+          onChange: this.handleChange('day'),
+          value: this.state.day // required   
 
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "form-errors-notes"
@@ -2952,8 +2960,8 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
         }, this.renderErrors().book), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Day#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "text",
           className: "notes-form-input",
-          value: this.state.tags,
-          onChange: this.handleChange('tags') // required   
+          value: this.state.day,
+          onChange: this.handleChange('day') // required   
 
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "form-errors-notes"
@@ -3359,6 +3367,7 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
       stateErrors: []
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.isTrimmedBlank = _this.isTrimmedBlank.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -3373,6 +3382,11 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
       if (this.props.errors !== prevProps.errors) {}
     }
   }, {
+    key: "isTrimmedBlank",
+    value: function isTrimmedBlank(word) {
+      return word.trim().length === 0;
+    }
+  }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
@@ -3385,26 +3399,17 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
           passwordMatch = _this$state.passwordMatch;
       this.props.clearErrors();
 
-      var trimmerLength = function trimmerLength(word) {
-        return word.trim().length;
-      };
-
-      var blankEmail = trimmerLength(email) < 1;
-      var blankFirst = trimmerLength(firstName) < 1;
-      var blankLast = trimmerLength(lastName) < 1;
-      var blankPassword = trimmerLength(password) < 1;
-
       var isPasswordMatch = function isPasswordMatch() {
         return password === passwordMatch;
       };
 
-      if (blankEmail || blankFirst || blankLast || blankPassword || !isPasswordMatch()) {
+      if (this.isTrimmedBlank(email) || this.isTrimmedBlank(firstName) || this.isTrimmedBlank(lastName) || this.isTrimmedBlank(password) || !isPasswordMatch()) {
         var errorsArr = [];
-        if (blankEmail) errorsArr.push(ERRORS[0]); // 0 Blank email
+        if (this.isTrimmedBlank(email)) errorsArr.push(ERRORS[0]); // 0 Blank email
 
-        if (blankFirst) errorsArr.push(ERRORS[3]); // 3 First name blank
+        if (this.isTrimmedBlank(firstName)) errorsArr.push(ERRORS[3]); // 3 First name blank
 
-        if (blankLast) errorsArr.push(ERRORS[4]); // 4 Last name blank
+        if (this.isTrimmedBlank(lastName)) errorsArr.push(ERRORS[4]); // 4 Last name blank
 
         if (password.length < 5) errorsArr.push(ERRORS[5]); // 5 PW too short
 
@@ -3455,14 +3460,6 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
           firstName = _this$state2.firstName,
           lastName = _this$state2.lastName,
           passwordMatch = _this$state2.passwordMatch;
-
-      var trimmerLength = function trimmerLength(word) {
-        return word.trim().length;
-      };
-
-      var blankEmail = trimmerLength(email) < 1;
-      var blankFirst = trimmerLength(firstName) < 1;
-      var blankLast = trimmerLength(lastName) < 1;
       var errorsHash = {
         emailBlank: '',
         emailInvalid: '',
@@ -3473,6 +3470,8 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
         pwNoMatch: ''
       };
       if (errors.length < 1 && stateErrors.length < 1) return errorsHash;
+      console.log(errors, stateErrors);
+      debugger;
       stateErrors.forEach(function (err) {
         if (ERRORS.indexOf(err) === 0) errorsHash.emailBlank = err;
         if (ERRORS.indexOf(err) === 3) errorsHash.firstName = err;
@@ -3485,9 +3484,9 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
         if (ERRORS.indexOf(err) === 2) errorsHash.emailTaken = err;
         if (ERRORS.indexOf(err) === 5) errorsHash.pwShort = err;
       });
-      if (!blankEmail) errorsHash.emailBlank = '';
-      if (!blankFirst) errorsHash.firstName = '';
-      if (!blankLast) errorsHash.lastName = '';
+      if (!this.isTrimmedBlank(email)) errorsHash.emailBlank = '';
+      if (!this.isTrimmedBlank(firstName)) errorsHash.firstName = '';
+      if (!this.isTrimmedBlank(lastName)) errorsHash.lastName = '';
       if (password.length > 5) errorsHash.pwShort = '';
       if (password === passwordMatch) errorsHash.pwNoMatch = '';
       return errorsHash;
@@ -4151,12 +4150,12 @@ var configureStore = function configureStore() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateBookmark", function() { return updateBookmark; });
-var updateBookmark = function updateBookmark(bookmark) {
+var updateBookmark = function updateBookmark(bookmarkData) {
   return $.ajax({
     url: "api/bookmarks/",
-    method: 'PATCH',
+    method: 'POST',
     data: {
-      bookmark: bookmark
+      bookmarkData: bookmarkData
     }
   });
 };

@@ -16,7 +16,7 @@ class MainBody extends React.Component {
             esvPassage: [],
             mainBodyChanged: false,
             bookmark: false,
-            renderDay: '',
+            renderDay: null,
         }
 
         this.ESVpassageGetter = this.ESVpassageGetter.bind(this);
@@ -209,8 +209,19 @@ class MainBody extends React.Component {
     }
 
     toggleBookmark() {
-        const { bookmark } = this.state;
-        if (!bookmark) return this.setState({ bookmark: !bookmark })
+        const { bookmark, id, renderDay } = this.state;
+
+        let bookmarkData = {
+            user_id: this.props.currentUser.id, 
+            devo_id: id,
+            render_day: renderDay
+        }
+        console.log(bookmarkData)
+        console.log(this.state)
+        console.log(this.props.currentUser)
+
+        this.props.updateBookmark(bookmarkData)
+        this.setState({ bookmark: !bookmark })
     }
 
     render() {
