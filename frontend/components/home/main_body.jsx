@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { regBibleTitles, maxMcLeanBooks } from './function_helpers/bookTitles'
 
 class MainBody extends React.Component {
     constructor(props) {
@@ -17,12 +18,15 @@ class MainBody extends React.Component {
             mainBodyChanged: false,
             bookmark: false,
             renderDay: null,
+            width: 0,
+            height: 0
         }
 
         this.ESVpassageGetter = this.ESVpassageGetter.bind(this);
         this.renderDay = this.renderDay.bind(this);
         this.myRef = React.createRef();
         this.toggleBookmark = this.toggleBookmark.bind(this);
+        this.toggleAudio = this.toggleAudio.bind(this);
         this.splitPassages = this.splitPassages.bind(this);
         this.isMainBodyDevoNull = this.isMainBodyDevoNull.bind(this);
         this.checkUserBookmark = this.checkUserBookmark.bind(this);
@@ -79,6 +83,10 @@ class MainBody extends React.Component {
     //---------- REACT LIFE CYCLES ----------//
 
     componentDidMount() {
+        window.addEventListener('resize', 
+            this.setState({ width: window.innerWidth, height: window.innerHeight })
+        );
+
         const { bookmark, currentUser } = this.props
 
         if (this.checkUserBookmark()) {
@@ -97,6 +105,12 @@ class MainBody extends React.Component {
         } else {
             return this.props.fetchBookmark()
         }
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', 
+            this.setState({ width: window.innerWidth, height: window.innerHeight })
+        );
     }
 
     componentDidUpdate(prevProps) {
@@ -139,10 +153,6 @@ class MainBody extends React.Component {
                 ? this.setState({ bookmark: true })
                 : this.setState({ bookmark: false })
         }
-    }
-
-    componentWillUnmount() {
-
     }
 
     //---------- RENDER FUNCTIONS ----------//
@@ -250,10 +260,38 @@ class MainBody extends React.Component {
         this.setState({ bookmark: !bookmark })
     }
 
+    toggleAudio() {
+        const { width, height, esvPassage } = this.state
+        const passageSplit = esvPassage[0].passage.split(' ')
+
+        const checkForNumber = (data) => {
+            return data.match(/^([1-9]|[1-8][0-9]|9[0-9]|1[0-4][0-9]|150)$/g)
+        }
+
+        let book = passageSplit[0]
+        let chapter = passageSplit[passageSplit.length - 1].split(':')[0]
+
+        if (checkForNumber(book)) {
+            book = `${book} ${passageSplit[1]}`
+        } else if (book === 'Song') {
+            book = 'Song of Songs'
+        }
+
+        let bookName = maxMcLeanBooks[regBibleTitles.indexOf(book)]
+        let theURL = `https://www.biblegateway.com/audio/mclean/esv/${bookName}.${chapter}`
+        let winName = 'Max McLean Audio'
+        let winParams = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
+            width=${Math.floor(width / 1.4)},
+            height=${Math.floor(height / 2.2)},
+            left=100,top=100`;
+
+        bookName === undefined
+            ? false 
+            : window.open(theURL, winName, winParams);
+    }
+
     render() {
         if (this.isMainBodyDevoNull()) return <div></div>
-        console.log(this.state);
-        console.log(this.props.bookmark)
         
         return (
             <div className='middle-container'>
@@ -264,6 +302,10 @@ class MainBody extends React.Component {
                         className={this.state.bookmark ? 'fa fa-bookmark' : 'fa fa-bookmark-o' } 
                         onClick={() => this.toggleBookmark()} 
                         aria-hidden="true">
+                        </i>
+                        <i id='max-mclean-audio' className="fa fa-volume-up"
+                            onClick={() => this.toggleAudio()}
+                            aria-hidden="true">
                         </i>
                 </div>
             <div className='devo-main-container' ref={this.myRef}>

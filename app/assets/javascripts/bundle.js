@@ -486,11 +486,13 @@ var App = function App() {
 /*!*****************************************************************!*\
   !*** ./frontend/components/home/function_helpers/bookTitles.js ***!
   \*****************************************************************/
-/*! exports provided: allBookTitles, allBookTitlesFormat, bibleBooks, NTbooks, NTbookFormat, OTbooks, OTbookFormat, themeBooks, themeBookFormat */
+/*! exports provided: maxMcLeanBooks, regBibleTitles, allBookTitles, allBookTitlesFormat, bibleBooks, NTbooks, NTbookFormat, OTbooks, OTbookFormat, themeBooks, themeBookFormat */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "maxMcLeanBooks", function() { return maxMcLeanBooks; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "regBibleTitles", function() { return regBibleTitles; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "allBookTitles", function() { return allBookTitles; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "allBookTitlesFormat", function() { return allBookTitlesFormat; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "bibleBooks", function() { return bibleBooks; });
@@ -500,7 +502,79 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OTbookFormat", function() { return OTbookFormat; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "themeBooks", function() { return themeBooks; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "themeBookFormat", function() { return themeBookFormat; });
-// sidenav.jsx 
+/* 
+
+chapterDict['Gen'] = 50;
+chapterDict['Exod'] = 40;
+chapterDict['Lev'] = 27;
+chapterDict['Num'] = 36;
+chapterDict['Deut'] = 34;
+chapterDict['Josh'] = 24;
+chapterDict['Judg'] = 21;
+chapterDict['Ruth'] = 4;
+chapterDict['1Sam'] = 31;
+chapterDict['2Sam'] = 24;
+chapterDict['1Kgs'] = 22;
+chapterDict['2Kgs'] = 25;
+chapterDict['1Chr'] = 29;
+chapterDict['2Chr'] = 36;
+chapterDict['Ezra'] = 10;
+chapterDict['Neh'] = 13;
+chapterDict['Esth'] = 10;
+chapterDict['Job'] = 42;
+chapterDict['Ps'] = 150;
+chapterDict['Prov'] = 31;
+chapterDict['Eccl'] = 12;
+chapterDict['Song'] = 8;
+chapterDict['Isa'] = 66;
+chapterDict['Jer'] = 52;
+chapterDict['Lam'] = 5;
+chapterDict['Ezek'] = 48;
+chapterDict['Dan'] = 12;
+chapterDict['Hos'] = 14;
+chapterDict['Joel'] = 3;
+chapterDict['Amos'] = 9;
+chapterDict['Obad'] = 1;
+chapterDict['Jonah'] = 4;
+chapterDict['Mic'] = 7;
+chapterDict['Nah'] = 3;
+chapterDict['Hab'] = 3;
+chapterDict['Zeph'] = 3;
+chapterDict['Hag'] = 2;
+chapterDict['Zech'] = 14;
+chapterDict['Mal'] = 4;
+chapterDict['Matt'] = 28;
+chapterDict['Mark'] = 16;
+chapterDict['Luke'] = 24;
+chapterDict['John'] = 21;
+chapterDict['Acts'] = 28;
+chapterDict['Rom'] = 16;
+chapterDict['1Cor'] = 16;
+chapterDict['2Cor'] = 13;
+chapterDict['Gal'] = 6;
+chapterDict['Eph'] = 6;
+chapterDict['Phil'] = 4;
+chapterDict['Col'] = 4;
+chapterDict['1Thess'] = 5;
+chapterDict['2Thess'] = 3;
+chapterDict['1Tim'] = 6;
+chapterDict['2Tim'] = 4;
+chapterDict['Titus'] = 3;
+chapterDict['Phlm'] = 1;
+chapterDict['Heb'] = 13;
+chapterDict['Jas'] = 5;
+chapterDict['1Pet'] = 5;
+chapterDict['2Pet'] = 3;
+chapterDict['1John'] = 5;
+chapterDict['2John'] = 1;
+chapterDict['3John'] = 1;
+chapterDict['Jude'] = 1;
+chapterDict['Rev'] = 22;
+*/
+// main_body audio links
+var maxMcLeanBooks = ['Gen', 'Exod', 'Lev', 'Num', 'Deut', 'Josh', 'Judg', 'Ruth', '1Sam', '2Sam', '1Kgs', '2Kgs', '1Chr', '2Chr', 'Ezra', 'Neh', 'Esth', 'Job', 'Ps', 'Prov', 'Eccl', 'Song', 'Isa', 'Jer', 'Lam', 'Ezek', 'Dan', 'Hos', 'Joel', 'Amos', 'Obad', 'Jonah', 'Mic', 'Nah', 'Hab', 'Zeph', 'Hag', 'Zech', 'Mal', 'Matt', 'Mark', 'Luke', 'John', 'Acts', 'Rom', '1Cor', '2Cor', 'Gal', 'Eph', 'Phil', 'Col', '1Thess', '2Thess', '1Tim', '2Tim', 'Titus', 'Phlm', 'Heb', 'Jas', '1Pet', '2Pet', '1John', '2John', '3John', 'Jude', 'Rev'];
+var regBibleTitles = ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1 Samuel", "2 Samuel", "1 Kings", "2 Kings", "1 Chronicles", "2 Chronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalm", "Proverbs", "Ecclesiastes", "Song of Songs", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel", "Amos", "Obadiah", "Jonah", "Micah", "Nahum", "Habakkuk", "Zephaniah", "Haggai", "Zechariah", "Malachi", "Matthew", "Mark", "Luke", "John", "Acts", "Romans", "1 Corinthians", "1 Corinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1 Thessalonians", "2 Thessalonians", "1 Timothy", "2 Timothy", "Titus", "Philemon", "Hebrews", "James", "1 Peter", "2 Peter", "1 John", "2 John", "3 John", "Jude", "Revelation"]; // sidenav.jsx 
+
 var allBookTitles = ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1&2Samuel", "1&2Kings", "1&2Chronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalms", "Proverbs:TheWayofWisdom", "Ecclesiastes", "SongofSongs", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel,Amos,Obadiah,Jonah,andMicah", "Nahum,Habakkuk,Zephaniah,andHaggai", "ZechariahandMalachi", "Matthew", "Mark", "Luke", "John", "ActsoftheApostles", "Romans", "1&2Corinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1&2Thessalonians", "1&2TimothyandTitus", "Philemon", "Hebrews", "James", "1&2Peter", "123John", "Jude", "Revelation", "Justice", "HymnsV", "TheSermonontheMount", "Lent2017:YouAreMine", "Advent2018:UntiltheSonofGodAppears", "ThisIstheGospel", "Lent2018:SeetheLord’sSalvation", "MourningandDancing", "2019Wrapped:SheReadsTruthYearinReview", "NamesofGod", "OpenYourBible//Launch-WeekSampler", "InSpirit&inTruth:AStudyofBiblicalWorship", "Advent2016:ChristWasBornforThis", "Lent2016", "Hymns", "TheResurrectedLife", "TheRisenChrist", "Lent2020:HisLoveEndures", "Jesus,KeepMeNearTheCross", "TheBeatitudes", "PsalmsforPrayer", "AttributesofGod", "PsalmsofRest", "TheLifeofMoses", "HymnsIV", "BecauseHeLives", "HymnsII", "TheMiraclesofJesus", "SongsfortheRoad:ThePsalmsofAscent", "Women&MenintheWord:OldTestament", "HymnsIII", "GiveThanks", "MakingRoom:AStudyofBiblicalHospitality", "IAm:StatementsofOurSavior", "WorthyofPraise", "Advent2017:JoytotheWorld", "HoldingTighttoPermanent", "Advent2019:AThrillofHope", "CountdowntoActs", "FruitoftheSpirit", "Advent2015:BornIsTheKing", "TheParablesofJesus", "GoTellItontheMountain", "HymnsofHope", "PsalmsofGratitude"]; // sidenav.jsx 
 
 var allBookTitlesFormat = {
@@ -849,6 +923,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./function_helpers/bookTitles */ "./frontend/components/home/function_helpers/bookTitles.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
@@ -886,6 +961,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var MainBody = /*#__PURE__*/function (_React$Component) {
   _inherits(MainBody, _React$Component);
 
@@ -908,12 +984,15 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       esvPassage: [],
       mainBodyChanged: false,
       bookmark: false,
-      renderDay: null
+      renderDay: null,
+      width: 0,
+      height: 0
     };
     _this.ESVpassageGetter = _this.ESVpassageGetter.bind(_assertThisInitialized(_this));
     _this.renderDay = _this.renderDay.bind(_assertThisInitialized(_this));
     _this.myRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.toggleBookmark = _this.toggleBookmark.bind(_assertThisInitialized(_this));
+    _this.toggleAudio = _this.toggleAudio.bind(_assertThisInitialized(_this));
     _this.splitPassages = _this.splitPassages.bind(_assertThisInitialized(_this));
     _this.isMainBodyDevoNull = _this.isMainBodyDevoNull.bind(_assertThisInitialized(_this));
     _this.checkUserBookmark = _this.checkUserBookmark.bind(_assertThisInitialized(_this));
@@ -974,6 +1053,10 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       var _this3 = this;
 
+      window.addEventListener('resize', this.setState({
+        width: window.innerWidth,
+        height: window.innerHeight
+      }));
       var _this$props = this.props,
           bookmark = _this$props.bookmark,
           currentUser = _this$props.currentUser;
@@ -996,6 +1079,14 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       } else {
         return this.props.fetchBookmark();
       }
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      window.removeEventListener('resize', this.setState({
+        width: window.innerWidth,
+        height: window.innerHeight
+      }));
     }
   }, {
     key: "componentDidUpdate",
@@ -1057,10 +1148,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
           bookmark: false
         });
       }
-    }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {} //---------- RENDER FUNCTIONS ----------//
+    } //---------- RENDER FUNCTIONS ----------//
 
   }, {
     key: "renderPassages",
@@ -1164,13 +1252,39 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "toggleAudio",
+    value: function toggleAudio() {
+      var _this$state3 = this.state,
+          width = _this$state3.width,
+          height = _this$state3.height,
+          esvPassage = _this$state3.esvPassage;
+      var passageSplit = esvPassage[0].passage.split(' ');
+
+      var checkForNumber = function checkForNumber(data) {
+        return data.match(/^([1-9]|[1-8][0-9]|9[0-9]|1[0-4][0-9]|150)$/g);
+      };
+
+      var book = passageSplit[0];
+      var chapter = passageSplit[passageSplit.length - 1].split(':')[0];
+
+      if (checkForNumber(book)) {
+        book = "".concat(book, " ").concat(passageSplit[1]);
+      } else if (book === 'Song') {
+        book = 'Song of Songs';
+      }
+
+      var bookName = _function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__["maxMcLeanBooks"][_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__["regBibleTitles"].indexOf(book)];
+      var theURL = "https://www.biblegateway.com/audio/mclean/esv/".concat(bookName, ".").concat(chapter);
+      var winName = 'Max McLean Audio';
+      var winParams = "scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,\n            width=".concat(Math.floor(width / 1.4), ",\n            height=").concat(Math.floor(height / 2.2), ",\n            left=100,top=100");
+      bookName === undefined ? false : window.open(theURL, winName, winParams);
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this6 = this;
 
       if (this.isMainBodyDevoNull()) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
-      console.log(this.state);
-      console.log(this.props.bookmark);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "middle-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1182,6 +1296,13 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
         className: this.state.bookmark ? 'fa fa-bookmark' : 'fa fa-bookmark-o',
         onClick: function onClick() {
           return _this6.toggleBookmark();
+        },
+        "aria-hidden": "true"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        id: "max-mclean-audio",
+        className: "fa fa-volume-up",
+        onClick: function onClick() {
+          return _this6.toggleAudio();
         },
         "aria-hidden": "true"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -3992,12 +4113,12 @@ var bookmarkReducer = function bookmarkReducer() {
 
   switch (action.type) {
     case _actions_bookmark_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_BOOKMARK"]:
-      if (action.bookmark.bookmark[0] === undefined) return oldState;
-      debugger;
+      if (action.bookmark.bookmark[0] === undefined) return oldState; // debugger
+
       return Object.assign({}, newState, action.bookmark.bookmark[0]);
 
     case _actions_bookmark_actions__WEBPACK_IMPORTED_MODULE_0__["REMOVE_BOOKMARK"]:
-      debugger;
+      // debugger
       delete newState[action.bookmark.bookmark[0]];
       return Object.assign({}, newState, action.bookmark.bookmark[0]);
 
