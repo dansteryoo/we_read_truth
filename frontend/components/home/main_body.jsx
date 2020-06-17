@@ -234,7 +234,7 @@ class MainBody extends React.Component {
 
     toggleBookmark() {
         const { bookmark, id, renderDay, gender, book } = this.state
-        const { currentUser, createBookmark } = this.props
+        const { currentUser, createBookmark, deleteBookmark } = this.props
 
         let bookmarkData = {
             user_id: currentUser.id, 
@@ -244,8 +244,8 @@ class MainBody extends React.Component {
         }
         
         !bookmark
-        ? createBookmark(bookmarkData)
-        : deleteBookmark(this.props.bookmark.id)
+            ? createBookmark(bookmarkData)
+            : deleteBookmark(this.props.bookmark.id)
 
         this.setState({ bookmark: !bookmark })
     }

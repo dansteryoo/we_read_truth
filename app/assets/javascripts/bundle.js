@@ -1149,7 +1149,8 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
           book = _this$state2.book;
       var _this$props2 = this.props,
           currentUser = _this$props2.currentUser,
-          createBookmark = _this$props2.createBookmark;
+          createBookmark = _this$props2.createBookmark,
+          deleteBookmark = _this$props2.deleteBookmark;
       var bookmarkData = {
         user_id: currentUser.id,
         devo_id: id,
@@ -3992,6 +3993,7 @@ var bookmarkReducer = function bookmarkReducer() {
   switch (action.type) {
     case _actions_bookmark_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_BOOKMARK"]:
       if (action.bookmark.bookmark[0] === undefined) return oldState;
+      debugger;
       return Object.assign({}, newState, action.bookmark.bookmark[0]);
 
     case _actions_bookmark_actions__WEBPACK_IMPORTED_MODULE_0__["REMOVE_BOOKMARK"]:
