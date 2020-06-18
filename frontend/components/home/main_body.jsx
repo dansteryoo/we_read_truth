@@ -127,25 +127,28 @@ class MainBody extends React.Component {
 
         this.setBookmark()
         const currentPage = this.localStorageFunc('getCurrentPage')
-        
+        const { currentUser, fetchDevo } = this.props
+
         //---------- IF localStorage EXISTS then setState ----------//
         if (currentPage && !this.userBookmarkBlank()) {
             this.setState({ 
                 renderDay: currentPage.renderDay,
                 bookmarkId: currentPage.bookmarkId
             })
-            return this.props.fetchDevo(currentPage.id);
+            return this.props.fetchDevo(currentPage.id)
+
+        } else if (!this.userBookmarkBlank()) {
+            return fetchDevo(currentUser.bookmark.devo_id)
+                .then(() => this.setState({
+                    renderDay: currentUser.bookmark.render_day,
+                    bookmarkId: currentUser.bookmark.id,
+                    bookmark: true
+                 }))
+                 
         } else {
-            const { currentUser, fetchDevo, fetchBookmark } = this.props
-            if (!this.userBookmarkBlank()) {
-                return fetchDevo(currentUser.bookmark.devo_id)
-                    .then(() => this.setState({
-                        renderDay: currentUser.bookmark.render_day,
-                        bookmarkId: currentUser.bookmark.id,
-                        bookmark: true
-                    }))
-            }
+            return this.localStorageFunc('removeCurrentPage')
         }
+            
     }
 
     componentWillUnmount() {
