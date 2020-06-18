@@ -107,7 +107,6 @@ class MainBody extends React.Component {
                 return JSON.parse(localStorage.getItem(stringifyCurrentUserId))
 
             case 'setCurrentPage':
-                console.log(this.state)
                 return localStorage.setItem(stringifyCurrentUserId, JSON.stringify(this.state))
 
             case 'removeCurrentPage':

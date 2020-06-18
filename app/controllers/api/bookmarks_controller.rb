@@ -2,12 +2,6 @@ class Api::BookmarksController < ApplicationController
     before_action :require_logged_in!
 
     def index
-        @bookmark = Bookmark.all
-        File.open("notes.json","w") do |f|
-            f.write(JSON.pretty_generate(@bookmark))
-        end
-        debugger
-
         @bookmark = Bookmark.where(user_id: current_user.id)
 
         render :index

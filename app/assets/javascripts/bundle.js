@@ -1097,7 +1097,6 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
           return JSON.parse(localStorage.getItem(stringifyCurrentUserId));
 
         case 'setCurrentPage':
-          console.log(this.state);
           return localStorage.setItem(stringifyCurrentUserId, JSON.stringify(this.state));
 
         case 'removeCurrentPage':
