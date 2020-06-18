@@ -1120,25 +1120,19 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
           currentUser = _this$props.currentUser,
           fetchDevo = _this$props.fetchDevo; //---------- IF localStorage EXISTS then setState ----------//
 
-      if (currentPage && !this.userBookmarkBlank()) {
-        this.setState({
-          renderDay: currentPage.renderDay,
-          bookmarkId: currentPage.bookmarkId
+      if (currentPage) {
+        return fetchDevo(currentPage.id).then(function () {
+          return _this3.setState({
+            renderDay: currentPage.render_day,
+            bookmarkId: currentPage.bookmarkId,
+            bookmark: true
+          });
         });
-        return this.props.fetchDevo(currentPage.id);
       } else if (!this.userBookmarkBlank()) {
         return fetchDevo(currentUser.bookmark.devo_id).then(function () {
           return _this3.setState({
             renderDay: currentUser.bookmark.render_day,
             bookmarkId: currentUser.bookmark.id,
-            bookmark: true
-          });
-        });
-      } else if (currentPage) {
-        return fetchDevo(currentPage.id).then(function () {
-          return _this3.setState({
-            renderDay: currentPage.render_day,
-            bookmarkId: currentPage.bookmarkId,
             bookmark: true
           });
         });
@@ -1160,17 +1154,20 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       this.setBookmark();
       var _this$props2 = this.props,
           bookmark = _this$props2.bookmark,
-          mainBodyDevo = _this$props2.mainBodyDevo;
+          mainBodyDevo = _this$props2.mainBodyDevo,
+          currentUser = _this$props2.currentUser;
       var bookmarkId = this.state.bookmarkId;
       var bookmarkBlank = Object.values(bookmark).length < 1;
       if (this.isMainBodyDevoNull()) return; //---------- SET bookmarkId to props.bookmark.id ----------//
 
-      if ((bookmark || !bookmarkBlank) && bookmarkId !== bookmark.id) {
+      if (!bookmarkBlank && bookmarkId !== bookmark.id) {
         !this.isValidNumber(bookmarkId) ? this.setState({
           bookmarkId: bookmark.id
-        }) : this.setState({
-          bookmarkId: ''
-        });
+        }) : false;
+      } else if (bookmarkBlank && currentUser.bookmark) {
+        !this.isValidNumber(bookmarkId) ? this.setState({
+          bookmarkId: currentUser.bookmark.id
+        }) : false;
       } //---------- SET renderDay to this.state ----------//
 
 
@@ -1371,6 +1368,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
 
       if (this.isMainBodyDevoNull() && !this.localStorageFunc('getCurrentPage')) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
       this.state.bookmark ? this.localStorageFunc('setCurrentPage') : false;
+      console.log(this.state.bookmarkId);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "middle-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

@@ -129,12 +129,13 @@ class MainBody extends React.Component {
         const { currentUser, fetchDevo } = this.props
 
         //---------- IF localStorage EXISTS then setState ----------//
-        if (currentPage && !this.userBookmarkBlank()) {
-            this.setState({ 
-                renderDay: currentPage.renderDay,
-                bookmarkId: currentPage.bookmarkId
-            })
-            return this.props.fetchDevo(currentPage.id)
+        if (currentPage) {
+            return fetchDevo(currentPage.id)
+                .then(() => this.setState({
+                    renderDay: currentPage.render_day,
+                    bookmarkId: currentPage.bookmarkId,
+                    bookmark: true
+                })) 
 
         } else if (!this.userBookmarkBlank()) {
             return fetchDevo(currentUser.bookmark.devo_id)
@@ -143,15 +144,7 @@ class MainBody extends React.Component {
                     bookmarkId: currentUser.bookmark.id,
                     bookmark: true
                  }))
-
-        } else if (currentPage) {
-            return fetchDevo(currentPage.id)
-                .then(() => this.setState({
-                    renderDay: currentPage.render_day,
-                    bookmarkId: currentPage.bookmarkId,
-                    bookmark: true
-                })) 
-        }   
+        } 
     }
 
     componentWillUnmount() {
@@ -163,18 +156,22 @@ class MainBody extends React.Component {
     componentDidUpdate(prevProps) {
         this.setBookmark()
 
-        const { bookmark, mainBodyDevo } = this.props
+        const { bookmark, mainBodyDevo, currentUser } = this.props
         const { bookmarkId } = this.state
         const bookmarkBlank = Object.values(bookmark).length < 1
 
         if (this.isMainBodyDevoNull()) return 
 
         //---------- SET bookmarkId to props.bookmark.id ----------//
-        if ((bookmark || !bookmarkBlank) && bookmarkId !== bookmark.id) {
-
+        if (!bookmarkBlank && bookmarkId !== bookmark.id) {
             !this.isValidNumber(bookmarkId)
                 ? this.setState({ bookmarkId: bookmark.id })
-                : this.setState({ bookmarkId: '' })
+                : false
+
+        } else if (bookmarkBlank && currentUser.bookmark) {
+            !this.isValidNumber(bookmarkId)
+                ? this.setState({ bookmarkId: currentUser.bookmark.id })
+                : false 
         }
 
         //---------- SET renderDay to this.state ----------//
@@ -360,7 +357,7 @@ class MainBody extends React.Component {
         this.state.bookmark 
             ? this.localStorageFunc('setCurrentPage')
             : false 
-
+        console.log(this.state.bookmarkId)
         return (
             <div className='middle-container'>
                 <div className='devo-main-title'>
