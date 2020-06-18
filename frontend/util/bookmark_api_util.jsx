@@ -11,6 +11,13 @@ export const createBookmark = (bookmark) => {
 export const deleteBookmark = (bookmarkId) => {
     return $.ajax({
         url: `api/bookmarks/${bookmarkId}`,
-        method: 'DELETE'
+        method: 'DELETE',
+    })
+};
+
+export const fetchBookmark = () => {
+    return $.ajax({
+        url: `api/bookmarks/`,
+        method: 'GET',
     })
 };

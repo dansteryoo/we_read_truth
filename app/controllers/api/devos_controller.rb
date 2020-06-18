@@ -1,7 +1,8 @@
 class Api::DevosController < ApplicationController
     
     def index
-        @devos = Devo.select(:book, :gender).distinct
+        @devos = Devo.select(:book, :gender)
+        @devos = @devos.uniq { |each| each.values_at(:book, :gender) }
         render :index
     end
 

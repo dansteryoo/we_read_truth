@@ -86,6 +86,62 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./frontend/actions/bookmark_actions.js":
+/*!**********************************************!*\
+  !*** ./frontend/actions/bookmark_actions.js ***!
+  \**********************************************/
+/*! exports provided: RECEIVE_BOOKMARK, REMOVE_BOOKMARK, receiveBookmark, removeBookmark, fetchBookmark, createBookmark, deleteBookmark */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_BOOKMARK", function() { return RECEIVE_BOOKMARK; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_BOOKMARK", function() { return REMOVE_BOOKMARK; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveBookmark", function() { return receiveBookmark; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeBookmark", function() { return removeBookmark; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchBookmark", function() { return fetchBookmark; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createBookmark", function() { return createBookmark; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteBookmark", function() { return deleteBookmark; });
+/* harmony import */ var _util_bookmark_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/bookmark_api_util */ "./frontend/util/bookmark_api_util.jsx");
+
+var RECEIVE_BOOKMARK = 'RECEIVE_BOOKMARK';
+var REMOVE_BOOKMARK = 'REMOVE_BOOKMARK';
+var receiveBookmark = function receiveBookmark(bookmark) {
+  return {
+    type: RECEIVE_BOOKMARK,
+    bookmark: bookmark
+  };
+};
+var removeBookmark = function removeBookmark(bookmarkId) {
+  return {
+    type: REMOVE_BOOKMARK,
+    bookmarkId: bookmarkId
+  };
+};
+var fetchBookmark = function fetchBookmark() {
+  return function (dispatch) {
+    return _util_bookmark_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchBookmark"]().then(function (bookmark) {
+      return dispatch(receiveBookmark(bookmark));
+    });
+  };
+};
+var createBookmark = function createBookmark(bookmark) {
+  return function (dispatch) {
+    return _util_bookmark_api_util__WEBPACK_IMPORTED_MODULE_0__["createBookmark"](bookmark).then(function (bookmark) {
+      return dispatch(receiveBookmark(bookmark));
+    });
+  };
+};
+var deleteBookmark = function deleteBookmark(bookmarkId) {
+  return function (dispatch) {
+    return _util_bookmark_api_util__WEBPACK_IMPORTED_MODULE_0__["deleteBookmark"](bookmarkId).then(function () {
+      return dispatch(removeBookmark(bookmarkId));
+    });
+  };
+};
+
+/***/ }),
+
 /***/ "./frontend/actions/devo_actions.js":
 /*!******************************************!*\
   !*** ./frontend/actions/devo_actions.js ***!
@@ -426,15 +482,17 @@ var App = function App() {
 
 /***/ }),
 
-/***/ "./frontend/components/home/bookTitles.js":
-/*!************************************************!*\
-  !*** ./frontend/components/home/bookTitles.js ***!
-  \************************************************/
-/*! exports provided: allBookTitles, allBookTitlesFormat, bibleBooks, NTbooks, NTbookFormat, OTbooks, OTbookFormat, themeBooks, themeBookFormat */
+/***/ "./frontend/components/home/function_helpers/bookTitles.js":
+/*!*****************************************************************!*\
+  !*** ./frontend/components/home/function_helpers/bookTitles.js ***!
+  \*****************************************************************/
+/*! exports provided: maxMcLeanBooks, regBibleTitles, allBookTitles, allBookTitlesFormat, bibleBooks, NTbooks, NTbookFormat, OTbooks, OTbookFormat, themeBooks, themeBookFormat */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "maxMcLeanBooks", function() { return maxMcLeanBooks; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "regBibleTitles", function() { return regBibleTitles; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "allBookTitles", function() { return allBookTitles; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "allBookTitlesFormat", function() { return allBookTitlesFormat; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "bibleBooks", function() { return bibleBooks; });
@@ -444,7 +502,79 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OTbookFormat", function() { return OTbookFormat; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "themeBooks", function() { return themeBooks; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "themeBookFormat", function() { return themeBookFormat; });
-// sidenav.jsx 
+/* 
+
+chapterDict['Gen'] = 50;
+chapterDict['Exod'] = 40;
+chapterDict['Lev'] = 27;
+chapterDict['Num'] = 36;
+chapterDict['Deut'] = 34;
+chapterDict['Josh'] = 24;
+chapterDict['Judg'] = 21;
+chapterDict['Ruth'] = 4;
+chapterDict['1Sam'] = 31;
+chapterDict['2Sam'] = 24;
+chapterDict['1Kgs'] = 22;
+chapterDict['2Kgs'] = 25;
+chapterDict['1Chr'] = 29;
+chapterDict['2Chr'] = 36;
+chapterDict['Ezra'] = 10;
+chapterDict['Neh'] = 13;
+chapterDict['Esth'] = 10;
+chapterDict['Job'] = 42;
+chapterDict['Ps'] = 150;
+chapterDict['Prov'] = 31;
+chapterDict['Eccl'] = 12;
+chapterDict['Song'] = 8;
+chapterDict['Isa'] = 66;
+chapterDict['Jer'] = 52;
+chapterDict['Lam'] = 5;
+chapterDict['Ezek'] = 48;
+chapterDict['Dan'] = 12;
+chapterDict['Hos'] = 14;
+chapterDict['Joel'] = 3;
+chapterDict['Amos'] = 9;
+chapterDict['Obad'] = 1;
+chapterDict['Jonah'] = 4;
+chapterDict['Mic'] = 7;
+chapterDict['Nah'] = 3;
+chapterDict['Hab'] = 3;
+chapterDict['Zeph'] = 3;
+chapterDict['Hag'] = 2;
+chapterDict['Zech'] = 14;
+chapterDict['Mal'] = 4;
+chapterDict['Matt'] = 28;
+chapterDict['Mark'] = 16;
+chapterDict['Luke'] = 24;
+chapterDict['John'] = 21;
+chapterDict['Acts'] = 28;
+chapterDict['Rom'] = 16;
+chapterDict['1Cor'] = 16;
+chapterDict['2Cor'] = 13;
+chapterDict['Gal'] = 6;
+chapterDict['Eph'] = 6;
+chapterDict['Phil'] = 4;
+chapterDict['Col'] = 4;
+chapterDict['1Thess'] = 5;
+chapterDict['2Thess'] = 3;
+chapterDict['1Tim'] = 6;
+chapterDict['2Tim'] = 4;
+chapterDict['Titus'] = 3;
+chapterDict['Phlm'] = 1;
+chapterDict['Heb'] = 13;
+chapterDict['Jas'] = 5;
+chapterDict['1Pet'] = 5;
+chapterDict['2Pet'] = 3;
+chapterDict['1John'] = 5;
+chapterDict['2John'] = 1;
+chapterDict['3John'] = 1;
+chapterDict['Jude'] = 1;
+chapterDict['Rev'] = 22;
+*/
+// main_body audio links
+var maxMcLeanBooks = ['Gen', 'Exod', 'Lev', 'Num', 'Deut', 'Josh', 'Judg', 'Ruth', '1Sam', '2Sam', '1Kgs', '2Kgs', '1Chr', '2Chr', 'Ezra', 'Neh', 'Esth', 'Job', 'Ps', 'Prov', 'Eccl', 'Song', 'Isa', 'Jer', 'Lam', 'Ezek', 'Dan', 'Hos', 'Joel', 'Amos', 'Obad', 'Jonah', 'Mic', 'Nah', 'Hab', 'Zeph', 'Hag', 'Zech', 'Mal', 'Matt', 'Mark', 'Luke', 'John', 'Acts', 'Rom', '1Cor', '2Cor', 'Gal', 'Eph', 'Phil', 'Col', '1Thess', '2Thess', '1Tim', '2Tim', 'Titus', 'Phlm', 'Heb', 'Jas', '1Pet', '2Pet', '1John', '2John', '3John', 'Jude', 'Rev'];
+var regBibleTitles = ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1 Samuel", "2 Samuel", "1 Kings", "2 Kings", "1 Chronicles", "2 Chronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalm", "Proverbs", "Ecclesiastes", "Song of Songs", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel", "Amos", "Obadiah", "Jonah", "Micah", "Nahum", "Habakkuk", "Zephaniah", "Haggai", "Zechariah", "Malachi", "Matthew", "Mark", "Luke", "John", "Acts", "Romans", "1 Corinthians", "1 Corinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1 Thessalonians", "2 Thessalonians", "1 Timothy", "2 Timothy", "Titus", "Philemon", "Hebrews", "James", "1 Peter", "2 Peter", "1 John", "2 John", "3 John", "Jude", "Revelation"]; // sidenav.jsx 
+
 var allBookTitles = ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1&2Samuel", "1&2Kings", "1&2Chronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalms", "Proverbs:TheWayofWisdom", "Ecclesiastes", "SongofSongs", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel,Amos,Obadiah,Jonah,andMicah", "Nahum,Habakkuk,Zephaniah,andHaggai", "ZechariahandMalachi", "Matthew", "Mark", "Luke", "John", "ActsoftheApostles", "Romans", "1&2Corinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1&2Thessalonians", "1&2TimothyandTitus", "Philemon", "Hebrews", "James", "1&2Peter", "123John", "Jude", "Revelation", "Justice", "HymnsV", "TheSermonontheMount", "Lent2017:YouAreMine", "Advent2018:UntiltheSonofGodAppears", "ThisIstheGospel", "Lent2018:SeetheLord’sSalvation", "MourningandDancing", "2019Wrapped:SheReadsTruthYearinReview", "NamesofGod", "OpenYourBible//Launch-WeekSampler", "InSpirit&inTruth:AStudyofBiblicalWorship", "Advent2016:ChristWasBornforThis", "Lent2016", "Hymns", "TheResurrectedLife", "TheRisenChrist", "Lent2020:HisLoveEndures", "Jesus,KeepMeNearTheCross", "TheBeatitudes", "PsalmsforPrayer", "AttributesofGod", "PsalmsofRest", "TheLifeofMoses", "HymnsIV", "BecauseHeLives", "HymnsII", "TheMiraclesofJesus", "SongsfortheRoad:ThePsalmsofAscent", "Women&MenintheWord:OldTestament", "HymnsIII", "GiveThanks", "MakingRoom:AStudyofBiblicalHospitality", "IAm:StatementsofOurSavior", "WorthyofPraise", "Advent2017:JoytotheWorld", "HoldingTighttoPermanent", "Advent2019:AThrillofHope", "CountdowntoActs", "FruitoftheSpirit", "Advent2015:BornIsTheKing", "TheParablesofJesus", "GoTellItontheMountain", "HymnsofHope", "PsalmsofGratitude"]; // sidenav.jsx 
 
 var allBookTitlesFormat = {
@@ -594,6 +724,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _nav_navbar_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../nav/navbar_container */ "./frontend/components/nav/navbar_container.js");
 /* harmony import */ var _notes_notes_form_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../notes/notes_form_container */ "./frontend/components/notes/notes_form_container.js");
 /* harmony import */ var _main_body_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./main_body_container */ "./frontend/components/home/main_body_container.js");
+/* harmony import */ var _util_devos_api_util__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../util/devos_api_util */ "./frontend/util/devos_api_util.jsx");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -624,6 +755,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var HomePage = /*#__PURE__*/function (_React$Component) {
   _inherits(HomePage, _React$Component);
 
@@ -639,7 +771,8 @@ var HomePage = /*#__PURE__*/function (_React$Component) {
       leftOpen: true,
       rightOpen: true,
       currentUser: null,
-      bookmark: null
+      bookmark: null,
+      devoFetch: false
     };
     _this.toggleSidebar = _this.toggleSidebar.bind(_assertThisInitialized(_this));
     return _this;
@@ -649,7 +782,8 @@ var HomePage = /*#__PURE__*/function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.setState({
-        currentUser: this.props.currentUser.id
+        currentUser: this.props.currentUser.id,
+        devoFetch: true
       });
       this.props.clearErrors();
     }
@@ -657,11 +791,6 @@ var HomePage = /*#__PURE__*/function (_React$Component) {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
       this.props.clearDevoState();
-    }
-  }, {
-    key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps) {
-      if (this.props.mainBodyDevo !== prevProps.mainBodyDevo) {}
     }
   }, {
     key: "toggleSidebar",
@@ -751,10 +880,30 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var mapStateToProps = function mapStateToProps(state) {
+  var devoBook;
+
+  if (state.devos.devoBook === undefined) {
+    devoBook = [];
+  } else {
+    devoBook = Object.values(state.devos.devoBook).filter(function (ele) {
+      return ele.title !== "Weekly Truth" && ele.title !== "Grace Day";
+    });
+
+    if (devoBook[0].gender === "HE") {
+      devoBook.reverse();
+    }
+
+    if (devoBook[0].gender === "SHE" && devoBook[0].book === "Judges") {
+      devoBook.reverse();
+    }
+  }
+
+  ;
   return {
     currentUser: state.users[state.session.id],
     errors: state.errors,
-    mainBodyDevo: state.devos.mainBodyDevo || null
+    devoBook: devoBook,
+    bookmark: state.bookmark
   };
 };
 
@@ -792,6 +941,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./function_helpers/bookTitles */ "./frontend/components/home/function_helpers/bookTitles.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
@@ -829,6 +979,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var MainBody = /*#__PURE__*/function (_React$Component) {
   _inherits(MainBody, _React$Component);
 
@@ -841,6 +992,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
+      bookmarkId: '',
       gender: '',
       book: '',
       id: null,
@@ -851,16 +1003,22 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       esvPassage: [],
       mainBodyChanged: false,
       bookmark: false,
-      renderDay: ''
+      renderDay: null,
+      width: 0,
+      height: 0,
+      localStorage: false
     };
     _this.ESVpassageGetter = _this.ESVpassageGetter.bind(_assertThisInitialized(_this));
     _this.renderDay = _this.renderDay.bind(_assertThisInitialized(_this));
     _this.myRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.toggleBookmark = _this.toggleBookmark.bind(_assertThisInitialized(_this));
-    _this.splitPassages = _this.splitPassages.bind(_assertThisInitialized(_this));
+    _this.toggleAudio = _this.toggleAudio.bind(_assertThisInitialized(_this));
     _this.isMainBodyDevoNull = _this.isMainBodyDevoNull.bind(_assertThisInitialized(_this));
+    _this.userBookmarkBlank = _this.userBookmarkBlank.bind(_assertThisInitialized(_this));
     _this.setBookmark = _this.setBookmark.bind(_assertThisInitialized(_this));
     _this.localStorageFunc = _this.localStorageFunc.bind(_assertThisInitialized(_this));
+    _this.splitPassages = _this.splitPassages.bind(_assertThisInitialized(_this));
+    _this.isValidNumber = _this.isValidNumber.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -909,6 +1067,11 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       }
     }
   }, {
+    key: "isValidNumber",
+    value: function isValidNumber(number) {
+      return typeof number === 'number';
+    }
+  }, {
     key: "splitPassages",
     value: function splitPassages(passages) {
       if (passages.length !== 0) return passages.split(', ');
@@ -919,19 +1082,25 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       return this.props.mainBodyDevo === null;
     }
   }, {
+    key: "userBookmarkBlank",
+    value: function userBookmarkBlank() {
+      var bookmark = this.props.currentUser.bookmark;
+      return bookmark == (undefined || null);
+    }
+  }, {
     key: "localStorageFunc",
     value: function localStorageFunc(condition) {
-      var userId = JSON.stringify(this.props.currentUser.id);
+      var stringifyCurrentUserId = JSON.stringify(this.props.currentUser.id);
 
       switch (condition) {
         case 'getCurrentPage':
-          return JSON.parse(localStorage.getItem(userId));
+          return JSON.parse(localStorage.getItem(stringifyCurrentUserId));
 
         case 'setCurrentPage':
-          return localStorage.setItem(userId, JSON.stringify(this.state));
+          return localStorage.setItem(stringifyCurrentUserId, JSON.stringify(this.state));
 
         case 'removeCurrentPage':
-          return localStorage.removeItem(userId);
+          return localStorage.removeItem(stringifyCurrentUserId);
 
         default:
           return;
@@ -941,23 +1110,65 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
+      var _this3 = this;
+
+      window.addEventListener('resize', this.setState({
+        width: window.innerWidth,
+        height: window.innerHeight
+      }));
       this.setBookmark();
       var currentPage = this.localStorageFunc('getCurrentPage'); //---------- IF localStorage EXISTS then setState ----------//
 
-      if (currentPage) {
+      if (currentPage && !this.userBookmarkBlank()) {
         this.setState({
-          renderDay: currentPage.renderDay
+          renderDay: currentPage.renderDay,
+          bookmarkId: currentPage.bookmarkId
         });
         return this.props.fetchDevo(currentPage.id);
+      } else {
+        var _this$props = this.props,
+            currentUser = _this$props.currentUser,
+            fetchDevo = _this$props.fetchDevo,
+            fetchBookmark = _this$props.fetchBookmark;
+
+        if (!this.userBookmarkBlank()) {
+          return fetchDevo(currentUser.bookmark.devo_id).then(function () {
+            return _this3.setState({
+              renderDay: currentUser.bookmark.render_day,
+              bookmarkId: currentUser.bookmark.id,
+              bookmark: true
+            });
+          });
+        }
       }
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      window.removeEventListener('resize', this.setState({
+        width: window.innerWidth,
+        height: window.innerHeight
+      }));
     }
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
-      var _this3 = this;
+      var _this4 = this;
 
       this.setBookmark();
-      if (this.isMainBodyDevoNull()) return; //---------- SET renderDay to this.state ----------//
+      var _this$props2 = this.props,
+          bookmark = _this$props2.bookmark,
+          mainBodyDevo = _this$props2.mainBodyDevo;
+      var bookmarkId = this.state.bookmarkId;
+      var bookmarkBlank = Object.values(bookmark).length < 1;
+      if (this.isMainBodyDevoNull()) return; //---------- SET bookmarkId to props.bookmark.id ----------//
+
+      if ((bookmark || !bookmarkBlank) && bookmarkId !== bookmark.id) {
+        this.setState({
+          bookmarkId: bookmark.id
+        });
+      } //---------- SET renderDay to this.state ----------//
+
 
       if (this.renderDay() && this.renderDay() !== this.state.renderDay) {
         this.setState({
@@ -970,17 +1181,17 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
         this.setState({
           mainBodyChanged: false
         });
-      }
+      } //---------- UPDATES new mainBodyDevo ----------//
 
-      if (this.props.mainBodyDevo !== prevProps.mainBodyDevo) {
-        var _this$props$mainBodyD = this.props.mainBodyDevo,
-            id = _this$props$mainBodyD.id,
-            img = _this$props$mainBodyD.img,
-            passages = _this$props$mainBodyD.passages,
-            summary = _this$props$mainBodyD.summary,
-            title = _this$props$mainBodyD.title,
-            gender = _this$props$mainBodyD.gender,
-            book = _this$props$mainBodyD.book; //---------- SCROLL TO TOP on render ----------//
+
+      if (prevProps.mainBodyDevo !== mainBodyDevo) {
+        var id = mainBodyDevo.id,
+            img = mainBodyDevo.img,
+            passages = mainBodyDevo.passages,
+            summary = mainBodyDevo.summary,
+            title = mainBodyDevo.title,
+            gender = mainBodyDevo.gender,
+            book = mainBodyDevo.book; //---------- SCROLL TO TOP on render ----------//
 
         this.myRef.current.scrollTo(0, 0); //---------- PREVENTS DUPS in esvPassage ----------//
 
@@ -988,7 +1199,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
           esvPassage: []
         });
         this.splitPassages(passages).forEach(function (each) {
-          return _this3.ESVpassageGetter(each.trim());
+          return _this4.ESVpassageGetter(each.trim());
         });
         this.setState({
           id: id,
@@ -1002,10 +1213,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
           bookmark: false
         });
       }
-    }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {} //---------- RENDER FUNCTIONS ----------//
+    } //---------- RENDER FUNCTIONS ----------//
 
   }, {
     key: "renderPassages",
@@ -1073,11 +1281,11 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderDay",
     value: function renderDay() {
-      var _this4 = this;
+      var _this5 = this;
 
       var renderDay;
       this.props.devoBook.forEach(function (each, i) {
-        if (each.id === _this4.state.id) {
+        if (each.id === _this5.state.id) {
           renderDay = i + 1;
         }
       });
@@ -1086,18 +1294,71 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "toggleBookmark",
     value: function toggleBookmark() {
-      var bookmark = this.state.bookmark;
-      !bookmark ? this.localStorageFunc('setCurrentPage') : this.localStorageFunc('removeCurrentPage');
+      var _this$state2 = this.state,
+          bookmark = _this$state2.bookmark,
+          id = _this$state2.id,
+          renderDay = _this$state2.renderDay,
+          gender = _this$state2.gender,
+          book = _this$state2.book,
+          bookmarkId = _this$state2.bookmarkId;
+      var _this$props3 = this.props,
+          currentUser = _this$props3.currentUser,
+          createBookmark = _this$props3.createBookmark,
+          deleteBookmark = _this$props3.deleteBookmark;
+      var bookmarkData = {
+        gender: gender,
+        book: book,
+        user_id: currentUser.id,
+        devo_id: id,
+        render_day: renderDay
+      };
+
+      if (bookmark) {
+        deleteBookmark(bookmarkId);
+        this.localStorageFunc('removeCurrentPage');
+      } else {
+        createBookmark(bookmarkData);
+      }
+
       this.setState({
         bookmark: !bookmark
       });
     }
   }, {
+    key: "toggleAudio",
+    value: function toggleAudio() {
+      var _this$state3 = this.state,
+          width = _this$state3.width,
+          height = _this$state3.height,
+          esvPassage = _this$state3.esvPassage;
+      var passageSplit = esvPassage[0].passage.split(' ');
+
+      var checkForNumber = function checkForNumber(data) {
+        return data.match(/^([1-9]|[1-8][0-9]|9[0-9]|1[0-4][0-9]|150)$/g);
+      };
+
+      var book = passageSplit[0];
+      var chapter = passageSplit[passageSplit.length - 1].split(':')[0];
+
+      if (checkForNumber(book)) {
+        book = "".concat(book, " ").concat(passageSplit[1]);
+      } else if (book === 'Song') {
+        book = 'Song of Songs';
+      }
+
+      var bookName = _function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__["maxMcLeanBooks"][_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__["regBibleTitles"].indexOf(book)];
+      var theURL = "https://www.biblegateway.com/audio/mclean/esv/".concat(bookName, ".").concat(chapter);
+      var winName = 'Max McLean Audio';
+      var winParams = "scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,\n            width=".concat(Math.floor(width / 1.4), ",\n            height=").concat(Math.floor(height / 2.2), ",\n            left=100,top=100");
+      bookName === undefined ? false : window.open(theURL, winName, winParams);
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this5 = this;
+      var _this6 = this;
 
       if (this.isMainBodyDevoNull() && !this.localStorageFunc('getCurrentPage')) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
+      this.state.bookmark ? this.localStorageFunc('setCurrentPage') : false;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "middle-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1108,7 +1369,14 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
         id: "bookmark",
         className: this.state.bookmark ? 'fa fa-bookmark' : 'fa fa-bookmark-o',
         onClick: function onClick() {
-          return _this5.toggleBookmark();
+          return _this6.toggleBookmark();
+        },
+        "aria-hidden": "true"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        id: "max-mclean-audio",
+        className: "fa fa-volume-up",
+        onClick: function onClick() {
+          return _this6.toggleAudio();
         },
         "aria-hidden": "true"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1154,7 +1422,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
 /* harmony import */ var _actions_devo_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/devo_actions */ "./frontend/actions/devo_actions.js");
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
-/* harmony import */ var _main_body__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./main_body */ "./frontend/components/home/main_body.jsx");
+/* harmony import */ var _actions_bookmark_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/bookmark_actions */ "./frontend/actions/bookmark_actions.js");
+/* harmony import */ var _main_body__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./main_body */ "./frontend/components/home/main_body.jsx");
+
 
 
 
@@ -1185,7 +1455,8 @@ var mapStateToProps = function mapStateToProps(state) {
     currentUser: state.users[state.session.id],
     errors: state.errors,
     mainBodyDevo: state.devos.mainBodyDevo || null,
-    devoBook: devoBook
+    devoBook: devoBook,
+    bookmark: state.bookmark
   };
 };
 
@@ -1202,11 +1473,20 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     fetchDevo: function fetchDevo(devoId) {
       return dispatch(Object(_actions_devo_actions__WEBPACK_IMPORTED_MODULE_2__["fetchDevo"])(devoId));
+    },
+    createBookmark: function createBookmark(bookmark) {
+      return dispatch(Object(_actions_bookmark_actions__WEBPACK_IMPORTED_MODULE_4__["createBookmark"])(bookmark));
+    },
+    fetchBookmark: function fetchBookmark() {
+      return dispatch(Object(_actions_bookmark_actions__WEBPACK_IMPORTED_MODULE_4__["fetchBookmark"])());
+    },
+    deleteBookmark: function deleteBookmark(bookmarkId) {
+      return dispatch(Object(_actions_bookmark_actions__WEBPACK_IMPORTED_MODULE_4__["deleteBookmark"])(bookmarkId));
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_main_body__WEBPACK_IMPORTED_MODULE_4__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_main_body__WEBPACK_IMPORTED_MODULE_5__["default"]));
 
 /***/ }),
 
@@ -1222,7 +1502,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _sidenav_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sidenav_item */ "./frontend/components/home/sidenav/sidenav_item.jsx");
-/* harmony import */ var _bookTitles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../bookTitles */ "./frontend/components/home/bookTitles.js");
+/* harmony import */ var _function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../function_helpers/bookTitles */ "./frontend/components/home/function_helpers/bookTitles.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1261,54 +1541,90 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      book: ''
+      book: '',
+      navSet: false
     };
     _this.handleGetDevo = _this.handleGetDevo.bind(_assertThisInitialized(_this));
     _this.myRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.renderDevoBookTitle = _this.renderDevoBookTitle.bind(_assertThisInitialized(_this));
+    _this.userBookmarkBlank = _this.userBookmarkBlank.bind(_assertThisInitialized(_this));
+    _this.setPayload = _this.setPayload.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(SideNav, [{
+    key: "userBookmarkBlank",
+    value: function userBookmarkBlank() {
+      var bookmark = this.props.currentUser.bookmark;
+      return bookmark == (undefined || null);
+    }
+  }, {
+    key: "setPayload",
+    value: function setPayload(data) {
+      var payload;
+      if (!data) return;
+
+      if (data.book.includes("&")) {
+        payload = {
+          gender: data.gender,
+          book: data.book.replace("&", "%26")
+        };
+      } else {
+        payload = {
+          gender: data.gender,
+          book: data.book
+        };
+      }
+
+      return payload;
+    }
+  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
+      var _this2 = this;
+
       var userId = JSON.stringify(this.props.currentUser.id);
       var currentPage = JSON.parse(localStorage.getItem(userId));
-      var payload = currentPage;
 
       if (currentPage) {
-        if (currentPage.book.includes("&")) {
-          payload = {
-            gender: currentPage.gender,
-            book: currentPage.book.replace("&", "%26")
-          };
-        } else {
-          payload = {
-            gender: currentPage.gender,
-            book: currentPage.book
-          };
-        }
-
-        return this.props.fetchDevoBook(payload);
+        return this.props.fetchDevoBook(this.setPayload(currentPage));
+      } else if (!this.userBookmarkBlank()) {
+        var bookmark = this.props.currentUser.bookmark;
+        var userPayload = this.setPayload(bookmark);
+        return this.props.fetchDevoBook(userPayload).then(function () {
+          return _this2.setState({
+            book: bookmark.book
+          });
+        });
       }
-    } // componentWillUnmount() {
-    // };
-
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {}
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
-      var devoBook = this.props.devoBook;
+      var _this$props = this.props,
+          currentUser = _this$props.currentUser,
+          devoBook = _this$props.devoBook,
+          bookmark = _this$props.bookmark;
+      var propsBookmarkBlank = Object.values(bookmark).length < 1;
 
       if (devoBook !== prevProps.devoBook) {
         if (devoBook.length > 0) {
           this.setState({
             book: devoBook[0].book
-          }); //---------- SCROLL TO TOP on render ----------//
-
-          if (devoBook[0].book !== this.state.book) {
-            this.myRef.current.scrollTo(0, 0);
-          }
+          });
+          devoBook[0].book !== this.state.book ? this.myRef.current.scrollTo(0, 0) : false;
+        } else if (!propsBookmarkBlank && bookmark.user_id === currentUser.id) {
+          this.props.fetchDevoBook(this.setPayload(bookmark));
+        } else if (!this.userBookmarkBlank()) {
+          this.props.fetchDevoBook(this.setPayload(currentUser.bookmark));
         }
+
+        !this.state.navSet ? this.setState({
+          navSet: true
+        }) : false;
       }
     }
   }, {
@@ -1320,14 +1636,14 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
     key: "renderDevoBookTitle",
     value: function renderDevoBookTitle() {
       var book = this.state.book;
-      var isBookInBookTitles = _bookTitles__WEBPACK_IMPORTED_MODULE_2__["allBookTitles"].includes(book);
-      var isBookTitleDefined = _bookTitles__WEBPACK_IMPORTED_MODULE_2__["allBookTitlesFormat"][book] !== undefined;
+      var isBookInBookTitles = _function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__["allBookTitles"].includes(book);
+      var isBookTitleDefined = _function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__["allBookTitlesFormat"][book] !== undefined;
       var devoBookTitle;
 
       if (isBookInBookTitles && !isBookTitleDefined) {
-        devoBookTitle = _bookTitles__WEBPACK_IMPORTED_MODULE_2__["allBookTitles"][_bookTitles__WEBPACK_IMPORTED_MODULE_2__["allBookTitles"].indexOf(book)];
+        devoBookTitle = _function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__["allBookTitles"][_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__["allBookTitles"].indexOf(book)];
       } else if (isBookInBookTitles && isBookTitleDefined) {
-        devoBookTitle = _bookTitles__WEBPACK_IMPORTED_MODULE_2__["allBookTitlesFormat"][book];
+        devoBookTitle = _function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__["allBookTitlesFormat"][book];
       }
 
       return devoBookTitle;
@@ -1335,7 +1651,7 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "left-container"
@@ -1350,7 +1666,7 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sidenav_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
           days: i,
           dailyDevo: dailyDevo,
-          handleGetDevo: _this2.handleGetDevo,
+          handleGetDevo: _this3.handleGetDevo,
           key: dailyDevo.id
         });
       }))));
@@ -1376,7 +1692,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
 /* harmony import */ var _actions_devo_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../actions/devo_actions */ "./frontend/actions/devo_actions.js");
-/* harmony import */ var _sidenav__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./sidenav */ "./frontend/components/home/sidenav/sidenav.jsx");
+/* harmony import */ var _util_bookmark_api_util__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../util/bookmark_api_util */ "./frontend/util/bookmark_api_util.jsx");
+/* harmony import */ var _sidenav__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./sidenav */ "./frontend/components/home/sidenav/sidenav.jsx");
+
 
 
 
@@ -1405,7 +1723,8 @@ var mapStateToProps = function mapStateToProps(state) {
   return {
     currentUser: state.users[state.session.id],
     errors: state.errors,
-    devoBook: devoBook
+    devoBook: devoBook,
+    bookmark: state.bookmark
   };
 };
 
@@ -1422,11 +1741,17 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     fetchDevoBook: function fetchDevoBook(book) {
       return dispatch(Object(_actions_devo_actions__WEBPACK_IMPORTED_MODULE_2__["fetchDevoBook"])(book));
+    },
+    createBookmark: function createBookmark(bookmark) {
+      return dispatch(Object(_util_bookmark_api_util__WEBPACK_IMPORTED_MODULE_3__["createBookmark"])(bookmark));
+    },
+    fetchBookmark: function fetchBookmark() {
+      return dispatch(Object(_util_bookmark_api_util__WEBPACK_IMPORTED_MODULE_3__["fetchBookmark"])());
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_sidenav__WEBPACK_IMPORTED_MODULE_3__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_sidenav__WEBPACK_IMPORTED_MODULE_4__["default"]));
 
 /***/ }),
 
@@ -1477,7 +1802,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _category_list_OT__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./category_list_OT */ "./frontend/components/modal_pages/category_list_OT.jsx");
 /* harmony import */ var _category_list_NT__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./category_list_NT */ "./frontend/components/modal_pages/category_list_NT.jsx");
 /* harmony import */ var _category_list_Other__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./category_list_Other */ "./frontend/components/modal_pages/category_list_Other.jsx");
-/* harmony import */ var _home_bookTitles__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../home/bookTitles */ "./frontend/components/home/bookTitles.js");
+/* harmony import */ var _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../home/function_helpers/bookTitles */ "./frontend/components/home/function_helpers/bookTitles.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1539,7 +1864,7 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
     // this.props.sheDevoIndex.sort((a, b) => this.state.bibleBooks.indexOf(a.book) - this.state.bibleBooks.indexOf(b.book))
     // sort titles by bible order 
     value: function sortBibleTitles(data) {
-      var lowerCaseArr = _home_bookTitles__WEBPACK_IMPORTED_MODULE_4__["bibleBooks"].map(function (ele) {
+      var lowerCaseArr = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_4__["bibleBooks"].map(function (ele) {
         return ele.toLowerCase();
       });
       return data.sort(function (a, b) {
@@ -1793,25 +2118,25 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _home_bookTitles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../home/bookTitles */ "./frontend/components/home/bookTitles.js");
+/* harmony import */ var _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../home/function_helpers/bookTitles */ "./frontend/components/home/function_helpers/bookTitles.js");
 
 
 
 var CategoryListNT = function CategoryListNT(_ref) {
   var eachTitle = _ref.eachTitle,
       handleClick = _ref.handleClick;
-  var lowerCaseArr = _home_bookTitles__WEBPACK_IMPORTED_MODULE_1__["NTbooks"].map(function (ele) {
+  var lowerCaseArr = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["NTbooks"].map(function (ele) {
     return ele.toLowerCase();
   });
   var inBookTitle = lowerCaseArr.includes(eachTitle.book);
-  var isbookTitleDefined = _home_bookTitles__WEBPACK_IMPORTED_MODULE_1__["NTbookFormat"][eachTitle.book] !== undefined;
-  var bookTitle = _home_bookTitles__WEBPACK_IMPORTED_MODULE_1__["NTbooks"][lowerCaseArr.indexOf(eachTitle.book)];
+  var isbookTitleDefined = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["NTbookFormat"][eachTitle.book] !== undefined;
+  var bookTitle = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["NTbooks"][lowerCaseArr.indexOf(eachTitle.book)];
   var NTbook;
 
   if (inBookTitle && !isbookTitleDefined) {
     NTbook = bookTitle;
   } else if (inBookTitle && isbookTitleDefined) {
-    NTbook = _home_bookTitles__WEBPACK_IMPORTED_MODULE_1__["NTbookFormat"][eachTitle.book];
+    NTbook = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["NTbookFormat"][eachTitle.book];
   }
 
   ;
@@ -1844,25 +2169,25 @@ var CategoryListNT = function CategoryListNT(_ref) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _home_bookTitles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../home/bookTitles */ "./frontend/components/home/bookTitles.js");
+/* harmony import */ var _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../home/function_helpers/bookTitles */ "./frontend/components/home/function_helpers/bookTitles.js");
 
 
 
 var CategoryListOT = function CategoryListOT(_ref) {
   var eachTitle = _ref.eachTitle,
       handleClick = _ref.handleClick;
-  var lowerCaseArr = _home_bookTitles__WEBPACK_IMPORTED_MODULE_1__["OTbooks"].map(function (ele) {
+  var lowerCaseArr = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["OTbooks"].map(function (ele) {
     return ele.toLowerCase();
   });
   var inBookTitle = lowerCaseArr.includes(eachTitle.book);
-  var isBookTitleDefined = _home_bookTitles__WEBPACK_IMPORTED_MODULE_1__["OTbookFormat"][eachTitle.book] !== undefined;
-  var bookTitle = _home_bookTitles__WEBPACK_IMPORTED_MODULE_1__["OTbooks"][lowerCaseArr.indexOf(eachTitle.book)];
+  var isBookTitleDefined = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["OTbookFormat"][eachTitle.book] !== undefined;
+  var bookTitle = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["OTbooks"][lowerCaseArr.indexOf(eachTitle.book)];
   var OTbook;
 
   if (inBookTitle && !isBookTitleDefined) {
     OTbook = bookTitle;
   } else if (inBookTitle && isBookTitleDefined) {
-    OTbook = _home_bookTitles__WEBPACK_IMPORTED_MODULE_1__["OTbookFormat"][eachTitle.book];
+    OTbook = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["OTbookFormat"][eachTitle.book];
   }
 
   ;
@@ -1895,14 +2220,14 @@ var CategoryListOT = function CategoryListOT(_ref) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _home_bookTitles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../home/bookTitles */ "./frontend/components/home/bookTitles.js");
+/* harmony import */ var _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../home/function_helpers/bookTitles */ "./frontend/components/home/function_helpers/bookTitles.js");
 
 
 
 var CategoryListOther = function CategoryListOther(_ref) {
   var eachTitle = _ref.eachTitle,
       handleClick = _ref.handleClick;
-  var lowerCaseArr = _home_bookTitles__WEBPACK_IMPORTED_MODULE_1__["themeBooks"].map(function (ele) {
+  var lowerCaseArr = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["themeBooks"].map(function (ele) {
     return ele.toLowerCase();
   });
 
@@ -1918,9 +2243,9 @@ var CategoryListOther = function CategoryListOther(_ref) {
   };
 
   var inBookTitle = lowerCaseArr.includes(eachTitle.book);
-  var isBookTitleDefined = lowerCaseFormat(_home_bookTitles__WEBPACK_IMPORTED_MODULE_1__["themeBookFormat"])[eachTitle.book] !== undefined;
-  var bookTitle = _home_bookTitles__WEBPACK_IMPORTED_MODULE_1__["themeBooks"][lowerCaseArr.indexOf(eachTitle.book)];
-  var bookTitleRender = lowerCaseFormat(_home_bookTitles__WEBPACK_IMPORTED_MODULE_1__["themeBookFormat"])[eachTitle.book];
+  var isBookTitleDefined = lowerCaseFormat(_home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["themeBookFormat"])[eachTitle.book] !== undefined;
+  var bookTitle = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["themeBooks"][lowerCaseArr.indexOf(eachTitle.book)];
+  var bookTitleRender = lowerCaseFormat(_home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["themeBookFormat"])[eachTitle.book];
   var themeBook = inBookTitle && isBookTitleDefined ? bookTitleRender : null;
   var fetchBookPayload = {
     gender: eachTitle.gender,
@@ -1982,7 +2307,7 @@ var NotesItem = function NotesItem(_ref) {
     className: "note-bottom"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, " Book: "), eachNote.category), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "note-title"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Day ", eachNote.tags, ": "), eachNote.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Day ", eachNote.day, ": "), eachNote.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "note-body"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Preview: "), eachNote.body), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "note-time"
@@ -2654,7 +2979,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       id: '',
       title: '',
       category: '',
-      tags: '',
+      day: '',
       body: '',
       update: false,
       success: false,
@@ -2662,13 +2987,14 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       updateForm: false
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.isTrimmedBlank = _this.isTrimmedBlank.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(NotesForm, [{
     key: "dayIsNumber",
-    value: function dayIsNumber(tags) {
-      var splitStr = tags.trim().split('');
+    value: function dayIsNumber(day) {
+      var splitStr = day.trim().split('');
 
       for (var i = 0; i < splitStr.length; i++) {
         if (/^[a-zA-Z]*$/.test(splitStr[i])) return false;
@@ -2703,13 +3029,13 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
               id = _this$props$noteId.id,
               title = _this$props$noteId.title,
               category = _this$props$noteId.category,
-              tags = _this$props$noteId.tags,
+              day = _this$props$noteId.day,
               body = _this$props$noteId.body;
           this.setState({
             id: id,
             title: title,
             category: category,
-            tags: tags,
+            day: day,
             body: body,
             updateForm: true
           });
@@ -2727,7 +3053,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
               id: '',
               title: '',
               category: '',
-              tags: '',
+              day: '',
               body: '',
               updateForm: false,
               updateErrors: []
@@ -2755,37 +3081,33 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
           id = _this$state.id,
           title = _this$state.title,
           category = _this$state.category,
-          tags = _this$state.tags,
+          day = _this$state.day,
           body = _this$state.body;
       var noteUpdate = {
         id: id,
         title: title,
         category: category,
-        tags: tags,
+        day: day,
         body: body
       };
       var note = {
         title: title,
         category: category,
-        tags: tags,
+        day: day,
         body: body
       };
-      var blankTitle = this.isTrimmedBlank(title);
-      var blankBody = this.isTrimmedBlank(body);
-      var blankBook = this.isTrimmedBlank(category);
-      var blankDay = this.isTrimmedBlank(tags);
 
-      if (blankTitle || blankBody || blankBook || blankDay || !this.dayIsNumber(tags)) {
+      if (this.isTrimmedBlank(title) || this.isTrimmedBlank(body) || this.isTrimmedBlank(category) || this.isTrimmedBlank(day) || !this.dayIsNumber(day)) {
         var errorsArr = [];
-        if (blankTitle) errorsArr.push(ERRORS[0]); // Title is blank
+        if (this.isTrimmedBlank(title)) errorsArr.push(ERRORS[0]); // Title is blank
 
-        if (blankBody) errorsArr.push(ERRORS[1]); // Body is blank
+        if (this.isTrimmedBlank(body)) errorsArr.push(ERRORS[1]); // Body is blank
 
-        if (blankBook) errorsArr.push(ERRORS[2]); // Book is blank
+        if (this.isTrimmedBlank(category)) errorsArr.push(ERRORS[2]); // Book is blank
 
-        if (blankDay) errorsArr.push(ERRORS[3]); // Day is blank
+        if (this.isTrimmedBlank(day)) errorsArr.push(ERRORS[3]); // Day is blank
 
-        if (!this.dayIsNumber(tags) && !blankDay) errorsArr.push(ERRORS[4]); // Day is !number
+        if (!this.dayIsNumber(day) && !this.isTrimmedBlank(day)) errorsArr.push(ERRORS[4]); // Day is !number
 
         if (errorsArr.length > 0) {
           return this.setState({
@@ -2798,7 +3120,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
             success: true,
             title: '',
             category: '',
-            tags: '',
+            day: '',
             body: '',
             id: '',
             updateForm: false,
@@ -2815,7 +3137,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
             update: true,
             title: '',
             category: '',
-            tags: '',
+            day: '',
             body: '',
             id: '',
             updateForm: false,
@@ -2872,17 +3194,13 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       var _this$state2 = this.state,
           title = _this$state2.title,
           category = _this$state2.category,
-          tags = _this$state2.tags,
+          day = _this$state2.day,
           body = _this$state2.body;
-      var blankTitle = this.isTrimmedBlank(title);
-      var blankBody = this.isTrimmedBlank(body);
-      var blankBook = this.isTrimmedBlank(category);
-      var blankDay = this.isTrimmedBlank(tags);
-      if (!blankTitle) errorsHash.title = '';
-      if (!blankBody) errorsHash.body = '';
-      if (!blankBook) errorsHash.book = '';
-      if (!blankDay) errorsHash.day = '';
-      if (this.dayIsNumber(tags)) errorsHash.number = '';
+      if (!this.isTrimmedBlank(title)) errorsHash.title = '';
+      if (!this.isTrimmedBlank(body)) errorsHash.body = '';
+      if (!this.isTrimmedBlank(category)) errorsHash.book = '';
+      if (!this.isTrimmedBlank(day)) errorsHash.day = '';
+      if (this.dayIsNumber(day)) errorsHash.number = '';
       return errorsHash;
     }
   }, {
@@ -2932,8 +3250,8 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
         }, this.renderErrors().book), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Day#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "text",
           className: "notes-form-input",
-          onChange: this.handleChange('tags'),
-          value: this.state.tags // required   
+          onChange: this.handleChange('day'),
+          value: this.state.day // required   
 
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "form-errors-notes"
@@ -2979,8 +3297,8 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
         }, this.renderErrors().book), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Day#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "text",
           className: "notes-form-input",
-          value: this.state.tags,
-          onChange: this.handleChange('tags') // required   
+          value: this.state.day,
+          onChange: this.handleChange('day') // required   
 
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "form-errors-notes"
@@ -3183,6 +3501,7 @@ var LogInForm = /*#__PURE__*/function (_React$Component) {
       e.preventDefault();
       var user = Object.assign({}, this.state);
       user.email = user.email.toLocaleLowerCase();
+      user.password = user.password.toLocaleLowerCase();
       this.props.processForm(user);
     }
   }, {
@@ -3385,6 +3704,7 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
       stateErrors: []
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.isTrimmedBlank = _this.isTrimmedBlank.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -3399,6 +3719,11 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
       if (this.props.errors !== prevProps.errors) {}
     }
   }, {
+    key: "isTrimmedBlank",
+    value: function isTrimmedBlank(word) {
+      return word.trim().length === 0;
+    }
+  }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
@@ -3411,26 +3736,17 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
           passwordMatch = _this$state.passwordMatch;
       this.props.clearErrors();
 
-      var trimmerLength = function trimmerLength(word) {
-        return word.trim().length;
-      };
-
-      var blankEmail = trimmerLength(email) < 1;
-      var blankFirst = trimmerLength(firstName) < 1;
-      var blankLast = trimmerLength(lastName) < 1;
-      var blankPassword = trimmerLength(password) < 1;
-
       var isPasswordMatch = function isPasswordMatch() {
         return password === passwordMatch;
       };
 
-      if (blankEmail || blankFirst || blankLast || blankPassword || !isPasswordMatch()) {
+      if (this.isTrimmedBlank(email) || this.isTrimmedBlank(firstName) || this.isTrimmedBlank(lastName) || this.isTrimmedBlank(password) || !isPasswordMatch()) {
         var errorsArr = [];
-        if (blankEmail) errorsArr.push(ERRORS[0]); // 0 Blank email
+        if (this.isTrimmedBlank(email)) errorsArr.push(ERRORS[0]); // 0 Blank email
 
-        if (blankFirst) errorsArr.push(ERRORS[3]); // 3 First name blank
+        if (this.isTrimmedBlank(firstName)) errorsArr.push(ERRORS[3]); // 3 First name blank
 
-        if (blankLast) errorsArr.push(ERRORS[4]); // 4 Last name blank
+        if (this.isTrimmedBlank(lastName)) errorsArr.push(ERRORS[4]); // 4 Last name blank
 
         if (password.length < 5) errorsArr.push(ERRORS[5]); // 5 PW too short
 
@@ -3481,14 +3797,6 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
           firstName = _this$state2.firstName,
           lastName = _this$state2.lastName,
           passwordMatch = _this$state2.passwordMatch;
-
-      var trimmerLength = function trimmerLength(word) {
-        return word.trim().length;
-      };
-
-      var blankEmail = trimmerLength(email) < 1;
-      var blankFirst = trimmerLength(firstName) < 1;
-      var blankLast = trimmerLength(lastName) < 1;
       var errorsHash = {
         emailBlank: '',
         emailInvalid: '',
@@ -3511,9 +3819,9 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
         if (ERRORS.indexOf(err) === 2) errorsHash.emailTaken = err;
         if (ERRORS.indexOf(err) === 5) errorsHash.pwShort = err;
       });
-      if (!blankEmail) errorsHash.emailBlank = '';
-      if (!blankFirst) errorsHash.firstName = '';
-      if (!blankLast) errorsHash.lastName = '';
+      if (!this.isTrimmedBlank(email)) errorsHash.emailBlank = '';
+      if (!this.isTrimmedBlank(firstName)) errorsHash.firstName = '';
+      if (!this.isTrimmedBlank(lastName)) errorsHash.lastName = '';
       if (password.length > 5) errorsHash.pwShort = '';
       if (password === passwordMatch) errorsHash.pwNoMatch = '';
       return errorsHash;
@@ -3864,6 +4172,44 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /***/ }),
 
+/***/ "./frontend/reducers/bookmark_reducer.js":
+/*!***********************************************!*\
+  !*** ./frontend/reducers/bookmark_reducer.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_bookmark_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/bookmark_actions */ "./frontend/actions/bookmark_actions.js");
+
+
+var bookmarkReducer = function bookmarkReducer() {
+  var oldState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(oldState);
+  var newState = Object.assign({}, oldState);
+
+  switch (action.type) {
+    case _actions_bookmark_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_BOOKMARK"]:
+      var setBookmark = action.bookmark.id === undefined ? action.bookmark.bookmark[0] : action.bookmark;
+      if (setBookmark === undefined) return oldState;
+      return Object.assign({}, newState, setBookmark);
+
+    case _actions_bookmark_actions__WEBPACK_IMPORTED_MODULE_0__["REMOVE_BOOKMARK"]:
+      if (newState.id === action.bookmarkId) {
+        return {};
+      }
+
+    default:
+      return oldState;
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (bookmarkReducer);
+
+/***/ }),
+
 /***/ "./frontend/reducers/devos_reducer.js":
 /*!********************************************!*\
   !*** ./frontend/reducers/devos_reducer.js ***!
@@ -4014,6 +4360,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _users_reducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./users_reducer */ "./frontend/reducers/users_reducer.js");
 /* harmony import */ var _devos_reducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./devos_reducer */ "./frontend/reducers/devos_reducer.js");
 /* harmony import */ var _notes_reducer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./notes_reducer */ "./frontend/reducers/notes_reducer.js");
+/* harmony import */ var _bookmark_reducer__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./bookmark_reducer */ "./frontend/reducers/bookmark_reducer.js");
+
 
 
 
@@ -4027,7 +4375,8 @@ var RootReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])(
   errors: _session_errors_reducer__WEBPACK_IMPORTED_MODULE_2__["default"],
   modal: _modal_reducer__WEBPACK_IMPORTED_MODULE_3__["default"],
   devos: _devos_reducer__WEBPACK_IMPORTED_MODULE_5__["default"],
-  notes: _notes_reducer__WEBPACK_IMPORTED_MODULE_6__["default"]
+  notes: _notes_reducer__WEBPACK_IMPORTED_MODULE_6__["default"],
+  bookmark: _bookmark_reducer__WEBPACK_IMPORTED_MODULE_7__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (RootReducer);
 
@@ -4164,6 +4513,42 @@ var configureStore = function configureStore() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (configureStore);
+
+/***/ }),
+
+/***/ "./frontend/util/bookmark_api_util.jsx":
+/*!*********************************************!*\
+  !*** ./frontend/util/bookmark_api_util.jsx ***!
+  \*********************************************/
+/*! exports provided: createBookmark, deleteBookmark, fetchBookmark */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createBookmark", function() { return createBookmark; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteBookmark", function() { return deleteBookmark; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchBookmark", function() { return fetchBookmark; });
+var createBookmark = function createBookmark(bookmark) {
+  return $.ajax({
+    url: "api/bookmarks/",
+    method: 'POST',
+    data: {
+      bookmark: bookmark
+    }
+  });
+};
+var deleteBookmark = function deleteBookmark(bookmarkId) {
+  return $.ajax({
+    url: "api/bookmarks/".concat(bookmarkId),
+    method: 'DELETE'
+  });
+};
+var fetchBookmark = function fetchBookmark() {
+  return $.ajax({
+    url: "api/bookmarks/",
+    method: 'GET'
+  });
+};
 
 /***/ }),
 

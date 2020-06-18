@@ -1,1 +1,1 @@
-json.partial! "api/bookmarks/bookmark", bookmark: @bookmark
+json.extract! @bookmark, :id, :gender, :book, :user_id, :devo_id, :render_day 

@@ -18,7 +18,6 @@ const mapStateToProps = (state) => {
     }
 };
 
-
 const mapDispatchToProps = (dispatch) => ({
     logindemo: () => dispatch(logindemo()),
     processForm: (user) => dispatch(login(user)),
@@ -26,7 +25,6 @@ const mapDispatchToProps = (dispatch) => ({
     openModal: (formType) => dispatch(openModal(formType)), 
     clearErrors: () => dispatch(clearErrors()),
 });
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(LogInForm);
 

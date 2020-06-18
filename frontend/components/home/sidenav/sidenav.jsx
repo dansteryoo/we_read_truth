@@ -1,6 +1,6 @@
 import React from 'react';
 import SideNavItem from './sidenav_item'
-import { allBookTitles, allBookTitlesFormat } from '../bookTitles'
+import { allBookTitles, allBookTitlesFormat } from '../function_helpers/bookTitles'
 
 class SideNav extends React.Component {
     constructor(props) {
@@ -8,57 +8,88 @@ class SideNav extends React.Component {
 
         this.state = {
             book: '',
+            navSet: false,
         }
 
         this.handleGetDevo = this.handleGetDevo.bind(this);
         this.myRef = React.createRef();
         this.renderDevoBookTitle = this.renderDevoBookTitle.bind(this);
-    };
+        this.userBookmarkBlank = this.userBookmarkBlank.bind(this);
+        this.setPayload = this.setPayload.bind(this);
+    }
 
+    userBookmarkBlank() {
+        const { bookmark } = this.props.currentUser
+        return bookmark == (undefined || null)
+    }
+
+    setPayload(data) {
+        let payload;
+        if (!data) return 
+
+        if (data.book.includes("&")) {
+            payload = {
+                gender: data.gender,
+                book: data.book.replace("&", "%26")
+            }
+        } else {
+            payload = {
+                gender: data.gender,
+                book: data.book
+            }
+        }
+
+        return payload
+    }
 
     componentDidMount() {
         let userId = JSON.stringify(this.props.currentUser.id)
         const currentPage = JSON.parse(localStorage.getItem(userId))
 
-        let payload = currentPage;
-
         if (currentPage) {
-            if (currentPage.book.includes("&")) {
-                payload = {
-                    gender: currentPage.gender,
-                    book: currentPage.book.replace("&", "%26")
-                }
-            } else {
-                payload = {
-                    gender: currentPage.gender,
-                    book: currentPage.book
-                }
-            }
-            return this.props.fetchDevoBook(payload)
+            return this.props.fetchDevoBook(this.setPayload(currentPage))
+
+        } else if (!this.userBookmarkBlank()) {
+            const { bookmark } = this.props.currentUser
+            let userPayload = this.setPayload(bookmark)
+
+            return this.props.fetchDevoBook(userPayload)
+                .then(() => this.setState({ book: bookmark.book }))
         }
     }
 
-    // componentWillUnmount() {
-    // };
+    componentWillUnmount() {
+    };
 
     componentDidUpdate(prevProps) {
-        const { devoBook } = this.props;
+        const { currentUser, devoBook, bookmark } = this.props
+        let propsBookmarkBlank = Object.values(bookmark).length < 1
 
         if (devoBook !== prevProps.devoBook) {
             if (devoBook.length > 0) {
                 this.setState({ book: devoBook[0].book })
 
-                //---------- SCROLL TO TOP on render ----------//
-                if (devoBook[0].book !== this.state.book) {
-                    this.myRef.current.scrollTo(0, 0);
-                }
+                devoBook[0].book !== this.state.book
+                    ? this.myRef.current.scrollTo(0, 0)
+                    : false
+
+            } else if (!propsBookmarkBlank && bookmark.user_id === currentUser.id) {
+                this.props.fetchDevoBook(this.setPayload(bookmark))
+
+            } else if (!this.userBookmarkBlank()) {
+                this.props.fetchDevoBook(this.setPayload(currentUser.bookmark))
             }
+
+            !this.state.navSet
+                ? this.setState({ navSet: true })
+                : false
         }
-    };
+    }
+
 
     handleGetDevo(devoId) {
-        this.props.fetchDevo(devoId);
-    };
+        this.props.fetchDevo(devoId)
+    }
 
     renderDevoBookTitle () {
         const { book } = this.state;
@@ -75,7 +106,6 @@ class SideNav extends React.Component {
 
         return devoBookTitle
     }
-    
 
     render() {
 

@@ -26,6 +26,17 @@ $darkpink: #ff8da1;
             font-weight: bold;
         }
 
+        #max-mclean-audio {
+            font-size: 25px;
+            color: orange;
+            float: right;
+            padding-right: 10px;
+        }
+
+        #max-mclean-audio:hover {
+            cursor: pointer;
+        }
+
         #bookmark {
             font-size: 25px;
             color: orange;

@@ -1,1 +1,1 @@
-json.extract! notes, :id, :title, :body, :category, :tags, :notary_id, :created_at, :updated_at
+json.extract! notes, :id, :title, :body, :category, :day, :notary_id, :created_at, :updated_at
