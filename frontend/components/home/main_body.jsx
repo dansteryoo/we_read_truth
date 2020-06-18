@@ -99,17 +99,17 @@ class MainBody extends React.Component {
     }
 
     localStorageFunc(condition) {
-        let stringifyCurrentUserId = JSON.stringify(this.props.currentUser.id)
+        let userId = JSON.stringify(this.props.currentUser.id)
 
         switch (condition) {
             case 'getCurrentPage':
-                return JSON.parse(localStorage.getItem(stringifyCurrentUserId))
+                return JSON.parse(localStorage.getItem(userId))
 
             case 'setCurrentPage':
-                return localStorage.setItem(stringifyCurrentUserId, JSON.stringify(this.state))
+                return localStorage.setItem(userId, JSON.stringify(this.state))
 
             case 'removeCurrentPage':
-                return localStorage.removeItem(stringifyCurrentUserId);
+                return localStorage.removeItem(userId);
 
             default:
                 return
@@ -143,11 +143,15 @@ class MainBody extends React.Component {
                     bookmarkId: currentUser.bookmark.id,
                     bookmark: true
                  }))
-                 
-        } else {
-            return this.localStorageFunc('removeCurrentPage')
-        }
-            
+
+        } else if (currentPage) {
+            return fetchDevo(currentPage.id)
+                .then(() => this.setState({
+                    renderDay: currentPage.render_day,
+                    bookmarkId: currentPage.bookmarkId,
+                    bookmark: true
+                })) 
+        }   
     }
 
     componentWillUnmount() {
@@ -163,19 +167,21 @@ class MainBody extends React.Component {
         const { bookmarkId } = this.state
         const bookmarkBlank = Object.values(bookmark).length < 1
 
-
         if (this.isMainBodyDevoNull()) return 
-
 
         //---------- SET bookmarkId to props.bookmark.id ----------//
         if ((bookmark || !bookmarkBlank) && bookmarkId !== bookmark.id) {
-            this.setState({ bookmarkId: bookmark.id})
+
+            !this.isValidNumber(bookmarkId)
+                ? this.setState({ bookmarkId: bookmark.id })
+                : this.setState({ bookmarkId: '' })
         }
- 
+
         //---------- SET renderDay to this.state ----------//
         if (this.renderDay() && this.renderDay() !== this.state.renderDay) {
             this.setState({ renderDay: this.renderDay() })
         }
+
         //---------- PREVENTS MULTIPLE this.setState on update ----------//
         if (this.state.mainBodyChanged) {
             this.setState({ mainBodyChanged: false })
@@ -201,7 +207,7 @@ class MainBody extends React.Component {
                 bookmark: false,
             })
         }
-    };
+    }
 
     componentWillUnmount() {
         window.removeEventListener('resize',

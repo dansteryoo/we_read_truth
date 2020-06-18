@@ -3,7 +3,6 @@ import SidNavContainer from './sidenav/sidenav_container';
 import NavBarContainer from '../nav/navbar_container';
 import NotesFormContainer from '../notes/notes_form_container';
 import MainBodyContainer from './main_body_container';
-import { fetchDevoBook } from '../../util/devos_api_util';
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -13,23 +12,21 @@ class HomePage extends React.Component {
             leftOpen: true,
             rightOpen: true,
             currentUser: null,
-            bookmark: null,
-            devoFetch: false,
+            bookmark: false
         }
 
         this.toggleSidebar = this.toggleSidebar.bind(this);
     };
 
     componentDidMount() {
-        this.setState({ 
-            currentUser: this.props.currentUser.id, 
-            devoFetch: true
-         })
+        this.setState({ currentUser: this.props.currentUser.id })
         this.props.clearErrors()
     };
 
     componentWillUnmount() {
         this.props.clearDevoState()
+        localStorage.removeItem(JSON.stringify(this.props.currentUser.id));
+
     };
 
     toggleSidebar(event) {
