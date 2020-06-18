@@ -64,8 +64,8 @@ class NavBar extends React.Component {
 
         <ul className='nav-links'>
           <li className='devo-li'>
-          <a href="mailto:wereadtruth.app@gmail.com?subject=We Read Truth Feedback: ">Contact Us</a>  
-        </li>
+            <a href="mailto:wereadtruth.app@gmail.com?subject=We Read Truth Feedback: ">Contact Us</a>  
+          </li>
           <li className='devo-li' onClick={() => this.props.openModal('Categories')}>
             Devotionals
           </li>
