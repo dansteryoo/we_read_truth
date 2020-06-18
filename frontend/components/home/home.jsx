@@ -3,6 +3,7 @@ import SidNavContainer from './sidenav/sidenav_container';
 import NavBarContainer from '../nav/navbar_container';
 import NotesFormContainer from '../notes/notes_form_container';
 import MainBodyContainer from './main_body_container';
+import { fetchDevoBook } from '../../util/devos_api_util';
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -13,13 +14,37 @@ class HomePage extends React.Component {
             rightOpen: true,
             currentUser: null,
             bookmark: null,
+            devoFetch: false,
         }
 
         this.toggleSidebar = this.toggleSidebar.bind(this);
+        this.setPayload = this.setPayload.bind(this);
     };
 
+    setPayload(data) {
+        if (!data) return
+        let payload;
+
+        if (data.book.includes("&")) {
+            payload = {
+                gender: data.gender,
+                book: data.book.replace("&", "%26")
+            }
+        } else {
+            payload = {
+                gender: data.gender,
+                book: data.book
+            }
+        }
+
+        return payload
+    }
+
     componentDidMount() {
-        this.setState({ currentUser: this.props.currentUser.id })
+        this.setState({ 
+            currentUser: this.props.currentUser.id, 
+            devoFetch: true
+         })
         this.props.clearErrors()
     };
 
@@ -28,7 +53,13 @@ class HomePage extends React.Component {
     };
 
     componentDidUpdate(prevProps) {
-        if (this.props.mainBodyDevo !== prevProps.mainBodyDevo) {
+        const { bookmark, fetchDevo } = this.props 
+
+        if (prevProps.bookmark != bookmark && this.state.devoFetch) {
+            if (bookmark !== null || Object.values(bookmark).length > 1) {
+                fetchDevo(bookmark.devo_id)
+                    .then(() => this.setState({ devoFetch: false }))
+            }
         }
     };
 
@@ -43,7 +74,7 @@ class HomePage extends React.Component {
         let rightOpen = this.state.rightOpen ? 'open' : 'closed';
 
         const { currentUser } = this.props;
-
+        
         return (
             <>
             {/* ---------- TOP NAV  ---------- */}

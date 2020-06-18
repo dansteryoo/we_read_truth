@@ -8,6 +8,7 @@ class SideNav extends React.Component {
 
         this.state = {
             book: '',
+            navSet: false,
         }
 
         this.handleGetDevo = this.handleGetDevo.bind(this);
@@ -24,6 +25,7 @@ class SideNav extends React.Component {
 
     setPayload(data) {
         let payload;
+        if (!data) return 
 
         if (data.book.includes("&")) {
             payload = {
@@ -41,38 +43,39 @@ class SideNav extends React.Component {
     }
 
     componentDidMount() {
-        const { bookmark, currentUser } = this.props
+        const { currentUser } = this.props
 
         if (this.checkUserBookmark()) {
             let userPayload = this.setPayload(currentUser.bookmark)
 
             return this.props.fetchDevoBook(userPayload)
                 .then(() => this.setState({ book: currentUser.bookmark.book }))
-
-        } else if (currentUser.id === bookmark.user_id) {
-            let propsPayload = this.setPayload(bookmark)
-            
-            return this.props.fetchDevoBook(propsPayload)
-                .then(() => this.setState({ book: bookmark.book }))
         }
     }
 
-    // componentWillUnmount() {
-    // };
+    componentWillUnmount() {
+        // this.props.clearDevoState()
+    };
 
     componentDidUpdate(prevProps) {
-        const { devoBook } = this.props;
+        const { currentUser, devoBook, bookmark } = this.props;
 
         if (devoBook !== prevProps.devoBook) {
             if (devoBook.length > 0) {
                 this.setState({ book: devoBook[0].book })
+                if (devoBook[0].book !== this.state.book) return this.myRef.current.scrollTo(0, 0)
 
-                //---------- SCROLL TO TOP on render ----------//
-                if (devoBook[0].book !== this.state.book) {
-                    this.myRef.current.scrollTo(0, 0)
-                }
+            } else if (Object.values(bookmark).length > 0 && bookmark.user_id === currentUser.id) {
+                currentUser.bookmark
+                    ? this.props.fetchDevoBook(this.setPayload(bookmark))
+                    : this.props.fetchDevoBook(this.setPayload(currentUser.bookmark))
+
+                !this.state.navSet
+                    ? this.props.fetchDevoBook(this.setPayload(bookmark))
+                        .then(() => this.setState({ navSet: true }))
+                    : false 
             }
-        }
+        } 
     }
 
     handleGetDevo(devoId) {

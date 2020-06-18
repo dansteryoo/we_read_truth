@@ -65,7 +65,7 @@ class NotesForm extends React.Component {
                 if (this.props.notes.length < 1) return 
                 
                 //---------- AND if current props array is NOT EMPTY then reset state ----------//
-                console.log(this.props.notes)
+                
                 if (!this.props.notes.some(ele => ele.id === this.state.id)) {
                     this.setState({
                         id: '',

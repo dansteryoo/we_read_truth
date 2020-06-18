@@ -21,13 +21,13 @@ const mapStateToProps = (state) => {
             devoBook.reverse()
         }
     };
-    
+
     return {
         currentUser: state.users[state.session.id],
         errors: state.errors,
         mainBodyDevo: state.devos.mainBodyDevo || null,
         devoBook: devoBook,
-        bookmark: state.bookmark
+        bookmark: state.bookmark 
     }
 };
 

@@ -7,6 +7,7 @@ class MainBody extends React.Component {
         super(props);
 
         this.state = {
+            bookmarkId: '',
             gender: '',
             book: '',
             id: null,
@@ -87,23 +88,16 @@ class MainBody extends React.Component {
             this.setState({ width: window.innerWidth, height: window.innerHeight })
         );
 
-        const { bookmark, currentUser } = this.props
+        const { currentUser, fetchDevo, fetchBookmark } = this.props
 
         if (this.checkUserBookmark()) {
-            return this.props.fetchDevo(currentUser.bookmark.devo_id)
+            return fetchDevo(currentUser.bookmark.devo_id)
                 .then(() => this.setState({
                     renderDay: currentUser.bookmark.render_day,
                     bookmark: true
                 }))
-        } else if (currentUser.id === bookmark.user_id) {
-            //---------- THEN fetch devo and setState ----------//
-            return this.props.fetchDevo(bookmark.devo_id)
-                .then(() => this.setState({ 
-                    renderDay: bookmark.render_day,
-                    bookmark: true 
-                }))
         } else {
-            return this.props.fetchBookmark()
+            return fetchBookmark()
         }
     }
 
@@ -115,19 +109,20 @@ class MainBody extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (this.isMainBodyDevoNull()) return 
-
+        console.log('update');
         //---------- SET renderDay to this.state ----------//
         if (this.renderDay() && this.renderDay() !== this.state.renderDay) {
             this.setState({ renderDay: this.renderDay() })
         }
         //---------- PREVENTS MULTIPLE this.setState on update ----------//
         if (this.state.mainBodyChanged) {
-            this.props.fetchBookmark()
             this.setState({ mainBodyChanged: false })
         }
 
-        if (prevProps.bookmark.id !== this.props.bookmark.id) {
-            return this.props.fetchBookmark()
+        if (prevProps !== this.props) {
+            if (!this.state.renderDay) {
+                this.setState({ renderDay: this.props.bookmark.render_day })  
+            }
         }
 
         //---------- UPDATES new mainBodyDevo ----------//
@@ -152,6 +147,10 @@ class MainBody extends React.Component {
             id === this.props.bookmark.devo_id
                 ? this.setState({ bookmark: true })
                 : this.setState({ bookmark: false })
+        }
+
+        if (this.props.bookmark.id !== this.state.bookmarkId) {
+            this.setState({ bookmarkId: this.props.bookmark.id })
         }
     }
 
@@ -246,13 +245,14 @@ class MainBody extends React.Component {
         const { bookmark, id, renderDay, gender, book } = this.state
         const { currentUser, createBookmark, deleteBookmark } = this.props
 
-        let bookmarkData = {
+        let bookmarkData = { 
+            gender, 
+            book,
             user_id: currentUser.id, 
             devo_id: id,
             render_day: renderDay,
-            gender, book,
         }
-        
+        console.log(this.props.bookmark)
         !bookmark
             ? createBookmark(bookmarkData)
             : deleteBookmark(this.props.bookmark.id)

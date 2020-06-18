@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     resource :session, only: [:create, :destroy]
     resources :devos, only: [:index, :show]
     resources :notes, only: [:index, :show, :create, :update, :destroy]
-    resources :bookmarks, only: [:index, :create, :delete]
+    resources :bookmarks, only: [:index, :create, :destroy]
     get '/search', to: 'devos#search'
     get '/book', to: 'devos#book'
   end

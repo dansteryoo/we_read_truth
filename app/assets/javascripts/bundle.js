@@ -724,6 +724,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _nav_navbar_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../nav/navbar_container */ "./frontend/components/nav/navbar_container.js");
 /* harmony import */ var _notes_notes_form_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../notes/notes_form_container */ "./frontend/components/notes/notes_form_container.js");
 /* harmony import */ var _main_body_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./main_body_container */ "./frontend/components/home/main_body_container.js");
+/* harmony import */ var _util_devos_api_util__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../util/devos_api_util */ "./frontend/util/devos_api_util.jsx");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -754,6 +755,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var HomePage = /*#__PURE__*/function (_React$Component) {
   _inherits(HomePage, _React$Component);
 
@@ -769,17 +771,40 @@ var HomePage = /*#__PURE__*/function (_React$Component) {
       leftOpen: true,
       rightOpen: true,
       currentUser: null,
-      bookmark: null
+      bookmark: null,
+      devoFetch: false
     };
     _this.toggleSidebar = _this.toggleSidebar.bind(_assertThisInitialized(_this));
+    _this.setPayload = _this.setPayload.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(HomePage, [{
+    key: "setPayload",
+    value: function setPayload(data) {
+      if (!data) return;
+      var payload;
+
+      if (data.book.includes("&")) {
+        payload = {
+          gender: data.gender,
+          book: data.book.replace("&", "%26")
+        };
+      } else {
+        payload = {
+          gender: data.gender,
+          book: data.book
+        };
+      }
+
+      return payload;
+    }
+  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.setState({
-        currentUser: this.props.currentUser.id
+        currentUser: this.props.currentUser.id,
+        devoFetch: true
       });
       this.props.clearErrors();
     }
@@ -791,7 +816,21 @@ var HomePage = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
-      if (this.props.mainBodyDevo !== prevProps.mainBodyDevo) {}
+      var _this2 = this;
+
+      var _this$props = this.props,
+          bookmark = _this$props.bookmark,
+          fetchDevo = _this$props.fetchDevo;
+
+      if (prevProps.bookmark != bookmark && this.state.devoFetch) {
+        if (bookmark !== null || Object.values(bookmark).length > 1) {
+          fetchDevo(bookmark.devo_id).then(function () {
+            return _this2.setState({
+              devoFetch: false
+            });
+          });
+        }
+      }
     }
   }, {
     key: "toggleSidebar",
@@ -880,11 +919,31 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var mapStateToProps = function mapStateToProps(state) {
+  var devoBook;
+
+  if (state.devos.devoBook === undefined) {
+    devoBook = [];
+  } else {
+    devoBook = Object.values(state.devos.devoBook).filter(function (ele) {
+      return ele.title !== "Weekly Truth" && ele.title !== "Grace Day";
+    });
+
+    if (devoBook[0].gender === "HE") {
+      devoBook.reverse();
+    }
+
+    if (devoBook[0].gender === "SHE" && devoBook[0].book === "Judges") {
+      devoBook.reverse();
+    }
+  }
+
+  ;
   return {
     currentUser: state.users[state.session.id],
     errors: state.errors,
-    mainBodyDevo: state.devos.mainBodyDevo || null,
+    devoBook: devoBook,
     bookmark: state.bookmark
   };
 };
@@ -902,6 +961,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     clearDevoState: function clearDevoState() {
       return dispatch(Object(_actions_devo_actions__WEBPACK_IMPORTED_MODULE_2__["clearDevoState"])());
+    },
+    fetchDevo: function fetchDevo(devoId) {
+      return dispatch(Object(_actions_devo_actions__WEBPACK_IMPORTED_MODULE_2__["fetchDevo"])(devoId));
     }
   };
 };
@@ -974,6 +1036,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
+      bookmarkId: '',
       gender: '',
       book: '',
       id: null,
@@ -1058,26 +1121,19 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
         height: window.innerHeight
       }));
       var _this$props = this.props,
-          bookmark = _this$props.bookmark,
-          currentUser = _this$props.currentUser;
+          currentUser = _this$props.currentUser,
+          fetchDevo = _this$props.fetchDevo,
+          fetchBookmark = _this$props.fetchBookmark;
 
       if (this.checkUserBookmark()) {
-        return this.props.fetchDevo(currentUser.bookmark.devo_id).then(function () {
+        return fetchDevo(currentUser.bookmark.devo_id).then(function () {
           return _this3.setState({
             renderDay: currentUser.bookmark.render_day,
             bookmark: true
           });
         });
-      } else if (currentUser.id === bookmark.user_id) {
-        //---------- THEN fetch devo and setState ----------//
-        return this.props.fetchDevo(bookmark.devo_id).then(function () {
-          return _this3.setState({
-            renderDay: bookmark.render_day,
-            bookmark: true
-          });
-        });
       } else {
-        return this.props.fetchBookmark();
+        return fetchBookmark();
       }
     }
   }, {
@@ -1093,7 +1149,8 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
     value: function componentDidUpdate(prevProps) {
       var _this4 = this;
 
-      if (this.isMainBodyDevoNull()) return; //---------- SET renderDay to this.state ----------//
+      if (this.isMainBodyDevoNull()) return;
+      console.log('update'); //---------- SET renderDay to this.state ----------//
 
       if (this.renderDay() && this.renderDay() !== this.state.renderDay) {
         this.setState({
@@ -1103,14 +1160,17 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
 
 
       if (this.state.mainBodyChanged) {
-        this.props.fetchBookmark();
         this.setState({
           mainBodyChanged: false
         });
       }
 
-      if (prevProps.bookmark.id !== this.props.bookmark.id) {
-        return this.props.fetchBookmark();
+      if (prevProps !== this.props) {
+        if (!this.state.renderDay) {
+          this.setState({
+            renderDay: this.props.bookmark.render_day
+          });
+        }
       } //---------- UPDATES new mainBodyDevo ----------//
 
 
@@ -1146,6 +1206,12 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
           bookmark: true
         }) : this.setState({
           bookmark: false
+        });
+      }
+
+      if (this.props.bookmark.id !== this.state.bookmarkId) {
+        this.setState({
+          bookmarkId: this.props.bookmark.id
         });
       }
     } //---------- RENDER FUNCTIONS ----------//
@@ -1240,12 +1306,13 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
           createBookmark = _this$props2.createBookmark,
           deleteBookmark = _this$props2.deleteBookmark;
       var bookmarkData = {
+        gender: gender,
+        book: book,
         user_id: currentUser.id,
         devo_id: id,
-        render_day: renderDay,
-        gender: gender,
-        book: book
+        render_day: renderDay
       };
+      console.log(this.props.bookmark);
       !bookmark ? createBookmark(bookmarkData) : deleteBookmark(this.props.bookmark.id);
       this.setState({
         bookmark: !bookmark
@@ -1467,7 +1534,8 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      book: ''
+      book: '',
+      navSet: false
     };
     _this.handleGetDevo = _this.handleGetDevo.bind(_assertThisInitialized(_this));
     _this.myRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
@@ -1487,6 +1555,7 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
     key: "setPayload",
     value: function setPayload(data) {
       var payload;
+      if (!data) return;
 
       if (data.book.includes("&")) {
         payload = {
@@ -1507,9 +1576,7 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      var _this$props = this.props,
-          bookmark = _this$props.bookmark,
-          currentUser = _this$props.currentUser;
+      var currentUser = this.props.currentUser;
 
       if (this.checkUserBookmark()) {
         var userPayload = this.setPayload(currentUser.bookmark);
@@ -1518,31 +1585,35 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
             book: currentUser.bookmark.book
           });
         });
-      } else if (currentUser.id === bookmark.user_id) {
-        var propsPayload = this.setPayload(bookmark);
-        return this.props.fetchDevoBook(propsPayload).then(function () {
-          return _this2.setState({
-            book: bookmark.book
-          });
-        });
       }
-    } // componentWillUnmount() {
-    // };
-
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {// this.props.clearDevoState()
+    }
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
-      var devoBook = this.props.devoBook;
+      var _this3 = this;
+
+      var _this$props = this.props,
+          currentUser = _this$props.currentUser,
+          devoBook = _this$props.devoBook,
+          bookmark = _this$props.bookmark;
 
       if (devoBook !== prevProps.devoBook) {
         if (devoBook.length > 0) {
           this.setState({
             book: devoBook[0].book
-          }); //---------- SCROLL TO TOP on render ----------//
-
-          if (devoBook[0].book !== this.state.book) {
-            this.myRef.current.scrollTo(0, 0);
-          }
+          });
+          if (devoBook[0].book !== this.state.book) return this.myRef.current.scrollTo(0, 0);
+        } else if (Object.values(bookmark).length > 0 && bookmark.user_id === currentUser.id) {
+          currentUser.bookmark ? this.props.fetchDevoBook(this.setPayload(bookmark)) : this.props.fetchDevoBook(this.setPayload(currentUser.bookmark));
+          !this.state.navSet ? this.props.fetchDevoBook(this.setPayload(bookmark)).then(function () {
+            return _this3.setState({
+              navSet: true
+            });
+          }) : false;
         }
       }
     }
@@ -1570,7 +1641,7 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "left-container"
@@ -1585,7 +1656,7 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sidenav_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
           days: i,
           dailyDevo: dailyDevo,
-          handleGetDevo: _this3.handleGetDevo,
+          handleGetDevo: _this4.handleGetDevo,
           key: dailyDevo.id
         });
       }))));
@@ -2965,8 +3036,6 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
           //---------- AND if current props array is empty SKIP reset state ----------//
           if (this.props.notes.length < 1) return; //---------- AND if current props array is NOT EMPTY then reset state ----------//
 
-          console.log(this.props.notes);
-
           if (!this.props.notes.some(function (ele) {
             return ele.id === _this2.state.id;
           })) {
@@ -4113,14 +4182,14 @@ var bookmarkReducer = function bookmarkReducer() {
 
   switch (action.type) {
     case _actions_bookmark_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_BOOKMARK"]:
-      if (action.bookmark.bookmark[0] === undefined) return oldState; // debugger
-
-      return Object.assign({}, newState, action.bookmark.bookmark[0]);
+      var setBookmark = action.bookmark.id === undefined ? action.bookmark.bookmark[0] : action.bookmark;
+      if (setBookmark === undefined) return oldState;
+      return Object.assign({}, newState, setBookmark);
 
     case _actions_bookmark_actions__WEBPACK_IMPORTED_MODULE_0__["REMOVE_BOOKMARK"]:
-      // debugger
-      delete newState[action.bookmark.bookmark[0]];
-      return Object.assign({}, newState, action.bookmark.bookmark[0]);
+      if (newState.id === action.bookmarkId) {
+        return {};
+      }
 
     default:
       return oldState;

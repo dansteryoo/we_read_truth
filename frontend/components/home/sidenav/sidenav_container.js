@@ -25,7 +25,7 @@ const mapStateToProps = (state) => {
         currentUser: state.users[state.session.id],
         errors: state.errors,
         devoBook: devoBook,
-        bookmark: state.bookmark
+        bookmark: state.bookmark 
     }
 };
 
