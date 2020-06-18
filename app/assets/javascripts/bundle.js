@@ -3511,7 +3511,6 @@ var LogInForm = /*#__PURE__*/function (_React$Component) {
       e.preventDefault();
       var user = Object.assign({}, this.state);
       user.email = user.email.toLocaleLowerCase();
-      user.password = user.password.toLocaleLowerCase();
       this.props.processForm(user);
     }
   }, {
@@ -3781,7 +3780,6 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
       };
       user.first_name = capitalizeFirstLetter(firstName);
       user.last_name = capitalizeFirstLetter(lastName);
-      user.password = password.toLocaleLowerCase();
 
       if (stateErrors.length < 2) {
         return this.props.processForm(user);
