@@ -1,28 +1,33 @@
 import React from 'react';
 import axios from 'axios';
+import { regBibleTitles, maxMcLeanBooks } from './bookTitles'
 
 class MainBody extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            bookmarkId: '',
             gender: '',
             book: '',
             id: null,
             title: '',
             passages: [],
-            summary: '', 
+            summary: '',
             img: '',
             esvPassage: [],
             mainBodyChanged: false,
             bookmark: false,
-            renderDay: '',
+            renderDay: null,
+            width: 0,
+            height: 0
         }
 
         this.ESVpassageGetter = this.ESVpassageGetter.bind(this);
         this.renderDay = this.renderDay.bind(this);
         this.myRef = React.createRef();
         this.toggleBookmark = this.toggleBookmark.bind(this);
+        this.toggleAudio = this.toggleAudio.bind(this);
         this.splitPassages = this.splitPassages.bind(this);
         this.isMainBodyDevoNull = this.isMainBodyDevoNull.bind(this);
         this.setBookmark = this.setBookmark.bind(this);
@@ -102,6 +107,10 @@ class MainBody extends React.Component {
     //---------- REACT LIFE CYCLES ----------//
 
     componentDidMount() {
+        window.addEventListener('resize',
+            this.setState({ width: window.innerWidth, height: window.innerHeight })
+        );
+
         this.setBookmark()
         const currentPage = this.localStorageFunc('getCurrentPage')
 
@@ -147,7 +156,9 @@ class MainBody extends React.Component {
     };
 
     componentWillUnmount() {
-
+        window.removeEventListener('resize',
+            this.setState({ width: window.innerWidth, height: window.innerHeight })
+        );
     }
 
     //---------- RENDER FUNCTIONS ----------//
@@ -245,6 +256,36 @@ class MainBody extends React.Component {
         this.setState({ bookmark: !bookmark })
     }
 
+    toggleAudio() {
+        const { width, height, esvPassage } = this.state
+        const passageSplit = esvPassage[0].passage.split(' ')
+
+        const checkForNumber = (data) => {
+            return data.match(/^([1-9]|[1-8][0-9]|9[0-9]|1[0-4][0-9]|150)$/g)
+        }
+
+        let book = passageSplit[0]
+        let chapter = passageSplit[passageSplit.length - 1].split(':')[0]
+
+        if (checkForNumber(book)) {
+            book = `${book} ${passageSplit[1]}`
+        } else if (book === 'Song') {
+            book = 'Song of Songs'
+        }
+
+        let bookName = maxMcLeanBooks[regBibleTitles.indexOf(book)]
+        let theURL = `https://www.biblegateway.com/audio/mclean/esv/${bookName}.${chapter}`
+        let winName = 'Max McLean Audio'
+        let winParams = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
+            width=${Math.floor(width / 1.4)},
+            height=${Math.floor(height / 2.2)},
+            left=100,top=100`;
+
+        bookName === undefined
+            ? false
+            : window.open(theURL, winName, winParams);
+    }
+
     render() {
         if (this.isMainBodyDevoNull() && !this.localStorageFunc('getCurrentPage')) return <div></div>
 
@@ -258,6 +299,10 @@ class MainBody extends React.Component {
                         onClick={() => this.toggleBookmark()} 
                         aria-hidden="true">
                         </i>
+                    <i id='max-mclean-audio' className="fa fa-volume-up"
+                        onClick={() => this.toggleAudio()}
+                        aria-hidden="true">
+                    </i>
                 </div>
             <div className='devo-main-container' ref={this.myRef}>
                 <div className="form-or-separator-mainbody-passages">

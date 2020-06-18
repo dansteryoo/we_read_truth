@@ -72,7 +72,6 @@ class SignUp extends React.Component {
         let user = { email, password, firstName, lastName }
         user.first_name = capitalizeFirstLetter(firstName)
         user.last_name = capitalizeFirstLetter(lastName)
-        user.password = password.toLocaleLowerCase()
 
         if (stateErrors.length < 2) {
             return this.props.processForm(user) 
