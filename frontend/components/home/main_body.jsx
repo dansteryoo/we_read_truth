@@ -127,9 +127,9 @@ class MainBody extends React.Component {
 
         this.setBookmark()
         const currentPage = this.localStorageFunc('getCurrentPage')
-
+        
         //---------- IF localStorage EXISTS then setState ----------//
-        if (currentPage) {
+        if (currentPage && !this.userBookmarkBlank()) {
             this.setState({ 
                 renderDay: currentPage.renderDay,
                 bookmarkId: currentPage.bookmarkId
@@ -137,7 +137,6 @@ class MainBody extends React.Component {
             return this.props.fetchDevo(currentPage.id);
         } else {
             const { currentUser, fetchDevo, fetchBookmark } = this.props
-
             if (!this.userBookmarkBlank()) {
                 return fetchDevo(currentUser.bookmark.devo_id)
                     .then(() => this.setState({
@@ -145,8 +144,6 @@ class MainBody extends React.Component {
                         bookmarkId: currentUser.bookmark.id,
                         bookmark: true
                     }))
-            } else {
-                return fetchBookmark()
             }
         }
     }

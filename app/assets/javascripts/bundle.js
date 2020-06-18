@@ -1119,7 +1119,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       this.setBookmark();
       var currentPage = this.localStorageFunc('getCurrentPage'); //---------- IF localStorage EXISTS then setState ----------//
 
-      if (currentPage) {
+      if (currentPage && !this.userBookmarkBlank()) {
         this.setState({
           renderDay: currentPage.renderDay,
           bookmarkId: currentPage.bookmarkId
@@ -1139,8 +1139,6 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
               bookmark: true
             });
           });
-        } else {
-          return fetchBookmark();
         }
       }
     }
