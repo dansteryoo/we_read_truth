@@ -1,5 +1,8 @@
 /* 
+<<<<<<< HEAD:frontend/components/home/bookTitles.js
+=======
 
+>>>>>>> dev:frontend/components/home/function_helpers/bookTitles.js
 chapterDict['Gen'] = 50;
 chapterDict['Exod'] = 40;
 chapterDict['Lev'] = 27;

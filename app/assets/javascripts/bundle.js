@@ -503,7 +503,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "themeBooks", function() { return themeBooks; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "themeBookFormat", function() { return themeBookFormat; });
 /* 
+<<<<<<< HEAD:frontend/components/home/bookTitles.js
+=======
 
+>>>>>>> dev:frontend/components/home/function_helpers/bookTitles.js
 chapterDict['Gen'] = 50;
 chapterDict['Exod'] = 40;
 chapterDict['Lev'] = 27;
@@ -724,7 +727,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _nav_navbar_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../nav/navbar_container */ "./frontend/components/nav/navbar_container.js");
 /* harmony import */ var _notes_notes_form_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../notes/notes_form_container */ "./frontend/components/notes/notes_form_container.js");
 /* harmony import */ var _main_body_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./main_body_container */ "./frontend/components/home/main_body_container.js");
-/* harmony import */ var _util_devos_api_util__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../util/devos_api_util */ "./frontend/util/devos_api_util.jsx");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -755,7 +757,6 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
-
 var HomePage = /*#__PURE__*/function (_React$Component) {
   _inherits(HomePage, _React$Component);
 
@@ -770,9 +771,7 @@ var HomePage = /*#__PURE__*/function (_React$Component) {
     _this.state = {
       leftOpen: true,
       rightOpen: true,
-      currentUser: null,
-      bookmark: null,
-      devoFetch: false
+      currentUser: null
     };
     _this.toggleSidebar = _this.toggleSidebar.bind(_assertThisInitialized(_this));
     return _this;
@@ -782,8 +781,7 @@ var HomePage = /*#__PURE__*/function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.setState({
-        currentUser: this.props.currentUser.id,
-        devoFetch: true
+        currentUser: this.props.currentUser.id
       });
       this.props.clearErrors();
     }
@@ -791,6 +789,7 @@ var HomePage = /*#__PURE__*/function (_React$Component) {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
       this.props.clearDevoState();
+      localStorage.removeItem(JSON.stringify(this.props.currentUser.id));
     }
   }, {
     key: "toggleSidebar",
@@ -1005,8 +1004,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       bookmark: false,
       renderDay: null,
       width: 0,
-      height: 0,
-      localStorage: false
+      height: 0
     };
     _this.ESVpassageGetter = _this.ESVpassageGetter.bind(_assertThisInitialized(_this));
     _this.renderDay = _this.renderDay.bind(_assertThisInitialized(_this));
@@ -1090,17 +1088,17 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "localStorageFunc",
     value: function localStorageFunc(condition) {
-      var stringifyCurrentUserId = JSON.stringify(this.props.currentUser.id);
+      var userId = JSON.stringify(this.props.currentUser.id);
 
       switch (condition) {
         case 'getCurrentPage':
-          return JSON.parse(localStorage.getItem(stringifyCurrentUserId));
+          return JSON.parse(localStorage.getItem(userId));
 
         case 'setCurrentPage':
-          return localStorage.setItem(stringifyCurrentUserId, JSON.stringify(this.state));
+          return localStorage.setItem(userId, JSON.stringify(this.state));
 
         case 'removeCurrentPage':
-          return localStorage.removeItem(stringifyCurrentUserId);
+          return localStorage.removeItem(userId);
 
         default:
           return;
@@ -1136,8 +1134,14 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
             bookmark: true
           });
         });
-      } else {
-        return this.localStorageFunc('removeCurrentPage');
+      } else if (currentPage) {
+        return fetchDevo(currentPage.id).then(function () {
+          return _this3.setState({
+            renderDay: currentPage.render_day,
+            bookmarkId: currentPage.bookmarkId,
+            bookmark: true
+          });
+        });
       }
     }
   }, {
@@ -1162,8 +1166,10 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       if (this.isMainBodyDevoNull()) return; //---------- SET bookmarkId to props.bookmark.id ----------//
 
       if ((bookmark || !bookmarkBlank) && bookmarkId !== bookmark.id) {
-        this.setState({
+        !this.isValidNumber(bookmarkId) ? this.setState({
           bookmarkId: bookmark.id
+        }) : this.setState({
+          bookmarkId: ''
         });
       } //---------- SET renderDay to this.state ----------//
 
@@ -1211,6 +1217,14 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
           bookmark: false
         });
       }
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      window.removeEventListener('resize', this.setState({
+        width: window.innerWidth,
+        height: window.innerHeight
+      }));
     } //---------- RENDER FUNCTIONS ----------//
 
   }, {
@@ -3499,7 +3513,6 @@ var LogInForm = /*#__PURE__*/function (_React$Component) {
       e.preventDefault();
       var user = Object.assign({}, this.state);
       user.email = user.email.toLocaleLowerCase();
-      user.password = user.password.toLocaleLowerCase();
       this.props.processForm(user);
     }
   }, {
@@ -3769,7 +3782,6 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
       };
       user.first_name = capitalizeFirstLetter(firstName);
       user.last_name = capitalizeFirstLetter(lastName);
-      user.password = password.toLocaleLowerCase();
 
       if (stateErrors.length < 2) {
         return this.props.processForm(user);

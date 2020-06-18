@@ -13,15 +13,14 @@ class MainBody extends React.Component {
             id: null,
             title: '',
             passages: [],
-            summary: '', 
+            summary: '',
             img: '',
             esvPassage: [],
             mainBodyChanged: false,
             bookmark: false,
             renderDay: null,
             width: 0,
-            height: 0,
-            localStorage: false
+            height: 0
         }
 
         this.ESVpassageGetter = this.ESVpassageGetter.bind(this);
@@ -100,17 +99,17 @@ class MainBody extends React.Component {
     }
 
     localStorageFunc(condition) {
-        let stringifyCurrentUserId = JSON.stringify(this.props.currentUser.id)
+        let userId = JSON.stringify(this.props.currentUser.id)
 
         switch (condition) {
             case 'getCurrentPage':
-                return JSON.parse(localStorage.getItem(stringifyCurrentUserId))
+                return JSON.parse(localStorage.getItem(userId))
 
             case 'setCurrentPage':
-                return localStorage.setItem(stringifyCurrentUserId, JSON.stringify(this.state))
+                return localStorage.setItem(userId, JSON.stringify(this.state))
 
             case 'removeCurrentPage':
-                return localStorage.removeItem(stringifyCurrentUserId);
+                return localStorage.removeItem(userId);
 
             default:
                 return
@@ -144,11 +143,15 @@ class MainBody extends React.Component {
                     bookmarkId: currentUser.bookmark.id,
                     bookmark: true
                  }))
-                 
-        } else {
-            return this.localStorageFunc('removeCurrentPage')
-        }
-            
+
+        } else if (currentPage) {
+            return fetchDevo(currentPage.id)
+                .then(() => this.setState({
+                    renderDay: currentPage.render_day,
+                    bookmarkId: currentPage.bookmarkId,
+                    bookmark: true
+                })) 
+        }   
     }
 
     componentWillUnmount() {
@@ -164,19 +167,21 @@ class MainBody extends React.Component {
         const { bookmarkId } = this.state
         const bookmarkBlank = Object.values(bookmark).length < 1
 
-
         if (this.isMainBodyDevoNull()) return 
-
 
         //---------- SET bookmarkId to props.bookmark.id ----------//
         if ((bookmark || !bookmarkBlank) && bookmarkId !== bookmark.id) {
-            this.setState({ bookmarkId: bookmark.id})
+
+            !this.isValidNumber(bookmarkId)
+                ? this.setState({ bookmarkId: bookmark.id })
+                : this.setState({ bookmarkId: '' })
         }
- 
+
         //---------- SET renderDay to this.state ----------//
         if (this.renderDay() && this.renderDay() !== this.state.renderDay) {
             this.setState({ renderDay: this.renderDay() })
         }
+
         //---------- PREVENTS MULTIPLE this.setState on update ----------//
         if (this.state.mainBodyChanged) {
             this.setState({ mainBodyChanged: false })
@@ -202,6 +207,12 @@ class MainBody extends React.Component {
                 bookmark: false,
             })
         }
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize',
+            this.setState({ width: window.innerWidth, height: window.innerHeight })
+        );
     }
 
     //---------- RENDER FUNCTIONS ----------//
@@ -339,7 +350,7 @@ class MainBody extends React.Component {
             left=100,top=100`;
 
         bookName === undefined
-            ? false 
+            ? false
             : window.open(theURL, winName, winParams);
     }
 
@@ -360,10 +371,10 @@ class MainBody extends React.Component {
                         onClick={() => this.toggleBookmark()} 
                         aria-hidden="true">
                         </i>
-                        <i id='max-mclean-audio' className="fa fa-volume-up"
-                            onClick={() => this.toggleAudio()}
-                            aria-hidden="true">
-                        </i>
+                    <i id='max-mclean-audio' className="fa fa-volume-up"
+                        onClick={() => this.toggleAudio()}
+                        aria-hidden="true">
+                    </i>
                 </div>
             <div className='devo-main-container' ref={this.myRef}>
                 <div className="form-or-separator-mainbody-passages">
