@@ -26,7 +26,7 @@ const NotesItem = ({ eachNote, handleUpdate, deleteNote, toggleClass, noteId }) 
                     <span> Book: </span>{eachNote.category}
                 </div>
                 <div className='note-title'>
-                    <span>Day {eachNote.tags}: </span> 
+                    <span>Day {eachNote.day}: </span> 
                     {eachNote.title}
                 </div>
                 <div className='note-body'>

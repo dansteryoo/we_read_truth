@@ -6,7 +6,7 @@ export const REMOVE_BOOKMARK = 'REMOVE_BOOKMARK';
 export const receiveBookmark = (bookmark) => {
     return {
         type: RECEIVE_BOOKMARK,
-        bookmark
+        bookmark 
     }
 };
 
@@ -17,13 +17,20 @@ export const removeBookmark = (bookmarkId) => {
     }
 };
 
+export const fetchBookmark = () => dispatch => {
+    return BookmarkAPIUtil.fetchBookmark()
+        .then(bookmark => dispatch(receiveBookmark(bookmark))
+        )
+};
 
 export const createBookmark = (bookmark) => dispatch => {
     return BookmarkAPIUtil.createBookmark(bookmark)
-        .then(bookmark => dispatch(receiveBookmark(bookmark)))
+        .then(bookmark => dispatch(receiveBookmark(bookmark))
+        )
 };
 
 export const deleteBookmark = (bookmarkId) => dispatch => {
     return BookmarkAPIUtil.deleteBookmark(bookmarkId)
-        .then(() => dispatch(removeBookmark(bookmarkId)))
+        .then(() => dispatch(removeBookmark(bookmarkId))
+        )
 };
