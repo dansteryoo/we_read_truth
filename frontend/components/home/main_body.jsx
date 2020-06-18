@@ -1,10 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-<<<<<<< HEAD
-import { regBibleTitles, maxMcLeanBooks } from './bookTitles'
-=======
 import { regBibleTitles, maxMcLeanBooks } from './function_helpers/bookTitles'
->>>>>>> dev
 
 class MainBody extends React.Component {
     constructor(props) {
@@ -24,12 +20,7 @@ class MainBody extends React.Component {
             bookmark: false,
             renderDay: null,
             width: 0,
-<<<<<<< HEAD
             height: 0
-=======
-            height: 0,
-            localStorage: false
->>>>>>> dev
         }
 
         this.ESVpassageGetter = this.ESVpassageGetter.bind(this);
@@ -37,10 +28,6 @@ class MainBody extends React.Component {
         this.myRef = React.createRef();
         this.toggleBookmark = this.toggleBookmark.bind(this);
         this.toggleAudio = this.toggleAudio.bind(this);
-<<<<<<< HEAD
-        this.splitPassages = this.splitPassages.bind(this);
-=======
->>>>>>> dev
         this.isMainBodyDevoNull = this.isMainBodyDevoNull.bind(this);
         this.userBookmarkBlank = this.userBookmarkBlank.bind(this);
         this.setBookmark = this.setBookmark.bind(this);
@@ -133,11 +120,7 @@ class MainBody extends React.Component {
     //---------- REACT LIFE CYCLES ----------//
 
     componentDidMount() {
-<<<<<<< HEAD
-        window.addEventListener('resize',
-=======
         window.addEventListener('resize', 
->>>>>>> dev
             this.setState({ width: window.innerWidth, height: window.innerHeight })
         );
 
@@ -215,15 +198,12 @@ class MainBody extends React.Component {
                 bookmark: false,
             })
         }
-<<<<<<< HEAD
     };
 
     componentWillUnmount() {
         window.removeEventListener('resize',
             this.setState({ width: window.innerWidth, height: window.innerHeight })
         );
-=======
->>>>>>> dev
     }
 
     //---------- RENDER FUNCTIONS ----------//
@@ -361,11 +341,7 @@ class MainBody extends React.Component {
             left=100,top=100`;
 
         bookName === undefined
-<<<<<<< HEAD
             ? false
-=======
-            ? false 
->>>>>>> dev
             : window.open(theURL, winName, winParams);
     }
 
@@ -386,17 +362,10 @@ class MainBody extends React.Component {
                         onClick={() => this.toggleBookmark()} 
                         aria-hidden="true">
                         </i>
-<<<<<<< HEAD
                     <i id='max-mclean-audio' className="fa fa-volume-up"
                         onClick={() => this.toggleAudio()}
                         aria-hidden="true">
                     </i>
-=======
-                        <i id='max-mclean-audio' className="fa fa-volume-up"
-                            onClick={() => this.toggleAudio()}
-                            aria-hidden="true">
-                        </i>
->>>>>>> dev
                 </div>
             <div className='devo-main-container' ref={this.myRef}>
                 <div className="form-or-separator-mainbody-passages">

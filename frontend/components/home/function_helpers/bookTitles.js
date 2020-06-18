@@ -171,13 +171,8 @@ export const regBibleTitles = [
     "Daniel",
     "Hosea",
     "Joel",
-<<<<<<< HEAD:frontend/components/home/bookTitles.js
-    "Amos",
-    "Obadiah",
-=======
     "Amos", 
     "Obadiah", 
->>>>>>> dev:frontend/components/home/function_helpers/bookTitles.js
     "Jonah",
     "Micah",
     "Nahum",
