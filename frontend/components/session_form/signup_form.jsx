@@ -24,6 +24,7 @@ class SignUp extends React.Component {
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.isTrimmedBlank = this.isTrimmedBlank.bind(this);
     };
 
     componentWillUnmount() {
@@ -36,38 +37,37 @@ class SignUp extends React.Component {
         }
     }
 
-    handleSubmit(e) {
-        e.preventDefault();
 
-        const { stateErrors, email, password, firstName, lastName, passwordMatch } = this.state;
+    isTrimmedBlank(word) {
+        return word.trim().length === 0
+    }
+
+    handleSubmit(e) {
+        e.preventDefault()
+
+        const { stateErrors, email, password, firstName, lastName, passwordMatch } = this.state
         this.props.clearErrors()
 
-        const trimmerLength = (word) => word.trim().length
-        const blankEmail = trimmerLength(email) < 1
-        const blankFirst = trimmerLength(firstName) < 1
-        const blankLast = trimmerLength(lastName) < 1
-        const blankPassword = trimmerLength(password) < 1
         const isPasswordMatch = () => {
             return password === passwordMatch
         }
 
-        if (blankEmail || blankFirst || blankLast || blankPassword || !isPasswordMatch()) {
+        if (this.isTrimmedBlank(email) || this.isTrimmedBlank(firstName) ||
+            this.isTrimmedBlank(lastName) || this.isTrimmedBlank(password) || !isPasswordMatch()) {
             let errorsArr = []
 
-            if (blankEmail) errorsArr.push(ERRORS[0]) // 0 Blank email
-            if (blankFirst) errorsArr.push(ERRORS[3]) // 3 First name blank
-            if (blankLast) errorsArr.push(ERRORS[4]) // 4 Last name blank
+            if (this.isTrimmedBlank(email)) errorsArr.push(ERRORS[0]) // 0 Blank email
+            if (this.isTrimmedBlank(firstName)) errorsArr.push(ERRORS[3]) // 3 First name blank
+            if (this.isTrimmedBlank(lastName)) errorsArr.push(ERRORS[4]) // 4 Last name blank
             if (password.length < 5) errorsArr.push(ERRORS[5]) // 5 PW too short
             if (!isPasswordMatch() && !errorsArr.includes(ERRORS[5])) errorsArr.push(ERRORS[6]) // 6 PW !match
             if (errorsArr.length > 0) {
-                return this.setState({
-                    stateErrors: errorsArr
-                })
+                return this.setState({ stateErrors: errorsArr })
             }
         }
 
-        const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase() 
-                                                    + string.toLocaleLowerCase().slice(1)
+        const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase()
+            + string.toLocaleLowerCase().slice(1)
 
         let user = { email, password, firstName, lastName }
         user.first_name = capitalizeFirstLetter(firstName)
@@ -75,7 +75,7 @@ class SignUp extends React.Component {
         user.password = password.toLocaleLowerCase()
 
         if (stateErrors.length < 2) {
-            return this.props.processForm(user) 
+            return this.props.processForm(user)
         }
     }
 
@@ -87,13 +87,8 @@ class SignUp extends React.Component {
     };
 
     renderErrors() {
-        const { errors } = this.props 
+        const { errors } = this.props
         const { stateErrors, email, password, firstName, lastName, passwordMatch } = this.state;
-
-        const trimmerLength = (word) => word.trim().length
-        const blankEmail = trimmerLength(email) < 1
-        const blankFirst = trimmerLength(firstName) < 1
-        const blankLast = trimmerLength(lastName) < 1
 
         const errorsHash = {
             emailBlank: '',
@@ -106,7 +101,7 @@ class SignUp extends React.Component {
         }
 
         if (errors.length < 1 && stateErrors.length < 1) return errorsHash
-
+        
         stateErrors.forEach(err => {
             if (ERRORS.indexOf(err) === 0) errorsHash.emailBlank = err
             if (ERRORS.indexOf(err) === 3) errorsHash.firstName = err
@@ -121,9 +116,9 @@ class SignUp extends React.Component {
             if (ERRORS.indexOf(err) === 5) errorsHash.pwShort = err
         })
 
-        if (!blankEmail) errorsHash.emailBlank = ''
-        if (!blankFirst) errorsHash.firstName = ''
-        if (!blankLast) errorsHash.lastName = ''
+        if (!this.isTrimmedBlank(email)) errorsHash.emailBlank = ''
+        if (!this.isTrimmedBlank(firstName)) errorsHash.firstName = ''
+        if (!this.isTrimmedBlank(lastName)) errorsHash.lastName = ''
         if (password.length > 5) errorsHash.pwShort = ''
         if (password === passwordMatch) errorsHash.pwNoMatch = ''
 

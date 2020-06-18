@@ -82,4 +82,4 @@ production:
   <<: *default
   database: we_read_truth_production
   username: we_read_truth
-  password: <%= ENV['GRACE_UPON_GRACE_DATABASE_PASSWORD'] %>
+  password: <%= ENV['WE_READ_TRUTH_DATABASE_PASSWORD'] %>

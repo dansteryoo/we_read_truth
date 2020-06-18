@@ -7,4 +7,8 @@ class Devo < ApplicationRecord
         foreign_key: :devo_id,
         class_name: :Bookmark
 
+    def values_at *args
+        args.map { |method_name| self.public_send method_name }
+    end
+
 end

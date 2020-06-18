@@ -1,6 +1,6 @@
 class Api::UsersController < ApplicationController
 
-    before_action :require_logged_in!
+    before_action :require_logged_in!, only: [:index, :show]
 
     def index
         @user = User.all

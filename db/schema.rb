@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_11_000536) do
+ActiveRecord::Schema.define(version: 2020_06_15_195429) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(version: 2020_06_11_000536) do
     t.integer "user_id", null: false
     t.integer "devo_id", null: false
     t.integer "render_day", null: false
+    t.string "gender", null: false
+    t.string "book", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["devo_id"], name: "index_bookmarks_on_devo_id"
@@ -42,7 +44,7 @@ ActiveRecord::Schema.define(version: 2020_06_11_000536) do
     t.string "title", null: false
     t.text "body", null: false
     t.string "category", null: false
-    t.integer "day", null: false
+    t.string "day", null: false
     t.integer "notary_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

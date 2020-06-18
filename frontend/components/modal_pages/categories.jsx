@@ -2,7 +2,7 @@ import React from "react";
 import CategoryListOT from "./category_list_OT";
 import CategoryListNT from "./category_list_NT";
 import CategoryListOther from "./category_list_Other";
-import { bibleBooks } from '../home/bookTitles'
+import { bibleBooks } from '../home/function_helpers/bookTitles'
 
 class CategoriesPage extends React.Component {
     constructor(props) {
@@ -55,7 +55,7 @@ class CategoriesPage extends React.Component {
         }
 
         this.props.fetchDevoBook(payload)
-            .then(() => this.props.closeModal());
+            .then(() => this.props.closeModal())
     };
 
     render() {

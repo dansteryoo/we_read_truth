@@ -1,5 +1,5 @@
 import React from 'react';
-import { NTbooks, NTbookFormat } from '../home/bookTitles'
+import { NTbooks, NTbookFormat } from '../home/function_helpers/bookTitles'
 
 const CategoryListNT = ({ eachTitle, handleClick }) => {
 
