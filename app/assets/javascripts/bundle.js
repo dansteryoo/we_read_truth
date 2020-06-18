@@ -1119,7 +1119,10 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
         height: window.innerHeight
       }));
       this.setBookmark();
-      var currentPage = this.localStorageFunc('getCurrentPage'); //---------- IF localStorage EXISTS then setState ----------//
+      var currentPage = this.localStorageFunc('getCurrentPage');
+      var _this$props = this.props,
+          currentUser = _this$props.currentUser,
+          fetchDevo = _this$props.fetchDevo; //---------- IF localStorage EXISTS then setState ----------//
 
       if (currentPage && !this.userBookmarkBlank()) {
         this.setState({
@@ -1127,21 +1130,16 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
           bookmarkId: currentPage.bookmarkId
         });
         return this.props.fetchDevo(currentPage.id);
-      } else {
-        var _this$props = this.props,
-            currentUser = _this$props.currentUser,
-            fetchDevo = _this$props.fetchDevo,
-            fetchBookmark = _this$props.fetchBookmark;
-
-        if (!this.userBookmarkBlank()) {
-          return fetchDevo(currentUser.bookmark.devo_id).then(function () {
-            return _this3.setState({
-              renderDay: currentUser.bookmark.render_day,
-              bookmarkId: currentUser.bookmark.id,
-              bookmark: true
-            });
+      } else if (!this.userBookmarkBlank()) {
+        return fetchDevo(currentUser.bookmark.devo_id).then(function () {
+          return _this3.setState({
+            renderDay: currentUser.bookmark.render_day,
+            bookmarkId: currentUser.bookmark.id,
+            bookmark: true
           });
-        }
+        });
+      } else {
+        return this.localStorageFunc('removeCurrentPage');
       }
     }
   }, {

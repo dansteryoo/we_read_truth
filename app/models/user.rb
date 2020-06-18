@@ -42,6 +42,11 @@ class User < ApplicationRecord
         self.session_token
     end
 
+    
+    def send_welcome_email
+        WelcomeEmail.send_welcome(self).deliver_now
+    end
+
  private
 
     def ensure_session_token
