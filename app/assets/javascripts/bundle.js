@@ -775,31 +775,10 @@ var HomePage = /*#__PURE__*/function (_React$Component) {
       devoFetch: false
     };
     _this.toggleSidebar = _this.toggleSidebar.bind(_assertThisInitialized(_this));
-    _this.setPayload = _this.setPayload.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(HomePage, [{
-    key: "setPayload",
-    value: function setPayload(data) {
-      if (!data) return;
-      var payload;
-
-      if (data.book.includes("&")) {
-        payload = {
-          gender: data.gender,
-          book: data.book.replace("&", "%26")
-        };
-      } else {
-        payload = {
-          gender: data.gender,
-          book: data.book
-        };
-      }
-
-      return payload;
-    }
-  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.setState({
@@ -812,25 +791,6 @@ var HomePage = /*#__PURE__*/function (_React$Component) {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
       this.props.clearDevoState();
-    }
-  }, {
-    key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps) {
-      var _this2 = this;
-
-      var _this$props = this.props,
-          bookmark = _this$props.bookmark,
-          fetchDevo = _this$props.fetchDevo;
-
-      if (prevProps.bookmark != bookmark && this.state.devoFetch) {
-        if (bookmark !== null || Object.values(bookmark).length > 1) {
-          fetchDevo(bookmark.devo_id).then(function () {
-            return _this2.setState({
-              devoFetch: false
-            });
-          });
-        }
-      }
     }
   }, {
     key: "toggleSidebar",
@@ -919,7 +879,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 var mapStateToProps = function mapStateToProps(state) {
   var devoBook;
 
@@ -961,9 +920,6 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     clearDevoState: function clearDevoState() {
       return dispatch(Object(_actions_devo_actions__WEBPACK_IMPORTED_MODULE_2__["clearDevoState"])());
-    },
-    fetchDevo: function fetchDevo(devoId) {
-      return dispatch(Object(_actions_devo_actions__WEBPACK_IMPORTED_MODULE_2__["fetchDevo"])(devoId));
     }
   };
 };
@@ -1049,16 +1005,20 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       bookmark: false,
       renderDay: null,
       width: 0,
-      height: 0
+      height: 0,
+      localStorage: false
     };
     _this.ESVpassageGetter = _this.ESVpassageGetter.bind(_assertThisInitialized(_this));
     _this.renderDay = _this.renderDay.bind(_assertThisInitialized(_this));
     _this.myRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.toggleBookmark = _this.toggleBookmark.bind(_assertThisInitialized(_this));
     _this.toggleAudio = _this.toggleAudio.bind(_assertThisInitialized(_this));
-    _this.splitPassages = _this.splitPassages.bind(_assertThisInitialized(_this));
     _this.isMainBodyDevoNull = _this.isMainBodyDevoNull.bind(_assertThisInitialized(_this));
-    _this.checkUserBookmark = _this.checkUserBookmark.bind(_assertThisInitialized(_this));
+    _this.userBookmarkBlank = _this.userBookmarkBlank.bind(_assertThisInitialized(_this));
+    _this.setBookmark = _this.setBookmark.bind(_assertThisInitialized(_this));
+    _this.localStorageFunc = _this.localStorageFunc.bind(_assertThisInitialized(_this));
+    _this.splitPassages = _this.splitPassages.bind(_assertThisInitialized(_this));
+    _this.isValidNumber = _this.isValidNumber.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1095,6 +1055,23 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "setBookmark",
+    value: function setBookmark() {
+      //---------- SET BOOKMARK TO TRUE ----------//
+      if (!this.state.bookmark && this.state.mainBodyChanged) {
+        if (this.localStorageFunc('getCurrentPage') && this.localStorageFunc('getCurrentPage').id === this.state.id) {
+          return this.setState({
+            bookmark: true
+          });
+        }
+      }
+    }
+  }, {
+    key: "isValidNumber",
+    value: function isValidNumber(number) {
+      return typeof number === 'number';
+    }
+  }, {
     key: "splitPassages",
     value: function splitPassages(passages) {
       if (passages.length !== 0) return passages.split(', ');
@@ -1105,10 +1082,30 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       return this.props.mainBodyDevo === null;
     }
   }, {
-    key: "checkUserBookmark",
-    value: function checkUserBookmark() {
+    key: "userBookmarkBlank",
+    value: function userBookmarkBlank() {
       var bookmark = this.props.currentUser.bookmark;
-      return bookmark !== undefined && bookmark !== null;
+      return bookmark == (undefined || null);
+    }
+  }, {
+    key: "localStorageFunc",
+    value: function localStorageFunc(condition) {
+      var stringifyCurrentUserId = JSON.stringify(this.props.currentUser.id);
+
+      switch (condition) {
+        case 'getCurrentPage':
+          return JSON.parse(localStorage.getItem(stringifyCurrentUserId));
+
+        case 'setCurrentPage':
+          console.log(this.state);
+          return localStorage.setItem(stringifyCurrentUserId, JSON.stringify(this.state));
+
+        case 'removeCurrentPage':
+          return localStorage.removeItem(stringifyCurrentUserId);
+
+        default:
+          return;
+      }
     } //---------- REACT LIFE CYCLES ----------//
 
   }, {
@@ -1120,20 +1117,32 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
         width: window.innerWidth,
         height: window.innerHeight
       }));
-      var _this$props = this.props,
-          currentUser = _this$props.currentUser,
-          fetchDevo = _this$props.fetchDevo,
-          fetchBookmark = _this$props.fetchBookmark;
+      this.setBookmark();
+      var currentPage = this.localStorageFunc('getCurrentPage'); //---------- IF localStorage EXISTS then setState ----------//
 
-      if (this.checkUserBookmark()) {
-        return fetchDevo(currentUser.bookmark.devo_id).then(function () {
-          return _this3.setState({
-            renderDay: currentUser.bookmark.render_day,
-            bookmark: true
-          });
+      if (currentPage) {
+        this.setState({
+          renderDay: currentPage.renderDay,
+          bookmarkId: currentPage.bookmarkId
         });
+        return this.props.fetchDevo(currentPage.id);
       } else {
-        return fetchBookmark();
+        var _this$props = this.props,
+            currentUser = _this$props.currentUser,
+            fetchDevo = _this$props.fetchDevo,
+            fetchBookmark = _this$props.fetchBookmark;
+
+        if (!this.userBookmarkBlank()) {
+          return fetchDevo(currentUser.bookmark.devo_id).then(function () {
+            return _this3.setState({
+              renderDay: currentUser.bookmark.render_day,
+              bookmarkId: currentUser.bookmark.id,
+              bookmark: true
+            });
+          });
+        } else {
+          return fetchBookmark();
+        }
       }
     }
   }, {
@@ -1149,8 +1158,20 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
     value: function componentDidUpdate(prevProps) {
       var _this4 = this;
 
-      if (this.isMainBodyDevoNull()) return;
-      console.log('update'); //---------- SET renderDay to this.state ----------//
+      this.setBookmark();
+      var _this$props2 = this.props,
+          bookmark = _this$props2.bookmark,
+          mainBodyDevo = _this$props2.mainBodyDevo;
+      var bookmarkId = this.state.bookmarkId;
+      var bookmarkBlank = Object.values(bookmark).length < 1;
+      if (this.isMainBodyDevoNull()) return; //---------- SET bookmarkId to props.bookmark.id ----------//
+
+      if ((bookmark || !bookmarkBlank) && bookmarkId !== bookmark.id) {
+        this.setState({
+          bookmarkId: bookmark.id
+        });
+      } //---------- SET renderDay to this.state ----------//
+
 
       if (this.renderDay() && this.renderDay() !== this.state.renderDay) {
         this.setState({
@@ -1163,26 +1184,17 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
         this.setState({
           mainBodyChanged: false
         });
-      }
-
-      if (prevProps !== this.props) {
-        if (!this.state.renderDay) {
-          this.setState({
-            renderDay: this.props.bookmark.render_day
-          });
-        }
       } //---------- UPDATES new mainBodyDevo ----------//
 
 
-      if (prevProps.mainBodyDevo !== this.props.mainBodyDevo) {
-        var _this$props$mainBodyD = this.props.mainBodyDevo,
-            id = _this$props$mainBodyD.id,
-            img = _this$props$mainBodyD.img,
-            passages = _this$props$mainBodyD.passages,
-            summary = _this$props$mainBodyD.summary,
-            title = _this$props$mainBodyD.title,
-            gender = _this$props$mainBodyD.gender,
-            book = _this$props$mainBodyD.book; //---------- SCROLL TO TOP on render ----------//
+      if (prevProps.mainBodyDevo !== mainBodyDevo) {
+        var id = mainBodyDevo.id,
+            img = mainBodyDevo.img,
+            passages = mainBodyDevo.passages,
+            summary = mainBodyDevo.summary,
+            title = mainBodyDevo.title,
+            gender = mainBodyDevo.gender,
+            book = mainBodyDevo.book; //---------- SCROLL TO TOP on render ----------//
 
         this.myRef.current.scrollTo(0, 0); //---------- PREVENTS DUPS in esvPassage ----------//
 
@@ -1200,18 +1212,8 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
           title: title,
           gender: gender,
           book: book,
-          mainBodyChanged: true
-        });
-        id === this.props.bookmark.devo_id ? this.setState({
-          bookmark: true
-        }) : this.setState({
+          mainBodyChanged: true,
           bookmark: false
-        });
-      }
-
-      if (this.props.bookmark.id !== this.state.bookmarkId) {
-        this.setState({
-          bookmarkId: this.props.bookmark.id
         });
       }
     } //---------- RENDER FUNCTIONS ----------//
@@ -1300,11 +1302,12 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
           id = _this$state2.id,
           renderDay = _this$state2.renderDay,
           gender = _this$state2.gender,
-          book = _this$state2.book;
-      var _this$props2 = this.props,
-          currentUser = _this$props2.currentUser,
-          createBookmark = _this$props2.createBookmark,
-          deleteBookmark = _this$props2.deleteBookmark;
+          book = _this$state2.book,
+          bookmarkId = _this$state2.bookmarkId;
+      var _this$props3 = this.props,
+          currentUser = _this$props3.currentUser,
+          createBookmark = _this$props3.createBookmark,
+          deleteBookmark = _this$props3.deleteBookmark;
       var bookmarkData = {
         gender: gender,
         book: book,
@@ -1312,8 +1315,14 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
         devo_id: id,
         render_day: renderDay
       };
-      console.log(this.props.bookmark);
-      !bookmark ? createBookmark(bookmarkData) : deleteBookmark(this.props.bookmark.id);
+
+      if (bookmark) {
+        deleteBookmark(bookmarkId);
+        this.localStorageFunc('removeCurrentPage');
+      } else {
+        createBookmark(bookmarkData);
+      }
+
       this.setState({
         bookmark: !bookmark
       });
@@ -1351,7 +1360,8 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this6 = this;
 
-      if (this.isMainBodyDevoNull()) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
+      if (this.isMainBodyDevoNull() && !this.localStorageFunc('getCurrentPage')) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
+      this.state.bookmark ? this.localStorageFunc('setCurrentPage') : false;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "middle-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1540,16 +1550,16 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
     _this.handleGetDevo = _this.handleGetDevo.bind(_assertThisInitialized(_this));
     _this.myRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.renderDevoBookTitle = _this.renderDevoBookTitle.bind(_assertThisInitialized(_this));
-    _this.checkUserBookmark = _this.checkUserBookmark.bind(_assertThisInitialized(_this));
+    _this.userBookmarkBlank = _this.userBookmarkBlank.bind(_assertThisInitialized(_this));
     _this.setPayload = _this.setPayload.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(SideNav, [{
-    key: "checkUserBookmark",
-    value: function checkUserBookmark() {
+    key: "userBookmarkBlank",
+    value: function userBookmarkBlank() {
       var bookmark = this.props.currentUser.bookmark;
-      return bookmark !== undefined && bookmark !== null;
+      return bookmark == (undefined || null);
     }
   }, {
     key: "setPayload",
@@ -1576,45 +1586,48 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      var currentUser = this.props.currentUser;
+      var userId = JSON.stringify(this.props.currentUser.id);
+      var currentPage = JSON.parse(localStorage.getItem(userId));
 
-      if (this.checkUserBookmark()) {
-        var userPayload = this.setPayload(currentUser.bookmark);
+      if (currentPage) {
+        return this.props.fetchDevoBook(this.setPayload(currentPage));
+      } else if (!this.userBookmarkBlank()) {
+        var bookmark = this.props.currentUser.bookmark;
+        var userPayload = this.setPayload(bookmark);
         return this.props.fetchDevoBook(userPayload).then(function () {
           return _this2.setState({
-            book: currentUser.bookmark.book
+            book: bookmark.book
           });
         });
       }
     }
   }, {
     key: "componentWillUnmount",
-    value: function componentWillUnmount() {// this.props.clearDevoState()
-    }
+    value: function componentWillUnmount() {}
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
-      var _this3 = this;
-
       var _this$props = this.props,
           currentUser = _this$props.currentUser,
           devoBook = _this$props.devoBook,
           bookmark = _this$props.bookmark;
+      var propsBookmarkBlank = Object.values(bookmark).length < 1;
 
       if (devoBook !== prevProps.devoBook) {
         if (devoBook.length > 0) {
           this.setState({
             book: devoBook[0].book
           });
-          if (devoBook[0].book !== this.state.book) return this.myRef.current.scrollTo(0, 0);
-        } else if (Object.values(bookmark).length > 0 && bookmark.user_id === currentUser.id) {
-          currentUser.bookmark ? this.props.fetchDevoBook(this.setPayload(bookmark)) : this.props.fetchDevoBook(this.setPayload(currentUser.bookmark));
-          !this.state.navSet ? this.props.fetchDevoBook(this.setPayload(bookmark)).then(function () {
-            return _this3.setState({
-              navSet: true
-            });
-          }) : false;
+          devoBook[0].book !== this.state.book ? this.myRef.current.scrollTo(0, 0) : false;
+        } else if (!propsBookmarkBlank && bookmark.user_id === currentUser.id) {
+          this.props.fetchDevoBook(this.setPayload(bookmark));
+        } else if (!this.userBookmarkBlank()) {
+          this.props.fetchDevoBook(this.setPayload(currentUser.bookmark));
         }
+
+        !this.state.navSet ? this.setState({
+          navSet: true
+        }) : false;
       }
     }
   }, {
@@ -1641,7 +1654,7 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this3 = this;
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "left-container"
@@ -1656,7 +1669,7 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sidenav_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
           days: i,
           dailyDevo: dailyDevo,
-          handleGetDevo: _this4.handleGetDevo,
+          handleGetDevo: _this3.handleGetDevo,
           key: dailyDevo.id
         });
       }))));

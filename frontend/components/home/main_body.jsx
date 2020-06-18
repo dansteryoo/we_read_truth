@@ -20,7 +20,8 @@ class MainBody extends React.Component {
             bookmark: false,
             renderDay: null,
             width: 0,
-            height: 0
+            height: 0,
+            localStorage: false
         }
 
         this.ESVpassageGetter = this.ESVpassageGetter.bind(this);
@@ -28,9 +29,13 @@ class MainBody extends React.Component {
         this.myRef = React.createRef();
         this.toggleBookmark = this.toggleBookmark.bind(this);
         this.toggleAudio = this.toggleAudio.bind(this);
-        this.splitPassages = this.splitPassages.bind(this);
         this.isMainBodyDevoNull = this.isMainBodyDevoNull.bind(this);
-        this.checkUserBookmark = this.checkUserBookmark.bind(this);
+        this.userBookmarkBlank = this.userBookmarkBlank.bind(this);
+        this.setBookmark = this.setBookmark.bind(this);
+        this.localStorageFunc = this.localStorageFunc.bind(this);
+        this.splitPassages = this.splitPassages.bind(this);
+        this.isValidNumber = this.isValidNumber.bind(this);
+
     };
 
     //---------- ESV.ORG API CALL ----------//
@@ -67,6 +72,20 @@ class MainBody extends React.Component {
         })
     }
 
+    setBookmark() {
+        //---------- SET BOOKMARK TO TRUE ----------//
+        if (!this.state.bookmark && this.state.mainBodyChanged) {
+            if (this.localStorageFunc('getCurrentPage')
+                && this.localStorageFunc('getCurrentPage').id === this.state.id) {
+                return this.setState({ bookmark: true })
+            }
+        }
+    }
+
+    isValidNumber(number) {
+        return typeof number === 'number'
+    }
+
     splitPassages(passages) {
         if (passages.length !== 0) return passages.split(', ')
     }
@@ -75,9 +94,28 @@ class MainBody extends React.Component {
         return this.props.mainBodyDevo === null
     }
 
-    checkUserBookmark() {
+    userBookmarkBlank() {
         const { bookmark } = this.props.currentUser
-        return bookmark !== undefined && bookmark !== null
+        return bookmark == (undefined || null)
+    }
+
+    localStorageFunc(condition) {
+        let stringifyCurrentUserId = JSON.stringify(this.props.currentUser.id)
+
+        switch (condition) {
+            case 'getCurrentPage':
+                return JSON.parse(localStorage.getItem(stringifyCurrentUserId))
+
+            case 'setCurrentPage':
+                console.log(this.state)
+                return localStorage.setItem(stringifyCurrentUserId, JSON.stringify(this.state))
+
+            case 'removeCurrentPage':
+                return localStorage.removeItem(stringifyCurrentUserId);
+
+            default:
+                return
+        }
     }
 
 
@@ -88,16 +126,29 @@ class MainBody extends React.Component {
             this.setState({ width: window.innerWidth, height: window.innerHeight })
         );
 
-        const { currentUser, fetchDevo, fetchBookmark } = this.props
+        this.setBookmark()
+        const currentPage = this.localStorageFunc('getCurrentPage')
 
-        if (this.checkUserBookmark()) {
-            return fetchDevo(currentUser.bookmark.devo_id)
-                .then(() => this.setState({
-                    renderDay: currentUser.bookmark.render_day,
-                    bookmark: true
-                }))
+        //---------- IF localStorage EXISTS then setState ----------//
+        if (currentPage) {
+            this.setState({ 
+                renderDay: currentPage.renderDay,
+                bookmarkId: currentPage.bookmarkId
+            })
+            return this.props.fetchDevo(currentPage.id);
         } else {
-            return fetchBookmark()
+            const { currentUser, fetchDevo, fetchBookmark } = this.props
+
+            if (!this.userBookmarkBlank()) {
+                return fetchDevo(currentUser.bookmark.devo_id)
+                    .then(() => this.setState({
+                        renderDay: currentUser.bookmark.render_day,
+                        bookmarkId: currentUser.bookmark.id,
+                        bookmark: true
+                    }))
+            } else {
+                return fetchBookmark()
+            }
         }
     }
 
@@ -108,8 +159,21 @@ class MainBody extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
+        this.setBookmark()
+
+        const { bookmark, mainBodyDevo } = this.props
+        const { bookmarkId } = this.state
+        const bookmarkBlank = Object.values(bookmark).length < 1
+
+
         if (this.isMainBodyDevoNull()) return 
-        console.log('update');
+
+
+        //---------- SET bookmarkId to props.bookmark.id ----------//
+        if ((bookmark || !bookmarkBlank) && bookmarkId !== bookmark.id) {
+            this.setState({ bookmarkId: bookmark.id})
+        }
+ 
         //---------- SET renderDay to this.state ----------//
         if (this.renderDay() && this.renderDay() !== this.state.renderDay) {
             this.setState({ renderDay: this.renderDay() })
@@ -119,15 +183,9 @@ class MainBody extends React.Component {
             this.setState({ mainBodyChanged: false })
         }
 
-        if (prevProps !== this.props) {
-            if (!this.state.renderDay) {
-                this.setState({ renderDay: this.props.bookmark.render_day })  
-            }
-        }
-
         //---------- UPDATES new mainBodyDevo ----------//
-        if (prevProps.mainBodyDevo !==  this.props.mainBodyDevo) {
-            const { id, img, passages, summary, title, gender, book } = this.props.mainBodyDevo;
+        if (prevProps.mainBodyDevo !== mainBodyDevo) {
+            const { id, img, passages, summary, title, gender, book } = mainBodyDevo
 
             //---------- SCROLL TO TOP on render ----------//
             this.myRef.current.scrollTo(0, 0);
@@ -141,16 +199,9 @@ class MainBody extends React.Component {
 
             this.setState({
                 id, img, passages, summary, title, gender, book,
-                mainBodyChanged: true
+                mainBodyChanged: true, 
+                bookmark: false,
             })
-
-            id === this.props.bookmark.devo_id
-                ? this.setState({ bookmark: true })
-                : this.setState({ bookmark: false })
-        }
-
-        if (this.props.bookmark.id !== this.state.bookmarkId) {
-            this.setState({ bookmarkId: this.props.bookmark.id })
         }
     }
 
@@ -242,7 +293,7 @@ class MainBody extends React.Component {
     }
 
     toggleBookmark() {
-        const { bookmark, id, renderDay, gender, book } = this.state
+        const { bookmark, id, renderDay, gender, book, bookmarkId } = this.state
         const { currentUser, createBookmark, deleteBookmark } = this.props
 
         let bookmarkData = { 
@@ -252,10 +303,13 @@ class MainBody extends React.Component {
             devo_id: id,
             render_day: renderDay,
         }
-        console.log(this.props.bookmark)
-        !bookmark
-            ? createBookmark(bookmarkData)
-            : deleteBookmark(this.props.bookmark.id)
+
+        if (bookmark) {
+            deleteBookmark(bookmarkId)
+            this.localStorageFunc('removeCurrentPage')
+        } else {
+            createBookmark(bookmarkData)
+        }
 
         this.setState({ bookmark: !bookmark })
     }
@@ -291,8 +345,12 @@ class MainBody extends React.Component {
     }
 
     render() {
-        if (this.isMainBodyDevoNull()) return <div></div>
+        if (this.isMainBodyDevoNull() && !this.localStorageFunc('getCurrentPage')) return <div></div>
         
+        this.state.bookmark 
+            ? this.localStorageFunc('setCurrentPage')
+            : false 
+
         return (
             <div className='middle-container'>
                 <div className='devo-main-title'>

@@ -18,27 +18,7 @@ class HomePage extends React.Component {
         }
 
         this.toggleSidebar = this.toggleSidebar.bind(this);
-        this.setPayload = this.setPayload.bind(this);
     };
-
-    setPayload(data) {
-        if (!data) return
-        let payload;
-
-        if (data.book.includes("&")) {
-            payload = {
-                gender: data.gender,
-                book: data.book.replace("&", "%26")
-            }
-        } else {
-            payload = {
-                gender: data.gender,
-                book: data.book
-            }
-        }
-
-        return payload
-    }
 
     componentDidMount() {
         this.setState({ 
@@ -50,17 +30,6 @@ class HomePage extends React.Component {
 
     componentWillUnmount() {
         this.props.clearDevoState()
-    };
-
-    componentDidUpdate(prevProps) {
-        const { bookmark, fetchDevo } = this.props 
-
-        if (prevProps.bookmark != bookmark && this.state.devoFetch) {
-            if (bookmark !== null || Object.values(bookmark).length > 1) {
-                fetchDevo(bookmark.devo_id)
-                    .then(() => this.setState({ devoFetch: false }))
-            }
-        }
     };
 
     toggleSidebar(event) {
