@@ -771,8 +771,7 @@ var HomePage = /*#__PURE__*/function (_React$Component) {
     _this.state = {
       leftOpen: true,
       rightOpen: true,
-      currentUser: null,
-      bookmark: false
+      currentUser: null
     };
     _this.toggleSidebar = _this.toggleSidebar.bind(_assertThisInitialized(_this));
     return _this;

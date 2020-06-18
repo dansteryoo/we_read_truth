@@ -11,8 +11,7 @@ class HomePage extends React.Component {
         this.state = {
             leftOpen: true,
             rightOpen: true,
-            currentUser: null,
-            bookmark: false
+            currentUser: null
         }
 
         this.toggleSidebar = this.toggleSidebar.bind(this);
@@ -26,7 +25,6 @@ class HomePage extends React.Component {
     componentWillUnmount() {
         this.props.clearDevoState()
         localStorage.removeItem(JSON.stringify(this.props.currentUser.id));
-
     };
 
     toggleSidebar(event) {
