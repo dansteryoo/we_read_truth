@@ -257,7 +257,7 @@ export const allBookTitles = [
     "Hebrews",
     "James",
     "1&2Peter",
-    "123John",
+    "1,2&3John",
     "Jude",
     "Revelation",
     "Justice",
@@ -305,6 +305,7 @@ export const allBookTitles = [
     "GoTellItontheMountain",
     "HymnsofHope",
     "PsalmsofGratitude",
+    "PromisesofGod" 
 ]
 
 // sidenav.jsx 
@@ -364,6 +365,7 @@ export const allBookTitlesFormat = {
     "GoTellItontheMountain": 'Go Tell It on the Mountain',
     "HymnsofHope": 'Hymns of Hope',
     "PsalmsofGratitude": 'Psalms of Gratitude',
+    "PromisesofGod" : "Promises of God",
 }
 
 // categories.jsx 
@@ -429,7 +431,7 @@ export const bibleBooks = [
     "James",
     "1&2Peter",
     "SecondPeter",
-    "123John",
+    "1,2&3John",
     "SecondJohn",
     "ThirdJohn",
     "Jude",
@@ -455,7 +457,7 @@ export const NTbooks = [
     "Hebrews",
     "James",
     "1&2Peter",
-    "123John",
+    "1,2&3John",
     "Jude",
     "Revelation",
 ];
@@ -466,7 +468,8 @@ export const NTbookFormat = {
     "1&2peter": "1 & 2 Peter",
     "1&2timothyandtitus": "1 & 2 Timothy, & Titus",
     "actsoftheapostles": "Acts",
-    "1&2corinthians": "1 & 2 Corinthians"
+    "1&2corinthians": "1 & 2 Corinthians",
+    "1,2&3john": "1, 2, 3 John"
 };
 
 // category_list_OT.jsx
@@ -551,6 +554,7 @@ export const themeBooks = [
     "GoTellItontheMountain",
     "HymnsofHope",
     "PsalmsofGratitude",
+    "PromisesofGod"
 ]
 
 // category_list_Other.jsx
@@ -598,4 +602,5 @@ export const themeBookFormat = {
     "GoTellItontheMountain": 'Go Tell It on the Mountain',
     "HymnsofHope": 'Hymns of Hope',
     "PsalmsofGratitude": 'Psalms of Gratitude',
+    "PromisesofGod": "Promises of God",
 };
