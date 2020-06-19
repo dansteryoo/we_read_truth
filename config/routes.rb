@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     resources :bookmarks, only: [:index, :create, :destroy]
     get '/search', to: 'devos#search'
     get '/book', to: 'devos#book'
+    post 'password/forgot', to: 'password#forgot'
+    post 'password/reset', to: 'password#reset'
   end
 
   root 'static_pages#root'
