@@ -50,7 +50,6 @@ heDataArray.each do |he_data|
         # puts ""
         # puts @summary
         # puts ""
-        if @title != "Weekly Truth" || @title != "Grace Day"
         # byebug
             Devo.create!(
                 gender: "HE",
@@ -60,7 +59,6 @@ heDataArray.each do |he_data|
                 summary: @summary,
                 img: @img,
                 )
-        end
     end
     # byebug
 end
@@ -106,7 +104,6 @@ sheDataArray.each do |she_data|
         # puts ""
         # puts @summary
         # puts ""
-        if @title != "Weekly Truth" || @title != "Grace Day"
         # byebug
             Devo.create!(
                 gender: "SHE",
@@ -115,8 +112,8 @@ sheDataArray.each do |she_data|
                 passages: @passages,
                 summary: @summary,
                 img: @img,
-                )
-        end
+                
+            )
     # byebug
     end
-  end
+end
