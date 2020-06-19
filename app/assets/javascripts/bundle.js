@@ -988,9 +988,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       esvPassage: [],
       mainBodyChanged: false,
       bookmark: false,
-      renderDay: null,
-      width: 0,
-      height: 0
+      renderDay: null
     };
     _this.ESVpassageGetter = _this.ESVpassageGetter.bind(_assertThisInitialized(_this));
     _this.renderDay = _this.renderDay.bind(_assertThisInitialized(_this));
@@ -1098,9 +1096,6 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       var _this3 = this;
 
-      // window.addEventListener('resize', 
-      //     this.setState({ width: window.innerWidth, height: window.innerHeight })
-      // );
       this.setBookmark();
       var currentPage = this.localStorageFunc('getCurrentPage');
       var _this$props = this.props,
@@ -1127,10 +1122,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "componentWillUnmount",
-    value: function componentWillUnmount() {// window.removeEventListener('resize', 
-      //     this.setState({ width: window.innerWidth, height: window.innerHeight })
-      // );
-    }
+    value: function componentWillUnmount() {}
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
@@ -1141,32 +1133,22 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
           bookmark = _this$props2.bookmark,
           mainBodyDevo = _this$props2.mainBodyDevo,
           currentUser = _this$props2.currentUser;
-      var bookmarkId = this.state.bookmarkId;
+      var _this$state = this.state,
+          bookmarkId = _this$state.bookmarkId,
+          id = _this$state.id;
       var bookmarkBlank = Object.values(bookmark).length < 1;
-      if (this.isMainBodyDevoNull()) return; //---------- SET bookmarkId to props.bookmark.id ----------//
+      if (this.isMainBodyDevoNull()) return;
 
-      if (!this.isValidNumber(bookmarkId)) {
-        if (!bookmarkBlank && bookmarkId !== bookmark.id) {
-          this.setState({
-            bookmarkId: bookmark.id
-          });
-        } else if (bookmarkBlank && currentUser.bookmark) {
-          this.setState({
-            bookmarkId: currentUser.bookmark.id
-          });
-        }
-      } else {
-        if (!bookmarkBlank && currentUser.bookmark) {
-          if (bookmarkId !== bookmark.id) {
-            this.setState({
-              bookmarkId: bookmark.id
-            });
-          }
-        } else if (!bookmarkBlank) if (bookmarkId !== bookmark.id) {
-          this.setState({
-            bookmarkId: bookmark.id
-          });
-        }
+      if (!bookmarkBlank && bookmarkId !== bookmark.id && id === bookmark.devo_id) {
+        this.setState({
+          bookmarkId: bookmark.id
+        });
+      }
+
+      if (!this.isValidNumber(bookmarkId) && bookmarkBlank && currentUser.bookmark && bookmarkId !== currentUser.bookmark.id) {
+        this.setState({
+          bookmarkId: currentUser.bookmark.id
+        });
       } //---------- SET renderDay to this.state ----------//
 
 
@@ -1185,7 +1167,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
 
 
       if (prevProps.mainBodyDevo !== mainBodyDevo) {
-        var id = mainBodyDevo.id,
+        var _id = mainBodyDevo.id,
             img = mainBodyDevo.img,
             passages = mainBodyDevo.passages,
             summary = mainBodyDevo.summary,
@@ -1202,7 +1184,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
           return _this4.ESVpassageGetter(each.trim());
         });
         this.setState({
-          id: id,
+          id: _id,
           img: img,
           passages: passages,
           summary: summary,
@@ -1218,9 +1200,9 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderPassages",
     value: function renderPassages() {
-      var _this$state = this.state,
-          passages = _this$state.passages,
-          esvPassage = _this$state.esvPassage;
+      var _this$state2 = this.state,
+          passages = _this$state2.passages,
+          esvPassage = _this$state2.esvPassage;
       if (passages.length < 1) return;
       var esvSortMatch = [];
       var passagesArray = this.splitPassages(passages);
@@ -1294,13 +1276,13 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "toggleBookmark",
     value: function toggleBookmark() {
-      var _this$state2 = this.state,
-          bookmark = _this$state2.bookmark,
-          id = _this$state2.id,
-          renderDay = _this$state2.renderDay,
-          gender = _this$state2.gender,
-          book = _this$state2.book,
-          bookmarkId = _this$state2.bookmarkId;
+      var _this$state3 = this.state,
+          bookmark = _this$state3.bookmark,
+          id = _this$state3.id,
+          renderDay = _this$state3.renderDay,
+          gender = _this$state3.gender,
+          book = _this$state3.book,
+          bookmarkId = _this$state3.bookmarkId;
       var _this$props3 = this.props,
           currentUser = _this$props3.currentUser,
           createBookmark = _this$props3.createBookmark,
@@ -1327,10 +1309,10 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "toggleAudio",
     value: function toggleAudio() {
-      var _this$state3 = this.state,
-          width = _this$state3.width,
-          height = _this$state3.height,
-          esvPassage = _this$state3.esvPassage;
+      var _this$state4 = this.state,
+          width = _this$state4.width,
+          height = _this$state4.height,
+          esvPassage = _this$state4.esvPassage;
       var passageSplit = esvPassage[0].passage.split(' ');
 
       var checkForNumber = function checkForNumber(data) {
