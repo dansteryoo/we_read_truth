@@ -40,6 +40,15 @@ class MainBody extends React.Component {
     //---------- ESV.ORG API CALL ----------//
 
     ESVpassageGetter(passage) {
+        const esvKeys = [
+            window.esv_one,
+            window.esv_two,
+            window.esv_three,
+            window.esv_four,
+            window.esv_five,
+            window.esv_six,
+        ]
+        let randomGen = esvKeys[Math.floor(Math.random() * esvKeys.length)];
 
         axios.get('https://api.esv.org/v3/passage/text/?', {
             crossDomain: true,
@@ -52,7 +61,7 @@ class MainBody extends React.Component {
                 'include-passage-references': false
             },
             headers: {
-                'Authorization': window.esvAPIKey,
+                'Authorization': randomGen,
             }
         })
         .then(res => {
@@ -163,15 +172,22 @@ class MainBody extends React.Component {
         if (this.isMainBodyDevoNull()) return 
 
         //---------- SET bookmarkId to props.bookmark.id ----------//
-        if (!bookmarkBlank && bookmarkId !== bookmark.id) {
-            !this.isValidNumber(bookmarkId)
-                ? this.setState({ bookmarkId: bookmark.id })
-                : false
+        if (!this.isValidNumber(bookmarkId)) {
+            if (!bookmarkBlank && bookmarkId !== bookmark.id) {
+                this.setState({ bookmarkId: bookmark.id })
 
-        } else if (bookmarkBlank && currentUser.bookmark) {
-            !this.isValidNumber(bookmarkId)
-                ? this.setState({ bookmarkId: currentUser.bookmark.id })
-                : false 
+            } else if (bookmarkBlank && currentUser.bookmark) {
+                this.setState({ bookmarkId: currentUser.bookmark.id })
+            }
+        } else {
+            if (!bookmarkBlank && currentUser.bookmark) {
+                if (bookmarkId !== bookmark.id) {
+                    this.setState({ bookmarkId: bookmark.id })
+                }
+            } else if (!bookmarkBlank)
+                if (bookmarkId !== bookmark.id) {
+                    this.setState({ bookmarkId: bookmark.id })
+                }
         }
 
         //---------- SET renderDay to this.state ----------//
@@ -348,10 +364,10 @@ class MainBody extends React.Component {
     render() {
         if (this.isMainBodyDevoNull() && !this.localStorageFunc('getCurrentPage')) return <div></div>
         
-        this.state.bookmark 
+        this.state.bookmark && this.isValidNumber(this.state.bookmarkId)
             ? this.localStorageFunc('setCurrentPage')
             : false 
-        console.log(this.state.bookmarkId)
+
         return (
             <div className='middle-container'>
                 <div className='devo-main-title'>

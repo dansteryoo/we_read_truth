@@ -1012,6 +1012,8 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
     value: function ESVpassageGetter(passage) {
       var _this2 = this;
 
+      var esvKeys = [window.esv_one, window.esv_two, window.esv_three, window.esv_four, window.esv_five, window.esv_six];
+      var randomGen = esvKeys[Math.floor(Math.random() * esvKeys.length)];
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('https://api.esv.org/v3/passage/text/?', {
         crossDomain: true,
         params: {
@@ -1023,7 +1025,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
           'include-passage-references': false
         },
         headers: {
-          'Authorization': window.esvAPIKey
+          'Authorization': randomGen
         }
       }).then(function (res) {
         if (res.status === 200) {
@@ -1143,14 +1145,28 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       var bookmarkBlank = Object.values(bookmark).length < 1;
       if (this.isMainBodyDevoNull()) return; //---------- SET bookmarkId to props.bookmark.id ----------//
 
-      if (!bookmarkBlank && bookmarkId !== bookmark.id) {
-        !this.isValidNumber(bookmarkId) ? this.setState({
-          bookmarkId: bookmark.id
-        }) : false;
-      } else if (bookmarkBlank && currentUser.bookmark) {
-        !this.isValidNumber(bookmarkId) ? this.setState({
-          bookmarkId: currentUser.bookmark.id
-        }) : false;
+      if (!this.isValidNumber(bookmarkId)) {
+        if (!bookmarkBlank && bookmarkId !== bookmark.id) {
+          this.setState({
+            bookmarkId: bookmark.id
+          });
+        } else if (bookmarkBlank && currentUser.bookmark) {
+          this.setState({
+            bookmarkId: currentUser.bookmark.id
+          });
+        }
+      } else {
+        if (!bookmarkBlank && currentUser.bookmark) {
+          if (bookmarkId !== bookmark.id) {
+            this.setState({
+              bookmarkId: bookmark.id
+            });
+          }
+        } else if (!bookmarkBlank) if (bookmarkId !== bookmark.id) {
+          this.setState({
+            bookmarkId: bookmark.id
+          });
+        }
       } //---------- SET renderDay to this.state ----------//
 
 
@@ -1342,8 +1358,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       var _this6 = this;
 
       if (this.isMainBodyDevoNull() && !this.localStorageFunc('getCurrentPage')) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
-      this.state.bookmark ? this.localStorageFunc('setCurrentPage') : false;
-      console.log(this.state.bookmarkId);
+      this.state.bookmark && this.isValidNumber(this.state.bookmarkId) ? this.localStorageFunc('setCurrentPage') : false;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "middle-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
