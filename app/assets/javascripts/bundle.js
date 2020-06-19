@@ -656,7 +656,7 @@ var OTbookFormat = {
   "joel,amos,obadiah,jonah,andmicah": "Joel, Amos, Obadiah, Jonah, & Micah"
 }; // category_list_Other.jsx
 
-var themeBooks = ["Justice", "HymnsV", "TheSermonontheMount", "ThisIstheGospel", "MourningandDancing", "NamesofGod", "OpenYourBible//Launch-WeekSampler", "InSpirit&inTruth:AStudyofBiblicalWorship", "Hymns", "TheResurrectedLife", "TheRisenChrist", "Lent2020:HisLoveEndures", "Jesus,KeepMeNearTheCross", "TheBeatitudes", "PsalmsforPrayer", "AttributesofGod", "PsalmsofRest", "TheLifeofMoses", "HymnsIV", "BecauseHeLives", "HymnsII", "TheMiraclesofJesus", "SongsfortheRoad:ThePsalmsofAscent", "Women&MenintheWord:OldTestament", "HymnsIII", "GiveThanks", "MakingRoom:AStudyofBiblicalHospitality", "IAm:StatementsofOurSavior", "WorthyofPraise", "HoldingTighttoPermanent", "Advent2019:AThrillofHope", "CountdowntoActs", "FruitoftheSpirit", "TheParablesofJesus", "GoTellItontheMountain", "HymnsofHope", "PsalmsofGratitude", "PromisesofGod"]; // category_list_Other.jsx
+var themeBooks = ["Justice", "HymnsV", "TheSermonontheMount", "ThisIstheGospel", "MourningandDancing", "NamesofGod", "InSpirit&inTruth:AStudyofBiblicalWorship", "Hymns", "TheResurrectedLife", "TheRisenChrist", "Lent2020:HisLoveEndures", "Jesus,KeepMeNearTheCross", "TheBeatitudes", "PsalmsforPrayer", "AttributesofGod", "PsalmsofRest", "TheLifeofMoses", "HymnsIV", "BecauseHeLives", "HymnsII", "TheMiraclesofJesus", "SongsfortheRoad:ThePsalmsofAscent", "Women&MenintheWord:OldTestament", "HymnsIII", "GiveThanks", "MakingRoom:AStudyofBiblicalHospitality", "IAm:StatementsofOurSavior", "WorthyofPraise", "HoldingTighttoPermanent", "Advent2019:AThrillofHope", "CountdowntoActs", "FruitoftheSpirit", "TheParablesofJesus", "GoTellItontheMountain", "HymnsofHope", "PsalmsofGratitude", "PromisesofGod"]; // category_list_Other.jsx
 
 var themeBookFormat = {
   "HymnsV": 'Hymns V',
@@ -1344,7 +1344,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       var bookName = _function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__["maxMcLeanBooks"][_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__["regBibleTitles"].indexOf(book)];
       var theURL = "https://www.biblegateway.com/audio/mclean/esv/".concat(bookName, ".").concat(chapter);
       var winName = 'Max McLean Audio';
-      var winParams = "scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,\n            width=".concat(Math.floor(width / 1.4), ",\n            height=").concat(Math.floor(height / 2.2), ",\n            left=100,top=100");
+      var winParams = "scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,\n            width=700,\n            height=400,\n            left=100,top=100";
       bookName === undefined ? false : window.open(theURL, winName, winParams);
     }
   }, {

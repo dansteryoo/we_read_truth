@@ -106,7 +106,7 @@ class SideNav extends React.Component {
 
         return devoBookTitle
     }
-
+    
     render() {
 
         return (

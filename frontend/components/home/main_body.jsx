@@ -342,8 +342,8 @@ class MainBody extends React.Component {
         let theURL = `https://www.biblegateway.com/audio/mclean/esv/${bookName}.${chapter}`
         let winName = 'Max McLean Audio'
         let winParams = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
-            width=${Math.floor(width / 1.4)},
-            height=${Math.floor(height / 2.2)},
+            width=700,
+            height=400,
             left=100,top=100`;
 
         bookName === undefined
