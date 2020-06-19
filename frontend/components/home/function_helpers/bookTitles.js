@@ -505,7 +505,6 @@ export const themeBooks = [
     "ThisIstheGospel",
     "MourningandDancing",
     "NamesofGod",
-    "OpenYourBible//Launch-WeekSampler",
     "InSpirit&inTruth:AStudyofBiblicalWorship",
     "Hymns",
     "TheResurrectedLife",
