@@ -980,7 +980,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       bookmarkId: '',
       gender: '',
       book: '',
-      id: null,
+      id: '',
       title: '',
       passages: [],
       summary: '',
@@ -988,7 +988,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       esvPassage: [],
       mainBodyChanged: false,
       bookmark: false,
-      renderDay: null
+      renderDay: ''
     };
     _this.ESVpassageGetter = _this.ESVpassageGetter.bind(_assertThisInitialized(_this));
     _this.renderDay = _this.renderDay.bind(_assertThisInitialized(_this));
@@ -1135,36 +1135,27 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
           currentUser = _this$props2.currentUser;
       var _this$state = this.state,
           bookmarkId = _this$state.bookmarkId,
-          id = _this$state.id;
+          id = _this$state.id,
+          renderDay = _this$state.renderDay,
+          mainBodyChanged = _this$state.mainBodyChanged;
       var bookmarkBlank = Object.values(bookmark).length < 1;
-      if (this.isMainBodyDevoNull()) return;
+      if (this.isMainBodyDevoNull()) return; //---------- SET bookmarkId === bookmark.id ----------//
 
-      if (!bookmarkBlank && bookmarkId !== bookmark.id && id === bookmark.devo_id) {
-        this.setState({
-          bookmarkId: bookmark.id
-        });
-      }
+      !bookmarkBlank && bookmarkId !== bookmark.id && id === bookmark.devo_id ? this.setState({
+        bookmarkId: bookmark.id
+      }) : false; //---------- SET bookmarkId === currentUser.bookmark.id ----------//
 
-      if (!this.isValidNumber(bookmarkId) && bookmarkBlank && currentUser.bookmark && bookmarkId !== currentUser.bookmark.id) {
-        this.setState({
-          bookmarkId: currentUser.bookmark.id
-        });
-      } //---------- SET renderDay to this.state ----------//
+      !this.isValidNumber(bookmarkId) && bookmarkBlank && currentUser.bookmark && bookmarkId !== currentUser.bookmark.id ? this.setState({
+        bookmarkId: currentUser.bookmark.id
+      }) : false; //---------- SET renderDay to this.renderDay() ----------//
 
+      this.renderDay() && this.renderDay() !== renderDay ? this.setState({
+        renderDay: this.renderDay()
+      }) : false; //---------- PREVENTS MULTIPLE this.setState on update ----------//
 
-      if (this.renderDay() && this.renderDay() !== this.state.renderDay) {
-        this.setState({
-          renderDay: this.renderDay()
-        });
-      } //---------- PREVENTS MULTIPLE this.setState on update ----------//
-
-
-      if (this.state.mainBodyChanged) {
-        this.setState({
-          mainBodyChanged: false
-        });
-      } //---------- UPDATES new mainBodyDevo ----------//
-
+      mainBodyChanged ? this.setState({
+        mainBodyChanged: false
+      }) : false; //---------- UPDATES new mainBodyDevo ----------//
 
       if (prevProps.mainBodyDevo !== mainBodyDevo) {
         var _id = mainBodyDevo.id,
@@ -1309,10 +1300,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "toggleAudio",
     value: function toggleAudio() {
-      var _this$state4 = this.state,
-          width = _this$state4.width,
-          height = _this$state4.height,
-          esvPassage = _this$state4.esvPassage;
+      var esvPassage = this.state.esvPassage;
       var passageSplit = esvPassage[0].passage.split(' ');
 
       var checkForNumber = function checkForNumber(data) {
@@ -1331,8 +1319,8 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       var bookName = _function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__["maxMcLeanBooks"][_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__["regBibleTitles"].indexOf(book)];
       var theURL = "https://www.biblegateway.com/audio/mclean/esv/".concat(bookName, ".").concat(chapter);
       var winName = 'Max McLean Audio';
-      var winParams = "scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,\n            width=700,\n            height=350,\n            left=100,top=100";
-      bookName === undefined ? false : window.open(theURL, winName, winParams);
+      var winParams = "scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,\n            width=700,height=350,left=100,top=100";
+      bookName !== undefined ? window.open(theURL, winName, winParams) : false;
     }
   }, {
     key: "render",
@@ -1580,9 +1568,6 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
         });
       }
     }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {}
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
@@ -1838,9 +1823,6 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       this.props.fetchDevoIndex();
     }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {}
   }, {
     key: "sortBibleTitles",
     // this.props.sheDevoIndex.sort((a, b) => this.state.bibleBooks.indexOf(a.book) - this.state.bibleBooks.indexOf(b.book))
@@ -2973,7 +2955,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       updateForm: false
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
-    _this.isTrimmedBlank = _this.isTrimmedBlank.bind(_assertThisInitialized(_this));
+    _this.isBlank = _this.isBlank.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -2989,8 +2971,8 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       return true;
     }
   }, {
-    key: "isTrimmedBlank",
-    value: function isTrimmedBlank(word) {
+    key: "isBlank",
+    value: function isBlank(word) {
       return word.trim().length < 1;
     }
   }, {
@@ -3083,23 +3065,21 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
         body: body
       };
 
-      if (this.isTrimmedBlank(title) || this.isTrimmedBlank(body) || this.isTrimmedBlank(category) || this.isTrimmedBlank(day) || !this.dayIsNumber(day)) {
+      if (this.isBlank(title) || this.isBlank(body) || this.isBlank(category) || this.isBlank(day) || !this.dayIsNumber(day)) {
         var errorsArr = [];
-        if (this.isTrimmedBlank(title)) errorsArr.push(ERRORS[0]); // Title is blank
+        if (this.isBlank(title)) errorsArr.push(ERRORS[0]); // Title is blank
 
-        if (this.isTrimmedBlank(body)) errorsArr.push(ERRORS[1]); // Body is blank
+        if (this.isBlank(body)) errorsArr.push(ERRORS[1]); // Body is blank
 
-        if (this.isTrimmedBlank(category)) errorsArr.push(ERRORS[2]); // Book is blank
+        if (this.isBlank(category)) errorsArr.push(ERRORS[2]); // Book is blank
 
-        if (this.isTrimmedBlank(day)) errorsArr.push(ERRORS[3]); // Day is blank
+        if (this.isBlank(day)) errorsArr.push(ERRORS[3]); // Day is blank
 
-        if (!this.dayIsNumber(day) && !this.isTrimmedBlank(day)) errorsArr.push(ERRORS[4]); // Day is !number
+        if (!this.dayIsNumber(day) && !this.isBlank(day)) errorsArr.push(ERRORS[4]); // Day is !number
 
-        if (errorsArr.length > 0) {
-          return this.setState({
-            updateErrors: errorsArr
-          });
-        }
+        if (errorsArr.length > 0) return this.setState({
+          updateErrors: errorsArr
+        });
       } else if (id.length < 1) {
         this.props.createNote(note).then(function () {
           _this4.setState({
@@ -3182,10 +3162,10 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
           category = _this$state2.category,
           day = _this$state2.day,
           body = _this$state2.body;
-      if (!this.isTrimmedBlank(title)) errorsHash.title = '';
-      if (!this.isTrimmedBlank(body)) errorsHash.body = '';
-      if (!this.isTrimmedBlank(category)) errorsHash.book = '';
-      if (!this.isTrimmedBlank(day)) errorsHash.day = '';
+      if (!this.isBlank(title)) errorsHash.title = '';
+      if (!this.isBlank(body)) errorsHash.body = '';
+      if (!this.isBlank(category)) errorsHash.book = '';
+      if (!this.isBlank(day)) errorsHash.day = '';
       if (this.dayIsNumber(day)) errorsHash.number = '';
       return errorsHash;
     }
@@ -3688,8 +3668,8 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
       passwordMatchError: '',
       stateErrors: []
     };
-    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
-    _this.isTrimmedBlank = _this.isTrimmedBlank.bind(_assertThisInitialized(_this));
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this)); // this.isBlank = this.isBlank.bind(this);
+
     return _this;
   }
 
@@ -3699,13 +3679,8 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
       this.props.clearErrors();
     }
   }, {
-    key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps) {
-      if (this.props.errors !== prevProps.errors) {}
-    }
-  }, {
-    key: "isTrimmedBlank",
-    value: function isTrimmedBlank(word) {
+    key: "isBlank",
+    value: function isBlank(word) {
       return word.trim().length === 0;
     }
   }, {
@@ -3725,23 +3700,21 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
         return password === passwordMatch;
       };
 
-      if (this.isTrimmedBlank(email) || this.isTrimmedBlank(firstName) || this.isTrimmedBlank(lastName) || this.isTrimmedBlank(password) || !isPasswordMatch()) {
+      if (this.isBlank(email) || this.isBlank(firstName) || this.isBlank(lastName) || this.isBlank(password) || !isPasswordMatch()) {
         var errorsArr = [];
-        if (this.isTrimmedBlank(email)) errorsArr.push(ERRORS[0]); // 0 Blank email
+        if (this.isBlank(email)) errorsArr.push(ERRORS[0]); // 0 Blank email
 
-        if (this.isTrimmedBlank(firstName)) errorsArr.push(ERRORS[3]); // 3 First name blank
+        if (this.isBlank(firstName)) errorsArr.push(ERRORS[3]); // 3 First name blank
 
-        if (this.isTrimmedBlank(lastName)) errorsArr.push(ERRORS[4]); // 4 Last name blank
+        if (this.isBlank(lastName)) errorsArr.push(ERRORS[4]); // 4 Last name blank
 
         if (password.length < 5) errorsArr.push(ERRORS[5]); // 5 PW too short
 
         if (!isPasswordMatch() && !errorsArr.includes(ERRORS[5])) errorsArr.push(ERRORS[6]); // 6 PW !match
 
-        if (errorsArr.length > 0) {
-          return this.setState({
-            stateErrors: errorsArr
-          });
-        }
+        if (errorsArr.length > 0) return this.setState({
+          stateErrors: errorsArr
+        });
       }
 
       var capitalizeFirstLetter = function capitalizeFirstLetter(string) {
@@ -3803,9 +3776,9 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
         if (ERRORS.indexOf(err) === 2) errorsHash.emailTaken = err;
         if (ERRORS.indexOf(err) === 5) errorsHash.pwShort = err;
       });
-      if (!this.isTrimmedBlank(email)) errorsHash.emailBlank = '';
-      if (!this.isTrimmedBlank(firstName)) errorsHash.firstName = '';
-      if (!this.isTrimmedBlank(lastName)) errorsHash.lastName = '';
+      if (!this.isBlank(email)) errorsHash.emailBlank = '';
+      if (!this.isBlank(firstName)) errorsHash.firstName = '';
+      if (!this.isBlank(lastName)) errorsHash.lastName = '';
       if (password.length > 5) errorsHash.pwShort = '';
       if (password === passwordMatch) errorsHash.pwNoMatch = '';
       return errorsHash;

@@ -36,10 +36,7 @@ class NavBar extends React.Component {
   }
 
   handleChange(f) {
-    return (e) =>
-      this.setState({
-        [f]: e.target.value,
-      });
+    return (e) => this.setState({ [f]: e.target.value });
   }
 
   render() {

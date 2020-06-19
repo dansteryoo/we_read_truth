@@ -24,21 +24,14 @@ class SignUp extends React.Component {
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.isTrimmedBlank = this.isTrimmedBlank.bind(this);
+        // this.isBlank = this.isBlank.bind(this);
     };
 
     componentWillUnmount() {
         this.props.clearErrors();
     };
 
-    componentDidUpdate(prevProps) {
-
-        if (this.props.errors !== prevProps.errors) {
-        }
-    }
-
-
-    isTrimmedBlank(word) {
+    isBlank(word) {
         return word.trim().length === 0
     }
 
@@ -52,18 +45,16 @@ class SignUp extends React.Component {
             return password === passwordMatch
         }
 
-        if (this.isTrimmedBlank(email) || this.isTrimmedBlank(firstName) ||
-            this.isTrimmedBlank(lastName) || this.isTrimmedBlank(password) || !isPasswordMatch()) {
+        if (this.isBlank(email) || this.isBlank(firstName) ||
+            this.isBlank(lastName) || this.isBlank(password) || !isPasswordMatch()) {
             let errorsArr = []
 
-            if (this.isTrimmedBlank(email)) errorsArr.push(ERRORS[0]) // 0 Blank email
-            if (this.isTrimmedBlank(firstName)) errorsArr.push(ERRORS[3]) // 3 First name blank
-            if (this.isTrimmedBlank(lastName)) errorsArr.push(ERRORS[4]) // 4 Last name blank
+            if (this.isBlank(email)) errorsArr.push(ERRORS[0]) // 0 Blank email
+            if (this.isBlank(firstName)) errorsArr.push(ERRORS[3]) // 3 First name blank
+            if (this.isBlank(lastName)) errorsArr.push(ERRORS[4]) // 4 Last name blank
             if (password.length < 5) errorsArr.push(ERRORS[5]) // 5 PW too short
             if (!isPasswordMatch() && !errorsArr.includes(ERRORS[5])) errorsArr.push(ERRORS[6]) // 6 PW !match
-            if (errorsArr.length > 0) {
-                return this.setState({ stateErrors: errorsArr })
-            }
+            if (errorsArr.length > 0) return this.setState({ stateErrors: errorsArr })
         }
 
         const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase()
@@ -78,11 +69,8 @@ class SignUp extends React.Component {
         }
     }
 
-
     handleChange(f) {
-        return e => this.setState({
-            [f]: e.target.value
-        })
+        return e => this.setState({ [f]: e.target.value })
     };
 
     renderErrors() {
@@ -115,9 +103,9 @@ class SignUp extends React.Component {
             if (ERRORS.indexOf(err) === 5) errorsHash.pwShort = err
         })
 
-        if (!this.isTrimmedBlank(email)) errorsHash.emailBlank = ''
-        if (!this.isTrimmedBlank(firstName)) errorsHash.firstName = ''
-        if (!this.isTrimmedBlank(lastName)) errorsHash.lastName = ''
+        if (!this.isBlank(email)) errorsHash.emailBlank = ''
+        if (!this.isBlank(firstName)) errorsHash.firstName = ''
+        if (!this.isBlank(lastName)) errorsHash.lastName = ''
         if (password.length > 5) errorsHash.pwShort = ''
         if (password === passwordMatch) errorsHash.pwNoMatch = ''
 

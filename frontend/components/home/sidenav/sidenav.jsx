@@ -58,9 +58,6 @@ class SideNav extends React.Component {
         }
     }
 
-    componentWillUnmount() {
-    };
-
     componentDidUpdate(prevProps) {
         const { currentUser, devoBook, bookmark } = this.props
         let propsBookmarkBlank = Object.values(bookmark).length < 1
