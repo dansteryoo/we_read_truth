@@ -120,9 +120,9 @@ class MainBody extends React.Component {
     //---------- REACT LIFE CYCLES ----------//
 
     componentDidMount() {
-        window.addEventListener('resize', 
-            this.setState({ width: window.innerWidth, height: window.innerHeight })
-        );
+        // window.addEventListener('resize', 
+        //     this.setState({ width: window.innerWidth, height: window.innerHeight })
+        // );
 
         this.setBookmark()
         const currentPage = this.localStorageFunc('getCurrentPage')
@@ -148,9 +148,9 @@ class MainBody extends React.Component {
     }
 
     componentWillUnmount() {
-        window.removeEventListener('resize', 
-            this.setState({ width: window.innerWidth, height: window.innerHeight })
-        );
+        // window.removeEventListener('resize', 
+        //     this.setState({ width: window.innerWidth, height: window.innerHeight })
+        // );
     }
 
     componentDidUpdate(prevProps) {
@@ -204,12 +204,6 @@ class MainBody extends React.Component {
                 bookmark: false,
             })
         }
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('resize',
-            this.setState({ width: window.innerWidth, height: window.innerHeight })
-        );
     }
 
     //---------- RENDER FUNCTIONS ----------//

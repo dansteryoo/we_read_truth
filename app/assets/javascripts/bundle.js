@@ -1096,10 +1096,9 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       var _this3 = this;
 
-      window.addEventListener('resize', this.setState({
-        width: window.innerWidth,
-        height: window.innerHeight
-      }));
+      // window.addEventListener('resize', 
+      //     this.setState({ width: window.innerWidth, height: window.innerHeight })
+      // );
       this.setBookmark();
       var currentPage = this.localStorageFunc('getCurrentPage');
       var _this$props = this.props,
@@ -1126,11 +1125,9 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      window.removeEventListener('resize', this.setState({
-        width: window.innerWidth,
-        height: window.innerHeight
-      }));
+    value: function componentWillUnmount() {// window.removeEventListener('resize', 
+      //     this.setState({ width: window.innerWidth, height: window.innerHeight })
+      // );
     }
   }, {
     key: "componentDidUpdate",
@@ -1200,14 +1197,6 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
           bookmark: false
         });
       }
-    }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      window.removeEventListener('resize', this.setState({
-        width: window.innerWidth,
-        height: window.innerHeight
-      }));
     } //---------- RENDER FUNCTIONS ----------//
 
   }, {
