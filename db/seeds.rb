@@ -9,102 +9,111 @@
 
 Devo.destroy_all
 
-he_data = JSON.parse(File.read("#{Rails.root}/app/assets/seed/hereadstruth.json"))
+he_data_1 = JSON.parse(File.read("#{Rails.root}/app/assets/seed/hereadstruth_v1.json"))
+he_data_2 = JSON.parse(File.read("#{Rails.root}/app/assets/seed/hereadstruth_v2.json"))
 
-  he_data.each do |each|
+heDataArray = [he_data_1, he_data_2]
 
-    if each["img_url"] == ""
-        @img = "null"
-    else 
-        @img = each["img_url"]
+heDataArray.each do |he_data|
+    he_data.each do |each|
+
+        if each["img_url"] == ""
+            @img = "null"
+        else 
+            @img = each["img_url"]
+        end
+
+        if each["devo_passages"] == ""
+            @passages = "null"
+        else 
+            @passages = each["devo_passages"]
+        end
+
+        if each["devo_summary"] == ""
+            @summary = "null"
+        else 
+            @summary = each["devo_summary"]
+        end
+
+        if each["devo_title"] == ""
+            @title = "null"
+        else 
+            @title = each["devo_title"]
+        end
+
+        if each["book_title"].split(' ').join('') == ""
+            @book = "null"
+        else 
+            @book = each["book_title"].split(' ').join('')
+        end
+
+        # puts ""
+        # puts @summary
+        # puts ""
+        # byebug
+            Devo.create!(
+                gender: "HE",
+                book: @book,
+                title: @title,
+                passages: @passages,
+                summary: @summary,
+                img: @img,
+                )
     end
-
-    if each["devo_passages"] == ""
-        @passages = "null"
-    else 
-        @passages = each["devo_passages"]
-    end
-
-    if each["devo_summary"] == ""
-        @summary = "null"
-    else 
-        @summary = each["devo_summary"]
-    end
-
-    if each["devo_title"] == ""
-        @title = "null"
-    else 
-        @title = each["devo_title"]
-    end
-
-    if each["book_title"].split(' ').join('') == ""
-        @book = "null"
-    else 
-        @book = each["book_title"].split(' ').join('')
-    end
-
-    # puts ""
-    # puts @summary
-    # puts ""
-
     # byebug
-    Devo.create!(
-    gender: "HE",
-    book: @book,
-    title: @title,
-    passages: @passages,
-    summary: @summary,
-    img: @img,
-        )
+end
+
+she_data_1 = JSON.parse(File.read("#{Rails.root}/app/assets/seed/shereadstruth_v1.json"))
+she_data_2 = JSON.parse(File.read("#{Rails.root}/app/assets/seed/shereadstruth_v2.json"))
+
+sheDataArray = [she_data_1, she_data_2]
+
+sheDataArray.each do |she_data|
+    she_data.each do |each|
+
+        if each["img_url"] == ""
+            @img = "null"
+        else 
+            @img = each["img_url"]
+        end
+
+        if each["devo_passages"] == ""
+            @passages = "null"
+        else 
+            @passages = each["devo_passages"]
+        end
+
+        if each["devo_summary"] == ""
+            @summary = "null"
+        else 
+            @summary = each["devo_summary"]
+        end
+
+        if each["devo_title"] == ""
+            @title = "null"
+        else 
+            @title = each["devo_title"]
+        end
+
+        if each["book_title"].split(' ').join('') == ""
+            @book = "null"
+        else 
+            @book = each["book_title"].split(' ').join('')
+        end
+
+        # puts ""
+        # puts @summary
+        # puts ""
+        # byebug
+            Devo.create!(
+                gender: "SHE",
+                book: @book,
+                title: @title,
+                passages: @passages,
+                summary: @summary,
+                img: @img,
+                
+            )
     # byebug
-  end
-
-  she_data = JSON.parse(File.read("#{Rails.root}/app/assets/seed/shereadstruth.json"))
-
-  she_data.each do |each|
-
-    if each["img_url"] == ""
-        @img = "null"
-    else 
-        @img = each["img_url"]
     end
-
-    if each["devo_passages"] == ""
-        @passages = "null"
-    else 
-        @passages = each["devo_passages"]
-    end
-
-    if each["devo_summary"] == ""
-        @summary = "null"
-    else 
-        @summary = each["devo_summary"]
-    end
-
-    if each["devo_title"] == ""
-        @title = "null"
-    else 
-        @title = each["devo_title"]
-    end
-
-    if each["book_title"].split(' ').join('') == ""
-        @book = "null"
-    else 
-        @book = each["book_title"].split(' ').join('')
-    end
-
-    # puts ""
-    # puts @summary
-    # puts ""
-
-    # byebug
-    Devo.create!(
-    gender: "SHE",
-    book: @book,
-    title: @title,
-    passages: @passages,
-    summary: @summary,
-    img: @img,
-        )
-    # byebug
-  end
+end

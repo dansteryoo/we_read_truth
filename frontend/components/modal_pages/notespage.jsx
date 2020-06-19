@@ -58,6 +58,7 @@ class NotesPage extends React.Component {
 
         const { notes } = this.state
             let sortNotes;
+
             switch (checkbox) {
                 case 'byBook':
                     sortNotes = notes

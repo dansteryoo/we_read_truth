@@ -24,7 +24,7 @@ class NotesForm extends React.Component {
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.isTrimmedBlank = this.isTrimmedBlank.bind(this);
+        this.isBlank = this.isBlank.bind(this);
     }
 
     dayIsNumber(day) {
@@ -36,7 +36,7 @@ class NotesForm extends React.Component {
         return true
     }
 
-    isTrimmedBlank(word) {
+    isBlank(word) {
         return word.trim().length < 1
     }
 
@@ -49,7 +49,6 @@ class NotesForm extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        
         if (this.props.noteId !== prevProps.noteId) {
 
             //---------- if this.props.noteId is a NUMBER then populate with update first and render update form ----------//
@@ -65,7 +64,6 @@ class NotesForm extends React.Component {
                 if (this.props.notes.length < 1) return 
                 
                 //---------- AND if current props array is NOT EMPTY then reset state ----------//
-                
                 if (!this.props.notes.some(ele => ele.id === this.state.id)) {
                     this.setState({
                         id: '',
@@ -93,21 +91,18 @@ class NotesForm extends React.Component {
         let noteUpdate = { id, title, category, day, body }
         let note = { title, category, day, body }
 
-        if (this.isTrimmedBlank(title) || this.isTrimmedBlank(body) || 
-            this.isTrimmedBlank(category) || this.isTrimmedBlank(day) || 
+        if (this.isBlank(title) || this.isBlank(body) || 
+            this.isBlank(category) || this.isBlank(day) || 
             !this.dayIsNumber(day)) {
 
             let errorsArr = []
 
-            if (this.isTrimmedBlank(title)) errorsArr.push(ERRORS[0]) // Title is blank
-            if (this.isTrimmedBlank(body)) errorsArr.push(ERRORS[1]) // Body is blank
-            if (this.isTrimmedBlank(category)) errorsArr.push(ERRORS[2]) // Book is blank
-            if (this.isTrimmedBlank(day)) errorsArr.push(ERRORS[3]) // Day is blank
-            if (!this.dayIsNumber(day) && !this.isTrimmedBlank(day)) errorsArr.push(ERRORS[4])  // Day is !number
-            
-            if (errorsArr.length > 0) {
-                return this.setState({ updateErrors: errorsArr })
-            }
+            if (this.isBlank(title)) errorsArr.push(ERRORS[0]) // Title is blank
+            if (this.isBlank(body)) errorsArr.push(ERRORS[1]) // Body is blank
+            if (this.isBlank(category)) errorsArr.push(ERRORS[2]) // Book is blank
+            if (this.isBlank(day)) errorsArr.push(ERRORS[3]) // Day is blank
+            if (!this.dayIsNumber(day) && !this.isBlank(day)) errorsArr.push(ERRORS[4])  // Day is !number
+            if (errorsArr.length > 0) return this.setState({ updateErrors: errorsArr })
 
         } else if (id.length < 1) {
             this.props.createNote(note)
@@ -180,10 +175,10 @@ class NotesForm extends React.Component {
 
         const { title, category, day, body } = this.state
 
-        if (!this.isTrimmedBlank(title)) errorsHash.title = ''
-        if (!this.isTrimmedBlank(body)) errorsHash.body = ''
-        if (!this.isTrimmedBlank(category)) errorsHash.book = ''
-        if (!this.isTrimmedBlank(day)) errorsHash.day = ''
+        if (!this.isBlank(title)) errorsHash.title = ''
+        if (!this.isBlank(body)) errorsHash.body = ''
+        if (!this.isBlank(category)) errorsHash.book = ''
+        if (!this.isBlank(day)) errorsHash.day = ''
         if (this.dayIsNumber(day)) errorsHash.number = ''
 
         return errorsHash

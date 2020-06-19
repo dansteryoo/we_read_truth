@@ -398,22 +398,13 @@ $darkpink: #ff8da1;
 .categories-section-he {
     width: 100%;
     height: auto;
-    font-size: 0.85rem;
-
+    font-size: 1em;
     -webkit-columns: 5;
     -moz-columns: 5;
-    columns: 5;
+    columns: 6;
     -moz-column-fill: balance;
     column-fill: balance;
 }
-
-// .categories-section-she {
-//     min-height: 480px;
-// }
-
-// .categories-section-he {
-//     max-height: 200px;
-// }
 
 .categories-title-he,
 .categories-title-she {

@@ -8,7 +8,6 @@
 // "MourningandDancing"
 // "2019Wrapped:SheReadsTruthYearinReview"
 // "NamesofGod"
-// "OpenYourBible//Launch-WeekSampler"
 // "InSpirit&inTruth:AStudyofBiblicalWorship"
 // "Advent2016:ChristWasBornforThis"
 // "Lent2016"

@@ -36,10 +36,7 @@ class NavBar extends React.Component {
   }
 
   handleChange(f) {
-    return (e) =>
-      this.setState({
-        [f]: e.target.value,
-      });
+    return (e) => this.setState({ [f]: e.target.value });
   }
 
   render() {
@@ -63,6 +60,9 @@ class NavBar extends React.Component {
         </div>
 
         <ul className='nav-links'>
+          <li className='devo-li'>
+            <a href="mailto:wereadtruth.app@gmail.com?subject=We Read Truth Feedback: ">Contact Us</a>  
+          </li>
           <li className='devo-li' onClick={() => this.props.openModal('Categories')}>
             Devotionals
           </li>

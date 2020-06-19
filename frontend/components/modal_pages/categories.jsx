@@ -21,9 +21,6 @@ class CategoriesPage extends React.Component {
         this.props.fetchDevoIndex();
     };
 
-    componentWillUnmount() {
-    };
-
     // this.props.sheDevoIndex.sort((a, b) => this.state.bibleBooks.indexOf(a.book) - this.state.bibleBooks.indexOf(b.book))
     // sort titles by bible order 
 

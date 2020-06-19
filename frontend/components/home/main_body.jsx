@@ -10,7 +10,7 @@ class MainBody extends React.Component {
             bookmarkId: '',
             gender: '',
             book: '',
-            id: null,
+            id: '',
             title: '',
             passages: [],
             summary: '',
@@ -18,9 +18,7 @@ class MainBody extends React.Component {
             esvPassage: [],
             mainBodyChanged: false,
             bookmark: false,
-            renderDay: null,
-            width: 0,
-            height: 0
+            renderDay: '',
         }
 
         this.ESVpassageGetter = this.ESVpassageGetter.bind(this);
@@ -40,6 +38,15 @@ class MainBody extends React.Component {
     //---------- ESV.ORG API CALL ----------//
 
     ESVpassageGetter(passage) {
+        const esvKeys = [
+            window.esv_one,
+            window.esv_two,
+            window.esv_three,
+            window.esv_four,
+            window.esv_five,
+            window.esv_six,
+        ]
+        let randomGen = esvKeys[Math.floor(Math.random() * esvKeys.length)];
 
         axios.get('https://api.esv.org/v3/passage/text/?', {
             crossDomain: true,
@@ -52,7 +59,7 @@ class MainBody extends React.Component {
                 'include-passage-references': false
             },
             headers: {
-                'Authorization': window.esvAPIKey,
+                'Authorization': randomGen,
             }
         })
         .then(res => {
@@ -120,21 +127,18 @@ class MainBody extends React.Component {
     //---------- REACT LIFE CYCLES ----------//
 
     componentDidMount() {
-        window.addEventListener('resize', 
-            this.setState({ width: window.innerWidth, height: window.innerHeight })
-        );
-
         this.setBookmark()
         const currentPage = this.localStorageFunc('getCurrentPage')
         const { currentUser, fetchDevo } = this.props
 
         //---------- IF localStorage EXISTS then setState ----------//
-        if (currentPage && !this.userBookmarkBlank()) {
-            this.setState({ 
-                renderDay: currentPage.renderDay,
-                bookmarkId: currentPage.bookmarkId
-            })
-            return this.props.fetchDevo(currentPage.id)
+        if (currentPage) {
+            return fetchDevo(currentPage.id)
+                .then(() => this.setState({
+                    renderDay: currentPage.render_day,
+                    bookmarkId: currentPage.bookmarkId,
+                    bookmark: true
+                })) 
 
         } else if (!this.userBookmarkBlank()) {
             return fetchDevo(currentUser.bookmark.devo_id)
@@ -143,49 +147,40 @@ class MainBody extends React.Component {
                     bookmarkId: currentUser.bookmark.id,
                     bookmark: true
                  }))
-
-        } else if (currentPage) {
-            return fetchDevo(currentPage.id)
-                .then(() => this.setState({
-                    renderDay: currentPage.render_day,
-                    bookmarkId: currentPage.bookmarkId,
-                    bookmark: true
-                })) 
-        }   
+        } 
     }
 
     componentWillUnmount() {
-        window.removeEventListener('resize', 
-            this.setState({ width: window.innerWidth, height: window.innerHeight })
-        );
     }
 
     componentDidUpdate(prevProps) {
         this.setBookmark()
-
-        const { bookmark, mainBodyDevo } = this.props
-        const { bookmarkId } = this.state
+        const { bookmark, mainBodyDevo, currentUser } = this.props
+        const { bookmarkId, id, renderDay, mainBodyChanged } = this.state
         const bookmarkBlank = Object.values(bookmark).length < 1
 
         if (this.isMainBodyDevoNull()) return 
 
-        //---------- SET bookmarkId to props.bookmark.id ----------//
-        if ((bookmark || !bookmarkBlank) && bookmarkId !== bookmark.id) {
+        //---------- SET bookmarkId === bookmark.id ----------//
+        !bookmarkBlank && bookmarkId !== bookmark.id && id === bookmark.devo_id
+            ? this.setState({ bookmarkId: bookmark.id })
+            : false
 
-            !this.isValidNumber(bookmarkId)
-                ? this.setState({ bookmarkId: bookmark.id })
-                : this.setState({ bookmarkId: '' })
-        }
+        //---------- SET bookmarkId === currentUser.bookmark.id ----------//
+        !this.isValidNumber(bookmarkId) && bookmarkBlank && currentUser.bookmark 
+        && bookmarkId !== currentUser.bookmark.id
+            ? this.setState({ bookmarkId: currentUser.bookmark.id })
+            : false
 
-        //---------- SET renderDay to this.state ----------//
-        if (this.renderDay() && this.renderDay() !== this.state.renderDay) {
-            this.setState({ renderDay: this.renderDay() })
-        }
+        //---------- SET renderDay to this.renderDay() ----------//
+        this.renderDay() && this.renderDay() !== renderDay
+            ? this.setState({ renderDay: this.renderDay() })
+            : false 
 
         //---------- PREVENTS MULTIPLE this.setState on update ----------//
-        if (this.state.mainBodyChanged) {
-            this.setState({ mainBodyChanged: false })
-        }
+        mainBodyChanged 
+            ? this.setState({ mainBodyChanged: false })
+            : false
 
         //---------- UPDATES new mainBodyDevo ----------//
         if (prevProps.mainBodyDevo !== mainBodyDevo) {
@@ -207,12 +202,6 @@ class MainBody extends React.Component {
                 bookmark: false,
             })
         }
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('resize',
-            this.setState({ width: window.innerWidth, height: window.innerHeight })
-        );
     }
 
     //---------- RENDER FUNCTIONS ----------//
@@ -325,7 +314,7 @@ class MainBody extends React.Component {
     }
 
     toggleAudio() {
-        const { width, height, esvPassage } = this.state
+        const { esvPassage } = this.state
         const passageSplit = esvPassage[0].passage.split(' ')
 
         const checkForNumber = (data) => {
@@ -345,22 +334,20 @@ class MainBody extends React.Component {
         let theURL = `https://www.biblegateway.com/audio/mclean/esv/${bookName}.${chapter}`
         let winName = 'Max McLean Audio'
         let winParams = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
-            width=${Math.floor(width / 1.4)},
-            height=${Math.floor(height / 2.2)},
-            left=100,top=100`;
+            width=700,height=350,left=100,top=100`;
 
-        bookName === undefined
-            ? false
-            : window.open(theURL, winName, winParams);
+        bookName !== undefined
+            ? window.open(theURL, winName, winParams)
+            : false
     }
 
     render() {
         if (this.isMainBodyDevoNull() && !this.localStorageFunc('getCurrentPage')) return <div></div>
         
-        this.state.bookmark 
+        this.state.bookmark && this.isValidNumber(this.state.bookmarkId)
             ? this.localStorageFunc('setCurrentPage')
             : false 
-
+        
         return (
             <div className='middle-container'>
                 <div className='devo-main-title'>

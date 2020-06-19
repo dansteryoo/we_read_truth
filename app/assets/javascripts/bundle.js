@@ -578,7 +578,7 @@ chapterDict['Rev'] = 22;
 var maxMcLeanBooks = ['Gen', 'Exod', 'Lev', 'Num', 'Deut', 'Josh', 'Judg', 'Ruth', '1Sam', '2Sam', '1Kgs', '2Kgs', '1Chr', '2Chr', 'Ezra', 'Neh', 'Esth', 'Job', 'Ps', 'Prov', 'Eccl', 'Song', 'Isa', 'Jer', 'Lam', 'Ezek', 'Dan', 'Hos', 'Joel', 'Amos', 'Obad', 'Jonah', 'Mic', 'Nah', 'Hab', 'Zeph', 'Hag', 'Zech', 'Mal', 'Matt', 'Mark', 'Luke', 'John', 'Acts', 'Rom', '1Cor', '2Cor', 'Gal', 'Eph', 'Phil', 'Col', '1Thess', '2Thess', '1Tim', '2Tim', 'Titus', 'Phlm', 'Heb', 'Jas', '1Pet', '2Pet', '1John', '2John', '3John', 'Jude', 'Rev'];
 var regBibleTitles = ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1 Samuel", "2 Samuel", "1 Kings", "2 Kings", "1 Chronicles", "2 Chronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalm", "Proverbs", "Ecclesiastes", "Song of Songs", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel", "Amos", "Obadiah", "Jonah", "Micah", "Nahum", "Habakkuk", "Zephaniah", "Haggai", "Zechariah", "Malachi", "Matthew", "Mark", "Luke", "John", "Acts", "Romans", "1 Corinthians", "1 Corinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1 Thessalonians", "2 Thessalonians", "1 Timothy", "2 Timothy", "Titus", "Philemon", "Hebrews", "James", "1 Peter", "2 Peter", "1 John", "2 John", "3 John", "Jude", "Revelation"]; // sidenav.jsx 
 
-var allBookTitles = ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1&2Samuel", "1&2Kings", "1&2Chronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalms", "Proverbs:TheWayofWisdom", "Ecclesiastes", "SongofSongs", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel,Amos,Obadiah,Jonah,andMicah", "Nahum,Habakkuk,Zephaniah,andHaggai", "ZechariahandMalachi", "Matthew", "Mark", "Luke", "John", "ActsoftheApostles", "Romans", "1&2Corinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1&2Thessalonians", "1&2TimothyandTitus", "Philemon", "Hebrews", "James", "1&2Peter", "123John", "Jude", "Revelation", "Justice", "HymnsV", "TheSermonontheMount", "Lent2017:YouAreMine", "Advent2018:UntiltheSonofGodAppears", "ThisIstheGospel", "Lent2018:SeetheLord’sSalvation", "MourningandDancing", "2019Wrapped:SheReadsTruthYearinReview", "NamesofGod", "OpenYourBible//Launch-WeekSampler", "InSpirit&inTruth:AStudyofBiblicalWorship", "Advent2016:ChristWasBornforThis", "Lent2016", "Hymns", "TheResurrectedLife", "TheRisenChrist", "Lent2020:HisLoveEndures", "Jesus,KeepMeNearTheCross", "TheBeatitudes", "PsalmsforPrayer", "AttributesofGod", "PsalmsofRest", "TheLifeofMoses", "HymnsIV", "BecauseHeLives", "HymnsII", "TheMiraclesofJesus", "SongsfortheRoad:ThePsalmsofAscent", "Women&MenintheWord:OldTestament", "HymnsIII", "GiveThanks", "MakingRoom:AStudyofBiblicalHospitality", "IAm:StatementsofOurSavior", "WorthyofPraise", "Advent2017:JoytotheWorld", "HoldingTighttoPermanent", "Advent2019:AThrillofHope", "CountdowntoActs", "FruitoftheSpirit", "Advent2015:BornIsTheKing", "TheParablesofJesus", "GoTellItontheMountain", "HymnsofHope", "PsalmsofGratitude"]; // sidenav.jsx 
+var allBookTitles = ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1&2Samuel", "1&2Kings", "1&2Chronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalms", "Proverbs:TheWayofWisdom", "Ecclesiastes", "SongofSongs", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel,Amos,Obadiah,Jonah,andMicah", "Nahum,Habakkuk,Zephaniah,andHaggai", "ZechariahandMalachi", "Matthew", "Mark", "Luke", "John", "ActsoftheApostles", "Romans", "1&2Corinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1&2Thessalonians", "1&2TimothyandTitus", "Philemon", "Hebrews", "James", "1&2Peter", "1,2&3John", "Jude", "Revelation", "Justice", "HymnsV", "TheSermonontheMount", "ThisIstheGospel", "MourningandDancing", "NamesofGod", "InSpirit&inTruth:AStudyofBiblicalWorship", "Hymns", "TheResurrectedLife", "TheRisenChrist", "Lent2020:HisLoveEndures", "Jesus,KeepMeNearTheCross", "TheBeatitudes", "PsalmsforPrayer", "AttributesofGod", "PsalmsofRest", "TheLifeofMoses", "HymnsIV", "BecauseHeLives", "HymnsII", "TheMiraclesofJesus", "SongsfortheRoad:ThePsalmsofAscent", "Women&MenintheWord:OldTestament", "HymnsIII", "GiveThanks", "MakingRoom:AStudyofBiblicalHospitality", "IAm:StatementsofOurSavior", "WorthyofPraise", "HoldingTighttoPermanent", "CountdowntoActs", "FruitoftheSpirit", "TheParablesofJesus", "GoTellItontheMountain", "HymnsofHope", "PsalmsofGratitude", "PromisesofGod"]; // sidenav.jsx 
 
 var allBookTitlesFormat = {
   "ZechariahandMalachi": "Zechariah & Malachi",
@@ -593,18 +593,13 @@ var allBookTitlesFormat = {
   "1&2TimothyandTitus": "1 & 2 Timothy, & Titus",
   "ActsoftheApostles": "Acts",
   "1&2Corinthians": "1 & 2 Corinthians",
+  "1,2&3John": "1, 2, 3 John",
   "HymnsV": 'Hymns V',
   "TheSermonontheMount": 'The Sermon on the Mount',
-  "Lent2017:YouAreMine": 'Lent 2017',
-  "Advent2018:UntiltheSonofGodAppears": 'Advent 2018',
   "ThisIstheGospel": 'This is the Gospel',
-  "Lent2018:SeetheLord’sSalvation": 'Lent 2018',
   "MourningandDancing": 'Mourning & Dancing',
-  "2019Wrapped:SheReadsTruthYearinReview": '2019 Wrapped (Year in Review)',
   "NamesofGod": 'Names of God',
   "InSpirit&inTruth:AStudyofBiblicalWorship": 'In Spirit & in Truth (Biblical Worship)',
-  "Advent2016:ChristWasBornforThis": 'Advent 2016',
-  "Lent2016": 'Lent 2016',
   "Hymns": 'Hymns I',
   "TheResurrectedLife": 'The Resurrected Life',
   "TheRisenChrist": 'The Risen Christ',
@@ -626,28 +621,27 @@ var allBookTitlesFormat = {
   "MakingRoom:AStudyofBiblicalHospitality": 'Making Room (Biblical Hospitality)',
   "IAm:StatementsofOurSavior": 'I Am (Statements of Our Savior)',
   "WorthyofPraise": 'Worthy of Praise',
-  "Advent2017:JoytotheWorld": 'Advent 2017',
   "HoldingTighttoPermanent": 'Holding Tight to Permanent',
-  "Advent2019:AThrillofHope": 'Advent 2019',
   "CountdowntoActs": 'Countdown to Acts',
   "FruitoftheSpirit": 'Fruit of the Spirit',
-  "Advent2015:BornIsTheKing": 'Advent 2015',
   "TheParablesofJesus": 'The Parables of Jesus',
   "GoTellItontheMountain": 'Go Tell It on the Mountain',
   "HymnsofHope": 'Hymns of Hope',
-  "PsalmsofGratitude": 'Psalms of Gratitude'
+  "PsalmsofGratitude": 'Psalms of Gratitude',
+  "PromisesofGod": "Promises of God"
 }; // categories.jsx 
 
-var bibleBooks = ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1&2Samuel", "SecondSamuel", "1&2Kings", "SecondKings", "1&2Chronicles", "SecondChronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalm", "Proverbs:TheWayofWisdom", "Ecclesiastes", "SongofSongs", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel,Amos,Obadiah,Jonah,andMicah", "Amos", "Obadiah", "Jonah", "Micah", "Nahum,Habakkuk,Zephaniah,andHaggai", "Habakkuk", "Zephaniah", "Haggai", "ZechariahandMalachi", "Malachi", "Matthew", "Mark", "Luke", "John", "ActsoftheApostles", "Romans", "1&2Corinthians", "SecondCorinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1&2Thessalonians", "SecondThessalonians", "1&2TimothyandTitus", "SecondTimothy", "Titus", "Philemon", "Hebrews", "James", "1&2Peter", "SecondPeter", "123John", "SecondJohn", "ThirdJohn", "Jude", "Revelation"]; // category_list_NT.jsx
+var bibleBooks = ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1&2Samuel", "SecondSamuel", "1&2Kings", "SecondKings", "1&2Chronicles", "SecondChronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalm", "Proverbs:TheWayofWisdom", "Ecclesiastes", "SongofSongs", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel,Amos,Obadiah,Jonah,andMicah", "Amos", "Obadiah", "Jonah", "Micah", "Nahum,Habakkuk,Zephaniah,andHaggai", "Habakkuk", "Zephaniah", "Haggai", "ZechariahandMalachi", "Malachi", "Matthew", "Mark", "Luke", "John", "ActsoftheApostles", "Romans", "1&2Corinthians", "SecondCorinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1&2Thessalonians", "SecondThessalonians", "1&2TimothyandTitus", "SecondTimothy", "Titus", "Philemon", "Hebrews", "James", "1&2Peter", "SecondPeter", "1,2&3John", "SecondJohn", "ThirdJohn", "Jude", "Revelation"]; // category_list_NT.jsx
 
-var NTbooks = ["Matthew", "Mark", "Luke", "John", "ActsoftheApostles", "Romans", "1&2Corinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1&2Thessalonians", "1&2TimothyandTitus", "Philemon", "Hebrews", "James", "1&2Peter", "123John", "Jude", "Revelation"]; // category_list_NT.jsx
+var NTbooks = ["Matthew", "Mark", "Luke", "John", "ActsoftheApostles", "Romans", "1&2Corinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1&2Thessalonians", "1&2TimothyandTitus", "Philemon", "Hebrews", "James", "1&2Peter", "1,2&3John", "Jude", "Revelation"]; // category_list_NT.jsx
 
 var NTbookFormat = {
   "1&2thessalonians": "1 & 2 Thessalonians",
   "1&2peter": "1 & 2 Peter",
   "1&2timothyandtitus": "1 & 2 Timothy, & Titus",
   "actsoftheapostles": "Acts",
-  "1&2corinthians": "1 & 2 Corinthians"
+  "1&2corinthians": "1 & 2 Corinthians",
+  "1,2&3john": "1, 2, 3 John"
 }; // category_list_OT.jsx
 
 var OTbooks = ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1&2Samuel", "1&2Kings", "1&2Chronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalms", "Proverbs:TheWayofWisdom", "Ecclesiastes", "SongofSongs", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel,Amos,Obadiah,Jonah,andMicah", "Nahum,Habakkuk,Zephaniah,andHaggai", "ZechariahandMalachi"]; // category_list_OT.jsx
@@ -662,21 +656,15 @@ var OTbookFormat = {
   "joel,amos,obadiah,jonah,andmicah": "Joel, Amos, Obadiah, Jonah, & Micah"
 }; // category_list_Other.jsx
 
-var themeBooks = ["Justice", "HymnsV", "TheSermonontheMount", "ThisIstheGospel", "MourningandDancing", "NamesofGod", "OpenYourBible//Launch-WeekSampler", "InSpirit&inTruth:AStudyofBiblicalWorship", "Hymns", "TheResurrectedLife", "TheRisenChrist", "Lent2020:HisLoveEndures", "Jesus,KeepMeNearTheCross", "TheBeatitudes", "PsalmsforPrayer", "AttributesofGod", "PsalmsofRest", "TheLifeofMoses", "HymnsIV", "BecauseHeLives", "HymnsII", "TheMiraclesofJesus", "SongsfortheRoad:ThePsalmsofAscent", "Women&MenintheWord:OldTestament", "HymnsIII", "GiveThanks", "MakingRoom:AStudyofBiblicalHospitality", "IAm:StatementsofOurSavior", "WorthyofPraise", "HoldingTighttoPermanent", "Advent2019:AThrillofHope", "CountdowntoActs", "FruitoftheSpirit", "TheParablesofJesus", "GoTellItontheMountain", "HymnsofHope", "PsalmsofGratitude"]; // category_list_Other.jsx
+var themeBooks = ["Justice", "HymnsV", "TheSermonontheMount", "ThisIstheGospel", "MourningandDancing", "NamesofGod", "InSpirit&inTruth:AStudyofBiblicalWorship", "Hymns", "TheResurrectedLife", "TheRisenChrist", "Lent2020:HisLoveEndures", "Jesus,KeepMeNearTheCross", "TheBeatitudes", "PsalmsforPrayer", "AttributesofGod", "PsalmsofRest", "TheLifeofMoses", "HymnsIV", "BecauseHeLives", "HymnsII", "TheMiraclesofJesus", "SongsfortheRoad:ThePsalmsofAscent", "Women&MenintheWord:OldTestament", "HymnsIII", "GiveThanks", "MakingRoom:AStudyofBiblicalHospitality", "IAm:StatementsofOurSavior", "WorthyofPraise", "HoldingTighttoPermanent", "Advent2019:AThrillofHope", "CountdowntoActs", "FruitoftheSpirit", "TheParablesofJesus", "GoTellItontheMountain", "HymnsofHope", "PsalmsofGratitude", "PromisesofGod"]; // category_list_Other.jsx
 
 var themeBookFormat = {
   "HymnsV": 'Hymns V',
   "TheSermonontheMount": 'The Sermon on the Mount',
-  "Lent2017:YouAreMine": 'Lent 2017',
-  "Advent2018:UntiltheSonofGodAppears": 'Advent 2018',
   "ThisIstheGospel": 'This is the Gospel',
-  "Lent2018:SeetheLord’sSalvation": 'Lent 2018',
   "MourningandDancing": 'Mourning & Dancing',
-  "2019Wrapped:SheReadsTruthYearinReview": '2019 Wrapped (Year in Review)',
   "NamesofGod": 'Names of God',
   "InSpirit&inTruth:AStudyofBiblicalWorship": 'In Spirit & in Truth (Biblical Worship)',
-  "Advent2016:ChristWasBornforThis": 'Advent 2016',
-  "Lent2016": 'Lent 2016',
   "Hymns": 'Hymns I',
   "TheResurrectedLife": 'The Resurrected Life',
   "TheRisenChrist": 'The Risen Christ',
@@ -695,19 +683,17 @@ var themeBookFormat = {
   "Women&MenintheWord:OldTestament": 'Old Testament Women & Men',
   "HymnsIII": 'Hymns III',
   "GiveThanks": 'Give Thanks',
-  "MakingRoom:AStudyofBiblicalHospitality": 'MakingRoom (Biblical Hospitality)',
+  "MakingRoom:AStudyofBiblicalHospitality": 'Making Room (Biblical Hospitality)',
   "IAm:StatementsofOurSavior": 'I Am (Statements of Our Savior)',
   "WorthyofPraise": 'Worthy of Praise',
-  "Advent2017:JoytotheWorld": 'Advent 2017',
   "HoldingTighttoPermanent": 'Holding Tight to Permanent',
-  "Advent2019:AThrillofHope": 'Advent 2019',
   "CountdowntoActs": 'Countdown to Acts',
   "FruitoftheSpirit": 'Fruit of the Spirit',
-  "Advent2015:BornIsTheKing": 'Advent 2015',
   "TheParablesofJesus": 'The Parables of Jesus',
   "GoTellItontheMountain": 'Go Tell It on the Mountain',
   "HymnsofHope": 'Hymns of Hope',
-  "PsalmsofGratitude": 'Psalms of Gratitude'
+  "PsalmsofGratitude": 'Psalms of Gratitude',
+  "PromisesofGod": "Promises of God"
 };
 
 /***/ }),
@@ -994,7 +980,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       bookmarkId: '',
       gender: '',
       book: '',
-      id: null,
+      id: '',
       title: '',
       passages: [],
       summary: '',
@@ -1002,9 +988,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       esvPassage: [],
       mainBodyChanged: false,
       bookmark: false,
-      renderDay: null,
-      width: 0,
-      height: 0
+      renderDay: ''
     };
     _this.ESVpassageGetter = _this.ESVpassageGetter.bind(_assertThisInitialized(_this));
     _this.renderDay = _this.renderDay.bind(_assertThisInitialized(_this));
@@ -1026,6 +1010,8 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
     value: function ESVpassageGetter(passage) {
       var _this2 = this;
 
+      var esvKeys = [window.esv_one, window.esv_two, window.esv_three, window.esv_four, window.esv_five, window.esv_six];
+      var randomGen = esvKeys[Math.floor(Math.random() * esvKeys.length)];
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('https://api.esv.org/v3/passage/text/?', {
         crossDomain: true,
         params: {
@@ -1037,7 +1023,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
           'include-passage-references': false
         },
         headers: {
-          'Authorization': window.esvAPIKey
+          'Authorization': randomGen
         }
       }).then(function (res) {
         if (res.status === 200) {
@@ -1110,22 +1096,20 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       var _this3 = this;
 
-      window.addEventListener('resize', this.setState({
-        width: window.innerWidth,
-        height: window.innerHeight
-      }));
       this.setBookmark();
       var currentPage = this.localStorageFunc('getCurrentPage');
       var _this$props = this.props,
           currentUser = _this$props.currentUser,
           fetchDevo = _this$props.fetchDevo; //---------- IF localStorage EXISTS then setState ----------//
 
-      if (currentPage && !this.userBookmarkBlank()) {
-        this.setState({
-          renderDay: currentPage.renderDay,
-          bookmarkId: currentPage.bookmarkId
+      if (currentPage) {
+        return fetchDevo(currentPage.id).then(function () {
+          return _this3.setState({
+            renderDay: currentPage.render_day,
+            bookmarkId: currentPage.bookmarkId,
+            bookmark: true
+          });
         });
-        return this.props.fetchDevo(currentPage.id);
       } else if (!this.userBookmarkBlank()) {
         return fetchDevo(currentUser.bookmark.devo_id).then(function () {
           return _this3.setState({
@@ -1134,24 +1118,11 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
             bookmark: true
           });
         });
-      } else if (currentPage) {
-        return fetchDevo(currentPage.id).then(function () {
-          return _this3.setState({
-            renderDay: currentPage.render_day,
-            bookmarkId: currentPage.bookmarkId,
-            bookmark: true
-          });
-        });
       }
     }
   }, {
     key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      window.removeEventListener('resize', this.setState({
-        width: window.innerWidth,
-        height: window.innerHeight
-      }));
-    }
+    value: function componentWillUnmount() {}
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
@@ -1160,36 +1131,34 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       this.setBookmark();
       var _this$props2 = this.props,
           bookmark = _this$props2.bookmark,
-          mainBodyDevo = _this$props2.mainBodyDevo;
-      var bookmarkId = this.state.bookmarkId;
+          mainBodyDevo = _this$props2.mainBodyDevo,
+          currentUser = _this$props2.currentUser;
+      var _this$state = this.state,
+          bookmarkId = _this$state.bookmarkId,
+          id = _this$state.id,
+          renderDay = _this$state.renderDay,
+          mainBodyChanged = _this$state.mainBodyChanged;
       var bookmarkBlank = Object.values(bookmark).length < 1;
-      if (this.isMainBodyDevoNull()) return; //---------- SET bookmarkId to props.bookmark.id ----------//
+      if (this.isMainBodyDevoNull()) return; //---------- SET bookmarkId === bookmark.id ----------//
 
-      if ((bookmark || !bookmarkBlank) && bookmarkId !== bookmark.id) {
-        !this.isValidNumber(bookmarkId) ? this.setState({
-          bookmarkId: bookmark.id
-        }) : this.setState({
-          bookmarkId: ''
-        });
-      } //---------- SET renderDay to this.state ----------//
+      !bookmarkBlank && bookmarkId !== bookmark.id && id === bookmark.devo_id ? this.setState({
+        bookmarkId: bookmark.id
+      }) : false; //---------- SET bookmarkId === currentUser.bookmark.id ----------//
 
+      !this.isValidNumber(bookmarkId) && bookmarkBlank && currentUser.bookmark && bookmarkId !== currentUser.bookmark.id ? this.setState({
+        bookmarkId: currentUser.bookmark.id
+      }) : false; //---------- SET renderDay to this.renderDay() ----------//
 
-      if (this.renderDay() && this.renderDay() !== this.state.renderDay) {
-        this.setState({
-          renderDay: this.renderDay()
-        });
-      } //---------- PREVENTS MULTIPLE this.setState on update ----------//
+      this.renderDay() && this.renderDay() !== renderDay ? this.setState({
+        renderDay: this.renderDay()
+      }) : false; //---------- PREVENTS MULTIPLE this.setState on update ----------//
 
-
-      if (this.state.mainBodyChanged) {
-        this.setState({
-          mainBodyChanged: false
-        });
-      } //---------- UPDATES new mainBodyDevo ----------//
-
+      mainBodyChanged ? this.setState({
+        mainBodyChanged: false
+      }) : false; //---------- UPDATES new mainBodyDevo ----------//
 
       if (prevProps.mainBodyDevo !== mainBodyDevo) {
-        var id = mainBodyDevo.id,
+        var _id = mainBodyDevo.id,
             img = mainBodyDevo.img,
             passages = mainBodyDevo.passages,
             summary = mainBodyDevo.summary,
@@ -1206,7 +1175,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
           return _this4.ESVpassageGetter(each.trim());
         });
         this.setState({
-          id: id,
+          id: _id,
           img: img,
           passages: passages,
           summary: summary,
@@ -1217,22 +1186,14 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
           bookmark: false
         });
       }
-    }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      window.removeEventListener('resize', this.setState({
-        width: window.innerWidth,
-        height: window.innerHeight
-      }));
     } //---------- RENDER FUNCTIONS ----------//
 
   }, {
     key: "renderPassages",
     value: function renderPassages() {
-      var _this$state = this.state,
-          passages = _this$state.passages,
-          esvPassage = _this$state.esvPassage;
+      var _this$state2 = this.state,
+          passages = _this$state2.passages,
+          esvPassage = _this$state2.esvPassage;
       if (passages.length < 1) return;
       var esvSortMatch = [];
       var passagesArray = this.splitPassages(passages);
@@ -1306,13 +1267,13 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "toggleBookmark",
     value: function toggleBookmark() {
-      var _this$state2 = this.state,
-          bookmark = _this$state2.bookmark,
-          id = _this$state2.id,
-          renderDay = _this$state2.renderDay,
-          gender = _this$state2.gender,
-          book = _this$state2.book,
-          bookmarkId = _this$state2.bookmarkId;
+      var _this$state3 = this.state,
+          bookmark = _this$state3.bookmark,
+          id = _this$state3.id,
+          renderDay = _this$state3.renderDay,
+          gender = _this$state3.gender,
+          book = _this$state3.book,
+          bookmarkId = _this$state3.bookmarkId;
       var _this$props3 = this.props,
           currentUser = _this$props3.currentUser,
           createBookmark = _this$props3.createBookmark,
@@ -1339,10 +1300,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "toggleAudio",
     value: function toggleAudio() {
-      var _this$state3 = this.state,
-          width = _this$state3.width,
-          height = _this$state3.height,
-          esvPassage = _this$state3.esvPassage;
+      var esvPassage = this.state.esvPassage;
       var passageSplit = esvPassage[0].passage.split(' ');
 
       var checkForNumber = function checkForNumber(data) {
@@ -1361,8 +1319,8 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       var bookName = _function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__["maxMcLeanBooks"][_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__["regBibleTitles"].indexOf(book)];
       var theURL = "https://www.biblegateway.com/audio/mclean/esv/".concat(bookName, ".").concat(chapter);
       var winName = 'Max McLean Audio';
-      var winParams = "scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,\n            width=".concat(Math.floor(width / 1.4), ",\n            height=").concat(Math.floor(height / 2.2), ",\n            left=100,top=100");
-      bookName === undefined ? false : window.open(theURL, winName, winParams);
+      var winParams = "scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,\n            width=700,height=350,left=100,top=100";
+      bookName !== undefined ? window.open(theURL, winName, winParams) : false;
     }
   }, {
     key: "render",
@@ -1370,7 +1328,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       var _this6 = this;
 
       if (this.isMainBodyDevoNull() && !this.localStorageFunc('getCurrentPage')) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
-      this.state.bookmark ? this.localStorageFunc('setCurrentPage') : false;
+      this.state.bookmark && this.isValidNumber(this.state.bookmarkId) ? this.localStorageFunc('setCurrentPage') : false;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "middle-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1610,9 +1568,6 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
         });
       }
     }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {}
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
@@ -1868,9 +1823,6 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       this.props.fetchDevoIndex();
     }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {}
   }, {
     key: "sortBibleTitles",
     // this.props.sheDevoIndex.sort((a, b) => this.state.bibleBooks.indexOf(a.book) - this.state.bibleBooks.indexOf(b.book))
@@ -2844,6 +2796,10 @@ var NavBar = /*#__PURE__*/function (_React$Component) {
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "nav-links"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "devo-li"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "mailto:wereadtruth.app@gmail.com?subject=We Read Truth Feedback: "
+      }, "Contact Us")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "devo-li",
         onClick: function onClick() {
           return _this3.props.openModal('Categories');
@@ -2999,7 +2955,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       updateForm: false
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
-    _this.isTrimmedBlank = _this.isTrimmedBlank.bind(_assertThisInitialized(_this));
+    _this.isBlank = _this.isBlank.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -3015,8 +2971,8 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       return true;
     }
   }, {
-    key: "isTrimmedBlank",
-    value: function isTrimmedBlank(word) {
+    key: "isBlank",
+    value: function isBlank(word) {
       return word.trim().length < 1;
     }
   }, {
@@ -3109,23 +3065,21 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
         body: body
       };
 
-      if (this.isTrimmedBlank(title) || this.isTrimmedBlank(body) || this.isTrimmedBlank(category) || this.isTrimmedBlank(day) || !this.dayIsNumber(day)) {
+      if (this.isBlank(title) || this.isBlank(body) || this.isBlank(category) || this.isBlank(day) || !this.dayIsNumber(day)) {
         var errorsArr = [];
-        if (this.isTrimmedBlank(title)) errorsArr.push(ERRORS[0]); // Title is blank
+        if (this.isBlank(title)) errorsArr.push(ERRORS[0]); // Title is blank
 
-        if (this.isTrimmedBlank(body)) errorsArr.push(ERRORS[1]); // Body is blank
+        if (this.isBlank(body)) errorsArr.push(ERRORS[1]); // Body is blank
 
-        if (this.isTrimmedBlank(category)) errorsArr.push(ERRORS[2]); // Book is blank
+        if (this.isBlank(category)) errorsArr.push(ERRORS[2]); // Book is blank
 
-        if (this.isTrimmedBlank(day)) errorsArr.push(ERRORS[3]); // Day is blank
+        if (this.isBlank(day)) errorsArr.push(ERRORS[3]); // Day is blank
 
-        if (!this.dayIsNumber(day) && !this.isTrimmedBlank(day)) errorsArr.push(ERRORS[4]); // Day is !number
+        if (!this.dayIsNumber(day) && !this.isBlank(day)) errorsArr.push(ERRORS[4]); // Day is !number
 
-        if (errorsArr.length > 0) {
-          return this.setState({
-            updateErrors: errorsArr
-          });
-        }
+        if (errorsArr.length > 0) return this.setState({
+          updateErrors: errorsArr
+        });
       } else if (id.length < 1) {
         this.props.createNote(note).then(function () {
           _this4.setState({
@@ -3208,10 +3162,10 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
           category = _this$state2.category,
           day = _this$state2.day,
           body = _this$state2.body;
-      if (!this.isTrimmedBlank(title)) errorsHash.title = '';
-      if (!this.isTrimmedBlank(body)) errorsHash.body = '';
-      if (!this.isTrimmedBlank(category)) errorsHash.book = '';
-      if (!this.isTrimmedBlank(day)) errorsHash.day = '';
+      if (!this.isBlank(title)) errorsHash.title = '';
+      if (!this.isBlank(body)) errorsHash.body = '';
+      if (!this.isBlank(category)) errorsHash.book = '';
+      if (!this.isBlank(day)) errorsHash.day = '';
       if (this.dayIsNumber(day)) errorsHash.number = '';
       return errorsHash;
     }
@@ -3714,8 +3668,8 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
       passwordMatchError: '',
       stateErrors: []
     };
-    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
-    _this.isTrimmedBlank = _this.isTrimmedBlank.bind(_assertThisInitialized(_this));
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this)); // this.isBlank = this.isBlank.bind(this);
+
     return _this;
   }
 
@@ -3725,13 +3679,8 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
       this.props.clearErrors();
     }
   }, {
-    key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps) {
-      if (this.props.errors !== prevProps.errors) {}
-    }
-  }, {
-    key: "isTrimmedBlank",
-    value: function isTrimmedBlank(word) {
+    key: "isBlank",
+    value: function isBlank(word) {
       return word.trim().length === 0;
     }
   }, {
@@ -3751,23 +3700,21 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
         return password === passwordMatch;
       };
 
-      if (this.isTrimmedBlank(email) || this.isTrimmedBlank(firstName) || this.isTrimmedBlank(lastName) || this.isTrimmedBlank(password) || !isPasswordMatch()) {
+      if (this.isBlank(email) || this.isBlank(firstName) || this.isBlank(lastName) || this.isBlank(password) || !isPasswordMatch()) {
         var errorsArr = [];
-        if (this.isTrimmedBlank(email)) errorsArr.push(ERRORS[0]); // 0 Blank email
+        if (this.isBlank(email)) errorsArr.push(ERRORS[0]); // 0 Blank email
 
-        if (this.isTrimmedBlank(firstName)) errorsArr.push(ERRORS[3]); // 3 First name blank
+        if (this.isBlank(firstName)) errorsArr.push(ERRORS[3]); // 3 First name blank
 
-        if (this.isTrimmedBlank(lastName)) errorsArr.push(ERRORS[4]); // 4 Last name blank
+        if (this.isBlank(lastName)) errorsArr.push(ERRORS[4]); // 4 Last name blank
 
         if (password.length < 5) errorsArr.push(ERRORS[5]); // 5 PW too short
 
         if (!isPasswordMatch() && !errorsArr.includes(ERRORS[5])) errorsArr.push(ERRORS[6]); // 6 PW !match
 
-        if (errorsArr.length > 0) {
-          return this.setState({
-            stateErrors: errorsArr
-          });
-        }
+        if (errorsArr.length > 0) return this.setState({
+          stateErrors: errorsArr
+        });
       }
 
       var capitalizeFirstLetter = function capitalizeFirstLetter(string) {
@@ -3829,9 +3776,9 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
         if (ERRORS.indexOf(err) === 2) errorsHash.emailTaken = err;
         if (ERRORS.indexOf(err) === 5) errorsHash.pwShort = err;
       });
-      if (!this.isTrimmedBlank(email)) errorsHash.emailBlank = '';
-      if (!this.isTrimmedBlank(firstName)) errorsHash.firstName = '';
-      if (!this.isTrimmedBlank(lastName)) errorsHash.lastName = '';
+      if (!this.isBlank(email)) errorsHash.emailBlank = '';
+      if (!this.isBlank(firstName)) errorsHash.firstName = '';
+      if (!this.isBlank(lastName)) errorsHash.lastName = '';
       if (password.length > 5) errorsHash.pwShort = '';
       if (password === passwordMatch) errorsHash.pwNoMatch = '';
       return errorsHash;
