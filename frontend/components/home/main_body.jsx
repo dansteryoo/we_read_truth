@@ -353,7 +353,7 @@ class MainBody extends React.Component {
         let winName = 'Max McLean Audio'
         let winParams = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
             width=700,
-            height=400,
+            height=350,
             left=100,top=100`;
 
         bookName === undefined
