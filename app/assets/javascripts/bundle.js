@@ -1546,7 +1546,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-!(function webpackMissingModule() { var e = new Error("Cannot find module '../function_helpers/sidenav/sidenav_item'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+/* harmony import */ var _sidenav_sidenav_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../sidenav/sidenav_item */ "./frontend/components/home/sidenav/sidenav_item.jsx");
 /* harmony import */ var _function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../function_helpers/bookTitles */ "./frontend/components/home/function_helpers/bookTitles.js");
 /* harmony import */ var _function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../function_helpers/helper_funcs */ "./frontend/components/home/function_helpers/helper_funcs.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -1686,7 +1686,7 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "sidenav-ul"
       }, this.props.devoBook.map(function (dailyDevo, i) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(!(function webpackMissingModule() { var e = new Error("Cannot find module '../function_helpers/sidenav/sidenav_item'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()), {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sidenav_sidenav_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
           days: i,
           dailyDevo: dailyDevo,
           handleGetDevo: _this3.handleGetDevo,
@@ -1775,6 +1775,39 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_sidenav__WEBPACK_IMPORTED_MODULE_4__["default"]));
+
+/***/ }),
+
+/***/ "./frontend/components/home/sidenav/sidenav_item.jsx":
+/*!***********************************************************!*\
+  !*** ./frontend/components/home/sidenav/sidenav_item.jsx ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var SideNavItem = function SideNavItem(_ref) {
+  var dailyDevo = _ref.dailyDevo,
+      days = _ref.days,
+      handleGetDevo = _ref.handleGetDevo;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+    className: "daily-devo-li",
+    onClick: function onClick() {
+      return handleGetDevo(dailyDevo.id);
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "daily-devo-days"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Day: "), days + 1), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "daily-devo-title"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Title: "), dailyDevo.title));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (SideNavItem);
 
 /***/ }),
 
@@ -2939,7 +2972,7 @@ var ProfilesPage = /*#__PURE__*/function (_React$Component) {
           }
         }, "Cancel")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "update-form-delete-message"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " ARE YOU SURE BUDDY? "))))));
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " ARE YOU SURE YOU WANT TO DELETE YOUR ACCOUNT? "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, " You will permenatnly lose all your data. "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, " Please press the delete button to confirm. "))))));
       }
     }
   }]);

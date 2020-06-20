@@ -1,5 +1,5 @@
 import React from 'react';
-import SideNavItem from '../function_helpers/sidenav/sidenav_item'
+import SideNavItem from '../sidenav/sidenav_item'
 import { allBookTitles, allBookTitlesFormat } from '../function_helpers/bookTitles'
 import { setPayload } from '../function_helpers/helper_funcs'
 

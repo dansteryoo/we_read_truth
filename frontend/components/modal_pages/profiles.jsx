@@ -192,7 +192,10 @@ class ProfilesPage extends React.Component {
                     </div>
 
                     <div className='update-form-delete-message'>
-                            <p> ARE YOU SURE BUDDY? </p>
+                            <p> ARE YOU SURE YOU WANT TO DELETE YOUR ACCOUNT? </p>
+                            <br/>
+                            <span> You will permenatnly lose all your data. </span>
+                            <span> Please press the delete button to confirm. </span>
                     </div>
                 </div>
                 </div>

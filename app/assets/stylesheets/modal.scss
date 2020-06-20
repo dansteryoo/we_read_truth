@@ -111,12 +111,11 @@ $darkpink: #ff8da1;
             height: 35px;
             font-size: 12px;
             font-weight: bold;
-            margin: 10px 0;
             text-align: center;
             border-radius: 25px;
             letter-spacing: 0.1rem;
             color: white;
-            margin: 10px auto;
+            margin: 10px 75px;
             cursor: pointer;
         }
 
@@ -145,6 +144,31 @@ $darkpink: #ff8da1;
           box-shadow: 0 2px 7px 2px $lightgray;
         }
     }
+
+
+.update-form-button-container {
+  padding-left: 50px;
+}
+
+.update-form-delete-message {
+    height: 270px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    transform: translate(0, 5%);
+    
+  p {
+      font-size: 20px;
+      font-weight: bold;
+      color: red;
+    }
+
+  span {
+      font-size: 16px;
+      color: red;
+  }
+}
 
 .form-errors-update-email,
 .form-errors-update-first,
