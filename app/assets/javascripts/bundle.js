@@ -3096,6 +3096,7 @@ var NavBar = /*#__PURE__*/function (_React$Component) {
       search: ''
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.checkPosition = _this.checkPosition.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -3126,6 +3127,15 @@ var NavBar = /*#__PURE__*/function (_React$Component) {
       };
     }
   }, {
+    key: "checkPosition",
+    value: function checkPosition() {
+      if (window.matchMedia('(max-width: 1200px)').matches) {
+        return 'navsearch-none';
+      } else {
+        return 'navsearch';
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this3 = this;
@@ -3137,7 +3147,7 @@ var NavBar = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: window.logo
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "navsearch"
+        className: this.checkPosition()
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "navsearch-icon",
         src: window.search_icon,
@@ -3154,7 +3164,7 @@ var NavBar = /*#__PURE__*/function (_React$Component) {
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "nav-links"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "devo-li"
+        className: "contactus-li"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "mailto:wereadtruth.app@gmail.com?subject=We Read Truth Feedback: "
       }, "Contact Us")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
