@@ -1,7 +1,7 @@
 
 :root {
-  --landscape-width: 25; // % OR vw for responsive window resizing!
-  --portrait-width: 80vw;
+  --landscape-width: 15; // % OR vw for responsive window resizing!
+  --portrait-width: 50vw;
   --header-height: 7rem;
   --secs: 400ms;
   --bg-left: white;
@@ -100,6 +100,7 @@
 
 // Style in common for both sidebars:
 #left { 
+  z-index: 2;
   transition: width var(--secs); width: 0;
 
   @media (orientation: landscape) {
