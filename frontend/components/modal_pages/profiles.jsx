@@ -110,6 +110,11 @@ class ProfilesPage extends React.Component {
             <div className='form-container-update'>
                 <div className='form-title-update'>
                     Update {this.props.currentUser.first_name}'s Profile</div>
+
+                <div className="form-closing-x" onClick={() => this.props.closeModal()}>
+                    &#10005;
+                    </div>
+                    
                 <form onSubmit={this.handleSubmit} className='form__update'>
 
                     <div className='update-form'>
