@@ -8,6 +8,10 @@ $blue: #4ca6ff;
 $green: #00a699;
 $orange: #ff5a5f;
 
+.navsearch-none {
+    display: none;
+}
+
 //------------------Nav Splash
 
 .nav-container {
@@ -22,7 +26,7 @@ $orange: #ff5a5f;
 
     li {
         display: block;
-        transition-duration: 0.5s;
+        transition-duration: 500ms;
     }
 
     li:hover {
@@ -56,6 +60,11 @@ $orange: #ff5a5f;
             cursor: pointer;
         }
 
+        .contactus-li {
+            width: 85px;
+        }
+
+        .contactus-li:hover, 
         .devo-li:hover, 
         .notes-li:hover,
         .logout-li:hover ,
@@ -63,6 +72,7 @@ $orange: #ff5a5f;
             color: $green;
         }
 
+        .contactus-li:active, 
         .devo-li:active, 
         .notes-li:active,
         .logout-li:active {
@@ -70,7 +80,7 @@ $orange: #ff5a5f;
         }
 
         .profile-li {
-        position: relative;
+            position: relative;
 
             .dropdown-profile {
                 width: 115px;
