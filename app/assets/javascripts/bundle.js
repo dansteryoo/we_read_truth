@@ -716,6 +716,63 @@ var themeBookFormat = {
 
 /***/ }),
 
+/***/ "./frontend/components/home/function_helpers/helper_funcs.js":
+/*!*******************************************************************!*\
+  !*** ./frontend/components/home/function_helpers/helper_funcs.js ***!
+  \*******************************************************************/
+/*! exports provided: searchRegexMatch, setPayload, sortTitles, sortAlphabetically */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "searchRegexMatch", function() { return searchRegexMatch; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setPayload", function() { return setPayload; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sortTitles", function() { return sortTitles; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sortAlphabetically", function() { return sortAlphabetically; });
+var searchRegexMatch = function searchRegexMatch(search) {
+  var input = Array.from(search).reduce(function (a, v, i) {
+    return "".concat(a, "[^").concat(search.substring(i), "]*?").concat(v);
+  }, '');
+  return new RegExp(input);
+};
+var setPayload = function setPayload(data) {
+  var payload;
+  if (!data) return;
+
+  if (data.book.includes("&")) {
+    payload = {
+      gender: data.gender,
+      book: data.book.replace("&", "%26")
+    };
+  } else {
+    payload = {
+      gender: data.gender,
+      book: data.book
+    };
+  }
+
+  return payload;
+};
+var sortTitles = function sortTitles(data, bibleBooks) {
+  var lowerCaseArr = bibleBooks.map(function (ele) {
+    return ele.toLowerCase();
+  });
+  return data.sort(function (a, b) {
+    return lowerCaseArr.indexOf(a.book) - lowerCaseArr.indexOf(b.book);
+  }).map(function (ele) {
+    return ele;
+  });
+};
+var sortAlphabetically = function sortAlphabetically(data) {
+  return data.sort(function (a, b) {
+    return a.book < b.book ? -1 : 1;
+  }).map(function (ele) {
+    return ele;
+  });
+};
+
+/***/ }),
+
 /***/ "./frontend/components/home/home.jsx":
 /*!*******************************************!*\
   !*** ./frontend/components/home/home.jsx ***!
@@ -1491,6 +1548,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _sidenav_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sidenav_item */ "./frontend/components/home/sidenav/sidenav_item.jsx");
 /* harmony import */ var _function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../function_helpers/bookTitles */ "./frontend/components/home/function_helpers/bookTitles.js");
+/* harmony import */ var _function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../function_helpers/helper_funcs */ "./frontend/components/home/function_helpers/helper_funcs.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1517,6 +1575,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var SideNav = /*#__PURE__*/function (_React$Component) {
   _inherits(SideNav, _React$Component);
 
@@ -1536,7 +1595,6 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
     _this.myRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.renderDevoBookTitle = _this.renderDevoBookTitle.bind(_assertThisInitialized(_this));
     _this.userBookmarkBlank = _this.userBookmarkBlank.bind(_assertThisInitialized(_this));
-    _this.setPayload = _this.setPayload.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1547,26 +1605,6 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
       return bookmark == (undefined || null);
     }
   }, {
-    key: "setPayload",
-    value: function setPayload(data) {
-      var payload;
-      if (!data) return;
-
-      if (data.book.includes("&")) {
-        payload = {
-          gender: data.gender,
-          book: data.book.replace("&", "%26")
-        };
-      } else {
-        payload = {
-          gender: data.gender,
-          book: data.book
-        };
-      }
-
-      return payload;
-    }
-  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       var _this2 = this;
@@ -1575,10 +1613,10 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
       var currentPage = JSON.parse(localStorage.getItem(userId));
 
       if (currentPage) {
-        return this.props.fetchDevoBook(this.setPayload(currentPage));
+        return this.props.fetchDevoBook(Object(_function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_3__["setPayload"])(currentPage));
       } else if (!this.userBookmarkBlank()) {
         var bookmark = this.props.currentUser.bookmark;
-        var userPayload = this.setPayload(bookmark);
+        var userPayload = Object(_function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_3__["setPayload"])(bookmark);
         return this.props.fetchDevoBook(userPayload).then(function () {
           return _this2.setState({
             book: bookmark.book
@@ -1600,16 +1638,16 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
           this.setState({
             book: devoBook[0].book
           });
-          devoBook[0].book !== this.state.book ? this.myRef.current.scrollTo(0, 0) : false;
+          devoBook[0].book !== this.state.book && this.myRef.current.scrollTo(0, 0);
         } else if (!propsBookmarkBlank && bookmark.user_id === currentUser.id) {
-          this.props.fetchDevoBook(this.setPayload(bookmark));
+          this.props.fetchDevoBook(Object(_function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_3__["setPayload"])(bookmark));
         } else if (!this.userBookmarkBlank()) {
-          this.props.fetchDevoBook(this.setPayload(currentUser.bookmark));
+          this.props.fetchDevoBook(Object(_function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_3__["setPayload"])(currentUser.bookmark));
         }
 
-        !this.state.navSet ? this.setState({
+        !this.state.navSet && this.setState({
           navSet: true
-        }) : false;
+        });
       }
     }
   }, {
@@ -1621,13 +1659,13 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
     key: "renderDevoBookTitle",
     value: function renderDevoBookTitle() {
       var book = this.state.book;
-      var isBookInBookTitles = _function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__["allBookTitles"].includes(book);
-      var isBookTitleDefined = _function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__["allBookTitlesFormat"][book] !== undefined;
+      var bookInBookTitles = _function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__["allBookTitles"].includes(book);
+      var bookTitleDefined = _function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__["allBookTitlesFormat"][book] !== undefined;
       var devoBookTitle;
 
-      if (isBookInBookTitles && !isBookTitleDefined) {
+      if (bookInBookTitles && !bookTitleDefined) {
         devoBookTitle = _function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__["allBookTitles"][_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__["allBookTitles"].indexOf(book)];
-      } else if (isBookInBookTitles && isBookTitleDefined) {
+      } else if (bookInBookTitles && bookTitleDefined) {
         devoBookTitle = _function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__["allBookTitlesFormat"][book];
       }
 
@@ -1786,8 +1824,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _category_list_OT__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./category_list_OT */ "./frontend/components/modal_pages/category_list_OT.jsx");
 /* harmony import */ var _category_list_NT__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./category_list_NT */ "./frontend/components/modal_pages/category_list_NT.jsx");
-/* harmony import */ var _category_list_Other__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./category_list_Other */ "./frontend/components/modal_pages/category_list_Other.jsx");
+/* harmony import */ var _category_list_Themes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./category_list_Themes */ "./frontend/components/modal_pages/category_list_Themes.jsx");
 /* harmony import */ var _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../home/function_helpers/bookTitles */ "./frontend/components/home/function_helpers/bookTitles.js");
+/* harmony import */ var _home_function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../home/function_helpers/helper_funcs */ "./frontend/components/home/function_helpers/helper_funcs.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1816,6 +1855,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var CategoriesPage = /*#__PURE__*/function (_React$Component) {
   _inherits(CategoriesPage, _React$Component);
 
@@ -1831,8 +1871,6 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
       fetchBook: ''
     };
     _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
-    _this.sortBibleTitles = _this.sortBibleTitles.bind(_assertThisInitialized(_this));
-    _this.sortOtherTitles = _this.sortOtherTitles.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1842,46 +1880,18 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
       this.props.fetchDevoIndex();
     }
   }, {
-    key: "sortBibleTitles",
+    key: "handleClick",
+    // sortTitles
     // this.props.sheDevoIndex.sort((a, b) => this.state.bibleBooks.indexOf(a.book) - this.state.bibleBooks.indexOf(b.book))
     // sort titles by bible order 
-    value: function sortBibleTitles(data) {
-      var lowerCaseArr = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_4__["bibleBooks"].map(function (ele) {
-        return ele.toLowerCase();
-      });
-      return data.sort(function (a, b) {
-        return lowerCaseArr.indexOf(a.book) - lowerCaseArr.indexOf(b.book);
-      }).map(function (ele) {
-        return ele;
-      });
-    }
-  }, {
-    key: "sortOtherTitles",
+    // sortAlphabetically
     // this.props.sheDevoIndex.sort((a, b) => a.book < b.book ? -1 : 1
     // sort title by alphabetical order
-    value: function sortOtherTitles(data) {
-      return data.sort(function (a, b) {
-        return a.book < b.book ? -1 : 1;
-      }).map(function (ele) {
-        return ele;
-      });
-    }
-  }, {
-    key: "handleClick",
-    value: function handleClick(devoBookPayload, e) {
+    value: function handleClick(devoPayload, e) {
       var _this2 = this;
 
       e.preventDefault();
-      var payload = devoBookPayload;
-
-      if (devoBookPayload.book.includes("&")) {
-        payload = {
-          gender: devoBookPayload.gender,
-          book: devoBookPayload.book.replace("&", "%26")
-        };
-      }
-
-      this.props.fetchDevoBook(payload).then(function () {
+      this.props.fetchDevoBook(Object(_home_function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_5__["setPayload"])(devoPayload)).then(function () {
         return _this2.props.closeModal();
       });
     }
@@ -1908,9 +1918,9 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
         className: "categories-OT"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "she-category-ul"
-      }, this.sortBibleTitles(sheDevoIndex).map(function (eachTitle, i) {
+      }, Object(_home_function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_5__["sortTitles"])(sheDevoIndex, _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_4__["bibleBooks"]).map(function (title, i) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_category_list_OT__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          eachTitle: eachTitle,
+          title: title,
           handleClick: _this3.handleClick,
           key: i
         });
@@ -1920,9 +1930,9 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
         className: "categories-NT"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "she-category-ul"
-      }, this.sortBibleTitles(sheDevoIndex).map(function (eachTitle, i) {
+      }, Object(_home_function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_5__["sortTitles"])(sheDevoIndex, _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_4__["bibleBooks"]).map(function (title, i) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_category_list_NT__WEBPACK_IMPORTED_MODULE_2__["default"], {
-          eachTitle: eachTitle,
+          title: title,
           handleClick: _this3.handleClick,
           key: i
         });
@@ -1932,9 +1942,9 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
         className: "categories-Other"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "she-category-ul"
-      }, this.sortOtherTitles(sheDevoIndex).map(function (eachTitle, i) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_category_list_Other__WEBPACK_IMPORTED_MODULE_3__["default"], {
-          eachTitle: eachTitle,
+      }, Object(_home_function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_5__["sortAlphabetically"])(sheDevoIndex, _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_4__["bibleBooks"]).map(function (title, i) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_category_list_Themes__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          title: title,
           handleClick: _this3.handleClick,
           key: i
         });
@@ -1948,9 +1958,9 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
         className: "categories-OT"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "he-category-ul"
-      }, this.sortBibleTitles(heDevoIndex).map(function (eachTitle, i) {
+      }, Object(_home_function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_5__["sortTitles"])(heDevoIndex, _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_4__["bibleBooks"]).map(function (title, i) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_category_list_OT__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          eachTitle: eachTitle,
+          title: title,
           handleClick: _this3.handleClick,
           key: i
         });
@@ -1960,9 +1970,9 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
         className: "categories-NT"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "he-category-ul"
-      }, this.sortBibleTitles(heDevoIndex).map(function (eachTitle, i) {
+      }, Object(_home_function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_5__["sortTitles"])(heDevoIndex, _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_4__["bibleBooks"]).map(function (title, i) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_category_list_NT__WEBPACK_IMPORTED_MODULE_2__["default"], {
-          eachTitle: eachTitle,
+          title: title,
           handleClick: _this3.handleClick,
           key: i
         });
@@ -1972,9 +1982,9 @@ var CategoriesPage = /*#__PURE__*/function (_React$Component) {
         className: "categories-Other"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "she-category-ul"
-      }, this.sortOtherTitles(heDevoIndex).map(function (eachTitle, i) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_category_list_Other__WEBPACK_IMPORTED_MODULE_3__["default"], {
-          eachTitle: eachTitle,
+      }, Object(_home_function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_5__["sortAlphabetically"])(heDevoIndex, _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_4__["bibleBooks"]).map(function (title, i) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_category_list_Themes__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          title: title,
           handleClick: _this3.handleClick,
           key: i
         });
@@ -2105,25 +2115,25 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var CategoryListNT = function CategoryListNT(_ref) {
-  var eachTitle = _ref.eachTitle,
+  var title = _ref.title,
       handleClick = _ref.handleClick;
   var lowerCaseArr = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["NTbooks"].map(function (ele) {
     return ele.toLowerCase();
   });
-  var inBookTitle = lowerCaseArr.includes(eachTitle.book);
-  var isbookTitleDefined = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["NTbookFormat"][eachTitle.book] !== undefined;
-  var bookTitle = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["NTbooks"][lowerCaseArr.indexOf(eachTitle.book)];
+  var inBookTitle = lowerCaseArr.includes(title.book);
+  var isbookTitleDefined = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["NTbookFormat"][title.book] !== undefined;
+  var bookTitle = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["NTbooks"][lowerCaseArr.indexOf(title.book)];
   var NTbook;
 
   if (inBookTitle && !isbookTitleDefined) {
     NTbook = bookTitle;
   } else if (inBookTitle && isbookTitleDefined) {
-    NTbook = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["NTbookFormat"][eachTitle.book];
+    NTbook = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["NTbookFormat"][title.book];
   }
 
   ;
   var fetchBookPayload = {
-    gender: eachTitle.gender,
+    gender: title.gender,
     book: bookTitle
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
@@ -2156,25 +2166,25 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var CategoryListOT = function CategoryListOT(_ref) {
-  var eachTitle = _ref.eachTitle,
+  var title = _ref.title,
       handleClick = _ref.handleClick;
   var lowerCaseArr = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["OTbooks"].map(function (ele) {
     return ele.toLowerCase();
   });
-  var inBookTitle = lowerCaseArr.includes(eachTitle.book);
-  var isBookTitleDefined = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["OTbookFormat"][eachTitle.book] !== undefined;
-  var bookTitle = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["OTbooks"][lowerCaseArr.indexOf(eachTitle.book)];
+  var inBookTitle = lowerCaseArr.includes(title.book);
+  var isBookTitleDefined = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["OTbookFormat"][title.book] !== undefined;
+  var bookTitle = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["OTbooks"][lowerCaseArr.indexOf(title.book)];
   var OTbook;
 
   if (inBookTitle && !isBookTitleDefined) {
     OTbook = bookTitle;
   } else if (inBookTitle && isBookTitleDefined) {
-    OTbook = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["OTbookFormat"][eachTitle.book];
+    OTbook = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["OTbookFormat"][title.book];
   }
 
   ;
   var fetchBookPayload = {
-    gender: eachTitle.gender,
+    gender: title.gender,
     book: bookTitle
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
@@ -2191,10 +2201,10 @@ var CategoryListOT = function CategoryListOT(_ref) {
 
 /***/ }),
 
-/***/ "./frontend/components/modal_pages/category_list_Other.jsx":
-/*!*****************************************************************!*\
-  !*** ./frontend/components/modal_pages/category_list_Other.jsx ***!
-  \*****************************************************************/
+/***/ "./frontend/components/modal_pages/category_list_Themes.jsx":
+/*!******************************************************************!*\
+  !*** ./frontend/components/modal_pages/category_list_Themes.jsx ***!
+  \******************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2206,8 +2216,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var CategoryListOther = function CategoryListOther(_ref) {
-  var eachTitle = _ref.eachTitle,
+var CategoryListThemes = function CategoryListThemes(_ref) {
+  var title = _ref.title,
       handleClick = _ref.handleClick;
   var lowerCaseArr = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["themeBooks"].map(function (ele) {
     return ele.toLowerCase();
@@ -2224,13 +2234,13 @@ var CategoryListOther = function CategoryListOther(_ref) {
     return hash;
   };
 
-  var inBookTitle = lowerCaseArr.includes(eachTitle.book);
-  var isBookTitleDefined = lowerCaseFormat(_home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["themeBookFormat"])[eachTitle.book] !== undefined;
-  var bookTitle = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["themeBooks"][lowerCaseArr.indexOf(eachTitle.book)];
-  var bookTitleRender = lowerCaseFormat(_home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["themeBookFormat"])[eachTitle.book];
+  var inBookTitle = lowerCaseArr.includes(title.book);
+  var isBookTitleDefined = lowerCaseFormat(_home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["themeBookFormat"])[title.book] !== undefined;
+  var bookTitle = _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["themeBooks"][lowerCaseArr.indexOf(title.book)];
+  var bookTitleRender = lowerCaseFormat(_home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["themeBookFormat"])[title.book];
   var themeBook = inBookTitle && isBookTitleDefined ? bookTitleRender : null;
   var fetchBookPayload = {
-    gender: eachTitle.gender,
+    gender: title.gender,
     book: bookTitle
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
@@ -2243,7 +2253,7 @@ var CategoryListOther = function CategoryListOther(_ref) {
   }, themeBook));
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (CategoryListOther);
+/* harmony default export */ __webpack_exports__["default"] = (CategoryListThemes);
 
 /***/ }),
 
@@ -2338,6 +2348,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _notes_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./notes_item */ "./frontend/components/modal_pages/notes_item.jsx");
+/* harmony import */ var _home_function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../home/function_helpers/helper_funcs */ "./frontend/components/home/function_helpers/helper_funcs.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -2361,6 +2372,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
 
 
 
@@ -2490,16 +2502,9 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleSearch",
     value: function handleSearch(e) {
-      e.preventDefault();
+      e.preventDefault(); //---------- helper_func ----------//
 
-      var searchMatch = function searchMatch(search) {
-        var input = Array.from(search).reduce(function (a, v, i) {
-          return "".concat(a, "[^").concat(search.substring(i), "]*?").concat(v);
-        }, '');
-        return new RegExp(input);
-      };
-
-      var searchData = searchMatch(this.state.search.toLowerCase());
+      var searchData = Object(_home_function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_2__["searchRegexMatch"])(this.state.search.toLowerCase());
       var sortNotes = this.props.notes.filter(function (each) {
         var sortTitles = each.title.toLowerCase().match(searchData);
         var sortBody = each.body.toLowerCase().match(searchData);
@@ -2956,7 +2961,7 @@ var ProfilesPage = /*#__PURE__*/function (_React$Component) {
           className: "form__update"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "update-form"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " ARE YOU SURE BUDDY? "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "update-form-button-container"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "update-form-delete-btn"
@@ -2965,7 +2970,9 @@ var ProfilesPage = /*#__PURE__*/function (_React$Component) {
           onClick: function onClick() {
             return _this3.toggleDeleteConfirmation();
           }
-        }, "Cancel"))))));
+        }, "Cancel")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "update-form-delete-message"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " ARE YOU SURE BUDDY? "))))));
       }
     }
   }]);
@@ -3046,7 +3053,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _home_function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../home/function_helpers/helper_funcs */ "./frontend/components/home/function_helpers/helper_funcs.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -3095,16 +3102,9 @@ var NavBar = /*#__PURE__*/function (_React$Component) {
   _createClass(NavBar, [{
     key: "handleSubmit",
     value: function handleSubmit(e) {
-      e.preventDefault();
+      e.preventDefault(); //---------- helper_func ----------//
 
-      var match = function match(search) {
-        var input = Array.from(search).reduce(function (a, v, i) {
-          return "".concat(a, "[^").concat(search.substring(i), "]*?").concat(v);
-        }, '');
-        return new RegExp(input); // return values.filter((each) => each.match(result));
-      };
-
-      this.props.openModal('Categories', match(this.state.search.toLowerCase()));
+      this.props.openModal('Categories', Object(_home_function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_1__["searchRegexMatch"])(this.state.search.toLowerCase()));
     }
   }, {
     key: "componentDidMount",
@@ -3223,8 +3223,8 @@ var mapStateToProps = function mapStateToProps(state) {
   return {
     currentUser: state.users[state.session.id],
     errors: state.errors,
-    heDevoIndex: heDevoIdx,
-    sheDevoIndex: sheDevoIdx
+    heDevoIdx: heDevoIdx,
+    sheDevoIdx: sheDevoIdx
   };
 };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { searchRegexMatch } from '../home/function_helpers/helper_funcs'
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -15,16 +15,8 @@ class NavBar extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    const match = (search) => {
-      const input = Array.from(search).reduce(
-        (a, v, i) => `${a}[^${search.substring(i)}]*?${v}`,
-        ''
-      );
-      return new RegExp(input);
-      // return values.filter((each) => each.match(result));
-    };
-
-    this.props.openModal('Categories', match(this.state.search.toLowerCase()))
+    //---------- helper_func ----------//
+    this.props.openModal('Categories', searchRegexMatch(this.state.search.toLowerCase()))
   }
 
   componentDidMount() {

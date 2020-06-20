@@ -186,11 +186,13 @@ class ProfilesPage extends React.Component {
                 <div className='form-container-update'>
                 <div className='form__update'>
                 <div className='update-form'>
-                    <p> ARE YOU SURE BUDDY? </p>
-
                     <div className='update-form-button-container'>
                         <button className='update-form-delete-btn' >Delete</button>
                         <button className='update-form-cancel-btn' onClick={() => this.toggleDeleteConfirmation()}>Cancel</button>
+                    </div>
+
+                    <div className='update-form-delete-message'>
+                            <p> ARE YOU SURE BUDDY? </p>
                     </div>
                 </div>
                 </div>
