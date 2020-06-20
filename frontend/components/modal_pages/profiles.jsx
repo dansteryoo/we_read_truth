@@ -28,10 +28,6 @@ class ProfilesPage extends React.Component {
         this.toggleDeleteConfirmation = this.toggleDeleteConfirmation.bind(this);
     };
 
-    componentWillUnmount() {
-        this.props.clearErrors();
-    };
-
     isBlank(word) {
         return word.trim().length === 0
     }
@@ -107,7 +103,7 @@ class ProfilesPage extends React.Component {
     }
 
     render() {
-
+        if (!this.props.currentUser) return <div></div>
         if (!this.state.deleteUser) {
 
         return (

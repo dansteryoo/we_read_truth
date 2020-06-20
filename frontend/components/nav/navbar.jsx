@@ -40,6 +40,7 @@ class NavBar extends React.Component {
   }
 
   render() {
+
     return (
       <nav className='nav-container'>
         <div className='nav-home'>
