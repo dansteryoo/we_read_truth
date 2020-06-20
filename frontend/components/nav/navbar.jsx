@@ -69,8 +69,14 @@ class NavBar extends React.Component {
           <li className='notes-li' onClick={() => this.props.openModal('Notes')}>
             Notes
           </li>
-          <li className='logout-li' onClick={() => this.props.logout()}>
-            Logout
+
+          <li className="profile-li" onClick={() => this.props.openModal('Profiles')}>
+            <a>Profile</a>
+            <ul className="dropdown-profile">
+              <li className='logout-li' onClick={() => this.props.logout()}>
+                Logout
+              </li>
+          </ul>
           </li>
         </ul>
       </nav>

@@ -35,6 +35,131 @@ $darkpink: #ff8da1;
     cursor: pointer;
 }
 
+//------------------Profiles Page Modal
+
+.form__update {
+  width: 100%;
+}
+
+.form-container-update {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    min-width: 600px;
+    min-height: 430px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -42%);
+    padding: 30px 30px 0 30px;
+    font-size: 14px;
+    color: black;
+    z-index: 10;
+    background-color: $skin;
+
+    .form-title-update {
+        display: flex;
+        justify-content: center;
+        font-size: 24px;
+        font-weight: 700;
+        margin: 0 auto 30px;
+    }
+
+    .update-form {
+      display: flex;
+      background-color: transparent;
+      width: 100%;
+      flex-direction: column;
+    }
+
+    .update-form-input {
+        position: relative;
+        border-radius: 25px;
+        color: $darkgray;
+        font-size: 14px;
+        font-weight: 300;
+        height: 25px;
+        width: 52%;
+        border: 1px solid $lightgray;
+        margin: 5px auto;
+        padding: 10px 20px 10px 20px;
+    }
+
+    .update-form-input::placeholder {
+        color: gray;
+    }
+
+    .update-form-input:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px $blue;
+    }
+
+    .update-form-input:invalid {
+        outline: none;
+        box-shadow: 0 0 0 1px $orange;
+    }
+
+    .update-form-button {
+        width: 100px;
+        height: 35px;
+        font-size: 12px;
+        font-weight: bold;
+        margin: 10px 0;
+        text-align: center;
+        border-radius: 25px;
+        letter-spacing: 0.1rem;
+        background-color: $green;
+        color: white;
+        margin: 10px auto;
+        cursor: pointer;
+    }
+
+    .update-form-button:hover {
+      box-shadow: 0 2px 7px 2px $lightgray; 
+    }
+
+    .update-form-button:active {
+      opacity: 60%;
+      box-shadow: 0 2px 7px 2px $lightgray;
+    }
+}
+
+.form-errors-update-email,
+.form-errors-update-first,
+.form-errors-update-last,
+.form-errors-update-password {
+  position: relative;
+  color: $orange;
+  display: flex;
+  justify-content: center;
+  margin: 5px 0 5px;
+}
+
+ #first-update {
+     color: $gray;
+     display: block;
+     position: absolute;
+    left: 440px;
+    top: -40px;
+     z-index: 1;
+ }
+
+ #last-update  {
+     color: $gray;
+     display: block;
+     position: absolute;
+    left: 440px;
+    top: -40px;
+     z-index: 1;
+ }
+
+ #password-update {
+     color: $gray;
+     display: block;
+     position: absolute;
+    left: 440px;
+    top: -40px;
+     z-index: 1;
+ }
 
 //------------------Notes Page Modal
 
