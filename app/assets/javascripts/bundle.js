@@ -2767,12 +2767,6 @@ var ProfilesPage = /*#__PURE__*/function (_React$Component) {
   }
 
   _createClass(ProfilesPage, [{
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      debugger;
-      this.props.clearErrors();
-    }
-  }, {
     key: "isBlank",
     value: function isBlank(word) {
       return word.trim().length === 0;
@@ -2873,8 +2867,7 @@ var ProfilesPage = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this3 = this;
 
-      debugger;
-      if (!this.props.currentUser) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null);
+      if (!this.props.currentUser) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
 
       if (!this.state.deleteUser) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -3116,7 +3109,6 @@ var NavBar = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
-      debugger;
       this.props.closeModal();
     }
   }, {
@@ -3133,7 +3125,6 @@ var NavBar = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this3 = this;
 
-      debugger;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
         className: "nav-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
