@@ -2819,8 +2819,7 @@ var ProfilesPage = /*#__PURE__*/function (_React$Component) {
       userUpdate.first_name = capitalizeFirstLetter(firstName);
       userUpdate.last_name = capitalizeFirstLetter(lastName);
 
-      if (stateErrors.length < 1) {
-        return this.props.processForm(userUpdate);
+      if (stateErrors.length < 1) {// return this.props.processForm(userUpdate)
       }
     }
   }, {

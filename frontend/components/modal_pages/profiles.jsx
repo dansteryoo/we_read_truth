@@ -65,7 +65,7 @@ class ProfilesPage extends React.Component {
         userUpdate.last_name = capitalizeFirstLetter(lastName)
 
         if (stateErrors.length < 1) {
-            return this.props.processForm(userUpdate)
+            // return this.props.processForm(userUpdate)
         }
     }
 
