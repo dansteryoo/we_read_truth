@@ -1,5 +1,5 @@
 import React from 'react';
-import SideNavItem from './sidenav_item'
+import SideNavItem from '../function_helpers/sidenav/sidenav_item'
 import { allBookTitles, allBookTitlesFormat } from '../function_helpers/bookTitles'
 import { setPayload } from '../function_helpers/helper_funcs'
 
@@ -47,8 +47,8 @@ class SideNav extends React.Component {
             if (devoBook.length > 0) {
                 this.setState({ book: devoBook[0].book })
 
-                devoBook[0].book !== this.state.book && 
-                    this.myRef.current.scrollTo(0, 0)
+                devoBook[0].book !== this.state.book 
+                    && this.myRef.current.scrollTo(0, 0)
 
             } else if (!propsBookmarkBlank && bookmark.user_id === currentUser.id) {
                 this.props.fetchDevoBook(setPayload(bookmark))
@@ -57,8 +57,8 @@ class SideNav extends React.Component {
                 this.props.fetchDevoBook(setPayload(currentUser.bookmark))
             }
 
-            !this.state.navSet && 
-                this.setState({ navSet: true })
+            !this.state.navSet 
+                && this.setState({ navSet: true })
         }
     }
 

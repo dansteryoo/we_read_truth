@@ -1216,21 +1216,21 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       var bookmarkBlank = Object.values(bookmark).length < 1;
       if (this.isMainBodyDevoNull()) return; //---------- SET bookmarkId === bookmark.id ----------//
 
-      !bookmarkBlank && bookmarkId !== bookmark.id && id === bookmark.devo_id ? this.setState({
+      !bookmarkBlank && bookmarkId !== bookmark.id && id === bookmark.devo_id && this.setState({
         bookmarkId: bookmark.id
-      }) : false; //---------- SET bookmarkId === currentUser.bookmark.id ----------//
+      }); //---------- SET bookmarkId === currentUser.bookmark.id ----------//
 
-      !this.isValidNumber(bookmarkId) && bookmarkBlank && currentUser.bookmark && bookmarkId !== currentUser.bookmark.id ? this.setState({
+      !this.isValidNumber(bookmarkId) && bookmarkBlank && currentUser.bookmark && bookmarkId !== currentUser.bookmark.id && this.setState({
         bookmarkId: currentUser.bookmark.id
-      }) : false; //---------- SET renderDay to this.renderDay() ----------//
+      }); //---------- SET renderDay to this.renderDay() ----------//
 
-      this.renderDay() && this.renderDay() !== renderDay ? this.setState({
+      this.renderDay() && this.renderDay() !== renderDay && this.setState({
         renderDay: this.renderDay()
-      }) : false; //---------- PREVENTS MULTIPLE this.setState on update ----------//
+      }); //---------- PREVENTS MULTIPLE this.setState on update ----------//
 
-      mainBodyChanged ? this.setState({
+      mainBodyChanged && this.setState({
         mainBodyChanged: false
-      }) : false; //---------- UPDATES new mainBodyDevo ----------//
+      }); //---------- UPDATES new mainBodyDevo ----------//
 
       if (prevProps.mainBodyDevo !== mainBodyDevo) {
         var _id = mainBodyDevo.id,
@@ -1395,7 +1395,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       var theURL = "https://www.biblegateway.com/audio/mclean/esv/".concat(bookName, ".").concat(chapter);
       var winName = 'Max McLean Audio';
       var winParams = "scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,\n            width=700,height=350,left=100,top=100";
-      bookName !== undefined ? window.open(theURL, winName, winParams) : false;
+      bookName !== undefined && window.open(theURL, winName, winParams);
     }
   }, {
     key: "render",
@@ -1403,7 +1403,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       var _this6 = this;
 
       if (this.isMainBodyDevoNull() && !this.localStorageFunc('getCurrentPage')) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
-      this.state.bookmark && this.isValidNumber(this.state.bookmarkId) ? this.localStorageFunc('setCurrentPage') : false;
+      this.state.bookmark && this.isValidNumber(this.state.bookmarkId) && this.localStorageFunc('setCurrentPage');
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "middle-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1546,7 +1546,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _sidenav_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sidenav_item */ "./frontend/components/home/sidenav/sidenav_item.jsx");
+!(function webpackMissingModule() { var e = new Error("Cannot find module '../function_helpers/sidenav/sidenav_item'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
 /* harmony import */ var _function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../function_helpers/bookTitles */ "./frontend/components/home/function_helpers/bookTitles.js");
 /* harmony import */ var _function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../function_helpers/helper_funcs */ "./frontend/components/home/function_helpers/helper_funcs.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -1686,7 +1686,7 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "sidenav-ul"
       }, this.props.devoBook.map(function (dailyDevo, i) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sidenav_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(!(function webpackMissingModule() { var e = new Error("Cannot find module '../function_helpers/sidenav/sidenav_item'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()), {
           days: i,
           dailyDevo: dailyDevo,
           handleGetDevo: _this3.handleGetDevo,
@@ -1775,39 +1775,6 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_sidenav__WEBPACK_IMPORTED_MODULE_4__["default"]));
-
-/***/ }),
-
-/***/ "./frontend/components/home/sidenav/sidenav_item.jsx":
-/*!***********************************************************!*\
-  !*** ./frontend/components/home/sidenav/sidenav_item.jsx ***!
-  \***********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-
-
-var SideNavItem = function SideNavItem(_ref) {
-  var dailyDevo = _ref.dailyDevo,
-      days = _ref.days,
-      handleGetDevo = _ref.handleGetDevo;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-    className: "daily-devo-li",
-    onClick: function onClick() {
-      return handleGetDevo(dailyDevo.id);
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "daily-devo-days"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Day: "), days + 1), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "daily-devo-title"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Title: "), dailyDevo.title));
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (SideNavItem);
 
 /***/ }),
 
