@@ -1,5 +1,6 @@
 import React from 'react';
 import NotesItem from './notes_item'
+import { searchRegexMatch } from '../home/function_helpers/helper_funcs'
 
 class NotesPage extends React.Component {
     constructor(props) {
@@ -86,14 +87,8 @@ class NotesPage extends React.Component {
     handleSearch(e) {
         e.preventDefault();
 
-        const searchMatch = (search) => {
-            const input = Array.from(search).reduce(
-                (a, v, i) => `${a}[^${search.substring(i)}]*?${v}`,
-                ''
-            );
-            return new RegExp(input);
-        };
-        const searchData = searchMatch(this.state.search.toLowerCase());
+        //---------- helper_func ----------//
+        const searchData = searchRegexMatch(this.state.search.toLowerCase());
 
         const sortNotes = this.props.notes.filter(each => {
             let sortTitles = each.title.toLowerCase().match(searchData)

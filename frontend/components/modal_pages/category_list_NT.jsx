@@ -1,22 +1,22 @@
 import React from 'react';
 import { NTbooks, NTbookFormat } from '../home/function_helpers/bookTitles'
 
-const CategoryListNT = ({ eachTitle, handleClick }) => {
+const CategoryListNT = ({ title, handleClick }) => {
 
     const lowerCaseArr = NTbooks.map(ele => ele.toLowerCase());
-    const inBookTitle = lowerCaseArr.includes(eachTitle.book)
-    const isbookTitleDefined = NTbookFormat[eachTitle.book] !== undefined
-    const bookTitle = NTbooks[lowerCaseArr.indexOf(eachTitle.book)]
+    const inBookTitle = lowerCaseArr.includes(title.book)
+    const isbookTitleDefined = NTbookFormat[title.book] !== undefined
+    const bookTitle = NTbooks[lowerCaseArr.indexOf(title.book)]
 
     let NTbook;
     if (inBookTitle && !isbookTitleDefined) {
         NTbook = bookTitle
     } else if (inBookTitle && isbookTitleDefined) {
-        NTbook = NTbookFormat[eachTitle.book]
+        NTbook = NTbookFormat[title.book]
     };
 
     let fetchBookPayload = {
-        gender: eachTitle.gender,
+        gender: title.gender,
         book: bookTitle
     }
 

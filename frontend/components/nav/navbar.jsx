@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { searchRegexMatch } from '../home/function_helpers/helper_funcs'
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -15,16 +15,8 @@ class NavBar extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    const match = (search) => {
-      const input = Array.from(search).reduce(
-        (a, v, i) => `${a}[^${search.substring(i)}]*?${v}`,
-        ''
-      );
-      return new RegExp(input);
-      // return values.filter((each) => each.match(result));
-    };
-
-    this.props.openModal('Categories', match(this.state.search.toLowerCase()))
+    //---------- helper_func ----------//
+    this.props.openModal('Categories', searchRegexMatch(this.state.search.toLowerCase()))
   }
 
   componentDidMount() {
@@ -40,6 +32,7 @@ class NavBar extends React.Component {
   }
 
   render() {
+
     return (
       <nav className='nav-container'>
         <div className='nav-home'>
@@ -69,8 +62,14 @@ class NavBar extends React.Component {
           <li className='notes-li' onClick={() => this.props.openModal('Notes')}>
             Notes
           </li>
-          <li className='logout-li' onClick={() => this.props.logout()}>
-            Logout
+
+          <li className="profile-li">
+            <a onClick={() => this.props.openModal('Profiles')}>Profile</a>
+            <ul className="dropdown-profile">
+              <li className='logout-li' onClick={() => this.props.logout()}>
+                Logout
+              </li>
+          </ul>
           </li>
         </ul>
       </nav>

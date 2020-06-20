@@ -51,14 +51,15 @@ $orange: #ff5a5f;
         li {
             color: black;
             font-weight: 600;
-            margin: 14px 50px 0 0;
+            margin: 10px 50px 0 0;
             height: 20px;
             cursor: pointer;
         }
 
         .devo-li:hover, 
         .notes-li:hover,
-        .logout-li:hover {
+        .logout-li:hover ,
+        .profile-li:hover {
             color: $green;
         }
 
@@ -67,6 +68,41 @@ $orange: #ff5a5f;
         .logout-li:active {
             opacity: 60%;
         }
+
+        .profile-li {
+        position: relative;
+
+            .dropdown-profile {
+                width: 115px;
+                position: absolute;
+                display: none;
+                margin: 0;
+                padding: 0 0 10px 10px;
+                background-color: white;
+
+                li {
+                    clear: both;
+                    width: 100%;
+                }
+
+                li:hover {
+                    color: $green;
+                }
+                
+                li:active {
+                    color: $green;
+                    opacity: 60%;
+                }
+            }
+        }
+
+        .profile-li:hover > ul,
+        .profile-li ul:hover {
+            visibility: visible;
+            display: block;
+            z-index: 2;
+        }
+
     }
 
 

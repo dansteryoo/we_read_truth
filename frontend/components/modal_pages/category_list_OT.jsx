@@ -1,22 +1,22 @@
 import React from 'react';
 import { OTbooks, OTbookFormat } from '../home/function_helpers/bookTitles'
 
-const CategoryListOT = ({ eachTitle, handleClick }) => {
+const CategoryListOT = ({ title, handleClick }) => {
 
     const lowerCaseArr = OTbooks.map(ele => ele.toLowerCase());
-    const inBookTitle = lowerCaseArr.includes(eachTitle.book)
-    const isBookTitleDefined = OTbookFormat[eachTitle.book] !== undefined
-    const bookTitle = OTbooks[lowerCaseArr.indexOf(eachTitle.book)]
+    const inBookTitle = lowerCaseArr.includes(title.book)
+    const isBookTitleDefined = OTbookFormat[title.book] !== undefined
+    const bookTitle = OTbooks[lowerCaseArr.indexOf(title.book)]
 
     let OTbook;
     if (inBookTitle && !isBookTitleDefined) {
         OTbook = bookTitle
     } else if (inBookTitle && isBookTitleDefined) {
-        OTbook = OTbookFormat[eachTitle.book]
+        OTbook = OTbookFormat[title.book]
     };
 
     let fetchBookPayload = {
-        gender: eachTitle.gender,
+        gender: title.gender,
         book: bookTitle
     }
     

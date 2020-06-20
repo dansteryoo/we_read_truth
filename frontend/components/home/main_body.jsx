@@ -163,24 +163,20 @@ class MainBody extends React.Component {
 
         //---------- SET bookmarkId === bookmark.id ----------//
         !bookmarkBlank && bookmarkId !== bookmark.id && id === bookmark.devo_id
-            ? this.setState({ bookmarkId: bookmark.id })
-            : false
+            && this.setState({ bookmarkId: bookmark.id })
 
         //---------- SET bookmarkId === currentUser.bookmark.id ----------//
         !this.isValidNumber(bookmarkId) && bookmarkBlank && currentUser.bookmark 
         && bookmarkId !== currentUser.bookmark.id
-            ? this.setState({ bookmarkId: currentUser.bookmark.id })
-            : false
+            && this.setState({ bookmarkId: currentUser.bookmark.id })
 
         //---------- SET renderDay to this.renderDay() ----------//
         this.renderDay() && this.renderDay() !== renderDay
-            ? this.setState({ renderDay: this.renderDay() })
-            : false 
+            && this.setState({ renderDay: this.renderDay() }) 
 
         //---------- PREVENTS MULTIPLE this.setState on update ----------//
         mainBodyChanged 
-            ? this.setState({ mainBodyChanged: false })
-            : false
+            && this.setState({ mainBodyChanged: false })
 
         //---------- UPDATES new mainBodyDevo ----------//
         if (prevProps.mainBodyDevo !== mainBodyDevo) {
@@ -337,16 +333,14 @@ class MainBody extends React.Component {
             width=700,height=350,left=100,top=100`;
 
         bookName !== undefined
-            ? window.open(theURL, winName, winParams)
-            : false
+            && window.open(theURL, winName, winParams)
     }
 
     render() {
         if (this.isMainBodyDevoNull() && !this.localStorageFunc('getCurrentPage')) return <div></div>
         
         this.state.bookmark && this.isValidNumber(this.state.bookmarkId)
-            ? this.localStorageFunc('setCurrentPage')
-            : false 
+            && this.localStorageFunc('setCurrentPage')
         
         return (
             <div className='middle-container'>

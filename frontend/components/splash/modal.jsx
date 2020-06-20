@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { closeModal } from '../../actions/modal_actions';
 import CategoriesContainer from '../modal_pages/categories_container';
 import NotesContainer from '../modal_pages/notespage_container';
+import ProfilesContainer from '../modal_pages/profiles_container';
 
 
 const Modal = ({ modal, closeModal }) => {
@@ -15,6 +16,9 @@ const Modal = ({ modal, closeModal }) => {
             break;
         case 'Categories':
             component = <CategoriesContainer />;
+            break;
+        case 'Profiles':
+            component = <ProfilesContainer />;
             break;
         default:
             return null;

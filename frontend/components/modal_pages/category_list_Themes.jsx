@@ -1,7 +1,7 @@
 import React from 'react';
 import { themeBooks, themeBookFormat } from '../home/function_helpers/bookTitles'
 
-const CategoryListOther = ({ eachTitle, handleClick }) => {
+const CategoryListThemes= ({ title, handleClick }) => {
 
     const lowerCaseArr = themeBooks.map(ele => ele.toLowerCase());
 
@@ -13,15 +13,15 @@ const CategoryListOther = ({ eachTitle, handleClick }) => {
         return hash;
     };
 
-    const inBookTitle = lowerCaseArr.includes(eachTitle.book) 
-    const isBookTitleDefined = lowerCaseFormat(themeBookFormat)[eachTitle.book] !== undefined
-    const bookTitle = themeBooks[lowerCaseArr.indexOf(eachTitle.book)]
-    const bookTitleRender = lowerCaseFormat(themeBookFormat)[eachTitle.book]
+    const inBookTitle = lowerCaseArr.includes(title.book) 
+    const isBookTitleDefined = lowerCaseFormat(themeBookFormat)[title.book] !== undefined
+    const bookTitle = themeBooks[lowerCaseArr.indexOf(title.book)]
+    const bookTitleRender = lowerCaseFormat(themeBookFormat)[title.book]
 
     let themeBook = inBookTitle && isBookTitleDefined ? bookTitleRender : null;
 
     let fetchBookPayload = {
-        gender: eachTitle.gender,
+        gender: title.gender,
         book: bookTitle
     }
 
@@ -35,4 +35,4 @@ const CategoryListOther = ({ eachTitle, handleClick }) => {
 };
 
 
-export default CategoryListOther;
+export default CategoryListThemes;

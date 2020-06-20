@@ -59,3 +59,16 @@ export const logindemo = () => dispatch => (
         err => (dispatch(receiveErrors(err.responseJSON)))
     )
 );
+
+export const updateUser = (user) => dispatch => {
+    return SessionsAPIUtil.updateUser(user)
+        .then(user => (dispatch(receiveCurrentUser(user))),
+            err => (dispatch(receiveErrors(err.responseJSON)))
+        )
+};
+
+export const deleteUser = (userId) => dispatch => {
+    return SessionsAPIUtil.deleteUser(userId)
+        .then(() => (dispatch(logoutCurrentUser()))
+        )
+};
