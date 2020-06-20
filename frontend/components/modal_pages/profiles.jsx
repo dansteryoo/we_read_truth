@@ -19,11 +19,13 @@ class ProfilesPage extends React.Component {
             lastName: '',
             passwordMatch: '',
             passwordMatchError: '',
-            stateErrors: []
+            stateErrors: [],
+            deleteUser: false
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.isBlank = this.isBlank.bind(this);
+        this.toggleDeleteConfirmation = this.toggleDeleteConfirmation.bind(this);
     };
 
     componentWillUnmount() {
@@ -99,9 +101,15 @@ class ProfilesPage extends React.Component {
         return errorsHash
     }
 
+
+    toggleDeleteConfirmation() {
+        return this.setState({ deleteUser: !this.state.deleteUser })
+    }
+
     render() {
-        console.log(this.props.currentUser);
-        
+
+        if (!this.state.deleteUser) {
+
         return (
             <div className='form-container-update'>
                 <div className='form-title-update'>
@@ -163,13 +171,32 @@ class ProfilesPage extends React.Component {
                         <div className='form-errors-update-password'>
                             {this.renderErrors().pwNoMatch}
                         </div>
-                        <button className='update-form-button' type='submit' value={this.props.formType}>Update</button>
+                        <div className='update-form-button-container'>
+                            <button className='update-form-button' type='submit' value={this.props.formType}>Update</button>
+                            <button className='update-form-delete-btn' onClick={() => this.toggleDeleteConfirmation()}>Delete</button>
+                        </div>
                     </div>
                 </form>
-
             </div>
+            );
+        } else {
+            return (
+                <>
+                <div className='form-container-update'>
+                <div className='form__update'>
+                <div className='update-form'>
+                    <p> ARE YOU SURE BUDDY? </p>
 
-        );
+                    <div className='update-form-button-container'>
+                        <button className='update-form-delete-btn' >Delete</button>
+                        <button className='update-form-cancel-btn' onClick={() => this.toggleDeleteConfirmation()}>Cancel</button>
+                    </div>
+                </div>
+                </div>
+                </div>
+                </>
+            )
+        }
     }
 }
 

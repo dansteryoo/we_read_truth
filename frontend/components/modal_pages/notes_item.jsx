@@ -39,11 +39,11 @@ const NotesItem = ({ eachNote, handleUpdate, deleteNote, toggleClass, noteId }) 
                 </div>
 
                 <div className='note-button-container'>
-                    <button className='note-delete' onClick={() => toggleClass(eachNote.id)}>
-                        Delete
-                    </button>
                     <button className='note-update' onClick={() => handleUpdate(eachNote.id)}>
                         Update
+                    </button>
+                    <button className='note-delete' onClick={() => toggleClass(eachNote.id)}>
+                        Delete
                     </button>
                 </div>
             </div>

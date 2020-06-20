@@ -46,7 +46,7 @@ $darkpink: #ff8da1;
     flex-direction: column;
     position: absolute;
     min-width: 600px;
-    min-height: 430px;
+    min-height: 420px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -42%);
@@ -69,6 +69,7 @@ $darkpink: #ff8da1;
       background-color: transparent;
       width: 100%;
       flex-direction: column;
+      padding-bottom: 30px;
     }
 
     .update-form-input {
@@ -97,31 +98,53 @@ $darkpink: #ff8da1;
         outline: none;
         box-shadow: 0 0 0 1px $orange;
     }
-
-    .update-form-button {
-        width: 100px;
-        height: 35px;
-        font-size: 12px;
-        font-weight: bold;
-        margin: 10px 0;
-        text-align: center;
-        border-radius: 25px;
-        letter-spacing: 0.1rem;
-        background-color: $green;
-        color: white;
-        margin: 10px auto;
-        cursor: pointer;
-    }
-
-    .update-form-button:hover {
-      box-shadow: 0 2px 7px 2px $lightgray; 
-    }
-
-    .update-form-button:active {
-      opacity: 60%;
-      box-shadow: 0 2px 7px 2px $lightgray;
-    }
 }
+
+.update-form-button-container {
+    width: 100%;
+    display: inline-flex;
+
+        .update-form-cancel-btn, 
+        .update-form-delete-btn, 
+        .update-form-button {
+            width: 100px;
+            height: 35px;
+            font-size: 12px;
+            font-weight: bold;
+            margin: 10px 0;
+            text-align: center;
+            border-radius: 25px;
+            letter-spacing: 0.1rem;
+            color: white;
+            margin: 10px auto;
+            cursor: pointer;
+        }
+
+        .update-form-delete-btn {
+          background-color: $orange;
+        }
+
+        .update-form-button {
+          background-color: $blue;
+        }
+
+        .update-form-cancel-btn {
+          background-color: black;
+        }
+
+        .update-form-button:hover,
+        .update-form-delete-btn:hover,
+        .update-form-cancel-btn:hover {
+          box-shadow: 0 2px 7px 2px $lightgray; 
+        }
+
+        .update-form-button:active,
+        .update-form-delete-btn:active,
+        .update-form-cancel-btn:active {
+          opacity: 60%;
+          box-shadow: 0 2px 7px 2px $lightgray;
+        }
+    }
 
 .form-errors-update-email,
 .form-errors-update-first,
@@ -441,10 +464,11 @@ $darkpink: #ff8da1;
     color: white;
     font-size: 11px;
     font-weight: bold;
-    margin-top: 10px;
+    margin-top: 8px;
     cursor: pointer;
     text-align: center;
     border-radius: 25px;
+    padding: 2px;
     letter-spacing: 0.1rem;
   }
 

@@ -2296,16 +2296,16 @@ var NotesItem = function NotesItem(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Created: "), formateDate(eachNote.created_at), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Updated: "), formateDate(eachNote.updated_at)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "note-button-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    className: "note-delete",
-    onClick: function onClick() {
-      return toggleClass(eachNote.id);
-    }
-  }, "Delete"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     className: "note-update",
     onClick: function onClick() {
       return handleUpdate(eachNote.id);
     }
-  }, "Update"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, "Update"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "note-delete",
+    onClick: function onClick() {
+      return toggleClass(eachNote.id);
+    }
+  }, "Delete"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "note-back"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "note-button-container"
@@ -2757,10 +2757,12 @@ var ProfilesPage = /*#__PURE__*/function (_React$Component) {
       lastName: '',
       passwordMatch: '',
       passwordMatchError: '',
-      stateErrors: []
+      stateErrors: [],
+      deleteUser: false
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.isBlank = _this.isBlank.bind(_assertThisInitialized(_this));
+    _this.toggleDeleteConfirmation = _this.toggleDeleteConfirmation.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -2860,76 +2862,110 @@ var ProfilesPage = /*#__PURE__*/function (_React$Component) {
       return errorsHash;
     }
   }, {
+    key: "toggleDeleteConfirmation",
+    value: function toggleDeleteConfirmation() {
+      return this.setState({
+        deleteUser: !this.state.deleteUser
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
-      console.log(this.props.currentUser);
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "form-container-update"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "form-title-update"
-      }, "Update ", this.props.currentUser.first_name, "'s Profile"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        onSubmit: this.handleSubmit,
-        className: "form__update"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "update-form"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "text",
-        className: "update-form-input",
-        value: this.state.firstName,
-        placeholder: 'First name',
-        onChange: this.handleChange('firstName'),
-        name: "firstName" // noValidate
-        // required
+      var _this3 = this;
 
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "form-errors-update-first"
-      }, this.renderErrors().firstName, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        id: "first-update",
-        className: "fas fa-user fa-lg"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "text",
-        className: "update-form-input",
-        value: this.state.lastName,
-        placeholder: 'Last name',
-        onChange: this.handleChange('lastName'),
-        name: "lastName" // noValidate
-        // required
+      if (!this.state.deleteUser) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "form-container-update"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "form-title-update"
+        }, "Update ", this.props.currentUser.first_name, "'s Profile"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+          onSubmit: this.handleSubmit,
+          className: "form__update"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "update-form"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          type: "text",
+          className: "update-form-input",
+          value: this.state.firstName,
+          placeholder: 'First name',
+          onChange: this.handleChange('firstName'),
+          name: "firstName" // noValidate
+          // required
 
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "form-errors-update-last"
-      }, this.renderErrors().lastName, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        id: "last-update",
-        className: "fas fa-user fa-lg"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "password",
-        className: "update-form-input",
-        value: this.state.password,
-        placeholder: 'Create a password',
-        onChange: this.handleChange('password'),
-        name: "password" // noValidate
-        // required
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "form-errors-update-first"
+        }, this.renderErrors().firstName, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          id: "first-update",
+          className: "fas fa-user fa-lg"
+        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          type: "text",
+          className: "update-form-input",
+          value: this.state.lastName,
+          placeholder: 'Last name',
+          onChange: this.handleChange('lastName'),
+          name: "lastName" // noValidate
+          // required
 
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "form-errors-update-password"
-      }, this.renderErrors().pwShort, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        id: "password-update",
-        className: "fas fa-lock fa-lg"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "password",
-        className: "update-form-input",
-        value: this.state.passwordMatch,
-        placeholder: 'Confirm Password',
-        onChange: this.handleChange('passwordMatch'),
-        name: "passwordMatch" // noValidate
-        // required
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "form-errors-update-last"
+        }, this.renderErrors().lastName, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          id: "last-update",
+          className: "fas fa-user fa-lg"
+        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          type: "password",
+          className: "update-form-input",
+          value: this.state.password,
+          placeholder: 'Create a password',
+          onChange: this.handleChange('password'),
+          name: "password" // noValidate
+          // required
 
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "form-errors-update-password"
-      }, this.renderErrors().pwNoMatch), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "update-form-button",
-        type: "submit",
-        value: this.props.formType
-      }, "Update"))));
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "form-errors-update-password"
+        }, this.renderErrors().pwShort, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          id: "password-update",
+          className: "fas fa-lock fa-lg"
+        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          type: "password",
+          className: "update-form-input",
+          value: this.state.passwordMatch,
+          placeholder: 'Confirm Password',
+          onChange: this.handleChange('passwordMatch'),
+          name: "passwordMatch" // noValidate
+          // required
+
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "form-errors-update-password"
+        }, this.renderErrors().pwNoMatch), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "update-form-button-container"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "update-form-button",
+          type: "submit",
+          value: this.props.formType
+        }, "Update"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "update-form-delete-btn",
+          onClick: function onClick() {
+            return _this3.toggleDeleteConfirmation();
+          }
+        }, "Delete")))));
+      } else {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "form-container-update"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "form__update"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "update-form"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " ARE YOU SURE BUDDY? "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "update-form-button-container"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "update-form-delete-btn"
+        }, "Delete"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "update-form-cancel-btn",
+          onClick: function onClick() {
+            return _this3.toggleDeleteConfirmation();
+          }
+        }, "Cancel"))))));
+      }
     }
   }]);
 
