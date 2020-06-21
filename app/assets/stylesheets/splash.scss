@@ -43,6 +43,20 @@ $darkpink: #ff8da1;
         font-size: 24px;
         font-weight: 700;
         margin: 0 auto;
+
+        #login-title {
+            padding-right: 6px;
+        }
+
+        #login-to-signup:hover {
+            color: $blue;
+            cursor: pointer;
+            transition: ease 250ms;
+        }
+
+        #login-to-signup:active {
+            opacity: 60%;
+        }
     }
 
     .form {
@@ -93,6 +107,7 @@ $darkpink: #ff8da1;
     .form-button {
         background-color: black;
     }
+
     .form-demo-button:active,
     .form-button:active {
         opacity: 60%;

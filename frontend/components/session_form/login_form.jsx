@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 class LogInForm extends React.Component {
     constructor(props) {
@@ -48,7 +49,12 @@ class LogInForm extends React.Component {
         return (
             <div className='form-container'>
 
-                <div className='form-title'>Login to continue</div>
+                <div className='form-title'>
+                <span id='login-title'>Login to continue or </span>
+                    <Link to="/wrt/sign_up">
+                        <span id='login-to-signup'> Signup</span>
+                    </Link>
+                </div>
                 <br />
                 <form onSubmit={this.handleSubmit} className='form'>
                     {this.renderErrors()}

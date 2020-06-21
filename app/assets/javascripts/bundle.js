@@ -997,18 +997,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./function_helpers/bookTitles */ "./frontend/components/home/function_helpers/bookTitles.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -1076,35 +1064,35 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
     key: "ESVpassageGetter",
     //---------- ESV.ORG API CALL ----------//
     value: function ESVpassageGetter(passage) {
-      var _this2 = this;
-
       var esvKeys = [window.esv_one, window.esv_two, window.esv_three, window.esv_four, window.esv_five, window.esv_six];
-      var randomGen = esvKeys[Math.floor(Math.random() * esvKeys.length)];
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('https://api.esv.org/v3/passage/text/?', {
-        crossDomain: true,
-        params: {
-          'q': passage,
-          'include-headings': false,
-          'include-footnotes': false,
-          'include-verse-numbers': false,
-          'include-short-copyright': false,
-          'include-passage-references': false
-        },
-        headers: {
-          'Authorization': randomGen
-        }
-      }).then(function (res) {
-        if (res.status === 200) {
-          return _this2.setState({
-            esvPassage: [].concat(_toConsumableArray(_this2.state.esvPassage), [{
-              passage: res.config.params.q,
-              text: res.data.passages[0]
-            }])
-          });
-        } else {
-          return 'Error: Passage not found';
-        }
-      });
+      var randomGen = esvKeys[Math.floor(Math.random() * esvKeys.length)]; // axios.get('https://api.esv.org/v3/passage/text/?', {
+      //     crossDomain: true,
+      //     params: {
+      //         'q': passage,
+      //         'include-headings': false,
+      //         'include-footnotes': false,
+      //         'include-verse-numbers': false,
+      //         'include-short-copyright': false,
+      //         'include-passage-references': false
+      //     },
+      //     headers: {
+      //         'Authorization': randomGen,
+      //     }
+      // })
+      // .then(res => {
+      //     if (res.status === 200) {
+      //         return this.setState({ 
+      //             esvPassage: [ ...this.state.esvPassage, 
+      //                 { 
+      //                 passage: res.config.params.q, 
+      //                 text: res.data.passages[0] 
+      //                 }
+      //             ]
+      //         })
+      //     } else {
+      //         return 'Error: Passage not found'
+      //     }
+      // })
     }
   }, {
     key: "setBookmark",
@@ -1162,7 +1150,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      var _this3 = this;
+      var _this2 = this;
 
       this.setBookmark();
       var currentPage = this.localStorageFunc('getCurrentPage');
@@ -1172,7 +1160,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
 
       if (currentPage) {
         return fetchDevo(currentPage.id).then(function () {
-          return _this3.setState({
+          return _this2.setState({
             renderDay: currentPage.render_day,
             bookmarkId: currentPage.bookmarkId,
             bookmark: true
@@ -1180,7 +1168,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
         });
       } else if (!this.userBookmarkBlank()) {
         return fetchDevo(currentUser.bookmark.devo_id).then(function () {
-          return _this3.setState({
+          return _this2.setState({
             renderDay: currentUser.bookmark.render_day,
             bookmarkId: currentUser.bookmark.id,
             bookmark: true
@@ -1194,7 +1182,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
-      var _this4 = this;
+      var _this3 = this;
 
       this.setBookmark();
       var _this$props2 = this.props,
@@ -1240,7 +1228,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
           esvPassage: []
         });
         this.splitPassages(passages).forEach(function (each) {
-          return _this4.ESVpassageGetter(each.trim());
+          return _this3.ESVpassageGetter(each.trim());
         });
         this.setState({
           id: _id,
@@ -1308,7 +1296,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       return this.state.summary.split('\n').map(function (ele, i) {
         var scripture = ele.slice(0, 17) === "Scripture Reading";
         var text = ele.slice(0, 5) === "Text:";
-        var eleCountMatch = eleCount[i - 1] === ele.trim(); //---------- eleCount.push STORES each item into eleCount ----------//
+        var eleCountMatch = eleCount[i - 1] === ele.trim() && ele.trim().length < 1; //---------- eleCount.push STORES each item into eleCount ----------//
 
         scripture || text ? eleCount.push("") : eleCount.push(ele.trim());
 
@@ -1322,11 +1310,11 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderDay",
     value: function renderDay() {
-      var _this5 = this;
+      var _this4 = this;
 
       var renderDay;
       this.props.devoBook.forEach(function (each, i) {
-        if (each.id === _this5.state.id) {
+        if (each.id === _this4.state.id) {
           renderDay = i + 1;
         }
       });
@@ -1393,7 +1381,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this6 = this;
+      var _this5 = this;
 
       if (this.isMainBodyDevoNull() && !this.localStorageFunc('getCurrentPage')) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
       this.state.bookmark && this.isValidNumber(this.state.bookmarkId) && this.localStorageFunc('setCurrentPage');
@@ -1407,14 +1395,14 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
         id: "bookmark",
         className: this.state.bookmark ? 'fa fa-bookmark' : 'fa fa-bookmark-o',
         onClick: function onClick() {
-          return _this6.toggleBookmark();
+          return _this5.toggleBookmark();
         },
         "aria-hidden": "true"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         id: "max-mclean-audio",
         className: "fa fa-volume-up",
         onClick: function onClick() {
-          return _this6.toggleAudio();
+          return _this5.toggleAudio();
         },
         "aria-hidden": "true"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -3857,6 +3845,7 @@ var Root = function Root(_ref) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -3880,6 +3869,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
 
 
 
@@ -3948,7 +3938,13 @@ var LogInForm = /*#__PURE__*/function (_React$Component) {
         className: "form-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-title"
-      }, "Login to continue"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        id: "login-title"
+      }, "Login to continue or "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "/wrt/sign_up"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        id: "login-to-signup"
+      }, " Signup"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit,
         className: "form"
       }, this.renderErrors(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -4061,6 +4057,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -4084,6 +4081,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
 
 
 var ERRORS = ["Email can't be blank", // 0 Blank email
@@ -4234,7 +4232,13 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
         className: "form-container-signup"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-title-signup"
-      }, "Sign up with email"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        id: "signup-title"
+      }, "Sign up with email or "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "/"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        id: "signup-to-login"
+      }, " Login"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit,
         className: "form"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

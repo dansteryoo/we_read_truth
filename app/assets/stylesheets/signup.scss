@@ -41,6 +41,20 @@ $orange: #ff5a5f;
         font-size: 24px;
         font-weight: 700;
         margin: 0 auto 30px;
+
+        #signup-title {
+            padding-right: 6px;
+        }
+
+        #signup-to-login:hover {
+            color: $green;
+            cursor: pointer;
+            transition: ease 250ms;
+        }
+
+        #signup-to-login:active {
+            opacity: 60%;
+        }
     }
 
     .signup-form {

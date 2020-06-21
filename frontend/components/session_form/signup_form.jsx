@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 const ERRORS = [
     "Email can't be blank", // 0 Blank email
     "Email is invalid", // 1 Email !valid 
@@ -116,7 +117,12 @@ class SignUp extends React.Component {
 
         return (
             <div className='form-container-signup'>
-                <div className='form-title-signup'>Sign up with email</div>
+                <div className='form-title-signup'>
+                    <span id='signup-title'>Sign up with email or </span>
+                    <Link to='/'>
+                        <span id='signup-to-login'> Login</span>
+                    </Link>
+                </div>
                     <form onSubmit={this.handleSubmit} className='form'>
                     
                     <div className='signup-form'>

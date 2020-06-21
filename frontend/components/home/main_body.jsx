@@ -48,34 +48,34 @@ class MainBody extends React.Component {
         ]
         let randomGen = esvKeys[Math.floor(Math.random() * esvKeys.length)];
 
-        axios.get('https://api.esv.org/v3/passage/text/?', {
-            crossDomain: true,
-            params: {
-                'q': passage,
-                'include-headings': false,
-                'include-footnotes': false,
-                'include-verse-numbers': false,
-                'include-short-copyright': false,
-                'include-passage-references': false
-            },
-            headers: {
-                'Authorization': randomGen,
-            }
-        })
-        .then(res => {
-            if (res.status === 200) {
-                return this.setState({ 
-                    esvPassage: [ ...this.state.esvPassage, 
-                        { 
-                        passage: res.config.params.q, 
-                        text: res.data.passages[0] 
-                        }
-                    ]
-                })
-            } else {
-                return 'Error: Passage not found'
-            }
-        })
+        // axios.get('https://api.esv.org/v3/passage/text/?', {
+        //     crossDomain: true,
+        //     params: {
+        //         'q': passage,
+        //         'include-headings': false,
+        //         'include-footnotes': false,
+        //         'include-verse-numbers': false,
+        //         'include-short-copyright': false,
+        //         'include-passage-references': false
+        //     },
+        //     headers: {
+        //         'Authorization': randomGen,
+        //     }
+        // })
+        // .then(res => {
+        //     if (res.status === 200) {
+        //         return this.setState({ 
+        //             esvPassage: [ ...this.state.esvPassage, 
+        //                 { 
+        //                 passage: res.config.params.q, 
+        //                 text: res.data.passages[0] 
+        //                 }
+        //             ]
+        //         })
+        //     } else {
+        //         return 'Error: Passage not found'
+        //     }
+        // })
     }
 
     setBookmark() {
@@ -261,7 +261,7 @@ class MainBody extends React.Component {
             this.state.summary.split('\n').map((ele, i) => {
                 const scripture = ele.slice(0, 17) === "Scripture Reading"
                 const text = ele.slice(0, 5) === "Text:"
-                const eleCountMatch = eleCount[i - 1] === ele.trim()
+                const eleCountMatch = eleCount[i - 1] === ele.trim() && ele.trim().length < 1
 
                 //---------- eleCount.push STORES each item into eleCount ----------//
                 scripture || text
