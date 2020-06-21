@@ -10,16 +10,12 @@ const mapStateToProps = (state) => {
     if (state.devos.devoBook === undefined) {
         devoBook = []
     } else {
-        devoBook = Object.values(state.devos.devoBook).filter(ele => {
-            return ele.title !== "Weekly Truth" && ele.title !== "Grace Day"
-        })
-        if (devoBook[0].gender === "HE") {
+        devoBook = Object.values(state.devos.devoBook)
+        if (devoBook[0].gender === "HE" ||
+            devoBook[0].gender === "SHE" && devoBook[0].book === "Judges") {
             devoBook.reverse()
         }
-        if (devoBook[0].gender === "SHE" && devoBook[0].book === "Judges") {
-            devoBook.reverse()
-        }
-    };
+    }
 
     return {
         currentUser: state.users[state.session.id],
