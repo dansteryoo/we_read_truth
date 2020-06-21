@@ -20,49 +20,94 @@ class ProfilesPage extends React.Component {
             passwordMatch: '',
             passwordMatchError: '',
             stateErrors: [],
-            deleteUser: false
+            deleteUser: false,
+            success: false,
+            demoMessage: false
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.isBlank = this.isBlank.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
         this.toggleDeleteConfirmation = this.toggleDeleteConfirmation.bind(this);
+        this.processUpdate = this.processUpdate.bind(this);
     };
 
     isBlank(word) {
         return word.trim().length === 0
     }
 
+    componentDidMount() {
+        this.setState({
+            firstName: this.props.currentUser.first_name,
+            lastName: this.props.currentUser.last_name
+        })
+    }
+
     handleSubmit(e) {
         e.preventDefault()
+        const { currentUser } = this.props
+        if (currentUser.first_name === "Demo" && currentUser.last_name === "User") {
+            this.setState({ demoMessage: true })
+            return this.renderDemoMsg()
+        }
 
         const { stateErrors, password, firstName, lastName, passwordMatch } = this.state
         this.props.clearErrors()
 
-        const isPasswordMatch = () => {
-            return password === passwordMatch
-        }
+        const isPasswordMatch = () => password === passwordMatch
+        let errorsArr = []
 
-        if (this.isBlank(firstName) || this.isBlank(lastName) || 
-            this.isBlank(password) || !isPasswordMatch()) {
-            let errorsArr = []
-
+        if (this.isBlank(firstName) || this.isBlank(lastName)) {
             if (this.isBlank(firstName)) errorsArr.push(ERRORS[3]) // 3 First name blank
             if (this.isBlank(lastName)) errorsArr.push(ERRORS[4]) // 4 Last name blank
+        }
+
+        if (!this.isBlank(password) || !isPasswordMatch()) {
             if (password.length < 6) errorsArr.push(ERRORS[5]) // 5 PW too short
             if (!isPasswordMatch() && !errorsArr.includes(ERRORS[5])) errorsArr.push(ERRORS[6]) // 6 PW !match
-            if (errorsArr.length > 0) return this.setState({ stateErrors: errorsArr })
         }
+
+        if (errorsArr.length > 0) return this.setState({ stateErrors: errorsArr })
 
         const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase()
             + string.toLocaleLowerCase().slice(1)
 
-        let userUpdate = { password, firstName, lastName }
-        userUpdate.first_name = capitalizeFirstLetter(firstName)
-        userUpdate.last_name = capitalizeFirstLetter(lastName)
-
-        if (stateErrors.length < 1) {
-            // return this.props.processForm(userUpdate)
+        let userUpdate = { 
+            first_name: capitalizeFirstLetter(firstName),
+            last_name: capitalizeFirstLetter(lastName),
+            id: currentUser.id  
         }
+
+        if (stateErrors.length < 1 && this.isBlank(password)) {
+            return this.processUpdate(userUpdate)
+        } else {
+            if (!this.isBlank(password) && isPasswordMatch()) {
+                userUpdate.password = password
+                return this.processUpdate(userUpdate)
+            } else {
+                return this.processUpdate(userUpdate)
+            }
+
+        }
+    }
+
+    processUpdate(userUpdate) {
+        return this.props.processForm(userUpdate)
+            .then(() => this.setState({ success: true }))
+            .then(() => this.renderSuccessMsg())
+    }
+
+    renderSuccessMsg() {
+        window.setTimeout(() => {
+            this.setState({ success: false })
+            this.props.closeModal()
+        }, 2500)
+    }
+
+    renderDemoMsg() {
+        window.setTimeout(() => {
+            this.setState({ demoMessage: false })
+            this.props.closeModal()
+        }, 4000)
     }
 
     handleChange(f) {
@@ -82,7 +127,6 @@ class ProfilesPage extends React.Component {
         if (stateErrors.length < 1) return errorsHash
 
         stateErrors.forEach(err => {
-            if (ERRORS.indexOf(err) === 0) errorsHash.emailBlank = err
             if (ERRORS.indexOf(err) === 3) errorsHash.firstName = err
             if (ERRORS.indexOf(err) === 4) errorsHash.lastName = err
             if (ERRORS.indexOf(err) === 5) errorsHash.pwShort = err
@@ -97,19 +141,49 @@ class ProfilesPage extends React.Component {
         return errorsHash
     }
 
+    handleDelete(currentUser) {
+        if (currentUser.first_name !== "Demo" 
+            && currentUser.last_name !== "User") {
+            return this.props.deleteUser(currentUser.id)
+        } else {
+            this.setState({ demoMessage: true })
+            return this.renderDemoMsg()
+        }
+    };
+
 
     toggleDeleteConfirmation() {
         return this.setState({ deleteUser: !this.state.deleteUser })
     }
 
     render() {
-        if (!this.props.currentUser) return <div></div>
-        if (!this.state.deleteUser) {
+        const { currentUser, formType } = this.props
+        if (!currentUser) return <div></div>
+
+        if (this.state.success) {
+            return (
+                <>
+                <div className='success-message-div-update'>
+                    <span>Profile Updated!</span>
+                </div>
+                </>
+            );
+
+        } else if (this.state.demoMessage) {
+                return (
+                    <>
+                        <div className='success-message-div-demo'>
+                            <span>Sorry, but you cannot modify the Demo.</span>
+                        </div>
+                    </>
+                );
+
+        } else if (!this.state.deleteUser) {
 
         return (
             <div className='form-container-update'>
                 <div className='form-title-update'>
-                    Update {this.props.currentUser.first_name}'s Profile</div>
+                    Update {currentUser.first_name}'s Profile</div>
 
                 <div className="form-closing-x" onClick={() => this.props.closeModal()}>
                     &#10005;
@@ -173,13 +247,14 @@ class ProfilesPage extends React.Component {
                             {this.renderErrors().pwNoMatch}
                         </div>
                         <div className='update-form-button-container'>
-                            <button className='update-form-button' type='submit' value={this.props.formType}>Update</button>
+                            <button className='update-form-button' type='submit' value={formType}>Update</button>
                             <button className='update-form-delete-btn' onClick={() => this.toggleDeleteConfirmation()}>Delete</button>
                         </div>
                     </div>
                 </form>
             </div>
             );
+
         } else {
             return (
                 <>
@@ -187,7 +262,7 @@ class ProfilesPage extends React.Component {
                 <div className='form__update'>
                 <div className='update-form'>
                     <div className='update-form-button-container'>
-                        <button className='update-form-delete-btn' >Delete</button>
+                        <button className='update-form-delete-btn' onClick={() => this.handleDelete(currentUser)}>Delete</button>
                         <button className='update-form-cancel-btn' onClick={() => this.toggleDeleteConfirmation()}>Cancel</button>
                     </div>
 

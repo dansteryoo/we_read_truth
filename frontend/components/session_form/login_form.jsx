@@ -20,7 +20,7 @@ class LogInForm extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
         let user = Object.assign({}, this.state);
-        user.email = user.email.toLocaleLowerCase()
+        user.email = user.email.toLowerCase()
         this.props.processForm(user)
     }
 

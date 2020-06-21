@@ -24,7 +24,6 @@ class SignUp extends React.Component {
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.isBlank = this.isBlank.bind(this);
     };
 
     componentWillUnmount() {
@@ -41,9 +40,7 @@ class SignUp extends React.Component {
         const { stateErrors, email, password, firstName, lastName, passwordMatch } = this.state
         this.props.clearErrors()
 
-        const isPasswordMatch = () => {
-            return password === passwordMatch
-        }
+        const isPasswordMatch = () => password === passwordMatch
 
         if (this.isBlank(email) || this.isBlank(firstName) ||
             this.isBlank(lastName) || this.isBlank(password) || !isPasswordMatch()) {
@@ -60,9 +57,12 @@ class SignUp extends React.Component {
         const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase()
             + string.toLocaleLowerCase().slice(1)
 
-        let user = { email, password, firstName, lastName }
-        user.first_name = capitalizeFirstLetter(firstName)
-        user.last_name = capitalizeFirstLetter(lastName)
+        let user = { 
+            email: email.toLowerCase(),
+            password, 
+            first_name: capitalizeFirstLetter(firstName),
+            last_name: capitalizeFirstLetter(lastName)
+        }
 
         if (stateErrors.length < 2) {
             return this.props.processForm(user)

@@ -2742,11 +2742,14 @@ var ProfilesPage = /*#__PURE__*/function (_React$Component) {
       passwordMatch: '',
       passwordMatchError: '',
       stateErrors: [],
-      deleteUser: false
+      deleteUser: false,
+      success: false,
+      demoMessage: false
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
-    _this.isBlank = _this.isBlank.bind(_assertThisInitialized(_this));
+    _this.handleDelete = _this.handleDelete.bind(_assertThisInitialized(_this));
     _this.toggleDeleteConfirmation = _this.toggleDeleteConfirmation.bind(_assertThisInitialized(_this));
+    _this.processUpdate = _this.processUpdate.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -2756,9 +2759,26 @@ var ProfilesPage = /*#__PURE__*/function (_React$Component) {
       return word.trim().length === 0;
     }
   }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.setState({
+        firstName: this.props.currentUser.first_name,
+        lastName: this.props.currentUser.last_name
+      });
+    }
+  }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
+      var currentUser = this.props.currentUser;
+
+      if (currentUser.first_name === "Demo" && currentUser.last_name === "User") {
+        this.setState({
+          demoMessage: true
+        });
+        return this.renderDemoMsg();
+      }
+
       var _this$state = this.state,
           stateErrors = _this$state.stateErrors,
           password = _this$state.password,
@@ -2771,43 +2791,91 @@ var ProfilesPage = /*#__PURE__*/function (_React$Component) {
         return password === passwordMatch;
       };
 
-      if (this.isBlank(firstName) || this.isBlank(lastName) || this.isBlank(password) || !isPasswordMatch()) {
-        var errorsArr = [];
+      var errorsArr = [];
+
+      if (this.isBlank(firstName) || this.isBlank(lastName)) {
         if (this.isBlank(firstName)) errorsArr.push(ERRORS[3]); // 3 First name blank
 
         if (this.isBlank(lastName)) errorsArr.push(ERRORS[4]); // 4 Last name blank
+      }
 
+      if (!this.isBlank(password) || !isPasswordMatch()) {
         if (password.length < 6) errorsArr.push(ERRORS[5]); // 5 PW too short
 
         if (!isPasswordMatch() && !errorsArr.includes(ERRORS[5])) errorsArr.push(ERRORS[6]); // 6 PW !match
-
-        if (errorsArr.length > 0) return this.setState({
-          stateErrors: errorsArr
-        });
       }
+
+      if (errorsArr.length > 0) return this.setState({
+        stateErrors: errorsArr
+      });
 
       var capitalizeFirstLetter = function capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.toLocaleLowerCase().slice(1);
       };
 
       var userUpdate = {
-        password: password,
-        firstName: firstName,
-        lastName: lastName
+        first_name: capitalizeFirstLetter(firstName),
+        last_name: capitalizeFirstLetter(lastName),
+        id: currentUser.id
       };
-      userUpdate.first_name = capitalizeFirstLetter(firstName);
-      userUpdate.last_name = capitalizeFirstLetter(lastName);
 
-      if (stateErrors.length < 1) {// return this.props.processForm(userUpdate)
+      if (stateErrors.length < 1 && this.isBlank(password)) {
+        return this.processUpdate(userUpdate);
+      } else {
+        if (!this.isBlank(password) && isPasswordMatch()) {
+          userUpdate.password = password;
+          return this.processUpdate(userUpdate);
+        } else {
+          return this.processUpdate(userUpdate);
+        }
       }
+    }
+  }, {
+    key: "processUpdate",
+    value: function processUpdate(userUpdate) {
+      var _this2 = this;
+
+      return this.props.processForm(userUpdate).then(function () {
+        return _this2.setState({
+          success: true
+        });
+      }).then(function () {
+        return _this2.renderSuccessMsg();
+      });
+    }
+  }, {
+    key: "renderSuccessMsg",
+    value: function renderSuccessMsg() {
+      var _this3 = this;
+
+      window.setTimeout(function () {
+        _this3.setState({
+          success: false
+        });
+
+        _this3.props.closeModal();
+      }, 2500);
+    }
+  }, {
+    key: "renderDemoMsg",
+    value: function renderDemoMsg() {
+      var _this4 = this;
+
+      window.setTimeout(function () {
+        _this4.setState({
+          demoMessage: false
+        });
+
+        _this4.props.closeModal();
+      }, 4000);
     }
   }, {
     key: "handleChange",
     value: function handleChange(f) {
-      var _this2 = this;
+      var _this5 = this;
 
       return function (e) {
-        return _this2.setState(_defineProperty({}, f, e.target.value));
+        return _this5.setState(_defineProperty({}, f, e.target.value));
       };
     }
   }, {
@@ -2827,7 +2895,6 @@ var ProfilesPage = /*#__PURE__*/function (_React$Component) {
       };
       if (stateErrors.length < 1) return errorsHash;
       stateErrors.forEach(function (err) {
-        if (ERRORS.indexOf(err) === 0) errorsHash.emailBlank = err;
         if (ERRORS.indexOf(err) === 3) errorsHash.firstName = err;
         if (ERRORS.indexOf(err) === 4) errorsHash.lastName = err;
         if (ERRORS.indexOf(err) === 5) errorsHash.pwShort = err;
@@ -2840,6 +2907,18 @@ var ProfilesPage = /*#__PURE__*/function (_React$Component) {
       return errorsHash;
     }
   }, {
+    key: "handleDelete",
+    value: function handleDelete(currentUser) {
+      if (currentUser.first_name !== "Demo" && currentUser.last_name !== "User") {
+        return this.props.deleteUser(currentUser.id);
+      } else {
+        this.setState({
+          demoMessage: true
+        });
+        return this.renderDemoMsg();
+      }
+    }
+  }, {
     key: "toggleDeleteConfirmation",
     value: function toggleDeleteConfirmation() {
       return this.setState({
@@ -2849,19 +2928,30 @@ var ProfilesPage = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this6 = this;
 
-      if (!this.props.currentUser) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
+      var _this$props = this.props,
+          currentUser = _this$props.currentUser,
+          formType = _this$props.formType;
+      if (!currentUser) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
 
-      if (!this.state.deleteUser) {
+      if (this.state.success) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "success-message-div-update"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Profile Updated!")));
+      } else if (this.state.demoMessage) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "success-message-div-demo"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Sorry, but you cannot modify the Demo.")));
+      } else if (!this.state.deleteUser) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "form-container-update"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "form-title-update"
-        }, "Update ", this.props.currentUser.first_name, "'s Profile"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, "Update ", currentUser.first_name, "'s Profile"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "form-closing-x",
           onClick: function onClick() {
-            return _this3.props.closeModal();
+            return _this6.props.closeModal();
           }
         }, "\u2715"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
           onSubmit: this.handleSubmit,
@@ -2926,11 +3016,11 @@ var ProfilesPage = /*#__PURE__*/function (_React$Component) {
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "update-form-button",
           type: "submit",
-          value: this.props.formType
+          value: formType
         }, "Update"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "update-form-delete-btn",
           onClick: function onClick() {
-            return _this3.toggleDeleteConfirmation();
+            return _this6.toggleDeleteConfirmation();
           }
         }, "Delete")))));
       } else {
@@ -2943,11 +3033,14 @@ var ProfilesPage = /*#__PURE__*/function (_React$Component) {
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "update-form-button-container"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-          className: "update-form-delete-btn"
+          className: "update-form-delete-btn",
+          onClick: function onClick() {
+            return _this6.handleDelete(currentUser);
+          }
         }, "Delete"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "update-form-cancel-btn",
           onClick: function onClick() {
-            return _this3.toggleDeleteConfirmation();
+            return _this6.toggleDeleteConfirmation();
           }
         }, "Cancel")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "update-form-delete-message"
@@ -3310,7 +3403,6 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       updateForm: false
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
-    _this.isBlank = _this.isBlank.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -3480,7 +3572,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
         _this5.setState({
           success: false
         });
-      }, 4000);
+      }, 3000);
     }
   }, {
     key: "renderUpdateMsg",
@@ -3491,7 +3583,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
         _this6.setState({
           update: false
         });
-      }, 4000);
+      }, 3000);
     }
   }, {
     key: "renderErrors",
@@ -3821,7 +3913,7 @@ var LogInForm = /*#__PURE__*/function (_React$Component) {
     value: function handleSubmit(e) {
       e.preventDefault();
       var user = Object.assign({}, this.state);
-      user.email = user.email.toLocaleLowerCase();
+      user.email = user.email.toLowerCase();
       this.props.processForm(user);
     }
   }, {
@@ -4024,7 +4116,6 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
       stateErrors: []
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
-    _this.isBlank = _this.isBlank.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -4077,13 +4168,11 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
       };
 
       var user = {
-        email: email,
+        email: email.toLowerCase(),
         password: password,
-        firstName: firstName,
-        lastName: lastName
+        first_name: capitalizeFirstLetter(firstName),
+        last_name: capitalizeFirstLetter(lastName)
       };
-      user.first_name = capitalizeFirstLetter(firstName);
-      user.last_name = capitalizeFirstLetter(lastName);
 
       if (stateErrors.length < 2) {
         return this.props.processForm(user);

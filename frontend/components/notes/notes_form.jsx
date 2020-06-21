@@ -24,7 +24,6 @@ class NotesForm extends React.Component {
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.isBlank = this.isBlank.bind(this);
     }
 
     dayIsNumber(day) {
@@ -143,13 +142,13 @@ class NotesForm extends React.Component {
     renderSuccessMsg() {
         window.setTimeout(() => {
             this.setState({ success: false })
-        }, 4000)
+        }, 3000)
     }
 
     renderUpdateMsg() {
         window.setTimeout(() => {
             this.setState({ update: false })
-        }, 4000)
+        }, 3000)
     }
 
     renderErrors() {

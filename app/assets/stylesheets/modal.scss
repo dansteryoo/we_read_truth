@@ -208,6 +208,43 @@ $darkpink: #ff8da1;
      z-index: 1;
  }
 
+ .success-message-div-update span {
+    position: absolute;
+    color: $darkmint;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    font-size: 40px;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, 0);
+    animation: fadeIn ease 3s;
+    visibility: visible;
+}
+
+ .success-message-div-demo span {
+    position: absolute;
+    color: red;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    font-size: 40px;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, 0);
+    animation: fadeIn ease 3s;
+    visibility: visible;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 //------------------Notes Page Modal
 
 .notes-page-container {
