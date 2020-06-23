@@ -28,7 +28,7 @@ class NotesPage extends React.Component {
         this.props.fetchNotes()
         .then(() => this.setState({ 
             notes: this.props.notes,
-            defaultSorted: this.props.notes
+            defaultSorted: this.sortByCreated(this.props.notes)
         }))
     }
 
@@ -42,6 +42,7 @@ class NotesPage extends React.Component {
         //---------- defaultSorted on blank search input ----------//
         if (JSON.stringify(notes) !== JSON.stringify(defaultSorted)
         && search.length < 1 && checked === false) {
+
             return this.setState({ notes: defaultSorted })
         } 
     }
@@ -100,14 +101,14 @@ class NotesPage extends React.Component {
             })
         } else {
             this.setState({ checked: true })
-        }
 
-        switch (checkbox) {
-            case 'byBook':
-                return this.setState({ notes: this.sortByBook(notes) })
+            switch (checkbox) {
+                case 'byBook':
+                    return this.setState({ notes: this.sortByBook(notes) })
 
-            case 'byUpdated':
-                return this.setState({ notes: this.sortByUpdated(notes) })
+                case 'byUpdated':
+                    return this.setState({ notes: this.sortByUpdated(notes) })
+            }
         } 
     }
 
@@ -125,9 +126,24 @@ class NotesPage extends React.Component {
             return sortTitles || sortBody || sortBook
          });
 
-        const { search, defaultSorted } = this.state 
-        if (search.length > 0) return this.setState({ notes: sortNotes })
-        
+        const { search, defaultSorted, checked } = this.state 
+        let myCheckbox = document.getElementsByName("checkbox");
+        let checkboxName = []
+
+        myCheckbox.forEach(ele => {
+            if (ele.checked === true) checkboxName.push(ele.value)
+        }) 
+
+        if (search.length > 0 && checked) {
+            if (checkboxName.includes('byBook')) {
+                return this.setState({ notes: this.sortByBook(sortNotes) })
+            } else {
+
+                return this.setState({ notes: this.sortByUpdated(sortNotes) })
+            }
+        } else if (search.length > 0 && !checked) {
+            return this.setState({ notes: this.sortByCreated(sortNotes) })
+        }
         return this.setState({ notes: defaultSorted })
     }
 
@@ -135,7 +151,7 @@ class NotesPage extends React.Component {
         const { currentUser, closeModal } = this.props
         let currentUser_firstName = currentUser.first_name || 'Demo'
 
-        console.log(this.state.checked);
+        console.log(this.state.notes);
         
         return (
             <div className='notes-modal-top'>
@@ -180,7 +196,7 @@ class NotesPage extends React.Component {
     render() {
         const { fetchNote, deleteNote } = this.props
         const { notes, search } = this.state
-        let renderNotes = this.state.notes
+        let renderNotes = notes 
 
 
         if (notes.length < 1 && search.length > 0) {

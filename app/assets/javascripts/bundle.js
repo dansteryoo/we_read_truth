@@ -2492,7 +2492,7 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       this.props.fetchNotes().then(function () {
         return _this2.setState({
           notes: _this2.props.notes,
-          defaultSorted: _this2.props.notes
+          defaultSorted: _this2.sortByCreated(_this2.props.notes)
         });
       });
     }
@@ -2592,18 +2592,18 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
         this.setState({
           checked: true
         });
-      }
 
-      switch (checkbox) {
-        case 'byBook':
-          return this.setState({
-            notes: this.sortByBook(notes)
-          });
+        switch (checkbox) {
+          case 'byBook':
+            return this.setState({
+              notes: this.sortByBook(notes)
+            });
 
-        case 'byUpdated':
-          return this.setState({
-            notes: this.sortByUpdated(notes)
-          });
+          case 'byUpdated':
+            return this.setState({
+              notes: this.sortByUpdated(notes)
+            });
+        }
       }
     }
   }, {
@@ -2620,10 +2620,30 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       });
       var _this$state2 = this.state,
           search = _this$state2.search,
-          defaultSorted = _this$state2.defaultSorted;
-      if (search.length > 0) return this.setState({
-        notes: sortNotes
+          defaultSorted = _this$state2.defaultSorted,
+          checked = _this$state2.checked;
+      var myCheckbox = document.getElementsByName("checkbox");
+      var checkboxName = [];
+      myCheckbox.forEach(function (ele) {
+        if (ele.checked === true) checkboxName.push(ele.value);
       });
+
+      if (search.length > 0 && checked) {
+        if (checkboxName.includes('byBook')) {
+          return this.setState({
+            notes: this.sortByBook(sortNotes)
+          });
+        } else {
+          return this.setState({
+            notes: this.sortByUpdated(sortNotes)
+          });
+        }
+      } else if (search.length > 0 && !checked) {
+        return this.setState({
+          notes: this.sortByCreated(sortNotes)
+        });
+      }
+
       return this.setState({
         notes: defaultSorted
       });
@@ -2635,7 +2655,7 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
           currentUser = _this$props.currentUser,
           closeModal = _this$props.closeModal;
       var currentUser_firstName = currentUser.first_name || 'Demo';
-      console.log(this.state.checked);
+      console.log(this.state.notes);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "notes-modal-top"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2691,7 +2711,7 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       var _this$state3 = this.state,
           notes = _this$state3.notes,
           search = _this$state3.search;
-      var renderNotes = this.state.notes;
+      var renderNotes = notes;
 
       if (notes.length < 1 && search.length > 0) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
