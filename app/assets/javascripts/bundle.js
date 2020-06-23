@@ -2483,9 +2483,13 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
   _createClass(NotesPage, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchNotes().then(this.setState({
-        notes: this.props.notes
-      }));
+      var _this2 = this;
+
+      this.props.fetchNotes().then(function () {
+        return _this2.setState({
+          notes: _this2.props.notes
+        });
+      });
     }
   }, {
     key: "componentWillUnmount",
@@ -2495,6 +2499,13 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
+      var _this$state = this.state,
+          notes = _this$state.notes,
+          search = _this$state.search;
+      this.props.notes.length > 0 && notes.length < 1 && search.length < 1 && this.setState({
+        notes: this.props.notes
+      });
+
       if (this.props !== prevProps) {
         this.setState({
           notes: this.props.notes
@@ -2504,10 +2515,10 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleUpdate",
     value: function handleUpdate(noteId) {
-      var _this2 = this;
+      var _this3 = this;
 
       this.props.fetchNote(noteId).then(function () {
-        return _this2.props.closeModal();
+        return _this3.props.closeModal();
       });
     }
   }, {
@@ -2520,10 +2531,10 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleChange",
     value: function handleChange(f) {
-      var _this3 = this;
+      var _this4 = this;
 
       return function (e) {
-        return _this3.setState(_defineProperty({}, f, e.target.value));
+        return _this4.setState(_defineProperty({}, f, e.target.value));
       };
     }
   }, {
@@ -2587,7 +2598,12 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
         var sortTitles = each.title.toLowerCase().match(searchData);
         var sortBody = each.body.toLowerCase().match(searchData);
         var sortBook = each.category.toLowerCase().match(searchData);
-        if (sortTitles || sortBody || sortBook) return each;
+
+        if (sortTitles || sortBody || sortBook) {
+          return each;
+        } else {
+          return;
+        }
       });
       return this.setState({
         notes: sortNotes
@@ -2656,15 +2672,29 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this5 = this;
 
       var _this$props2 = this.props,
-          notes = _this$props2.notes,
           fetchNote = _this$props2.fetchNote,
           deleteNote = _this$props2.deleteNote;
-      var renderNotes = this.state.notes.length < 1 ? notes : this.state.notes;
+      var _this$state2 = this.state,
+          notes = _this$state2.notes,
+          search = _this$state2.search;
+      var renderNotes = this.state.notes;
 
-      if (notes.length < 1) {
+      if (notes.length < 1 && search.length > 0) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "notes-page-container"
+        }, this.renderModalTop(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "notes-page-content"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+          className: "notes-page-section"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "notes-page-section-empty"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "No notes matching your search."))))));
+      }
+
+      if (this.props.notes.length < 1) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-page-container"
         }, this.renderModalTop(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2685,10 +2715,10 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
           className: "notes-page-ul"
         }, renderNotes.map(function (eachNote) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_notes_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
-            handleUpdate: _this4.handleUpdate,
-            toggleClass: _this4.toggleClass,
-            flipToDelete: _this4.state.flipToDelete,
-            noteId: _this4.state.noteId,
+            handleUpdate: _this5.handleUpdate,
+            toggleClass: _this5.toggleClass,
+            flipToDelete: _this5.state.flipToDelete,
+            noteId: _this5.state.noteId,
             deleteNote: deleteNote,
             fetchNote: fetchNote,
             eachNote: eachNote,
