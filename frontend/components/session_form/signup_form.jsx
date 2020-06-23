@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, withRouter } from 'react-router-dom';
 const ERRORS = [
     "Email can't be blank", // 0 Blank email
     "Email is invalid", // 1 Email !valid 
@@ -24,7 +25,6 @@ class SignUp extends React.Component {
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.isBlank = this.isBlank.bind(this);
     };
 
     componentWillUnmount() {
@@ -41,9 +41,7 @@ class SignUp extends React.Component {
         const { stateErrors, email, password, firstName, lastName, passwordMatch } = this.state
         this.props.clearErrors()
 
-        const isPasswordMatch = () => {
-            return password === passwordMatch
-        }
+        const isPasswordMatch = () => password === passwordMatch
 
         if (this.isBlank(email) || this.isBlank(firstName) ||
             this.isBlank(lastName) || this.isBlank(password) || !isPasswordMatch()) {
@@ -60,12 +58,16 @@ class SignUp extends React.Component {
         const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase()
             + string.toLocaleLowerCase().slice(1)
 
-        let user = { email, password, firstName, lastName }
-        user.first_name = capitalizeFirstLetter(firstName)
-        user.last_name = capitalizeFirstLetter(lastName)
+        let user = { 
+            email: email.toLowerCase(),
+            password, 
+            first_name: capitalizeFirstLetter(firstName),
+            last_name: capitalizeFirstLetter(lastName)
+        }
 
         if (stateErrors.length < 2) {
             return this.props.processForm(user)
+                .then(() => this.props.history.push('/welcome'))
         }
     }
 
@@ -116,7 +118,12 @@ class SignUp extends React.Component {
 
         return (
             <div className='form-container-signup'>
-                <div className='form-title-signup'>Sign up with email</div>
+                <div className='form-title-signup'>
+                    <span id='signup-title'>Sign up with email or </span>
+                    <Link to='/'>
+                        <span id='signup-to-login'> Login</span>
+                    </Link>
+                </div>
                     <form onSubmit={this.handleSubmit} className='form'>
                     
                     <div className='signup-form'>
@@ -200,5 +207,5 @@ class SignUp extends React.Component {
     }
 }
 
-export default SignUp;
+export default withRouter(SignUp);
 

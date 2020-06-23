@@ -1,6 +1,5 @@
 class Api::UsersController < ApplicationController
-
-    before_action :require_logged_in!, only: [:index, :show]
+    before_action :require_logged_in!, only: [:show]
 
     def index
         @user = User.all
@@ -23,9 +22,24 @@ class Api::UsersController < ApplicationController
     end
 
     def update
+        @user = User.find(params[:id])
+
+        if @user.update(user_params)
+            render :show
+        else
+            render json: @user.errors.full_messages, status: 422
+        end
     end
 
     def destroy
+        @user = User.find(params[:id])
+        @user.destroy 
+        
+        if @user.destroy 
+            render json: {}
+        else
+            render json: ["Current user is not logged in"], status: 404
+        end
     end
 
 private

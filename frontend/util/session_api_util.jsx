@@ -35,17 +35,17 @@ export const logindemo = () => {
     })
 };
 
-export const updateUser = (user) => (
-    $.ajax({
+export const updateUser = (user) => {
+    return $.ajax({
         url: `/api/users/${user.id}`,
         method: 'PATCH',
         data: { user }
     })
-);
+};
 
-export const deleteUser = (userId) => (
-    $.ajax({
+export const deleteUser = (userId) => {
+    return $.ajax({
         url: `/api/users/${userId}`,
         method: 'DELETE'
     })
-);
+};

@@ -261,7 +261,7 @@ class MainBody extends React.Component {
             this.state.summary.split('\n').map((ele, i) => {
                 const scripture = ele.slice(0, 17) === "Scripture Reading"
                 const text = ele.slice(0, 5) === "Text:"
-                const eleCountMatch = eleCount[i - 1] === ele.trim()
+                const eleCountMatch = eleCount[i - 1] === ele.trim() && ele.trim().length < 1
 
                 //---------- eleCount.push STORES each item into eleCount ----------//
                 scripture || text

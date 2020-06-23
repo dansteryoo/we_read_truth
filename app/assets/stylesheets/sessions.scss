@@ -1,0 +1,272 @@
+@import './fonts.scss';
+
+.app-class {
+    height: 100%;
+}
+
+$darkgray: #3d3d3d;
+$lightgray: #d3d3d3;
+$gray: #767676;
+$mint: #d9fff0;
+$darkmint: #c0ffe6;
+$skin: #f3ede8;
+$blue: #4ca6ff;
+$green: #00a699;
+$orange: #ff5a5f;
+$pink: #ffc0cb;
+$darkpink: #ff8da1;
+
+//---------------Login Form
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    width: 500px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0 30px;
+    font-size: 14px;
+    color: black;
+
+    .form-title {
+        display: flex;
+        justify-content: center;
+        font-size: 24px;
+        font-weight: 700;
+        margin: 0 auto;
+
+        #login-title {
+            padding-right: 6px;
+        }
+
+        #login-to-signup {
+            text-decoration: underline;
+            text-decoration-color: $blue;
+        }
+
+        #login-to-signup:hover {
+            color: $blue;
+            cursor: pointer;
+            transition: ease 250ms;
+        }
+
+        #login-to-signup:active {
+            opacity: 60%;
+        }
+    }
+
+    .form {
+        display: block;
+        background-color: transparent;
+        width: 100%;
+    }
+
+    .form-input {
+        border-radius: 25px;
+        color: $darkgray;
+        font-size: 16px;
+        font-weight: 300;
+        height: 25px;
+        width: 95%;
+        border: 1px solid $lightgray;
+        margin-top: 20px;
+        padding: 10px 10px 10px 20px;
+    }
+
+    .form-input::placeholder {
+        color: $gray;
+    }
+
+    .form-input:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px $blue;
+    }
+
+    .form-input:invalid {
+        outline: none;
+        box-shadow: 0 0 0 1px $orange;
+    }
+
+    .form-demo-button,
+    .form-button {
+        text-align: center;
+        width: 100%;
+        height: 50px;
+        margin-top: 24px;
+        border-radius: 25px;
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .form-button {
+        background-color: black;
+    }
+
+    .form-demo-button:active,
+    .form-button:active {
+        opacity: 60%;
+    }
+
+    .form-demo-button {
+        background-color: $green;
+    }
+}
+
+.form-errors-login {
+  color: $orange;
+
+  li {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+}
+
+#form-icon-login {
+  color: $gray;
+  display: block;
+  position: absolute;
+  left: 528px;
+  margin: -31px;
+  z-index: 1;
+}
+
+//---------------Signup Form
+
+.form-container-signup {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    width: 500px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0 30px;
+    font-size: 14px;
+    color: black;
+
+    .form-title-signup {
+        display: flex;
+        justify-content: center;
+        font-size: 24px;
+        font-weight: 700;
+        margin: 0 auto 30px;
+
+        #signup-title {
+            padding-right: 6px;
+        }
+
+        #signup-to-login {
+            text-decoration: underline;
+            text-decoration-color: $green;
+        }
+
+        #signup-to-login:hover {
+            color: $green;
+            cursor: pointer;
+            transition: ease 250ms;
+        }
+
+        #signup-to-login:active {
+            opacity: 60%;
+        }
+    }
+
+    .signup-form {
+        display: block;
+        background-color: transparent;
+        width: 100%;
+    }
+
+    .signup-form-input {
+        position: relative;
+        border-radius: 25px;
+        color: $darkgray;
+        font-size: 16px;
+        font-weight: 300;
+        height: 25px;
+        width: 95%;
+        border: 1px solid $lightgray;
+        margin-top: 10px;
+        padding: 10px 10px 10px 20px;
+    }
+
+    .signup-form-input::placeholder {
+        color: gray;
+    }
+
+    .signup-form-input:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px $blue;
+    }
+
+    .signup-form-input:invalid {
+        outline: none;
+        box-shadow: 0 0 0 1px $orange;
+    }
+
+    .signup-form-button {
+        text-align: center;
+        width: 100%;
+        height: 50px;
+        margin-top: 10px;
+        border-radius: 25px;
+        background-color: black;
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+
+        cursor: pointer;
+    }
+}
+
+.form-errors-signup-email,
+.form-errors-signup-first,
+.form-errors-signup-last,
+.form-errors-signup-password {
+  position: relative;
+  color: $orange;
+  display: flex;
+  justify-content: center;
+  margin: 5px 0 5px;
+}
+
+ #email {
+     color: $gray;
+     display: block;
+     position: absolute;
+    left: 467px;
+    top: -36px;
+     z-index: 1;
+ }
+
+ #first {
+     color: $gray;
+     display: block;
+     position: absolute;
+    left: 467px;
+    top: -36px;
+     z-index: 1;
+ }
+
+ #last {
+     color: $gray;
+     display: block;
+     position: absolute;
+    left: 467px;
+    top: -36px;
+     z-index: 1;
+ }
+
+ #password {
+     color: $gray;
+     display: block;
+     position: absolute;
+    left: 467px;
+    top: -36px;
+     z-index: 1;
+ }

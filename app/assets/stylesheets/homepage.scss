@@ -1,6 +1,6 @@
 
 :root {
-  --landscape-width: 15; // % OR vw for responsive window resizing!
+  --landscape-width: 25; // % OR vw for responsive window resizing!
   --portrait-width: 50vw;
   --header-height: 7rem;
   --secs: 400ms;
@@ -75,6 +75,7 @@
 
 // Main area specific style:
 #main { 
+  z-index: 0;
   background: var(--bg-main); 
   flex-grow: 1;
 

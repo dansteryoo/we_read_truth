@@ -470,6 +470,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _splash_splash_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./splash/splash_container */ "./frontend/components/splash/splash_container.js");
 /* harmony import */ var _session_form_signup_form_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./session_form/signup_form_container */ "./frontend/components/session_form/signup_form_container.js");
 /* harmony import */ var _home_home_container__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./home/home_container */ "./frontend/components/home/home_container.js");
+/* harmony import */ var _home_welcome__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./home/welcome */ "./frontend/components/home/welcome.jsx");
+
 
 
 
@@ -490,6 +492,10 @@ var App = function App() {
     path: "/wrt/sign_up",
     component: _session_form_signup_form_container__WEBPACK_IMPORTED_MODULE_5__["default"]
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
+    exact: true,
+    path: "/welcome",
+    component: _home_welcome__WEBPACK_IMPORTED_MODULE_7__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
     exact: true,
     path: "/home",
     component: _home_home_container__WEBPACK_IMPORTED_MODULE_6__["default"]
@@ -945,20 +951,13 @@ var mapStateToProps = function mapStateToProps(state) {
   if (state.devos.devoBook === undefined) {
     devoBook = [];
   } else {
-    devoBook = Object.values(state.devos.devoBook).filter(function (ele) {
-      return ele.title !== "Weekly Truth" && ele.title !== "Grace Day";
-    });
+    devoBook = Object.values(state.devos.devoBook);
 
-    if (devoBook[0].gender === "HE") {
-      devoBook.reverse();
-    }
-
-    if (devoBook[0].gender === "SHE" && devoBook[0].book === "Judges") {
+    if (devoBook[0].gender === "HE" || devoBook[0].gender === "SHE" && devoBook[0].book === "Judges") {
       devoBook.reverse();
     }
   }
 
-  ;
   return {
     currentUser: state.users[state.session.id],
     errors: state.errors,
@@ -1315,7 +1314,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       return this.state.summary.split('\n').map(function (ele, i) {
         var scripture = ele.slice(0, 17) === "Scripture Reading";
         var text = ele.slice(0, 5) === "Text:";
-        var eleCountMatch = eleCount[i - 1] === ele.trim(); //---------- eleCount.push STORES each item into eleCount ----------//
+        var eleCountMatch = eleCount[i - 1] === ele.trim() && ele.trim().length < 1; //---------- eleCount.push STORES each item into eleCount ----------//
 
         scripture || text ? eleCount.push("") : eleCount.push(ele.trim());
 
@@ -1482,20 +1481,13 @@ var mapStateToProps = function mapStateToProps(state) {
   if (state.devos.devoBook === undefined) {
     devoBook = [];
   } else {
-    devoBook = Object.values(state.devos.devoBook).filter(function (ele) {
-      return ele.title !== "Weekly Truth" && ele.title !== "Grace Day";
-    });
+    devoBook = Object.values(state.devos.devoBook);
 
-    if (devoBook[0].gender === "HE") {
-      devoBook.reverse();
-    }
-
-    if (devoBook[0].gender === "SHE" && devoBook[0].book === "Judges") {
+    if (devoBook[0].gender === "HE" || devoBook[0].gender === "SHE" && devoBook[0].book === "Judges") {
       devoBook.reverse();
     }
   }
 
-  ;
   return {
     currentUser: state.users[state.session.id],
     errors: state.errors,
@@ -1729,20 +1721,13 @@ var mapStateToProps = function mapStateToProps(state) {
   if (state.devos.devoBook === undefined) {
     devoBook = [];
   } else {
-    devoBook = Object.values(state.devos.devoBook).filter(function (ele) {
-      return ele.title !== "Weekly Truth" && ele.title !== "Grace Day";
-    });
+    devoBook = Object.values(state.devos.devoBook);
 
-    if (devoBook[0].gender === "HE") {
-      devoBook.reverse();
-    }
-
-    if (devoBook[0].gender === "SHE" && devoBook[0].book === "Judges") {
+    if (devoBook[0].gender === "HE" || devoBook[0].gender === "SHE" && devoBook[0].book === "Judges") {
       devoBook.reverse();
     }
   }
 
-  ;
   return {
     currentUser: state.users[state.session.id],
     errors: state.errors,
@@ -1808,6 +1793,99 @@ var SideNavItem = function SideNavItem(_ref) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (SideNavItem);
+
+/***/ }),
+
+/***/ "./frontend/components/home/welcome.jsx":
+/*!**********************************************!*\
+  !*** ./frontend/components/home/welcome.jsx ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+var WelcomeMessage = /*#__PURE__*/function (_React$Component) {
+  _inherits(WelcomeMessage, _React$Component);
+
+  var _super = _createSuper(WelcomeMessage);
+
+  function WelcomeMessage(props) {
+    var _this;
+
+    _classCallCheck(this, WelcomeMessage);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      currentUser: null
+    };
+    return _this;
+  }
+
+  _createClass(WelcomeMessage, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {}
+  }, {
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "welcome-layout"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "welcome-message"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "welcome-title"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "The grass withers, the flower fades,"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "but the word of our God will stand forever.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "welcome-body"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        id: "wb-1"
+      }, "I hope this site helps you treasure His word as you continue to cherish His presence."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        id: "wb-2"
+      }, "Grow in grace. Persevere with hope."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        id: "wb-3"
+      }, "And ultimately, taste and see the goodness of His love for you today."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        id: "wb-4"
+      }, "\u2014with all"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "continue-button"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "/home"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        id: "continue-to-login"
+      }, "continue")))));
+    }
+  }]);
+
+  return WelcomeMessage;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (WelcomeMessage);
 
 /***/ }),
 
@@ -2763,11 +2841,14 @@ var ProfilesPage = /*#__PURE__*/function (_React$Component) {
       passwordMatch: '',
       passwordMatchError: '',
       stateErrors: [],
-      deleteUser: false
+      deleteUser: false,
+      success: false,
+      demoMessage: false
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
-    _this.isBlank = _this.isBlank.bind(_assertThisInitialized(_this));
+    _this.handleDelete = _this.handleDelete.bind(_assertThisInitialized(_this));
     _this.toggleDeleteConfirmation = _this.toggleDeleteConfirmation.bind(_assertThisInitialized(_this));
+    _this.processUpdate = _this.processUpdate.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -2777,9 +2858,26 @@ var ProfilesPage = /*#__PURE__*/function (_React$Component) {
       return word.trim().length === 0;
     }
   }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.setState({
+        firstName: this.props.currentUser.first_name,
+        lastName: this.props.currentUser.last_name
+      });
+    }
+  }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
+      var currentUser = this.props.currentUser;
+
+      if (currentUser.first_name === "Demo" && currentUser.last_name === "User") {
+        this.setState({
+          demoMessage: true
+        });
+        return this.renderDemoMsg();
+      }
+
       var _this$state = this.state,
           stateErrors = _this$state.stateErrors,
           password = _this$state.password,
@@ -2792,43 +2890,91 @@ var ProfilesPage = /*#__PURE__*/function (_React$Component) {
         return password === passwordMatch;
       };
 
-      if (this.isBlank(firstName) || this.isBlank(lastName) || this.isBlank(password) || !isPasswordMatch()) {
-        var errorsArr = [];
+      var errorsArr = [];
+
+      if (this.isBlank(firstName) || this.isBlank(lastName)) {
         if (this.isBlank(firstName)) errorsArr.push(ERRORS[3]); // 3 First name blank
 
         if (this.isBlank(lastName)) errorsArr.push(ERRORS[4]); // 4 Last name blank
+      }
 
+      if (!this.isBlank(password) || !isPasswordMatch()) {
         if (password.length < 6) errorsArr.push(ERRORS[5]); // 5 PW too short
 
         if (!isPasswordMatch() && !errorsArr.includes(ERRORS[5])) errorsArr.push(ERRORS[6]); // 6 PW !match
-
-        if (errorsArr.length > 0) return this.setState({
-          stateErrors: errorsArr
-        });
       }
+
+      if (errorsArr.length > 0) return this.setState({
+        stateErrors: errorsArr
+      });
 
       var capitalizeFirstLetter = function capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.toLocaleLowerCase().slice(1);
       };
 
       var userUpdate = {
-        password: password,
-        firstName: firstName,
-        lastName: lastName
+        first_name: capitalizeFirstLetter(firstName),
+        last_name: capitalizeFirstLetter(lastName),
+        id: currentUser.id
       };
-      userUpdate.first_name = capitalizeFirstLetter(firstName);
-      userUpdate.last_name = capitalizeFirstLetter(lastName);
 
-      if (stateErrors.length < 1) {// return this.props.processForm(userUpdate)
+      if (stateErrors.length < 1 && this.isBlank(password)) {
+        return this.processUpdate(userUpdate);
+      } else {
+        if (!this.isBlank(password) && isPasswordMatch()) {
+          userUpdate.password = password;
+          return this.processUpdate(userUpdate);
+        } else {
+          return this.processUpdate(userUpdate);
+        }
       }
+    }
+  }, {
+    key: "processUpdate",
+    value: function processUpdate(userUpdate) {
+      var _this2 = this;
+
+      return this.props.processForm(userUpdate).then(function () {
+        return _this2.setState({
+          success: true
+        });
+      }).then(function () {
+        return _this2.renderSuccessMsg();
+      });
+    }
+  }, {
+    key: "renderSuccessMsg",
+    value: function renderSuccessMsg() {
+      var _this3 = this;
+
+      window.setTimeout(function () {
+        _this3.setState({
+          success: false
+        });
+
+        _this3.props.closeModal();
+      }, 2500);
+    }
+  }, {
+    key: "renderDemoMsg",
+    value: function renderDemoMsg() {
+      var _this4 = this;
+
+      window.setTimeout(function () {
+        _this4.setState({
+          demoMessage: false
+        });
+
+        _this4.props.closeModal();
+      }, 4000);
     }
   }, {
     key: "handleChange",
     value: function handleChange(f) {
-      var _this2 = this;
+      var _this5 = this;
 
       return function (e) {
-        return _this2.setState(_defineProperty({}, f, e.target.value));
+        return _this5.setState(_defineProperty({}, f, e.target.value));
       };
     }
   }, {
@@ -2848,7 +2994,6 @@ var ProfilesPage = /*#__PURE__*/function (_React$Component) {
       };
       if (stateErrors.length < 1) return errorsHash;
       stateErrors.forEach(function (err) {
-        if (ERRORS.indexOf(err) === 0) errorsHash.emailBlank = err;
         if (ERRORS.indexOf(err) === 3) errorsHash.firstName = err;
         if (ERRORS.indexOf(err) === 4) errorsHash.lastName = err;
         if (ERRORS.indexOf(err) === 5) errorsHash.pwShort = err;
@@ -2861,6 +3006,18 @@ var ProfilesPage = /*#__PURE__*/function (_React$Component) {
       return errorsHash;
     }
   }, {
+    key: "handleDelete",
+    value: function handleDelete(currentUser) {
+      if (currentUser.first_name !== "Demo" && currentUser.last_name !== "User") {
+        return this.props.deleteUser(currentUser.id);
+      } else {
+        this.setState({
+          demoMessage: true
+        });
+        return this.renderDemoMsg();
+      }
+    }
+  }, {
     key: "toggleDeleteConfirmation",
     value: function toggleDeleteConfirmation() {
       return this.setState({
@@ -2870,19 +3027,30 @@ var ProfilesPage = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this6 = this;
 
-      if (!this.props.currentUser) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
+      var _this$props = this.props,
+          currentUser = _this$props.currentUser,
+          formType = _this$props.formType;
+      if (!currentUser) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
 
-      if (!this.state.deleteUser) {
+      if (this.state.success) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "success-message-div-update"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Profile Updated!")));
+      } else if (this.state.demoMessage) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "success-message-div-demo"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Sorry, but you cannot modify the Demo.")));
+      } else if (!this.state.deleteUser) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "form-container-update"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "form-title-update"
-        }, "Update ", this.props.currentUser.first_name, "'s Profile"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, "Update ", currentUser.first_name, "'s Profile"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "form-closing-x",
           onClick: function onClick() {
-            return _this3.props.closeModal();
+            return _this6.props.closeModal();
           }
         }, "\u2715"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
           onSubmit: this.handleSubmit,
@@ -2947,11 +3115,11 @@ var ProfilesPage = /*#__PURE__*/function (_React$Component) {
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "update-form-button",
           type: "submit",
-          value: this.props.formType
+          value: formType
         }, "Update"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "update-form-delete-btn",
           onClick: function onClick() {
-            return _this3.toggleDeleteConfirmation();
+            return _this6.toggleDeleteConfirmation();
           }
         }, "Delete")))));
       } else {
@@ -2964,15 +3132,18 @@ var ProfilesPage = /*#__PURE__*/function (_React$Component) {
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "update-form-button-container"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-          className: "update-form-delete-btn"
+          className: "update-form-delete-btn",
+          onClick: function onClick() {
+            return _this6.handleDelete(currentUser);
+          }
         }, "Delete"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "update-form-cancel-btn",
           onClick: function onClick() {
-            return _this3.toggleDeleteConfirmation();
+            return _this6.toggleDeleteConfirmation();
           }
         }, "Cancel")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "update-form-delete-message"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " ARE YOU SURE YOU WANT TO DELETE YOUR ACCOUNT? "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, " You will permenatnly lose all your data. "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, " Please press the delete button to confirm. "))))));
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "ARE YOU SURE YOU WANT TO DELETE YOUR ACCOUNT? "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "You will lose all your data permanently! "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Please press the delete button to confirm. "))))));
       }
     }
   }]);
@@ -3331,7 +3502,6 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       updateForm: false
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
-    _this.isBlank = _this.isBlank.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -3501,7 +3671,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
         _this5.setState({
           success: false
         });
-      }, 4000);
+      }, 3000);
     }
   }, {
     key: "renderUpdateMsg",
@@ -3512,7 +3682,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
         _this6.setState({
           update: false
         });
-      }, 4000);
+      }, 3000);
     }
   }, {
     key: "renderErrors",
@@ -3786,6 +3956,7 @@ var Root = function Root(_ref) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -3809,6 +3980,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
 
 
 
@@ -3842,7 +4014,7 @@ var LogInForm = /*#__PURE__*/function (_React$Component) {
     value: function handleSubmit(e) {
       e.preventDefault();
       var user = Object.assign({}, this.state);
-      user.email = user.email.toLocaleLowerCase();
+      user.email = user.email.toLowerCase();
       this.props.processForm(user);
     }
   }, {
@@ -3877,7 +4049,13 @@ var LogInForm = /*#__PURE__*/function (_React$Component) {
         className: "form-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-title"
-      }, "Login to continue"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        id: "login-title"
+      }, "Login to continue or "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "/wrt/sign_up"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        id: "login-to-signup"
+      }, " Signup"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit,
         className: "form"
       }, this.renderErrors(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -3990,6 +4168,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -4013,6 +4192,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
 
 
 var ERRORS = ["Email can't be blank", // 0 Blank email
@@ -4045,7 +4225,6 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
       stateErrors: []
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
-    _this.isBlank = _this.isBlank.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -4062,6 +4241,8 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
+      var _this2 = this;
+
       e.preventDefault();
       var _this$state = this.state,
           stateErrors = _this$state.stateErrors,
@@ -4098,25 +4279,25 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
       };
 
       var user = {
-        email: email,
+        email: email.toLowerCase(),
         password: password,
-        firstName: firstName,
-        lastName: lastName
+        first_name: capitalizeFirstLetter(firstName),
+        last_name: capitalizeFirstLetter(lastName)
       };
-      user.first_name = capitalizeFirstLetter(firstName);
-      user.last_name = capitalizeFirstLetter(lastName);
 
       if (stateErrors.length < 2) {
-        return this.props.processForm(user);
+        return this.props.processForm(user).then(function () {
+          return _this2.props.history.push('/welcome');
+        });
       }
     }
   }, {
     key: "handleChange",
     value: function handleChange(f) {
-      var _this2 = this;
+      var _this3 = this;
 
       return function (e) {
-        return _this2.setState(_defineProperty({}, f, e.target.value));
+        return _this3.setState(_defineProperty({}, f, e.target.value));
       };
     }
   }, {
@@ -4166,7 +4347,13 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
         className: "form-container-signup"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-title-signup"
-      }, "Sign up with email"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        id: "signup-title"
+      }, "Sign up with email or "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "/"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        id: "signup-to-login"
+      }, " Login"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit,
         className: "form"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -4249,7 +4436,7 @@ var SignUp = /*#__PURE__*/function (_React$Component) {
   return SignUp;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (SignUp);
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(SignUp));
 
 /***/ }),
 
