@@ -10,7 +10,7 @@ class NotesPage extends React.Component {
             noteId: '',
             search: '',
             notes: [],
-            checked: false
+            checked: false,
         }
 
         this.handleUpdate = this.handleUpdate.bind(this);
@@ -22,7 +22,7 @@ class NotesPage extends React.Component {
 
     componentDidMount() {
         this.props.fetchNotes()
-        .then(this.setState({ notes: this.props.notes }))
+        .then(() => this.setState({ notes: this.props.notes }))
     }
 
     componentWillUnmount() {
@@ -30,6 +30,11 @@ class NotesPage extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
+        const { notes, search } = this.state
+        
+        this.props.notes.length > 0 && notes.length < 1 && search.length < 1
+            && this.setState({ notes: this.props.notes })
+
         if (this.props !== prevProps) {
             this.setState({ notes: this.props.notes })
         }
@@ -94,10 +99,14 @@ class NotesPage extends React.Component {
             let sortTitles = each.title.toLowerCase().match(searchData)
             let sortBody = each.body.toLowerCase().match(searchData)
             let sortBook = each.category.toLowerCase().match(searchData)
-
-            if (sortTitles || sortBody || sortBook) return each 
+            
+            if (sortTitles || sortBody || sortBook) {
+                return each 
+            } else {
+                return
+            }
          });
-         
+
         return this.setState({ notes: sortNotes })
     }
 
@@ -155,10 +164,29 @@ class NotesPage extends React.Component {
 
     render() {
 
-        const { notes, fetchNote, deleteNote } = this.props
-        let renderNotes = this.state.notes.length < 1 ? notes : this.state.notes
+        const { fetchNote, deleteNote } = this.props
+        const { notes, search } = this.state
+        let renderNotes = this.state.notes
 
-        if (notes.length < 1) {
+
+        if (notes.length < 1 && search.length > 0) {
+            return (
+                <>
+                    <div className='notes-page-container'>
+                        {
+                            this.renderModalTop()
+                        }
+                        <div className='notes-page-content'>
+                            <section className='notes-page-section'>
+                                <div className='notes-page-section-empty'>
+                                    <span>No notes matching your search.</span>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </>
+            )
+        } if (this.props.notes.length < 1) {
             return (
                 <>
                     <div className='notes-page-container'>
