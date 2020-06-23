@@ -2470,6 +2470,7 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       noteId: '',
       search: '',
       notes: [],
+      defaultSorted: [],
       checked: false
     };
     _this.handleUpdate = _this.handleUpdate.bind(_assertThisInitialized(_this));
@@ -2477,6 +2478,9 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
     _this.handleCheck = _this.handleCheck.bind(_assertThisInitialized(_this));
     _this.toggleClass = _this.toggleClass.bind(_assertThisInitialized(_this));
     _this.renderModalTop = _this.renderModalTop.bind(_assertThisInitialized(_this));
+    _this.sortByBook = _this.sortByBook.bind(_assertThisInitialized(_this));
+    _this.sortByCreated = _this.sortByCreated.bind(_assertThisInitialized(_this));
+    _this.sortByUpdated = _this.sortByUpdated.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -2487,7 +2491,8 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
 
       this.props.fetchNotes().then(function () {
         return _this2.setState({
-          notes: _this2.props.notes
+          notes: _this2.props.notes,
+          defaultSorted: _this2.props.notes
         });
       });
     }
@@ -2498,19 +2503,48 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps) {
+    value: function componentDidUpdate() {
       var _this$state = this.state,
           notes = _this$state.notes,
-          search = _this$state.search;
-      this.props.notes.length > 0 && notes.length < 1 && search.length < 1 && this.setState({
-        notes: this.props.notes
-      });
+          search = _this$state.search,
+          defaultSorted = _this$state.defaultSorted,
+          checked = _this$state.checked; //---------- defaultSorted on blank search input ----------//
 
-      if (this.props !== prevProps) {
-        this.setState({
-          notes: this.props.notes
+      if (JSON.stringify(notes) !== JSON.stringify(defaultSorted) && search.length < 1 && checked === false) {
+        return this.setState({
+          notes: defaultSorted
         });
       }
+    }
+  }, {
+    key: "sortByBook",
+    value: function sortByBook(notes) {
+      var sortedNotes = notes.sort(function (a, b) {
+        return a.category.toLowerCase() < b.category.toLowerCase() ? -1 : 1;
+      }).map(function (ele) {
+        return ele;
+      });
+      return sortedNotes;
+    }
+  }, {
+    key: "sortByCreated",
+    value: function sortByCreated(notes) {
+      var sortedNotes = notes.sort(function (a, b) {
+        return a.created_at.toLowerCase() < b.created_at.toLowerCase() ? -1 : 1;
+      }).map(function (ele) {
+        return ele;
+      });
+      return sortedNotes;
+    }
+  }, {
+    key: "sortByUpdated",
+    value: function sortByUpdated(notes) {
+      var sortedNotes = notes.sort(function (a, b) {
+        return a.updated_at.toLowerCase() < b.updated_at.toLowerCase() ? -1 : 1;
+      }).map(function (ele) {
+        return ele;
+      });
+      return sortedNotes;
     }
   }, {
     key: "handleUpdate",
@@ -2541,50 +2575,34 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
     key: "handleCheck",
     value: function handleCheck(e) {
       var checkbox = e.target.value;
-      if (checkbox) this.setState({
-        checked: this.state.checked
-      });
       var myCheckbox = document.getElementsByName("checkbox");
+      var checkboxBool = [];
       myCheckbox.forEach(function (ele) {
-        if (checkbox !== ele.value) return ele.checked = false;
+        if (checkbox !== ele.value) ele.checked = false;
+        checkboxBool.push(ele.checked === true);
       });
-      var notes = this.state.notes;
-      var sortNotes;
+      var notes = this.state.notes; //---------- default byCreated sort on blank checkboxes ----------//
+
+      if (!checkboxBool.includes(true)) {
+        return this.setState({
+          notes: this.sortByCreated(notes),
+          checked: false
+        });
+      } else {
+        this.setState({
+          checked: true
+        });
+      }
 
       switch (checkbox) {
         case 'byBook':
-          sortNotes = notes.sort(function (a, b) {
-            return a.category.toLowerCase() < b.category.toLowerCase() ? -1 : 1;
-          }).map(function (ele) {
-            return ele;
-          });
           return this.setState({
-            notes: sortNotes
-          });
-
-        case 'byCreated':
-          sortNotes = notes.sort(function (a, b) {
-            return a.created_at < b.created_at ? -1 : 1;
-          }).map(function (ele) {
-            return ele;
-          });
-          return this.setState({
-            notes: sortNotes
+            notes: this.sortByBook(notes)
           });
 
         case 'byUpdated':
-          sortNotes = notes.sort(function (a, b) {
-            return a.updated_at < b.updated_at ? -1 : 1;
-          }).map(function (ele) {
-            return ele;
-          });
           return this.setState({
-            notes: sortNotes
-          });
-
-        default:
-          return this.setState({
-            notes: notes
+            notes: this.sortByUpdated(notes)
           });
       }
     }
@@ -2598,15 +2616,16 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
         var sortTitles = each.title.toLowerCase().match(searchData);
         var sortBody = each.body.toLowerCase().match(searchData);
         var sortBook = each.category.toLowerCase().match(searchData);
-
-        if (sortTitles || sortBody || sortBook) {
-          return each;
-        } else {
-          return;
-        }
+        return sortTitles || sortBody || sortBook;
+      });
+      var _this$state2 = this.state,
+          search = _this$state2.search,
+          defaultSorted = _this$state2.defaultSorted;
+      if (search.length > 0) return this.setState({
+        notes: sortNotes
       });
       return this.setState({
-        notes: sortNotes
+        notes: defaultSorted
       });
     }
   }, {
@@ -2616,6 +2635,7 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
           currentUser = _this$props.currentUser,
           closeModal = _this$props.closeModal;
       var currentUser_firstName = currentUser.first_name || 'Demo';
+      console.log(this.state.checked);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "notes-modal-top"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2639,15 +2659,6 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
         type: "checkbox",
         name: "checkbox",
         value: "byBook",
-        onChange: this.handleCheck
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "checkmark"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        className: "container"
-      }, "By Created", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "checkbox",
-        name: "checkbox",
-        value: "byCreated",
         onChange: this.handleCheck
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "checkmark"
@@ -2677,9 +2688,9 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       var _this$props2 = this.props,
           fetchNote = _this$props2.fetchNote,
           deleteNote = _this$props2.deleteNote;
-      var _this$state2 = this.state,
-          notes = _this$state2.notes,
-          search = _this$state2.search;
+      var _this$state3 = this.state,
+          notes = _this$state3.notes,
+          search = _this$state3.search;
       var renderNotes = this.state.notes;
 
       if (notes.length < 1 && search.length > 0) {

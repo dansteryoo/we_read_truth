@@ -10,7 +10,8 @@ class NotesPage extends React.Component {
             noteId: '',
             search: '',
             notes: [],
-            checked: false,
+            defaultSorted: [],
+            checked: false
         }
 
         this.handleUpdate = this.handleUpdate.bind(this);
@@ -18,26 +19,52 @@ class NotesPage extends React.Component {
         this.handleCheck = this.handleCheck.bind(this);
         this.toggleClass = this.toggleClass.bind(this);
         this.renderModalTop = this.renderModalTop.bind(this);
+        this.sortByBook = this.sortByBook.bind(this);
+        this.sortByCreated = this.sortByCreated.bind(this);
+        this.sortByUpdated = this.sortByUpdated.bind(this);
     }
 
     componentDidMount() {
         this.props.fetchNotes()
-        .then(() => this.setState({ notes: this.props.notes }))
+        .then(() => this.setState({ 
+            notes: this.props.notes,
+            defaultSorted: this.props.notes
+        }))
     }
 
     componentWillUnmount() {
         this.props.clearNoteState()
     }
 
-    componentDidUpdate(prevProps) {
-        const { notes, search } = this.state
-        
-        this.props.notes.length > 0 && notes.length < 1 && search.length < 1
-            && this.setState({ notes: this.props.notes })
+    componentDidUpdate() {
+        const { notes, search, defaultSorted, checked } = this.state
 
-        if (this.props !== prevProps) {
-            this.setState({ notes: this.props.notes })
-        }
+        //---------- defaultSorted on blank search input ----------//
+        if (JSON.stringify(notes) !== JSON.stringify(defaultSorted)
+        && search.length < 1 && checked === false) {
+            return this.setState({ notes: defaultSorted })
+        } 
+    }
+
+    sortByBook(notes) {
+        let sortedNotes = notes
+            .sort((a, b) => a.category.toLowerCase() < b.category.toLowerCase() ? -1 : 1)
+            .map(ele => ele)
+        return sortedNotes
+    }
+
+    sortByCreated(notes) {
+        let sortedNotes = notes
+            .sort((a, b) => a.created_at.toLowerCase() < b.created_at.toLowerCase() ? -1 : 1)
+            .map(ele => ele)
+        return sortedNotes
+    }
+
+    sortByUpdated(notes) {
+        let sortedNotes = notes
+            .sort((a, b) => a.updated_at.toLowerCase() < b.updated_at.toLowerCase() ? -1 : 1)
+            .map(ele => ele)
+        return sortedNotes
     }
 
     handleUpdate(noteId) {
@@ -55,38 +82,33 @@ class NotesPage extends React.Component {
 
     handleCheck(e) {
         const checkbox = e.target.value
-        if (checkbox) this.setState({ checked: this.state.checked })
 
         let myCheckbox = document.getElementsByName("checkbox");
+        let checkboxBool = []
+
         myCheckbox.forEach(ele => {
-            if (checkbox !== ele.value) return ele.checked = false;
+            if (checkbox !== ele.value) ele.checked = false
+            checkboxBool.push(ele.checked === true)
         }) 
 
         const { notes } = this.state
-            let sortNotes;
-
-            switch (checkbox) {
-                case 'byBook':
-                    sortNotes = notes
-                        .sort((a, b) => a.category.toLowerCase() < b.category.toLowerCase() ? -1 : 1)
-                        .map(ele => ele)
-                    return this.setState({ notes: sortNotes })
-
-                case 'byCreated':
-                    sortNotes = notes
-                        .sort((a, b) => a.created_at < b.created_at ? -1 : 1)
-                        .map(ele => ele)
-                    return this.setState({ notes: sortNotes })
-
-                case 'byUpdated':
-                    sortNotes = notes
-                        .sort((a, b) => a.updated_at < b.updated_at ? -1 : 1)
-                        .map(ele => ele)
-                    return this.setState({ notes: sortNotes })
-
-                default:
-                    return this.setState({ notes })
+        //---------- default byCreated sort on blank checkboxes ----------//
+        if (!checkboxBool.includes(true)) {
+            return this.setState({
+                notes: this.sortByCreated(notes),
+                checked: false
+            })
+        } else {
+            this.setState({ checked: true })
         }
+
+        switch (checkbox) {
+            case 'byBook':
+                return this.setState({ notes: this.sortByBook(notes) })
+
+            case 'byUpdated':
+                return this.setState({ notes: this.sortByUpdated(notes) })
+        } 
     }
 
     handleSearch(e) {
@@ -100,20 +122,21 @@ class NotesPage extends React.Component {
             let sortBody = each.body.toLowerCase().match(searchData)
             let sortBook = each.category.toLowerCase().match(searchData)
             
-            if (sortTitles || sortBody || sortBook) {
-                return each 
-            } else {
-                return
-            }
+            return sortTitles || sortBody || sortBook
          });
 
-        return this.setState({ notes: sortNotes })
+        const { search, defaultSorted } = this.state 
+        if (search.length > 0) return this.setState({ notes: sortNotes })
+        
+        return this.setState({ notes: defaultSorted })
     }
 
     renderModalTop() {
         const { currentUser, closeModal } = this.props
         let currentUser_firstName = currentUser.first_name || 'Demo'
 
+        console.log(this.state.checked);
+        
         return (
             <div className='notes-modal-top'>
                 <div className='notes-page-username'>
@@ -137,14 +160,6 @@ class NotesPage extends React.Component {
                             />
                         <span className="checkmark"></span>
                     </label>
-
-                    <label className="container">By Created
-                        <input type="checkbox" name='checkbox' value='byCreated'
-                            onChange={this.handleCheck}
-                            />
-                        <span className="checkmark"></span>
-                    </label>
-
                     <label className="container">By Updated
                         <input type="checkbox" name='checkbox' value='byUpdated'
                             onChange={this.handleCheck}
@@ -163,7 +178,6 @@ class NotesPage extends React.Component {
     }
 
     render() {
-
         const { fetchNote, deleteNote } = this.props
         const { notes, search } = this.state
         let renderNotes = this.state.notes
