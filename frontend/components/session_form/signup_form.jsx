@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 const ERRORS = [
     "Email can't be blank", // 0 Blank email
     "Email is invalid", // 1 Email !valid 
@@ -67,6 +67,7 @@ class SignUp extends React.Component {
 
         if (stateErrors.length < 2) {
             return this.props.processForm(user)
+                .then(() => this.props.history.push('/welcome'))
         }
     }
 
@@ -206,5 +207,5 @@ class SignUp extends React.Component {
     }
 }
 
-export default SignUp;
+export default withRouter(SignUp);
 

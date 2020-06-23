@@ -1,0 +1,125 @@
+$darkgray: #3d3d3d;
+$lightgray: #d3d3d3;
+$gray: #767676;
+$mint: #d9fff0;
+$darkmint: #c0ffe6;
+$skin: #f3ede8;
+$blue: #4ca6ff;
+$green: #00a699;
+$orange: #ff5a5f;
+
+
+#welcome-layout {
+    background-color: black; 
+    height: 100vh;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    color: white;
+    font-family: Helvetica;
+    text-align: center;
+    line-height: 3em;
+
+    .continue-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        #continue-to-login {
+            font-size: 26px;
+            font-weight: bold;
+        }
+    }
+}
+
+.welcome-message {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+    margin-top: 150px;
+
+    #welcome-title p {
+        font-size: 30px;
+        font-weight: bold;
+        animation: fadeIn ease 5000ms;
+    }
+
+    #welcome-body {
+        font-size: 16px;
+
+        #wb-1 {
+            opacity: 0;
+            animation-delay: 3s;
+            animation-name: fadeInDown; 
+            animation-duration: 3s;
+            animation-timing-function: linear;
+            animation-fill-mode: forwards;
+        }
+        
+        #wb-2 { 
+            opacity: 0;          
+            animation-delay: 4.5s;
+            animation-name: fadeInDown; 
+            animation-duration: 3s;
+            animation-timing-function: linear;
+            animation-fill-mode: forwards;
+        }
+        
+        #wb-3 {     
+            opacity: 0;      
+            animation-delay: 6s;
+            animation-name: fadeInDown; 
+            animation-duration: 3s;
+            animation-timing-function: linear;
+            animation-fill-mode: forwards;
+        }
+
+        #wb-4 {      
+            opacity: 0;      
+            animation-delay: 9.25s;
+            animation-name: fadeInDown; 
+            animation-duration: 3s;
+            animation-timing-function: linear;
+            animation-fill-mode: forwards;
+        }
+    } 
+}
+
+@keyframes fadeInDown {
+   0% {
+      opacity: 0;
+      transform: translateY(-30px);
+   }
+   100% {
+      opacity: 1;
+      transform: translateY(0);
+   }
+} 
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.continue-button {
+    opacity: 0;      
+    animation-delay: 14s;
+    animation-name: fadeIn; 
+    animation-duration: 3s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+.continue-button:hover {
+    color: $mint;
+}
+
+.continue-button:active {
+    opacity: 60%;
+}

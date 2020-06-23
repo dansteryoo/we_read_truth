@@ -48,34 +48,34 @@ class MainBody extends React.Component {
         ]
         let randomGen = esvKeys[Math.floor(Math.random() * esvKeys.length)];
 
-        // axios.get('https://api.esv.org/v3/passage/text/?', {
-        //     crossDomain: true,
-        //     params: {
-        //         'q': passage,
-        //         'include-headings': false,
-        //         'include-footnotes': false,
-        //         'include-verse-numbers': false,
-        //         'include-short-copyright': false,
-        //         'include-passage-references': false
-        //     },
-        //     headers: {
-        //         'Authorization': randomGen,
-        //     }
-        // })
-        // .then(res => {
-        //     if (res.status === 200) {
-        //         return this.setState({ 
-        //             esvPassage: [ ...this.state.esvPassage, 
-        //                 { 
-        //                 passage: res.config.params.q, 
-        //                 text: res.data.passages[0] 
-        //                 }
-        //             ]
-        //         })
-        //     } else {
-        //         return 'Error: Passage not found'
-        //     }
-        // })
+        axios.get('https://api.esv.org/v3/passage/text/?', {
+            crossDomain: true,
+            params: {
+                'q': passage,
+                'include-headings': false,
+                'include-footnotes': false,
+                'include-verse-numbers': false,
+                'include-short-copyright': false,
+                'include-passage-references': false
+            },
+            headers: {
+                'Authorization': randomGen,
+            }
+        })
+        .then(res => {
+            if (res.status === 200) {
+                return this.setState({ 
+                    esvPassage: [ ...this.state.esvPassage, 
+                        { 
+                        passage: res.config.params.q, 
+                        text: res.data.passages[0] 
+                        }
+                    ]
+                })
+            } else {
+                return 'Error: Passage not found'
+            }
+        })
     }
 
     setBookmark() {

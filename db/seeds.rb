@@ -65,8 +65,9 @@ Devo.where(gender: "SHE").destroy_all
 
 she_data_1 = JSON.parse(File.read("#{Rails.root}/app/assets/seed/shereadstruth_v1.json"))
 she_data_2 = JSON.parse(File.read("#{Rails.root}/app/assets/seed/shereadstruth_v2.json"))
+she_data_3 = JSON.parse(File.read("#{Rails.root}/app/assets/seed/shereadstruth_v3.json"))
 
-sheDataArray = [she_data_1, she_data_2]
+sheDataArray = [she_data_1, she_data_2, she_data_3]
 
 sheDataArray.each do |she_data|
     she_data.each do |each|
@@ -117,3 +118,7 @@ sheDataArray.each do |she_data|
     # byebug
     end
 end
+
+
+Devo.where(title: "Weekly Truth").destroy_all
+Devo.where(title: "Grace Day").destroy_all
