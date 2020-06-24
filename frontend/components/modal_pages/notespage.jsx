@@ -126,7 +126,7 @@ class NotesPage extends React.Component {
             return sortTitles || sortBody || sortBook
          });
 
-        const { search, defaultSorted, checked } = this.state 
+        const { checked } = this.state 
         let myCheckbox = document.getElementsByName("checkbox");
         let checkboxName = []
 
@@ -134,24 +134,20 @@ class NotesPage extends React.Component {
             if (ele.checked === true) checkboxName.push(ele.value)
         }) 
 
-        if (search.length > 0 && checked) {
+        if (checked) {
             if (checkboxName.includes('byBook')) {
                 return this.setState({ notes: this.sortByBook(sortNotes) })
             } else {
-
                 return this.setState({ notes: this.sortByUpdated(sortNotes) })
             }
-        } else if (search.length > 0 && !checked) {
+        } else {
             return this.setState({ notes: this.sortByCreated(sortNotes) })
         }
-        return this.setState({ notes: defaultSorted })
     }
 
     renderModalTop() {
         const { currentUser, closeModal } = this.props
         let currentUser_firstName = currentUser.first_name || 'Demo'
-
-        console.log(this.state.notes);
         
         return (
             <div className='notes-modal-top'>
