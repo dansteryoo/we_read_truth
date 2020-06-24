@@ -148,8 +148,6 @@ class NotesPage extends React.Component {
     renderModalTop() {
         const { currentUser, closeModal } = this.props
         let currentUser_firstName = currentUser.first_name || 'Demo'
-
-        console.log(this.state.notes);
         
         return (
             <div className='notes-modal-top'>
