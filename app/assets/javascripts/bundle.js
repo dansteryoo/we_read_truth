@@ -3639,6 +3639,21 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       };
     }
   }, {
+    key: "handleCancelUpdate",
+    value: function handleCancelUpdate() {
+      return this.setState({
+        id: '',
+        title: '',
+        category: '',
+        day: '',
+        body: '',
+        update: false,
+        success: false,
+        updateErrors: [],
+        updateForm: false
+      });
+    }
+  }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       var _this4 = this;
@@ -3771,6 +3786,8 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this7 = this;
+
       if (this.state.success) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "success-message-div"
@@ -3825,7 +3842,12 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "notes-form-submit-button",
           type: "submit"
-        }, "Update")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null))); //----------- Create Form -----------//
+        }, "Update"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "notes-form-cancel-x",
+          onClick: function onClick() {
+            return _this7.handleCancelUpdate();
+          }
+        }, "\u2715")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null))); //----------- Create Form -----------//
       } else {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-form-container"

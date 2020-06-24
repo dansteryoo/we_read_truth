@@ -83,6 +83,20 @@ class NotesForm extends React.Component {
         return e => this.setState({ [f]: e.target.value })
     }
 
+    handleCancelUpdate() {
+        return this.setState({ 
+            id: '',
+            title: '',
+            category: '',
+            day: '',
+            body: '',
+            update: false,
+            success: false,
+            updateErrors: [],
+            updateForm: false
+        })
+    }
+
     handleSubmit(e) {
         e.preventDefault()
 
@@ -260,6 +274,10 @@ class NotesForm extends React.Component {
                                     type='submit'>
                                         Update
                                     </button>
+                                    <div className='notes-form-cancel-x' 
+                                        onClick={() => this.handleCancelUpdate()}>
+                                        &#10005;
+                                    </div>
                                 </div>
                             </div>
                         </form>
