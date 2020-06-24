@@ -2618,17 +2618,14 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
         var sortBook = each.category.toLowerCase().match(searchData);
         return sortTitles || sortBody || sortBook;
       });
-      var _this$state2 = this.state,
-          search = _this$state2.search,
-          defaultSorted = _this$state2.defaultSorted,
-          checked = _this$state2.checked;
+      var checked = this.state.checked;
       var myCheckbox = document.getElementsByName("checkbox");
       var checkboxName = [];
       myCheckbox.forEach(function (ele) {
         if (ele.checked === true) checkboxName.push(ele.value);
       });
 
-      if (search.length > 0 && checked) {
+      if (checked) {
         if (checkboxName.includes('byBook')) {
           return this.setState({
             notes: this.sortByBook(sortNotes)
@@ -2638,15 +2635,11 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
             notes: this.sortByUpdated(sortNotes)
           });
         }
-      } else if (search.length > 0 && !checked) {
+      } else {
         return this.setState({
           notes: this.sortByCreated(sortNotes)
         });
       }
-
-      return this.setState({
-        notes: defaultSorted
-      });
     }
   }, {
     key: "renderModalTop",
@@ -2655,7 +2648,6 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
           currentUser = _this$props.currentUser,
           closeModal = _this$props.closeModal;
       var currentUser_firstName = currentUser.first_name || 'Demo';
-      console.log(this.state.notes);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "notes-modal-top"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2708,9 +2700,9 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       var _this$props2 = this.props,
           fetchNote = _this$props2.fetchNote,
           deleteNote = _this$props2.deleteNote;
-      var _this$state3 = this.state,
-          notes = _this$state3.notes,
-          search = _this$state3.search;
+      var _this$state2 = this.state,
+          notes = _this$state2.notes,
+          search = _this$state2.search;
       var renderNotes = notes;
 
       if (notes.length < 1 && search.length > 0) {
@@ -3647,6 +3639,21 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       };
     }
   }, {
+    key: "handleCancelUpdate",
+    value: function handleCancelUpdate() {
+      return this.setState({
+        id: '',
+        title: '',
+        category: '',
+        day: '',
+        body: '',
+        update: false,
+        success: false,
+        updateErrors: [],
+        updateForm: false
+      });
+    }
+  }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       var _this4 = this;
@@ -3779,6 +3786,8 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this7 = this;
+
       if (this.state.success) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "success-message-div"
@@ -3833,7 +3842,12 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "notes-form-submit-button",
           type: "submit"
-        }, "Update")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null))); //----------- Create Form -----------//
+        }, "Update"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "notes-form-cancel-x",
+          onClick: function onClick() {
+            return _this7.handleCancelUpdate();
+          }
+        }, "\u2715")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null))); //----------- Create Form -----------//
       } else {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-form-container"
