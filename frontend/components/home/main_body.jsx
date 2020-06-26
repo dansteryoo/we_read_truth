@@ -214,8 +214,7 @@ class MainBody extends React.Component {
                 return passagesArray.indexOf(a.passage) - passagesArray.indexOf(b.passage)
             })
         }
-        console.log(esvSortMatch)
-        console.log(passagesArray)
+
         //---------- CATCH undefined ESV API returns ----------//
         let newEsvData = esvSortMatch.filter((ele, i) => {
             if (ele.text === undefined) {
