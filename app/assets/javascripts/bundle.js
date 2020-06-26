@@ -1276,8 +1276,10 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
         esvSortMatch = esvPassage.sort(function (a, b) {
           return passagesArray.indexOf(a.passage) - passagesArray.indexOf(b.passage);
         });
-      } //---------- CATCH undefined ESV API returns ----------//
+      }
 
+      console.log(esvSortMatch);
+      console.log(passagesArray); //---------- CATCH undefined ESV API returns ----------//
 
       var newEsvData = esvSortMatch.filter(function (ele, i) {
         if (ele.text === undefined) {
