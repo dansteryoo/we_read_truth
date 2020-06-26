@@ -2503,7 +2503,7 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "componentDidUpdate",
-    value: function componentDidUpdate() {
+    value: function componentDidUpdate(prevProps) {
       var _this$state = this.state,
           notes = _this$state.notes,
           search = _this$state.search,
@@ -2513,6 +2513,13 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       if (JSON.stringify(notes) !== JSON.stringify(defaultSorted) && search.length < 1 && checked === false) {
         return this.setState({
           notes: defaultSorted
+        });
+      }
+
+      if (prevProps.notes.length !== this.props.notes.length) {
+        return this.setState({
+          notes: this.props.notes,
+          defaultSorted: this.props.notes
         });
       }
     }

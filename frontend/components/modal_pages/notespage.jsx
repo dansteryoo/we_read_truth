@@ -36,15 +36,21 @@ class NotesPage extends React.Component {
         this.props.clearNoteState()
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps) {
         const { notes, search, defaultSorted, checked } = this.state
 
         //---------- defaultSorted on blank search input ----------//
         if (JSON.stringify(notes) !== JSON.stringify(defaultSorted)
         && search.length < 1 && checked === false) {
-
             return this.setState({ notes: defaultSorted })
         } 
+
+        if (prevProps.notes.length !== this.props.notes.length) {
+            return this.setState({ 
+                notes: this.props.notes, 
+                defaultSorted: this.props.notes
+            })
+        }
     }
 
     sortByBook(notes) {
