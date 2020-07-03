@@ -2495,12 +2495,9 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
           defaultSorted: _this2.sortByCreated(_this2.props.notes)
         });
       });
-    }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      this.props.clearNoteState();
-    }
+    } // componentWillUnmount() {
+    // }
+
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {

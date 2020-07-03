@@ -32,11 +32,11 @@ class NotesPage extends React.Component {
         }))
     }
 
-    componentWillUnmount() {
-        this.props.clearNoteState()
-    }
+    // componentWillUnmount() {
+    // }
 
     componentDidUpdate(prevProps) {
+   
         const { notes, search, defaultSorted, checked } = this.state
 
         //---------- defaultSorted on blank search input ----------//
@@ -200,7 +200,6 @@ class NotesPage extends React.Component {
         const { notes, search } = this.state
         let renderNotes = notes 
 
-
         if (notes.length < 1 && search.length > 0) {
             return (
                 <>
@@ -220,49 +219,46 @@ class NotesPage extends React.Component {
             )
         } if (this.props.notes.length < 1) {
             return (
-                <>
-                    <div className='notes-page-container'>
-                        {
-                            this.renderModalTop()
-                        }
-                        <div className='notes-page-content'>
-                            <section className='notes-page-section'>
-                                <div className='notes-page-section-empty'>
-                                    <span>You don't have any notes.</span>
-                                </div>
-                            </section>
-                        </div>
-                    </div>
-                </>
-            )
-        } else {
-            return (
-                <>
-                    <div className='notes-page-container'>
-                        {
-                            this.renderModalTop()
-                        }
-                        <div className='notes-page-content'>
-                            <section className='notes-page-section'>
-                                <ul className='notes-page-ul'>
-                                    {renderNotes.map((eachNote) => (
-                                        <NotesItem 
-                                            handleUpdate={this.handleUpdate}
-                                            toggleClass={this.toggleClass}
-                                            flipToDelete={this.state.flipToDelete}
-                                            noteId={this.state.noteId}
-                                            deleteNote={deleteNote}
-                                            fetchNote={fetchNote}
-                                            eachNote={eachNote} 
-                                            key={eachNote.id} />
-                                        ))}
-                                </ul>
-                            </section>
-                        </div>
-                    </div>
-                </>
+              <>
+                <div className="notes-page-container">
+                  {this.renderModalTop()}
+                  <div className="notes-page-content">
+                    <section className="notes-page-section">
+                      <div className="notes-page-section-empty">
+                        <span>You don't have any notes.</span>
+                      </div>
+                    </section>
+                  </div>
+                </div>
+              </>
             );
-        }
+          } else {
+            return (
+              <>
+                <div className="notes-page-container">
+                  {this.renderModalTop()}
+                  <div className="notes-page-content">
+                    <section className="notes-page-section">
+                      <ul className="notes-page-ul">
+                        {renderNotes.map((eachNote) => (
+                          <NotesItem
+                            handleUpdate={this.handleUpdate}
+                            toggleClass={this.toggleClass}
+                            flipToDelete={this.state.flipToDelete}
+                            noteId={this.state.noteId}
+                            deleteNote={deleteNote}
+                            fetchNote={fetchNote}
+                            eachNote={eachNote}
+                            key={eachNote.id}
+                          />
+                        ))}
+                      </ul>
+                    </section>
+                  </div>
+                </div>
+              </>
+            );
+          }
     }
 }
 
