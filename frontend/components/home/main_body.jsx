@@ -188,9 +188,8 @@ class MainBody extends React.Component {
             //---------- PREVENTS DUPS in esvPassage ----------//
             this.setState({ esvPassage: [] });
             
-            this.splitPassages(passages).forEach(each => {
-                return this.ESVpassageGetter(each.trim())
-            });
+            Promise.all(this.splitPassages(passages)
+                .map(each => this.ESVpassageGetter(each.trim())))
 
             this.setState({
                 id, img, passages, summary, title, gender, book,

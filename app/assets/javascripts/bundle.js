@@ -1245,9 +1245,9 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
         this.setState({
           esvPassage: []
         });
-        this.splitPassages(passages).forEach(function (each) {
+        Promise.all(this.splitPassages(passages).map(function (each) {
           return _this4.ESVpassageGetter(each.trim());
-        });
+        }));
         this.setState({
           id: _id,
           img: img,
