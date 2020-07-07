@@ -36,7 +36,6 @@ class NotesPage extends React.Component {
     // }
 
     componentDidUpdate(prevProps) {
-   
         const { notes, search, defaultSorted, checked } = this.state
 
         //---------- defaultSorted on blank search input ----------//
@@ -153,7 +152,7 @@ class NotesPage extends React.Component {
 
     renderModalTop() {
         const { currentUser, closeModal } = this.props
-        let currentUser_firstName = currentUser.first_name || 'Demo'
+        let currentUser_firstName = currentUser ? currentUser.first_name : 'Demo'
         
         return (
             <div className='notes-modal-top'>
@@ -199,6 +198,10 @@ class NotesPage extends React.Component {
         const { fetchNote, deleteNote } = this.props
         const { notes, search } = this.state
         let renderNotes = notes 
+
+        console.log('RENDER')
+        console.log('this.props.notes', this.props.notes)
+        console.log('this.state.notes', this.state.notes)
 
         if (notes.length < 1 && search.length > 0) {
             return (

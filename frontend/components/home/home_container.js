@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import { closeModal, openModal } from '../../actions/modal_actions';
 import { clearDevoState } from '../../actions/devo_actions'
 import { clearErrors } from '../../actions/session_actions';
+import { clearNoteState } from '../../actions/note_actions';
 import HomePage from './home';
 
 const mapStateToProps = (state) => {
@@ -30,6 +31,7 @@ const mapDispatchToProps = (dispatch) => ({
     openModal: (formType) => dispatch(openModal(formType)),
     clearErrors: () => dispatch(clearErrors()),
     clearDevoState: () => dispatch(clearDevoState()),
+    clearNoteState: () => dispatch(clearNoteState()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

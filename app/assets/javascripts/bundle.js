@@ -856,6 +856,7 @@ var HomePage = /*#__PURE__*/function (_React$Component) {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
       this.props.clearDevoState();
+      this.props.clearNoteState();
       localStorage.removeItem(JSON.stringify(this.props.currentUser.id));
     }
   }, {
@@ -938,7 +939,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
 /* harmony import */ var _actions_devo_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/devo_actions */ "./frontend/actions/devo_actions.js");
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
-/* harmony import */ var _home__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./home */ "./frontend/components/home/home.jsx");
+/* harmony import */ var _actions_note_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/note_actions */ "./frontend/actions/note_actions.js");
+/* harmony import */ var _home__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./home */ "./frontend/components/home/home.jsx");
+
 
 
 
@@ -979,11 +982,14 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     clearDevoState: function clearDevoState() {
       return dispatch(Object(_actions_devo_actions__WEBPACK_IMPORTED_MODULE_2__["clearDevoState"])());
+    },
+    clearNoteState: function clearNoteState() {
+      return dispatch(Object(_actions_note_actions__WEBPACK_IMPORTED_MODULE_4__["clearNoteState"])());
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_home__WEBPACK_IMPORTED_MODULE_4__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_home__WEBPACK_IMPORTED_MODULE_5__["default"]));
 
 /***/ }),
 
@@ -2651,7 +2657,7 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       var _this$props = this.props,
           currentUser = _this$props.currentUser,
           closeModal = _this$props.closeModal;
-      var currentUser_firstName = currentUser.first_name || 'Demo';
+      var currentUser_firstName = currentUser ? currentUser.first_name : 'Demo';
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "notes-modal-top"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2708,6 +2714,9 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
           notes = _this$state2.notes,
           search = _this$state2.search;
       var renderNotes = notes;
+      console.log('RENDER');
+      console.log('this.props.notes', this.props.notes);
+      console.log('this.state.notes', this.state.notes);
 
       if (notes.length < 1 && search.length > 0) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2824,9 +2833,6 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     createNote: function createNote(note) {
       return dispatch(Object(_actions_note_actions__WEBPACK_IMPORTED_MODULE_2__["createNote"])(note));
-    },
-    clearNoteState: function clearNoteState() {
-      return dispatch(Object(_actions_note_actions__WEBPACK_IMPORTED_MODULE_2__["clearNoteState"])());
     }
   };
 };
@@ -3336,11 +3342,6 @@ var NavBar = /*#__PURE__*/function (_React$Component) {
       this.props.openModal('Categories', Object(_home_function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_1__["searchRegexMatch"])(this.state.search.toLowerCase()));
     }
   }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.props.clearNoteState();
-    }
-  }, {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
       this.props.closeModal();
@@ -3442,9 +3443,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
 /* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
 /* harmony import */ var _actions_devo_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/devo_actions */ "./frontend/actions/devo_actions.js");
-/* harmony import */ var _actions_note_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/note_actions */ "./frontend/actions/note_actions.js");
-/* harmony import */ var _navbar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./navbar */ "./frontend/components/nav/navbar.jsx");
-
+/* harmony import */ var _navbar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./navbar */ "./frontend/components/nav/navbar.jsx");
 
 
 
@@ -3482,14 +3481,11 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     clearErrors: function clearErrors() {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["clearErrors"])());
-    },
-    clearNoteState: function clearNoteState() {
-      return dispatch(Object(_actions_note_actions__WEBPACK_IMPORTED_MODULE_4__["clearNoteState"])());
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_navbar__WEBPACK_IMPORTED_MODULE_5__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_navbar__WEBPACK_IMPORTED_MODULE_4__["default"]));
 
 /***/ }),
 
@@ -3713,7 +3709,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
         }).then(function () {
           return _this4.renderSuccessMsg();
         }).then(function () {
-          return _this4.props.clearNoteState();
+          return _this4.props.fetchNotes();
         });
       } else {
         this.props.updateNote(noteUpdate).then(function () {
@@ -3983,9 +3979,6 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     clearErrors: function clearErrors() {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_3__["clearErrors"])());
-    },
-    clearNoteState: function clearNoteState() {
-      return dispatch(Object(_actions_note_actions__WEBPACK_IMPORTED_MODULE_1__["clearNoteState"])());
     }
   };
 };

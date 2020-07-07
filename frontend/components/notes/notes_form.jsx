@@ -132,8 +132,7 @@ class NotesForm extends React.Component {
                     })
                 })
                 .then(() => this.renderSuccessMsg())
-                .then(() => this.props.clearNoteState())
-
+                .then(() => this.props.fetchNotes())
         } else {
             this.props.updateNote(noteUpdate)
                 .then(() => {
