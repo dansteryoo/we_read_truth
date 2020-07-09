@@ -2714,9 +2714,6 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
           notes = _this$state2.notes,
           search = _this$state2.search;
       var renderNotes = notes;
-      console.log('RENDER');
-      console.log('this.props.notes', this.props.notes);
-      console.log('this.state.notes', this.state.notes);
 
       if (notes.length < 1 && search.length > 0) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
