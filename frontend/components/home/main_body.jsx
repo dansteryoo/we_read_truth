@@ -329,7 +329,7 @@ class MainBody extends React.Component {
         let theURL = `https://www.biblegateway.com/audio/mclean/esv/${bookName}.${chapter}`
         let winName = 'Max McLean Audio'
         let winParams = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
-            width=700,height=350,left=100,top=100`;
+            width=330,height=460,left=100,top=100`;
 
         bookName !== undefined
             && window.open(theURL, winName, winParams)

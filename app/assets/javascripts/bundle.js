@@ -1399,7 +1399,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       var bookName = _function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__["maxMcLeanBooks"][_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__["regBibleTitles"].indexOf(book)];
       var theURL = "https://www.biblegateway.com/audio/mclean/esv/".concat(bookName, ".").concat(chapter);
       var winName = 'Max McLean Audio';
-      var winParams = "scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,\n            width=700,height=350,left=100,top=100";
+      var winParams = "scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,\n            width=330,height=460,left=100,top=100";
       bookName !== undefined && window.open(theURL, winName, winParams);
     }
   }, {
