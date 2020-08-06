@@ -1287,7 +1287,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
 
       var newEsvData = esvSortMatch.filter(function (ele, i) {
         if (ele.text === undefined) {
-          console.log("ESV PASSAGE ERROR IN: \n                    index(".concat(i, "), \n                    passage(").concat(JSON.stringify(ele.passage), "), \n                    text(").concat(JSON.stringify(ele.text), ")"));
+          alert("ESV PASSAGE ERROR IN: \n                    index(".concat(i, "), \n                    passage(").concat(JSON.stringify(ele.passage), "), \n                    text(").concat(JSON.stringify(ele.text), ")"));
           return;
         }
 

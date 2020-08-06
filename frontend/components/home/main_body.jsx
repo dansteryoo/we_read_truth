@@ -217,7 +217,7 @@ class MainBody extends React.Component {
         //---------- CATCH undefined ESV API returns ----------//
         let newEsvData = esvSortMatch.filter((ele, i) => {
             if (ele.text === undefined) {
-                console.log(`ESV PASSAGE ERROR IN: 
+                alert(`ESV PASSAGE ERROR IN: 
                     index(${i}), 
                     passage(${JSON.stringify(ele.passage)}), 
                     text(${JSON.stringify(ele.text)})`
