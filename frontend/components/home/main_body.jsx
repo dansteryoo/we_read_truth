@@ -93,7 +93,7 @@ class MainBody extends React.Component {
     }
 
     splitPassages(passages) {
-        if (passages.length < 1) {
+        if (passages.length > 0) {
             return passages
                     .split(", ")
                     .map((ele) => ele.trim());
