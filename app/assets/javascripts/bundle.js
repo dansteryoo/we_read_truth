@@ -1138,7 +1138,11 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "splitPassages",
     value: function splitPassages(passages) {
-      if (passages.length !== 0) return passages.split(', ');
+      if (passages.length < 1) {
+        return passages.split(", ").map(function (ele) {
+          return ele.trim();
+        });
+      }
     }
   }, {
     key: "isMainBodyDevoNull",
