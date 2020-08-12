@@ -19,16 +19,14 @@ class NotesPage extends React.Component {
         this.handleCheck = this.handleCheck.bind(this);
         this.toggleClass = this.toggleClass.bind(this);
         this.renderModalTop = this.renderModalTop.bind(this);
-        this.sortByBook = this.sortByBook.bind(this);
-        this.sortByCreated = this.sortByCreated.bind(this);
-        this.sortByUpdated = this.sortByUpdated.bind(this);
+        this.sortByType = this.sortByType.bind(this);
     }
 
     componentDidMount() {
         this.props.fetchNotes()
         .then(() => this.setState({ 
             notes: this.props.notes,
-            defaultSorted: this.sortByCreated(this.props.notes)
+            defaultSorted: this.sortByType(this.props.notes, 'created_at')
         }))
     }
 
@@ -47,28 +45,14 @@ class NotesPage extends React.Component {
         if (prevProps.notes.length !== this.props.notes.length) {
             return this.setState({
               notes: this.props.notes,
-              defaultSorted: this.sortByCreated(this.props.notes)
+              defaultSorted: this.sortByType(this.props.notes, 'created_at')
             });
         }
     }
 
-    sortByBook(notes) {
+    sortByType(notes, type) {
         let sortedNotes = notes
-            .sort((a, b) => a.category.toLowerCase() < b.category.toLowerCase() ? -1 : 1)
-            .map(ele => ele)
-        return sortedNotes
-    }
-
-    sortByCreated(notes) {
-        let sortedNotes = notes
-            .sort((a, b) => a.created_at.toLowerCase() < b.created_at.toLowerCase() ? -1 : 1)
-            .map(ele => ele)
-        return sortedNotes
-    }
-
-    sortByUpdated(notes) {
-        let sortedNotes = notes
-            .sort((a, b) => a.updated_at.toLowerCase() < b.updated_at.toLowerCase() ? -1 : 1)
+            .sort((a, b) => a[`${type}`].toLowerCase() < b[`${type}`].toLowerCase() ? -1 : 1)
             .map(ele => ele)
         return sortedNotes
     }
@@ -101,18 +85,22 @@ class NotesPage extends React.Component {
         //---------- default byCreated sort on blank checkboxes ----------//
         if (!checkboxBool.includes(true)) {
             return this.setState({
-                notes: this.sortByCreated(notes),
-                checked: false
-            })
+              notes: this.sortByType(notes, 'created_at'),
+              checked: false,
+            });
         } else {
             this.setState({ checked: true })
 
             switch (checkbox) {
                 case 'byBook':
-                    return this.setState({ notes: this.sortByBook(notes) })
+                    return this.setState({ 
+                        notes: this.sortByType(notes, 'category') 
+                    })
 
                 case 'byUpdated':
-                    return this.setState({ notes: this.sortByUpdated(notes) })
+                    return this.setState({
+                      notes: this.sortByType(notes, 'updated_at'),
+                    });
             }
         } 
     }
@@ -141,12 +129,18 @@ class NotesPage extends React.Component {
 
         if (checked) {
             if (checkboxName.includes('byBook')) {
-                return this.setState({ notes: this.sortByBook(sortNotes) })
+                return this.setState({ 
+                    notes: this.sortByType(sortNotes, 'category') 
+                })
             } else {
-                return this.setState({ notes: this.sortByUpdated(sortNotes) })
+                return this.setState({ 
+                    notes: this.sortByType(sortNotes, 'updated_at') 
+                })
             }
         } else {
-            return this.setState({ notes: this.sortByCreated(sortNotes) })
+            return this.setState({ 
+                notes: this.sortByType(sortNotes, 'created_at') 
+            })
         }
     }
 

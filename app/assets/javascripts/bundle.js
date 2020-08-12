@@ -2488,9 +2488,7 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
     _this.handleCheck = _this.handleCheck.bind(_assertThisInitialized(_this));
     _this.toggleClass = _this.toggleClass.bind(_assertThisInitialized(_this));
     _this.renderModalTop = _this.renderModalTop.bind(_assertThisInitialized(_this));
-    _this.sortByBook = _this.sortByBook.bind(_assertThisInitialized(_this));
-    _this.sortByCreated = _this.sortByCreated.bind(_assertThisInitialized(_this));
-    _this.sortByUpdated = _this.sortByUpdated.bind(_assertThisInitialized(_this));
+    _this.sortByType = _this.sortByType.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -2502,7 +2500,7 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       this.props.fetchNotes().then(function () {
         return _this2.setState({
           notes: _this2.props.notes,
-          defaultSorted: _this2.sortByCreated(_this2.props.notes)
+          defaultSorted: _this2.sortByType(_this2.props.notes, 'created_at')
         });
       });
     } // componentWillUnmount() {
@@ -2526,35 +2524,15 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       if (prevProps.notes.length !== this.props.notes.length) {
         return this.setState({
           notes: this.props.notes,
-          defaultSorted: this.sortByCreated(this.props.notes)
+          defaultSorted: this.sortByType(this.props.notes, 'created_at')
         });
       }
     }
   }, {
-    key: "sortByBook",
-    value: function sortByBook(notes) {
+    key: "sortByType",
+    value: function sortByType(notes, type) {
       var sortedNotes = notes.sort(function (a, b) {
-        return a.category.toLowerCase() < b.category.toLowerCase() ? -1 : 1;
-      }).map(function (ele) {
-        return ele;
-      });
-      return sortedNotes;
-    }
-  }, {
-    key: "sortByCreated",
-    value: function sortByCreated(notes) {
-      var sortedNotes = notes.sort(function (a, b) {
-        return a.created_at.toLowerCase() < b.created_at.toLowerCase() ? -1 : 1;
-      }).map(function (ele) {
-        return ele;
-      });
-      return sortedNotes;
-    }
-  }, {
-    key: "sortByUpdated",
-    value: function sortByUpdated(notes) {
-      var sortedNotes = notes.sort(function (a, b) {
-        return a.updated_at.toLowerCase() < b.updated_at.toLowerCase() ? -1 : 1;
+        return a["".concat(type)].toLowerCase() < b["".concat(type)].toLowerCase() ? -1 : 1;
       }).map(function (ele) {
         return ele;
       });
@@ -2599,7 +2577,7 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
 
       if (!checkboxBool.includes(true)) {
         return this.setState({
-          notes: this.sortByCreated(notes),
+          notes: this.sortByType(notes, 'created_at'),
           checked: false
         });
       } else {
@@ -2610,12 +2588,12 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
         switch (checkbox) {
           case 'byBook':
             return this.setState({
-              notes: this.sortByBook(notes)
+              notes: this.sortByType(notes, 'category')
             });
 
           case 'byUpdated':
             return this.setState({
-              notes: this.sortByUpdated(notes)
+              notes: this.sortByType(notes, 'updated_at')
             });
         }
       }
@@ -2642,16 +2620,16 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       if (checked) {
         if (checkboxName.includes('byBook')) {
           return this.setState({
-            notes: this.sortByBook(sortNotes)
+            notes: this.sortByType(sortNotes, 'category')
           });
         } else {
           return this.setState({
-            notes: this.sortByUpdated(sortNotes)
+            notes: this.sortByType(sortNotes, 'updated_at')
           });
         }
       } else {
         return this.setState({
-          notes: this.sortByCreated(sortNotes)
+          notes: this.sortByType(sortNotes, 'created_at')
         });
       }
     }
