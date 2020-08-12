@@ -45,10 +45,10 @@ class NotesPage extends React.Component {
         } 
 
         if (prevProps.notes.length !== this.props.notes.length) {
-            return this.setState({ 
-                notes: this.props.notes, 
-                defaultSorted: this.props.notes
-            })
+            return this.setState({
+              notes: this.props.notes,
+              defaultSorted: this.sortByCreated(this.props.notes)
+            });
         }
     }
 
