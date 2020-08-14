@@ -2437,7 +2437,9 @@ var Pagination = function Pagination(_ref) {
   var notesPerPage = _ref.notesPerPage,
       totalNotes = _ref.totalNotes,
       paginate = _ref.paginate,
-      currentPage = _ref.currentPage;
+      currentPage = _ref.currentPage,
+      nextPage = _ref.nextPage,
+      prevPage = _ref.prevPage;
   var pageNumbers = [];
 
   for (var i = 1; i <= Math.ceil(totalNotes / notesPerPage); i++) {
@@ -2448,7 +2450,14 @@ var Pagination = function Pagination(_ref) {
     className: "pagination-nav"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
     className: "pagination"
-  }, pageNumbers.map(function (number) {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+    className: "page-item"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    className: "page-link",
+    onClick: function onClick() {
+      return prevPage();
+    }
+  }, "Prev")), pageNumbers.map(function (number) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
       key: number,
       className: "page-item"
@@ -2456,9 +2465,16 @@ var Pagination = function Pagination(_ref) {
       onClick: function onClick() {
         return paginate(number);
       },
-      className: number === currentPage ? 'active-link' : ''
+      className: number === currentPage ? "active-link" : ""
     }, number));
-  })));
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+    className: "page-item"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    className: "page-link",
+    onClick: function onClick() {
+      return nextPage();
+    }
+  }, "Next"))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Pagination);
@@ -2526,7 +2542,7 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       defaultSorted: [],
       checked: false,
       currentPage: 1,
-      notesPerPage: 40
+      notesPerPage: 1
     };
     _this.handleUpdate = _this.handleUpdate.bind(_assertThisInitialized(_this));
     _this.handleSearch = _this.handleSearch.bind(_assertThisInitialized(_this));
@@ -2689,11 +2705,25 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       var _this$state2 = this.state,
           notes = _this$state2.notes,
           notesPerPage = _this$state2.notesPerPage,
-          currentPage = _this$state2.currentPage; // Change page
+          currentPage = _this$state2.currentPage;
+      var totalNotes = notes.length;
+      var maxPage = Math.ceil(totalNotes / notesPerPage); // Change page
 
       var paginate = function paginate(pageNumber) {
-        _this5.setState({
+        return _this5.setState({
           currentPage: pageNumber
+        });
+      };
+
+      var nextPage = function nextPage() {
+        currentPage < maxPage && _this5.setState({
+          currentPage: currentPage + 1
+        });
+      };
+
+      var prevPage = function prevPage() {
+        currentPage > 1 && _this5.setState({
+          currentPage: currentPage - 1
         });
       };
 
@@ -2735,9 +2765,11 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
         className: "checkmark"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_notes_pagination__WEBPACK_IMPORTED_MODULE_2__["default"], {
         notesPerPage: notesPerPage,
-        totalNotes: notes.length,
+        totalNotes: totalNotes,
         paginate: paginate,
-        currentPage: currentPage
+        currentPage: currentPage,
+        nextPage: nextPage,
+        prevPage: prevPage
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-closing-x",
         onClick: function onClick() {

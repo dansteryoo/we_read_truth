@@ -14,7 +14,7 @@ class NotesPage extends React.Component {
             defaultSorted: [],
             checked: false,
             currentPage: 1, 
-            notesPerPage: 40
+            notesPerPage: 1
         }
 
         this.handleUpdate = this.handleUpdate.bind(this);
@@ -150,13 +150,22 @@ class NotesPage extends React.Component {
     renderModalTop() {
         const { currentUser, closeModal } = this.props;
         const { notes, notesPerPage, currentPage } = this.state; 
+        const totalNotes = notes.length; 
+        const maxPage = Math.ceil(totalNotes / notesPerPage);
 
         // Change page
-        const paginate = (pageNumber) => {
-            this.setState({
-                currentPage: pageNumber
-            })
-        };
+        const paginate = (pageNumber) => 
+            this.setState({ currentPage: pageNumber });
+
+        const nextPage = () => {
+            currentPage < maxPage 
+            && this.setState({ currentPage: currentPage + 1 })
+        }
+    
+        const prevPage = () => {
+            currentPage > 1
+            && this.setState({ currentPage: currentPage - 1 })
+        }
 
         let currentUser_firstName = currentUser ? currentUser.first_name : 'Demo'
         
@@ -203,9 +212,11 @@ class NotesPage extends React.Component {
 
               <Pagination
                 notesPerPage={notesPerPage}
-                totalNotes={notes.length}
+                totalNotes={totalNotes}
                 paginate={paginate}
                 currentPage={currentPage}
+                nextPage={nextPage}
+                prevPage={prevPage}
               />
             </div>
 
