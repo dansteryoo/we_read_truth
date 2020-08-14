@@ -14,7 +14,7 @@ class NotesPage extends React.Component {
             defaultSorted: [],
             checked: false,
             currentPage: 1, 
-            notesPerPage: 1
+            notesPerPage: 40
         }
 
         this.handleUpdate = this.handleUpdate.bind(this);
