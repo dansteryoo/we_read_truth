@@ -1,5 +1,6 @@
 import React from 'react';
 import NotesItem from './notes_item'
+import Pagination from './notes_pagination'
 import { searchRegexMatch } from '../home/function_helpers/helper_funcs'
 
 class NotesPage extends React.Component {
@@ -11,7 +12,9 @@ class NotesPage extends React.Component {
             search: '',
             notes: [],
             defaultSorted: [],
-            checked: false
+            checked: false,
+            currentPage: 1, 
+            notesPerPage: 40
         }
 
         this.handleUpdate = this.handleUpdate.bind(this);
@@ -145,114 +148,148 @@ class NotesPage extends React.Component {
     }
 
     renderModalTop() {
-        const { currentUser, closeModal } = this.props
+        const { currentUser, closeModal } = this.props;
+        const { notes, notesPerPage, currentPage } = this.state; 
+
+        // Change page
+        const paginate = (pageNumber) => {
+            this.setState({
+                currentPage: pageNumber
+            })
+        };
+
         let currentUser_firstName = currentUser ? currentUser.first_name : 'Demo'
         
         return (
-            <div className='notes-modal-top'>
-                <div className='notes-page-username'>
-                    <span>{currentUser_firstName}'s Notes</span>
-                </div>
-                <div className='notes-search'>
-                    <form onSubmit={this.handleSearch} className='notes-bar-search-form'>
-                        <input
-                            className='notes-search-input'
-                            type='text'
-                            placeholder='Search..'
-                            value={this.state.search}
-                            onChange={this.handleChange('search')}
-                        />
-                    </form>
-                </div>
-                <div className='checkbox-container'>
-                    <label className="container">By Book
-                        <input type="checkbox" name='checkbox' value='byBook'
-                            onChange={this.handleCheck}
-                            />
-                        <span className="checkmark"></span>
-                    </label>
-                    <label className="container">By Updated
-                        <input type="checkbox" name='checkbox' value='byUpdated'
-                            onChange={this.handleCheck}
-                            />
-                        <span className="checkmark"></span>
-                    </label>
-                </div>
-                <div className='form-closing-x' onClick={() => closeModal()}>
-                    &#10005;
-                </div>
-                <div className='form-or-separator-notes'>
-                    <hr />
-                </div>
+          <div className="notes-modal-top">
+            <div className="notes-page-username">
+              <span>{currentUser_firstName}'s Notes</span>
             </div>
-        )
+            <div className="notes-search">
+              <form
+                onSubmit={this.handleSearch}
+                className="notes-bar-search-form"
+              >
+                <input
+                  className="notes-search-input"
+                  type="text"
+                  placeholder="Search.."
+                  value={this.state.search}
+                  onChange={this.handleChange("search")}
+                />
+              </form>
+            </div>
+            <div className="checkbox-container">
+              <label className="container">
+                By Book
+                <input
+                  type="checkbox"
+                  name="checkbox"
+                  value="byBook"
+                  onChange={this.handleCheck}
+                />
+                <span className="checkmark"></span>
+              </label>
+              <label className="container">
+                By Updated
+                <input
+                  type="checkbox"
+                  name="checkbox"
+                  value="byUpdated"
+                  onChange={this.handleCheck}
+                />
+                <span className="checkmark"></span>
+              </label>
+
+              <Pagination
+                notesPerPage={notesPerPage}
+                totalNotes={notes.length}
+                paginate={paginate}
+                currentPage={currentPage}
+              />
+            </div>
+
+            <div className="form-closing-x" onClick={() => closeModal()}>
+              &#10005;
+            </div>
+            <div className="form-or-separator-notes">
+              <hr />
+            </div>
+          </div>
+        );
     }
 
     render() {
-        const { fetchNote, deleteNote } = this.props
-        const { notes, search } = this.state
-        let renderNotes = notes 
+            const { fetchNote, deleteNote } = this.props;
+            const { notes, search, currentPage, notesPerPage } = this.state;
 
-        if (notes.length < 1 && search.length > 0) {
-            return (
-                <>
-                    <div className='notes-page-container'>
-                        {
-                            this.renderModalTop()
-                        }
-                        <div className='notes-page-content'>
-                            <section className='notes-page-section'>
-                                <div className='notes-page-section-empty'>
-                                    <span>No notes matching your search.</span>
-                                </div>
-                            </section>
-                        </div>
-                    </div>
-                </>
-            )
-        } if (this.props.notes.length < 1) {
-            return (
-              <>
-                <div className="notes-page-container">
-                  {this.renderModalTop()}
-                  <div className="notes-page-content">
-                    <section className="notes-page-section">
-                      <div className="notes-page-section-empty">
-                        <span>You don't have any notes.</span>
-                      </div>
-                    </section>
-                  </div>
-                </div>
-              </>
+            // Get current notes
+            const indexOfLastNote = currentPage * notesPerPage;
+            const indexOfFirstNote = indexOfLastNote - notesPerPage;
+            const currentNotes = notes.slice(
+              indexOfFirstNote,
+              indexOfLastNote
             );
-          } else {
-            return (
-              <>
-                <div className="notes-page-container">
-                  {this.renderModalTop()}
-                  <div className="notes-page-content">
-                    <section className="notes-page-section">
-                      <ul className="notes-page-ul">
-                        {renderNotes.map((eachNote) => (
-                          <NotesItem
-                            handleUpdate={this.handleUpdate}
-                            toggleClass={this.toggleClass}
-                            flipToDelete={this.state.flipToDelete}
-                            noteId={this.state.noteId}
-                            deleteNote={deleteNote}
-                            fetchNote={fetchNote}
-                            eachNote={eachNote}
-                            key={eachNote.id}
-                          />
-                        ))}
-                      </ul>
-                    </section>
-                  </div>
-                </div>
-              </>
-            );
-          }
-    }
+
+               if (notes.length < 1 && search.length > 0) {
+                 return (
+                   <>
+                     <div className="notes-page-container">
+                       {this.renderModalTop()}
+                       <div className="notes-page-content">
+                         <section className="notes-page-section">
+                           <div className="notes-page-section-empty">
+                             <span>No notes matching your search.</span>
+                           </div>
+                         </section>
+                       </div>
+                     </div>
+                   </>
+                 );
+               }
+               if (this.props.notes.length < 1) {
+                 return (
+                   <>
+                     <div className="notes-page-container">
+                       {this.renderModalTop()}
+                       <div className="notes-page-content">
+                         <section className="notes-page-section">
+                           <div className="notes-page-section-empty">
+                             <span>You don't have any notes.</span>
+                           </div>
+                         </section>
+                       </div>
+                     </div>
+                   </>
+                 );
+               } else {
+                 return (
+                   <>
+                     <div className="notes-page-container">
+                       {this.renderModalTop()}
+                       <div className="notes-page-content">
+                         <section className="notes-page-section">
+                           <ul className="notes-page-ul">
+                             {currentNotes.map((eachNote) => (
+                               <NotesItem
+                                 handleUpdate={this.handleUpdate}
+                                 toggleClass={this.toggleClass}
+                                 flipToDelete={this.state.flipToDelete}
+                                 noteId={this.state.noteId}
+                                 deleteNote={deleteNote}
+                                 fetchNote={fetchNote}
+                                 eachNote={eachNote}
+                                 key={eachNote.id}
+                               />
+                             ))}
+                           </ul>
+                         </section>
+                       </div>
+                     </div>
+                   </>
+                 );
+               }
+             }
 }
 
 export default NotesPage;

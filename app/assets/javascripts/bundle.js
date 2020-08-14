@@ -527,10 +527,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "themeBooks", function() { return themeBooks; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "themeBookFormat", function() { return themeBookFormat; });
 /* 
-<<<<<<< HEAD:frontend/components/home/bookTitles.js
-=======
-
->>>>>>> dev:frontend/components/home/function_helpers/bookTitles.js
 chapterDict['Gen'] = 50;
 chapterDict['Exod'] = 40;
 chapterDict['Lev'] = 27;
@@ -2424,6 +2420,51 @@ var NotesItem = function NotesItem(_ref) {
 
 /***/ }),
 
+/***/ "./frontend/components/modal_pages/notes_pagination.jsx":
+/*!**************************************************************!*\
+  !*** ./frontend/components/modal_pages/notes_pagination.jsx ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var Pagination = function Pagination(_ref) {
+  var notesPerPage = _ref.notesPerPage,
+      totalNotes = _ref.totalNotes,
+      paginate = _ref.paginate,
+      currentPage = _ref.currentPage;
+  var pageNumbers = [];
+
+  for (var i = 1; i <= Math.ceil(totalNotes / notesPerPage); i++) {
+    pageNumbers.push(i);
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
+    className: "pagination-nav"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+    className: "pagination"
+  }, pageNumbers.map(function (number) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      key: number,
+      className: "page-item"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      onClick: function onClick() {
+        return paginate(number);
+      },
+      className: number === currentPage ? 'active-link' : ''
+    }, number));
+  })));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Pagination);
+
+/***/ }),
+
 /***/ "./frontend/components/modal_pages/notespage.jsx":
 /*!*******************************************************!*\
   !*** ./frontend/components/modal_pages/notespage.jsx ***!
@@ -2436,7 +2477,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _notes_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./notes_item */ "./frontend/components/modal_pages/notes_item.jsx");
-/* harmony import */ var _home_function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../home/function_helpers/helper_funcs */ "./frontend/components/home/function_helpers/helper_funcs.js");
+/* harmony import */ var _notes_pagination__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./notes_pagination */ "./frontend/components/modal_pages/notes_pagination.jsx");
+/* harmony import */ var _home_function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../home/function_helpers/helper_funcs */ "./frontend/components/home/function_helpers/helper_funcs.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -2465,6 +2507,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var NotesPage = /*#__PURE__*/function (_React$Component) {
   _inherits(NotesPage, _React$Component);
 
@@ -2481,7 +2524,9 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       search: '',
       notes: [],
       defaultSorted: [],
-      checked: false
+      checked: false,
+      currentPage: 1,
+      notesPerPage: 40
     };
     _this.handleUpdate = _this.handleUpdate.bind(_assertThisInitialized(_this));
     _this.handleSearch = _this.handleSearch.bind(_assertThisInitialized(_this));
@@ -2603,7 +2648,7 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
     value: function handleSearch(e) {
       e.preventDefault(); //---------- helper_func ----------//
 
-      var searchData = Object(_home_function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_2__["searchRegexMatch"])(this.state.search.toLowerCase());
+      var searchData = Object(_home_function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_3__["searchRegexMatch"])(this.state.search.toLowerCase());
       var sortNotes = this.props.notes.filter(function (each) {
         var sortTitles = each.title.toLowerCase().match(searchData);
         var sortBody = each.body.toLowerCase().match(searchData);
@@ -2636,9 +2681,22 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderModalTop",
     value: function renderModalTop() {
+      var _this5 = this;
+
       var _this$props = this.props,
           currentUser = _this$props.currentUser,
           closeModal = _this$props.closeModal;
+      var _this$state2 = this.state,
+          notes = _this$state2.notes,
+          notesPerPage = _this$state2.notesPerPage,
+          currentPage = _this$state2.currentPage; // Change page
+
+      var paginate = function paginate(pageNumber) {
+        _this5.setState({
+          currentPage: pageNumber
+        });
+      };
+
       var currentUser_firstName = currentUser ? currentUser.first_name : 'Demo';
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "notes-modal-top"
@@ -2654,7 +2712,7 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
         type: "text",
         placeholder: "Search..",
         value: this.state.search,
-        onChange: this.handleChange('search')
+        onChange: this.handleChange("search")
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "checkbox-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
@@ -2675,7 +2733,12 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
         onChange: this.handleCheck
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "checkmark"
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_notes_pagination__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        notesPerPage: notesPerPage,
+        totalNotes: notes.length,
+        paginate: paginate,
+        currentPage: currentPage
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-closing-x",
         onClick: function onClick() {
           return closeModal();
@@ -2687,15 +2750,20 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this5 = this;
+      var _this6 = this;
 
       var _this$props2 = this.props,
           fetchNote = _this$props2.fetchNote,
           deleteNote = _this$props2.deleteNote;
-      var _this$state2 = this.state,
-          notes = _this$state2.notes,
-          search = _this$state2.search;
-      var renderNotes = notes;
+      var _this$state3 = this.state,
+          notes = _this$state3.notes,
+          search = _this$state3.search,
+          currentPage = _this$state3.currentPage,
+          notesPerPage = _this$state3.notesPerPage; // Get current notes
+
+      var indexOfLastNote = currentPage * notesPerPage;
+      var indexOfFirstNote = indexOfLastNote - notesPerPage;
+      var currentNotes = notes.slice(indexOfFirstNote, indexOfLastNote);
 
       if (notes.length < 1 && search.length > 0) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2728,12 +2796,12 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
           className: "notes-page-section"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           className: "notes-page-ul"
-        }, renderNotes.map(function (eachNote) {
+        }, currentNotes.map(function (eachNote) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_notes_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
-            handleUpdate: _this5.handleUpdate,
-            toggleClass: _this5.toggleClass,
-            flipToDelete: _this5.state.flipToDelete,
-            noteId: _this5.state.noteId,
+            handleUpdate: _this6.handleUpdate,
+            toggleClass: _this6.toggleClass,
+            flipToDelete: _this6.state.flipToDelete,
+            noteId: _this6.state.noteId,
             deleteNote: deleteNote,
             fetchNote: fetchNote,
             eachNote: eachNote,
