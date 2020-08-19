@@ -2431,50 +2431,138 @@ var NotesItem = function NotesItem(_ref) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 
 
 var Pagination = function Pagination(_ref) {
-  var notesPerPage = _ref.notesPerPage,
-      totalNotes = _ref.totalNotes,
-      paginate = _ref.paginate,
+  var paginate = _ref.paginate,
       currentPage = _ref.currentPage,
       nextPage = _ref.nextPage,
-      prevPage = _ref.prevPage;
-  var pageNumbers = [];
+      prevPage = _ref.prevPage,
+      maxPage = _ref.maxPage;
+  var totalBlocks = 7;
+  var LEFT_PAGE = 'LEFT';
+  var RIGHT_PAGE = 'RIGHT';
 
-  for (var i = 1; i <= Math.ceil(totalNotes / notesPerPage); i++) {
-    pageNumbers.push(i);
+  var range = function range(from, to) {
+    var step = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+    var i = from;
+    var range = [];
+
+    while (i <= to) {
+      range.push(i);
+      i += step;
+    }
+
+    return range;
+  };
+
+  var fetchPageNumbers = function fetchPageNumbers() {
+    if (maxPage > totalBlocks) {
+      var startPage = Math.max(2, currentPage - 1);
+      var endPage = Math.min(maxPage - 1, currentPage + 1);
+      var pages = range(startPage, endPage);
+      var hasLeftSpill = startPage > 2;
+      var hasRightSpill = maxPage - endPage > 1;
+      var spillOffset = totalBlocks - (pages.length + 1);
+
+      switch (true) {
+        // handle: (1) < {5 6} [7] {8 9} (10)
+        case hasLeftSpill && !hasRightSpill:
+          {
+            var extraPages = range(startPage - spillOffset, startPage - 1);
+            pages = [LEFT_PAGE].concat(_toConsumableArray(extraPages), _toConsumableArray(pages));
+            break;
+          }
+        // handle: (1) {2 3} [4] {5 6} > (10)
+
+        case !hasLeftSpill && hasRightSpill:
+          {
+            var _extraPages = range(endPage + 1, endPage + spillOffset);
+
+            pages = [].concat(_toConsumableArray(pages), _toConsumableArray(_extraPages), [RIGHT_PAGE]);
+            break;
+          }
+        // handle: (1) < {4 5} [6] {7 8} > (10)
+
+        case hasLeftSpill && hasRightSpill:
+        default:
+          {
+            pages = [LEFT_PAGE].concat(_toConsumableArray(pages), [RIGHT_PAGE]);
+            break;
+          }
+      }
+
+      return [1].concat(_toConsumableArray(pages), [maxPage]);
+    }
+
+    return range(1, maxPage);
+  };
+
+  var pageNumbers = fetchPageNumbers();
+
+  if (maxPage < 2) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
+      className: "pagination-nav"
+    });
+  } else {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
+      className: "pagination-nav"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      className: "pagination"
+    }, pageNumbers.map(function (page, index) {
+      if (page === LEFT_PAGE) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        key: index,
+        className: "page-item"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        className: "page-link",
+        "aria-label": "Previous",
+        onClick: function onClick() {
+          return prevPage();
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        "aria-hidden": "true"
+      }, "\xAB"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "sr-only"
+      }, "Previous")));
+      if (page === RIGHT_PAGE) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        key: index,
+        className: "page-item"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        className: "page-link",
+        "aria-label": "Next",
+        onClick: function onClick() {
+          return nextPage();
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        "aria-hidden": "true"
+      }, "\xBB"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "sr-only"
+      }, "Next")));
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        key: index,
+        className: "page-item"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        onClick: function onClick() {
+          return paginate(page);
+        },
+        className: page === currentPage ? "active-link" : ""
+      }, page));
+    }))));
   }
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
-    className: "pagination-nav"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-    className: "pagination"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-    className: "page-item"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-    className: "page-link",
-    onClick: function onClick() {
-      return prevPage();
-    }
-  }, "Prev")), pageNumbers.map(function (number) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-      key: number,
-      className: "page-item"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      onClick: function onClick() {
-        return paginate(number);
-      },
-      className: number === currentPage ? "active-link" : ""
-    }, number));
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-    className: "page-item"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-    className: "page-link",
-    onClick: function onClick() {
-      return nextPage();
-    }
-  }, "Next"))));
+  ;
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Pagination);
@@ -2764,12 +2852,11 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "checkmark"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_notes_pagination__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        notesPerPage: notesPerPage,
-        totalNotes: totalNotes,
         paginate: paginate,
         currentPage: currentPage,
         nextPage: nextPage,
-        prevPage: prevPage
+        prevPage: prevPage,
+        maxPage: maxPage
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-closing-x",
         onClick: function onClick() {

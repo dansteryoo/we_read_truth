@@ -211,12 +211,11 @@ class NotesPage extends React.Component {
               </label>
 
               <Pagination
-                notesPerPage={notesPerPage}
-                totalNotes={totalNotes}
                 paginate={paginate}
                 currentPage={currentPage}
                 nextPage={nextPage}
                 prevPage={prevPage}
+                maxPage={maxPage}
               />
             </div>
 

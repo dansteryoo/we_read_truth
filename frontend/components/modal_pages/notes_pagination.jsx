@@ -1,46 +1,121 @@
 import React from 'react';
 
 const Pagination = ({
-  notesPerPage,
-  totalNotes,
   paginate,
   currentPage,
   nextPage,
   prevPage,
+  maxPage
 }) => {
 
-  const pageNumbers = [];
+  const totalBlocks = 7;
+  const LEFT_PAGE = 'LEFT';
+  const RIGHT_PAGE = 'RIGHT';
 
-  for (let i = 1; i <= Math.ceil(totalNotes / notesPerPage); i++) {
-    pageNumbers.push(i);
-  }
+  const range = (from, to, step = 1) => {
+    let i = from;
+    const range = [];
 
-  return (
-    <nav className="pagination-nav">
-      <ul className="pagination">
-        <li className="page-item">
-          <a className="page-link" onClick={() => prevPage()}>
-            Prev
-          </a>
-        </li>
-        {pageNumbers.map((number) => (
-          <li key={number} className="page-item">
-            <a
-              onClick={() => paginate(number)}
-              className={number === currentPage ? "active-link" : ""}
-            >
-              {number}
-            </a>
-          </li>
-        ))}
-        <li className="page-item">
-          <a className="page-link" onClick={() => nextPage()}>
-            Next
-          </a>
-        </li>
-      </ul>
-    </nav>
-  );
+    while (i <= to) {
+      range.push(i);
+      i += step;
+    }
+
+    return range;
+  };
+
+  const fetchPageNumbers = () => {
+  if (maxPage > totalBlocks) {
+    const startPage = Math.max(2, currentPage - 1);
+    const endPage = Math.min(maxPage - 1, currentPage + 1);
+
+    let pages = range(startPage, endPage);
+
+    const hasLeftSpill = startPage > 2;
+    const hasRightSpill = maxPage - endPage > 1;
+    const spillOffset = totalBlocks - (pages.length + 1);
+
+    switch (true) {
+        // handle: (1) < {5 6} [7] {8 9} (10)
+        case (hasLeftSpill && !hasRightSpill): {
+          const extraPages = range(startPage - spillOffset, startPage - 1);
+          pages = [LEFT_PAGE, ...extraPages, ...pages];
+          break;
+        }
+
+        // handle: (1) {2 3} [4] {5 6} > (10)
+        case (!hasLeftSpill && hasRightSpill): {
+          const extraPages = range(endPage + 1, endPage + spillOffset);
+          pages = [...pages, ...extraPages, RIGHT_PAGE];
+          break;
+        }
+
+        // handle: (1) < {4 5} [6] {7 8} > (10)
+        case (hasLeftSpill && hasRightSpill):
+        default: {
+          pages = [LEFT_PAGE, ...pages, RIGHT_PAGE];
+          break;
+        }
+      }
+      return [1, ...pages, maxPage];
+    }
+    return range(1, maxPage);
+    }
+    
+  const pageNumbers = fetchPageNumbers()
+
+  if (maxPage < 2) {
+    return <nav className="pagination-nav"></nav>;
+  } else {
+        return (
+          <>
+            <nav className="pagination-nav">
+              <ul className="pagination">
+                {pageNumbers.map((page, index) => {
+                  if (page === LEFT_PAGE)
+                    return (
+                      <li key={index} className="page-item">
+                        <a
+                          className="page-link"
+                          aria-label="Previous"
+                          onClick={() => prevPage()}
+                        >
+                          <span aria-hidden="true">&laquo;</span>
+                          <span className="sr-only">Previous</span>
+                        </a>
+                      </li>
+                    );
+
+                  if (page === RIGHT_PAGE)
+                    return (
+                      <li key={index} className="page-item">
+                        <a
+                          className="page-link"
+                          aria-label="Next"
+                          onClick={() => nextPage()}
+                        >
+                          <span aria-hidden="true">&raquo;</span>
+                          <span className="sr-only">Next</span>
+                        </a>
+                      </li>
+                    );
+
+                  return (
+                    <li key={index} className="page-item">
+                      <a
+                      onClick={() => paginate(page)}
+                      className={page === currentPage ? "active-link" : ""}
+                      >
+                      {page}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+          </>
+        );
+  };
 };
 
 export default Pagination;
