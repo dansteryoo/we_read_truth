@@ -2451,7 +2451,7 @@ var Pagination = function Pagination(_ref) {
       nextPage = _ref.nextPage,
       prevPage = _ref.prevPage,
       maxPage = _ref.maxPage;
-  var totalBlocks = 7;
+  var totalBlocks = 5;
   var LEFT_PAGE = 'LEFT';
   var RIGHT_PAGE = 'RIGHT';
 
@@ -2533,9 +2533,7 @@ var Pagination = function Pagination(_ref) {
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         "aria-hidden": "true"
-      }, "\xAB"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "sr-only"
-      }, "Previous")));
+      }, "\xAB")));
       if (page === RIGHT_PAGE) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         key: index,
         className: "page-item"
@@ -2547,9 +2545,7 @@ var Pagination = function Pagination(_ref) {
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         "aria-hidden": "true"
-      }, "\xBB"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "sr-only"
-      }, "Next")));
+      }, "\xBB")));
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         key: index,
         className: "page-item"

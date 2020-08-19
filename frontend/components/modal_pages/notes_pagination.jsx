@@ -8,7 +8,7 @@ const Pagination = ({
   maxPage
 }) => {
 
-  const totalBlocks = 7;
+  const totalBlocks = 5;
   const LEFT_PAGE = 'LEFT';
   const RIGHT_PAGE = 'RIGHT';
 
@@ -81,7 +81,6 @@ const Pagination = ({
                           onClick={() => prevPage()}
                         >
                           <span aria-hidden="true">&laquo;</span>
-                          <span className="sr-only">Previous</span>
                         </a>
                       </li>
                     );
@@ -95,7 +94,6 @@ const Pagination = ({
                           onClick={() => nextPage()}
                         >
                           <span aria-hidden="true">&raquo;</span>
-                          <span className="sr-only">Next</span>
                         </a>
                       </li>
                     );
