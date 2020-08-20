@@ -13,6 +13,17 @@
     <%= javascript_include_tag 'application' %>
     <%= favicon_link_tag image_url('wrt_logo_white.png') %>
 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-175882692-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-175882692-1');
+    </script>
+
+
     <script type="text/javascript" src="http://l2.io/ip.js?var=session_id"></script>
     <script>
       (function (i, s, o, g, r, a, m) {
@@ -24,7 +35,9 @@
 
     ga('create', 'UA-175882692-1', 'auto');
       ga('set', 'dimension1', session_id);  
-      ga('send', 'pageview')
+      ga('send', 'pageview', {
+        'dimension1': session_id
+      });
     </script>
 
    <script type="text/javascript">
