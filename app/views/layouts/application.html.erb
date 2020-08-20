@@ -34,10 +34,9 @@
       })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
     ga('create', 'UA-175882692-1', 'auto');
-      ga('set', 'dimension1', session_id);  
-      ga('send', 'pageview', {
-        'dimension1': session_id
-      });
+    ga('require','displayfeatures');
+    ga('set', 'dimension1', session_id);
+    ga('send', 'pageview');
     </script>
 
    <script type="text/javascript">
