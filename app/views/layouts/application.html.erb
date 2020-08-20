@@ -13,6 +13,18 @@
     <%= javascript_include_tag 'application' %>
     <%= favicon_link_tag image_url('wrt_logo_white.png') %>
 
+    <script type="text/javascript" src="http://l2.io/ip.js?var=session_id"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-175882692-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-175882692-1',  {
+      'session_id' : 'session_id'
+    });
+    </script>
+
 
    <script type="text/javascript">
     window.esv_one = "<%= Rails.application.credentials.esv[:api_one] %>"
