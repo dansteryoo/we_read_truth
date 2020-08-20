@@ -27,16 +27,6 @@
     ga('set', 'dimension1', session_id);  
     </script>
 
-    <%# <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script src="https://www.googletagmanager.com/gtag/js?id=UA-175882692-1"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-175882692-1');
-    </script> %>
-
 
    <script type="text/javascript">
     window.esv_one = "<%= Rails.application.credentials.esv[:api_one] %>"
