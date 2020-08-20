@@ -42,11 +42,10 @@
               })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
       ga('create', 'UA-175882692-1', 'auto');
-      ga('require', 'displayfeatures');
       ga('set', 'dimension1', session_id);
       ga('send', 'pageview');
     </script>
-    
+
    <script type="text/javascript">
     window.esv_one = "<%= Rails.application.credentials.esv[:api_one] %>"
     window.esv_two = "<%= Rails.application.credentials.esv[:api_two] %>"
