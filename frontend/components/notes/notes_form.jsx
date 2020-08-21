@@ -121,33 +121,33 @@ class NotesForm extends React.Component {
             this.props.createNote(note)
                 .then(() => {
                     this.setState({
-                        success: true,
-                        title: '',
-                        category: '',
-                        day: '',
-                        body: '',
-                        id: '',
-                        updateForm: false,
-                        updateErrors: [],
-                    })
+                      success: true,
+                      title: "",
+                      category: "",
+                      day: "",
+                      body: "",
+                      id: "",
+                      updateForm: false,
+                      updateErrors: [],
+                    }),
+                    this.renderSuccessMsg();
                 })
-                .then(() => this.renderSuccessMsg())
                 .then(() => this.props.fetchNotes())
         } else {
             this.props.updateNote(noteUpdate)
                 .then(() => {
                     this.setState({
-                        update: true,
-                        title: '',
-                        category: '',
-                        day: '',
-                        body: '',
-                        id: '',
-                        updateForm: false,
-                        updateErrors: [],
-                    })
+                      update: true,
+                      title: "",
+                      category: "",
+                      day: "",
+                      body: "",
+                      id: "",
+                      updateForm: false,
+                      updateErrors: [],
+                    }),
+                    this.renderUpdateMsg();
                 })
-                .then(() => this.renderUpdateMsg())
                 .then(() => this.props.fetchNotes())
         }
     }

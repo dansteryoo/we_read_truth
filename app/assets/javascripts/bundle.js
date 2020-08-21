@@ -676,7 +676,7 @@ var OTbookFormat = {
   "joel,amos,obadiah,jonah,andmicah": "Joel, Amos, Obadiah, Jonah, & Micah"
 }; // category_list_Other.jsx
 
-var themeBooks = ["Justice", "HymnsV", "TheSermonontheMount", "ThisIstheGospel", "MourningandDancing", "NamesofGod", "InSpirit&inTruth:AStudyofBiblicalWorship", "Hymns", "TheResurrectedLife", "TheRisenChrist", "Lent2020:HisLoveEndures", "Jesus,KeepMeNearTheCross", "TheBeatitudes", "PsalmsforPrayer", "AttributesofGod", "PsalmsofRest", "TheLifeofMoses", "HymnsIV", "BecauseHeLives", "HymnsII", "TheMiraclesofJesus", "SongsfortheRoad:ThePsalmsofAscent", "Women&MenintheWord:OldTestament", "HymnsIII", "GiveThanks", "MakingRoom:AStudyofBiblicalHospitality", "IAm:StatementsofOurSavior", "WorthyofPraise", "HoldingTighttoPermanent", "Advent2019:AThrillofHope", "CountdowntoActs", "FruitoftheSpirit", "TheParablesofJesus", "GoTellItontheMountain", "HymnsofHope", "PsalmsofGratitude", "PromisesofGod"]; // category_list_Other.jsx
+var themeBooks = ["Justice", "HymnsV", "TheSermonontheMount", "ThisIstheGospel", "MourningandDancing", "NamesofGod", "InSpirit&inTruth:AStudyofBiblicalWorship", "Hymns", "TheResurrectedLife", "TheRisenChrist", "Lent2020:HisLoveEndures", "Jesus,KeepMeNearTheCross", "TheBeatitudes", "PsalmsforPrayer", "AttributesofGod", "PsalmsofRest", "TheLifeofMoses", "HymnsIV", "BecauseHeLives", "HymnsII", "TheMiraclesofJesus", "SongsfortheRoad:ThePsalmsofAscent", "Women&MenintheWord:OldTestament", "HymnsIII", "GiveThanks", "MakingRoom:AStudyofBiblicalHospitality", "IAm:StatementsofOurSavior", "WorthyofPraise", "HoldingTighttoPermanent", "Advent2019:AThrillofHope", "CountdowntoActs", "FruitoftheSpirit", "TheParablesofJesus", "GoTellItontheMountain", "HymnsofHope", "PsalmsofGratitude", "PromisesofGod", "Psalm119"]; // category_list_Other.jsx
 
 var themeBookFormat = {
   "HymnsV": 'Hymns V',
@@ -713,7 +713,8 @@ var themeBookFormat = {
   "GoTellItontheMountain": 'Go Tell It on the Mountain',
   "HymnsofHope": 'Hymns of Hope',
   "PsalmsofGratitude": 'Psalms of Gratitude',
-  "PromisesofGod": "Promises of God"
+  "PromisesofGod": "Promises of God",
+  "Psalm119": "Psalm 119"
 };
 
 /***/ }),
@@ -3860,16 +3861,14 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
         this.props.createNote(note).then(function () {
           _this4.setState({
             success: true,
-            title: '',
-            category: '',
-            day: '',
-            body: '',
-            id: '',
+            title: "",
+            category: "",
+            day: "",
+            body: "",
+            id: "",
             updateForm: false,
             updateErrors: []
-          });
-        }).then(function () {
-          return _this4.renderSuccessMsg();
+          }), _this4.renderSuccessMsg();
         }).then(function () {
           return _this4.props.fetchNotes();
         });
@@ -3877,16 +3876,14 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
         this.props.updateNote(noteUpdate).then(function () {
           _this4.setState({
             update: true,
-            title: '',
-            category: '',
-            day: '',
-            body: '',
-            id: '',
+            title: "",
+            category: "",
+            day: "",
+            body: "",
+            id: "",
             updateForm: false,
             updateErrors: []
-          });
-        }).then(function () {
-          return _this4.renderUpdateMsg();
+          }), _this4.renderUpdateMsg();
         }).then(function () {
           return _this4.props.fetchNotes();
         });
