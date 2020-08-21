@@ -9,12 +9,7 @@
 
 # Devo.destroy_all
 
-
-Devo.where(book: "Judges", gender: "HE").destroy_all
-
 he_data_1 = JSON.parse(File.read("#{Rails.root}/dist/update/update.json"))
-# he_data_2 = JSON.parse(File.read("#{Rails.root}/app/assets/seed/hereadstruth_v2.json"))
-# he_data_2 = JSON.parse(File.read("#{Rails.root}/app/assets/seed/hereadstruth_v2.json"))
 
 heDataArray = [he_data_1]
 
