@@ -531,7 +531,8 @@ export const themeBooks = [
     "GoTellItontheMountain",
     "HymnsofHope",
     "PsalmsofGratitude",
-    "PromisesofGod"
+    "PromisesofGod",
+    "Psalm119",
 ]
 
 // category_list_Other.jsx
@@ -571,4 +572,5 @@ export const themeBookFormat = {
     "HymnsofHope": 'Hymns of Hope',
     "PsalmsofGratitude": 'Psalms of Gratitude',
     "PromisesofGod": "Promises of God",
+    "Psalm119": "Psalm 119",
 };
