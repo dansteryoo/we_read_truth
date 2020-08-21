@@ -9,7 +9,7 @@
 
 # Devo.destroy_all
 
-he_data_1 = JSON.parse(File.read("#{Rails.root}/dist/update/update.json"))
+he_data_1 = JSON.parse(File.read("#{Rails.root}/dist/update/he_update.json"))
 
 heDataArray = [he_data_1]
 
