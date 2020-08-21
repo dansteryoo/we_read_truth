@@ -32,8 +32,13 @@
           m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
       })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
+      var d = new Date().toDateString()
+      var t = new Date().toTimeString().slice(0, 8)
+
       ga('create', 'UA-175882692-1', 'auto');
-      ga('set', 'dimension1', session_id);
+      ga('set', 'dimension1', id);
+      ga('set', 'dimension2', d);
+      ga('set', 'dimension3', t);
       ga('send', 'pageview');
     </script>
 
