@@ -8,6 +8,8 @@
 
 
 # Devo.destroy_all
+# Devo.where(book: "Judges", gender: "HE").destroy_all
+Devo.where(book: "Psalm119").destroy_all
 
 he_data_1 = JSON.parse(File.read("#{Rails.root}/dist/update/he_update.json"))
 
