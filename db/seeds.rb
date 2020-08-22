@@ -7,104 +7,54 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
-# Devo.destroy_all
+Devo.destroy_all
 # Devo.where(book: "Judges", gender: "HE").destroy_all
-Devo.where(book: "Psalm119").destroy_all
+# Devo.where(book: "Psalm119").destroy_all
 
-he_data_1 = JSON.parse(File.read("#{Rails.root}/dist/update/he_update.json"))
+# he_1 = JSON.parse(File.read("#{Rails.root}/dist/py/devos_he.json"))
+# he_2 = JSON.parse(File.read("#{Rails.root}/dist/py/devos_he.json"))
 
-heDataArray = [he_data_1]
+data_1 = JSON.parse(File.read("#{Rails.root}/dist/he_v1.json"))
+data_2 = JSON.parse(File.read("#{Rails.root}/dist/he_v2.json"))
+data_3 = JSON.parse(File.read("#{Rails.root}/dist/he_v3.json"))
+data_4 = JSON.parse(File.read("#{Rails.root}/dist/she_v1.json"))
+data_5 = JSON.parse(File.read("#{Rails.root}/dist/she_v2.json"))
+data_6 = JSON.parse(File.read("#{Rails.root}/dist/she_v3.json"))
+data_7 = JSON.parse(File.read("#{Rails.root}/dist/she_v4.json"))
 
-heDataArray.each do |he_data|
-    he_data.each do |each|
+hash = {
+    "HE": [data_1, data_2, data_3],
+    "SHE": [data_4, data_5, data_6, data_7]
+}
 
-        if each["img_url"] == ""
-            @img = "null"
-        else 
-            @img = each["img_url"]
-        end
+hash.each do |gender, data_array|
+    data_array.each do |each_data|
+        each_data.each do |each|
 
-        if each["devo_passages"] == ""
-            @passages = "null"
-        else 
-            @passages = each["devo_passages"]
-        end
+    each["img_url"] == "" ? @img = "null" 
+        : @img = each["img_url"]
 
-        if each["devo_summary"] == ""
-            @summary = "null"
-        else 
-            @summary = each["devo_summary"]
-        end
+    each["devo_passages"] == "" ? @passages = "null" 
+        : @passages = each["devo_passages"]
+        
+    each["devo_summary"] == "" ? @summary = "null" 
+        : @summary = each["devo_summary"]
 
-        if each["devo_title"] == ""
-            @title = "null"
-        else 
-            @title = each["devo_title"]
-        end
+    each["devo_title"] == "" ? @title = "null" 
+        : @title = each["devo_title"]
 
-        if each["book_title"].split(' ').join('') == ""
-            @book = "null"
-        else 
-            @book = each["book_title"].split(' ').join('')
-        end
-
-            Devo.create!(
-                gender: "HE",
-                book: @book,
-                title: @title,
-                passages: @passages,
-                summary: @summary,
-                img: @img,
-                )
+    each["book_title"].split(' ').join('') == "" ? @book = "null"
+        : @book = each["book_title"].split(' ').join('')
+    
+        Devo.create!(
+            gender: gender,
+            book: @book,
+            title: @title,
+            passages: @passages,
+            summary: @summary,
+            img: @img,
+        )
     end
-end
-
-she_data_1 = JSON.parse(File.read("#{Rails.root}/dist/update/she_update.json"))
-
-sheDataArray = [she_data_1]
-
-sheDataArray.each do |she_data|
-    she_data.each do |each|
-
-        if each["img_url"] == ""
-            @img = "null"
-        else 
-            @img = each["img_url"]
-        end
-
-        if each["devo_passages"] == ""
-            @passages = "null"
-        else 
-            @passages = each["devo_passages"]
-        end
-
-        if each["devo_summary"] == ""
-            @summary = "null"
-        else 
-            @summary = each["devo_summary"]
-        end
-
-        if each["devo_title"] == ""
-            @title = "null"
-        else 
-            @title = each["devo_title"]
-        end
-
-        if each["book_title"].split(' ').join('') == ""
-            @book = "null"
-        else 
-            @book = each["book_title"].split(' ').join('')
-        end
-
-            Devo.create!(
-                gender: "SHE",
-                book: @book,
-                title: @title,
-                passages: @passages,
-                summary: @summary,
-                img: @img,
-                
-            )
     end
 end
 

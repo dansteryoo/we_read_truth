@@ -291,7 +291,8 @@ export const allBookTitles = [
     "GoTellItontheMountain",
     "HymnsofHope",
     "PsalmsofGratitude",
-    "PromisesofGod" 
+    "PromisesofGod",
+    "Psalm119",
 ]
 
 // sidenav.jsx 
