@@ -1479,12 +1479,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var mapStateToProps = function mapStateToProps(state) {
-  var devoBook = Object.values(state.devos);
+  var devoBook = [];
 
-  if (devoBook.length > 0) {
-    var obj = devoBook[0];
+  if (state.devos.devoBook) {
+    devoBook = Object.values(state.devos.devoBook);
 
-    if (obj.gender === "HE" || obj.gender === "SHE" && obj.book === "Judges") {
+    if (devoBook[0].gender === "HE" || devoBook[0].gender === "SHE" && devoBook[0].book === "Judges") {
       devoBook.reverse();
     }
   }

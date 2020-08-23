@@ -287,6 +287,7 @@ class MainBody extends React.Component {
                     renderDay = i + 1
                 }
             })
+            
         return renderDay
     }
 

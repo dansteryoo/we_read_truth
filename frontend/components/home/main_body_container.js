@@ -7,14 +7,14 @@ import MainBody from './main_body';
 
 const mapStateToProps = (state) => {
 
-    let devoBook = Object.values(state.devos);
+    let devoBook = [];
 
-    if (devoBook.length > 0) {
-      let obj = devoBook[0];
+    if (state.devos.devoBook) {
+      devoBook = Object.values(state.devos.devoBook);
 
       if (
-        obj.gender === "HE" ||
-        (obj.gender === "SHE" && obj.book === "Judges")
+        devoBook[0].gender === "HE" ||
+        (devoBook[0].gender === "SHE" && devoBook[0].book === "Judges")
       ) {
         devoBook.reverse();
       }
