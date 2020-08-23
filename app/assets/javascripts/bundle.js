@@ -946,13 +946,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var mapStateToProps = function mapStateToProps(state) {
-  var devoBook;
+  var devoBook = Object.values(state.devos);
 
-  if (state.devos.devoBook === undefined) {
-    devoBook = [];
-  } else {
-    devoBook = Object.values(state.devos.devoBook);
-
+  if (devoBook.length > 0) {
     if (devoBook[0].gender === "HE" || devoBook[0].gender === "SHE" && devoBook[0].book === "Judges") {
       devoBook.reverse();
     }
@@ -1483,14 +1479,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var mapStateToProps = function mapStateToProps(state) {
-  var devoBook;
+  var devoBook = Object.values(state.devos);
 
-  if (state.devos.devoBook === undefined) {
-    devoBook = [];
-  } else {
-    devoBook = Object.values(state.devos.devoBook);
+  if (devoBook.length > 0) {
+    var obj = devoBook[0];
 
-    if (devoBook[0].gender === "HE" || devoBook[0].gender === "SHE" && devoBook[0].book === "Judges") {
+    if (obj.gender === "HE" || obj.gender === "SHE" && obj.book === "Judges") {
       devoBook.reverse();
     }
   }
@@ -1723,11 +1717,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var mapStateToProps = function mapStateToProps(state) {
-  var devoBook;
+  var devoBook = [];
 
-  if (state.devos.devoBook === undefined) {
-    devoBook = [];
-  } else {
+  if (state.devos.devoBook) {
     devoBook = Object.values(state.devos.devoBook);
 
     if (devoBook[0].gender === "HE" || devoBook[0].gender === "SHE" && devoBook[0].book === "Judges") {
@@ -4949,9 +4941,7 @@ var bookmarkReducer = function bookmarkReducer() {
 
   switch (action.type) {
     case _actions_bookmark_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_BOOKMARK"]:
-      var setBookmark = action.bookmark.id === undefined ? action.bookmark.bookmark[0] : action.bookmark;
-      if (setBookmark === undefined) return oldState;
-      return Object.assign({}, newState, setBookmark);
+      return Object.assign({}, newState, action.bookmark);
 
     case _actions_bookmark_actions__WEBPACK_IMPORTED_MODULE_0__["REMOVE_BOOKMARK"]:
       if (newState.id === action.bookmarkId) {

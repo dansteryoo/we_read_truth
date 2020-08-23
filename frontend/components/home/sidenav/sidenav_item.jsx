@@ -1,7 +1,7 @@
 import React from 'react';
 
 const SideNavItem = ({ dailyDevo, days, handleGetDevo }) => {
-
+    
     return (
         <li className='daily-devo-li' onClick={() => handleGetDevo(dailyDevo.id)}>
             <div className='daily-devo-days'>

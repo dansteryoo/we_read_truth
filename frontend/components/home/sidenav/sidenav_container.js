@@ -5,23 +5,24 @@ import { createBookmark, fetchBookmark } from '../../../util/bookmark_api_util';
 import SideNav from './sidenav';
 
 const mapStateToProps = (state) => {
-    
-    let devoBook;
-    if (state.devos.devoBook === undefined) {
-        devoBook = []
-    } else {
-        devoBook = Object.values(state.devos.devoBook)
-        if (devoBook[0].gender === "HE" ||
-            devoBook[0].gender === "SHE" && devoBook[0].book === "Judges") {
-            devoBook.reverse()
-        }
+    let devoBook = [];
+
+    if (state.devos.devoBook) {
+      devoBook = Object.values(state.devos.devoBook);
+
+      if (
+        devoBook[0].gender === "HE" ||
+        (devoBook[0].gender === "SHE" && devoBook[0].book === "Judges")
+      ) {
+        devoBook.reverse();
+      }
     }
 
     return {
         currentUser: state.users[state.session.id],
         errors: state.errors,
         devoBook: devoBook,
-        bookmark: state.bookmark 
+        bookmark: state.bookmark
     }
 };
 

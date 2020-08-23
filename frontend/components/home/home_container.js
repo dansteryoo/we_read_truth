@@ -6,16 +6,17 @@ import { clearNoteState } from '../../actions/note_actions';
 import HomePage from './home';
 
 const mapStateToProps = (state) => {
+    
+    let devoBook = Object.values(state.devos);
 
-    let devoBook;
-    if (state.devos.devoBook === undefined) {
-        devoBook = []
-    } else {
-        devoBook = Object.values(state.devos.devoBook)
-        if (devoBook[0].gender === "HE" ||
-            devoBook[0].gender === "SHE" && devoBook[0].book === "Judges") {
-            devoBook.reverse()
-        }
+    if (devoBook.length > 0) {
+      
+      if (
+        devoBook[0].gender === "HE" ||
+        (devoBook[0].gender === "SHE" && devoBook[0].book === "Judges")
+      ) {
+        devoBook.reverse();
+      }
     }
 
     return {

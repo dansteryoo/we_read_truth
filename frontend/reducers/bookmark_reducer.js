@@ -6,12 +6,7 @@ const bookmarkReducer = (oldState = {}, action) => {
     
     switch (action.type) {
         case RECEIVE_BOOKMARK: 
-            let setBookmark = action.bookmark.id === undefined
-                ? action.bookmark.bookmark[0]
-                : action.bookmark
-
-            if (setBookmark === undefined) return oldState
-            return Object.assign({}, newState, setBookmark);
+            return Object.assign({}, newState, action.bookmark);
 
         case REMOVE_BOOKMARK:
             if (newState.id === action.bookmarkId) {
