@@ -23,8 +23,9 @@ $darkpink: #ff8da1;
 
   label {
     font-size: 0.8rem;
-    margin-left: 12px;
+    margin: 0 3px 0 12px;
     color: $gray;
+    font-weight: 400 !important;
   }
 }
 
@@ -37,10 +38,19 @@ $darkpink: #ff8da1;
     scrollbar-width: none; /* Firefox 64 */
 }
 
+.notes-form-book-day {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 15px;
+
+  .columns {
+    width: 100%;
+  }
+}
+
 .notes-form-input,
 .notes-form-input-title {
 background-color: $skin;
-display: flex;
 border-radius: 6px;
 color: $darkgray;
 width: 95%;
@@ -58,7 +68,7 @@ height: 30px;
 
 .notes-form-textarea {
     background-color: $skin;
-    height: 45%;
+    height: 60%;
     padding: 10px;
     display: flex;
     border-radius: 6px;
@@ -183,6 +193,9 @@ height: 30px;
 .form-errors-notes {
   color: $orange;
   display: flex;
-  justify-content: center;
+  justify-content: left;
   font-size: 12px;
+  align-items: center;
+  margin-bottom: 4px;
+  font-weight: 600;
 }

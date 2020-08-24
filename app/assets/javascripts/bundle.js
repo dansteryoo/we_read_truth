@@ -2674,6 +2674,7 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       }).map(function (ele) {
         return ele;
       });
+      type === "updated_at" ? sortedNotes.reverse() : sortedNotes;
       return sortedNotes;
     }
   }, {
@@ -3680,11 +3681,11 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 
-var ERRORS = ["Title can't be blank", // 0 Title
-"Body can't be blank", // 1 Body
-"Book can't be blank", // 2 Book
-"Day can't be blank", // 3 Day
-"Day must only be a number" // 4 Number
+var ERRORS = ["ttl can't be blank", // 0 Title
+"bod can't be blank", // 1 Body
+"boo can't be blank", // 2 Book
+"day can't be blank", // 3 Day
+"day must only be a number" // 4 Number
 ];
 
 var NotesForm = /*#__PURE__*/function (_React$Component) {
@@ -3710,6 +3711,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       updateForm: false
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.renderFormButton = _this.renderFormButton.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -3904,6 +3906,32 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       }, 3000);
     }
   }, {
+    key: "renderFormButton",
+    value: function renderFormButton() {
+      var _this7 = this;
+
+      if (this.state.updateForm) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "button-container"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "notes-form-submit-button",
+          type: "submit"
+        }, "Update"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "notes-form-cancel-x",
+          onClick: function onClick() {
+            return _this7.handleCancelUpdate();
+          }
+        }, "\u2715"));
+      } else {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "button-container"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "notes-form-submit-button",
+          type: "submit"
+        }, "Create"));
+      }
+    }
+  }, {
     key: "renderErrors",
     value: function renderErrors() {
       var updateErrors = this.state.updateErrors;
@@ -3916,11 +3944,11 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       };
       if (updateErrors.length < 1) return errorsHash;
       updateErrors.forEach(function (err) {
-        if (ERRORS.indexOf(err) === 0) errorsHash.title = err;
-        if (ERRORS.indexOf(err) === 1) errorsHash.body = err;
-        if (ERRORS.indexOf(err) === 2) errorsHash.book = err;
-        if (ERRORS.indexOf(err) === 3) errorsHash.day = err;
-        if (ERRORS.indexOf(err) === 4) errorsHash.number = err;
+        if (ERRORS.indexOf(err) === 0) errorsHash.title = err.slice(3);
+        if (ERRORS.indexOf(err) === 1) errorsHash.body = err.slice(3);
+        if (ERRORS.indexOf(err) === 2) errorsHash.book = err.slice(3);
+        if (ERRORS.indexOf(err) === 3) errorsHash.day = err.slice(3);
+        if (ERRORS.indexOf(err) === 4) errorsHash.number = err.slice(3);
       });
       var _this$state2 = this.state,
           title = _this$state2.title,
@@ -3937,8 +3965,6 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this7 = this;
-
       if (this.state.success) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "success-message-div"
@@ -3946,59 +3972,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       } else if (this.state.update) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "success-message-div"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Note Updated!")); //----------- Update Form -----------//
-      } else if (this.state.updateForm) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "notes-form-container"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-          onSubmit: this.handleSubmit
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "notes-form"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Title"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-          type: "text",
-          className: "notes-form-input-title",
-          onChange: this.handleChange('title'),
-          value: this.state.title // required
-
-        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "form-errors-notes"
-        }, this.renderErrors().title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Body"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
-          className: "notes-form-textarea",
-          placeholder: 'Enter note here..',
-          onChange: this.handleChange('body'),
-          value: this.state.body // required
-
-        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "form-errors-notes"
-        }, this.renderErrors().body), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "notes-form-bottom"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Book"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-          type: "text",
-          className: "notes-form-input",
-          onChange: this.handleChange('category'),
-          value: this.state.category // required   
-
-        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "form-errors-notes"
-        }, this.renderErrors().book), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Day#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-          type: "text",
-          className: "notes-form-input",
-          onChange: this.handleChange('day'),
-          value: this.state.day // required   
-
-        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "form-errors-notes"
-        }, this.renderErrors().day, this.renderErrors().number)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "button-container"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-          className: "notes-form-submit-button",
-          type: "submit"
-        }, "Update"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "notes-form-cancel-x",
-          onClick: function onClick() {
-            return _this7.handleCancelUpdate();
-          }
-        }, "\u2715")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null))); //----------- Create Form -----------//
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Note Updated!"));
       } else {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-form-container"
@@ -4006,46 +3980,45 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
           onSubmit: this.handleSubmit
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-form"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Title"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-          type: "text",
-          className: "notes-form-input-title",
-          value: this.state.title,
-          onChange: this.handleChange('title') // required
-
-        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "notes-form-book-day"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "columns"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "form-errors-notes"
-        }, this.renderErrors().title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Body"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
-          className: "notes-form-textarea",
-          value: this.state.body,
-          placeholder: 'Enter note here..',
-          onChange: this.handleChange('body') // required
-
-        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "form-errors-notes"
-        }, this.renderErrors().body), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "notes-form-bottom"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Book"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Book "), " ", this.renderErrors().book), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "text",
           className: "notes-form-input",
           value: this.state.category,
-          onChange: this.handleChange('category') // required   
+          onChange: this.handleChange("category") // required
 
-        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "columns"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "form-errors-notes"
-        }, this.renderErrors().book), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Day#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Day# "), this.renderErrors().day, this.renderErrors().number), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "text",
           className: "notes-form-input",
           value: this.state.day,
-          onChange: this.handleChange('day') // required   
+          onChange: this.handleChange("day") // required
+
+        }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "form-errors-notes"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Title "), this.renderErrors().title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          type: "text",
+          className: "notes-form-input-title",
+          onChange: this.handleChange("title"),
+          value: this.state.title // required
 
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "form-errors-notes"
-        }, this.renderErrors().day, this.renderErrors().number)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "button-container"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-          className: "notes-form-submit-button",
-          type: "submit"
-        }, "Create")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null)));
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Body "), this.renderErrors().body), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+          className: "notes-form-textarea",
+          placeholder: "Enter note here..",
+          onChange: this.handleChange("body"),
+          value: this.state.body // required
+
+        }), this.renderFormButton())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null)));
       }
     }
   }]);

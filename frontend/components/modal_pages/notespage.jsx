@@ -57,6 +57,10 @@ class NotesPage extends React.Component {
         let sortedNotes = notes
             .sort((a, b) => a[`${type}`].toLowerCase() < b[`${type}`].toLowerCase() ? -1 : 1)
             .map(ele => ele)
+            
+        type === "updated_at" 
+          ? sortedNotes.reverse() 
+          : sortedNotes;
         return sortedNotes
     }
 
