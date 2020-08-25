@@ -50,18 +50,20 @@ $orange: #ff5a5f;
         width: 100%;
         list-style: none;
         margin: 28px 0 0 0;
-
-
+        font-size: 17px;
+        letter-spacing: 0.025em;
+        
         li {
             color: black;
-            font-weight: 600;
+            font-weight: 500;
             margin: 10px 50px 0 0;
             height: 20px;
             cursor: pointer;
         }
 
         .contactus-li {
-            width: 85px;
+            width: 100px;
+            margin: 10px 40px 0 0;
         }
 
         .contactus-li:hover, 
