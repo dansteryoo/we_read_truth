@@ -73,11 +73,10 @@ $darkpink: #ff8da1;
         p {
             font-size: 15px;
             font-weight: 400;
-            line-height: 2rem;
-            letter-spacing: 0.015em;
+            line-height: 2em;
             padding: 0 35px 0 25px;
             font-family: 'Roboto';
-            text-align: justify;
+            word-spacing: 0.1em;
         }
     }
 
@@ -91,7 +90,7 @@ $darkpink: #ff8da1;
             font-size: 17px;
             line-height: 2rem;
             font-family: 'Roboto';
-            text-align: justify;
+            word-spacing: 0.1em;
         }
     }
 
