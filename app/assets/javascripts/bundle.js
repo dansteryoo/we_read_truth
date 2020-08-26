@@ -1317,11 +1317,15 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
       return this.state.summary.split('\n').map(function (ele, i) {
         var scripture = ele.slice(0, 17) === "Scripture Reading";
         var text = ele.slice(0, 5) === "Text:";
+        var author_1 = ele.slice(0, 10) === "Written by";
+        var author_2 = ele.slice(0, 10) === "Written By";
         var eleCountMatch = eleCount[i - 1] === ele.trim() && ele.trim().length < 1; //---------- eleCount.push STORES each item into eleCount ----------//
 
         scripture || text ? eleCount.push("") : eleCount.push(ele.trim());
 
         if (!eleCountMatch && !scripture && !text) {
+          if (author_1) ele = ele.replace("Written by", "By");
+          if (author_2) ele = ele.replace("Written By", "By");
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
             key: 'summary' + i
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, ele, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null)));

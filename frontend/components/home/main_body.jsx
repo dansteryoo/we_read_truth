@@ -264,6 +264,8 @@ class MainBody extends React.Component {
             this.state.summary.split('\n').map((ele, i) => {
                 const scripture = ele.slice(0, 17) === "Scripture Reading"
                 const text = ele.slice(0, 5) === "Text:"
+                const author_1 = ele.slice(0, 10) === "Written by"
+                const author_2 = ele.slice(0, 10) === "Written By"
                 const eleCountMatch = eleCount[i - 1] === ele.trim() && ele.trim().length < 1
 
                 //---------- eleCount.push STORES each item into eleCount ----------//
@@ -272,6 +274,9 @@ class MainBody extends React.Component {
                     : eleCount.push(ele.trim())
 
                 if (!eleCountMatch && !scripture && !text) {
+                    if (author_1) ele = ele.replace("Written by", "By")
+                    if (author_2) ele = ele.replace("Written By", "By")
+                    
                     return <li key={'summary' + i}>
                         <p>{ele}<br /></p>
                         </li>
