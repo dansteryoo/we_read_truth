@@ -7,24 +7,29 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
-Devo.destroy_all
+# Devo.destroy_all
 # Devo.where(book: "Judges", gender: "HE").destroy_all
-# Devo.where(book: "Psalm119").destroy_all
+Devo.where(book: "Ephesians").destroy_all
 
-# he_1 = JSON.parse(File.read("#{Rails.root}/dist/py/devos_he.json"))
-# he_2 = JSON.parse(File.read("#{Rails.root}/dist/py/devos_he.json"))
+update_1 = JSON.parse(File.read("#{Rails.root}/dist/update/he_update.json"))
+update_2 = JSON.parse(File.read("#{Rails.root}/dist/update/she_update.json"))
 
-data_1 = JSON.parse(File.read("#{Rails.root}/dist/he_v1.json"))
-data_2 = JSON.parse(File.read("#{Rails.root}/dist/he_v2.json"))
-data_3 = JSON.parse(File.read("#{Rails.root}/dist/he_v3.json"))
-data_4 = JSON.parse(File.read("#{Rails.root}/dist/she_v1.json"))
-data_5 = JSON.parse(File.read("#{Rails.root}/dist/she_v2.json"))
-data_6 = JSON.parse(File.read("#{Rails.root}/dist/she_v3.json"))
-data_7 = JSON.parse(File.read("#{Rails.root}/dist/she_v4.json"))
+# data_1 = JSON.parse(File.read("#{Rails.root}/dist/he_v1.json"))
+# data_2 = JSON.parse(File.read("#{Rails.root}/dist/he_v2.json"))
+# data_3 = JSON.parse(File.read("#{Rails.root}/dist/he_v3.json"))
+# data_4 = JSON.parse(File.read("#{Rails.root}/dist/she_v1.json"))
+# data_5 = JSON.parse(File.read("#{Rails.root}/dist/she_v2.json"))
+# data_6 = JSON.parse(File.read("#{Rails.root}/dist/she_v3.json"))
+# data_7 = JSON.parse(File.read("#{Rails.root}/dist/she_v4.json"))
+
+# hash = {
+#     "HE": [data_1, data_2, data_3],
+#     "SHE": [data_4, data_5, data_6, data_7]
+# }
 
 hash = {
-    "HE": [data_1, data_2, data_3],
-    "SHE": [data_4, data_5, data_6, data_7]
+    "HE": [update_1],
+    "SHE": [update_2]
 }
 
 hash.each do |gender, data_array|

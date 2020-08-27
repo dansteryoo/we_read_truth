@@ -2623,7 +2623,7 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       defaultSorted: [],
       checked: false,
       currentPage: 1,
-      notesPerPage: 40
+      notesPerPage: 1
     };
     _this.handleUpdate = _this.handleUpdate.bind(_assertThisInitialized(_this));
     _this.handleSearch = _this.handleSearch.bind(_assertThisInitialized(_this));
