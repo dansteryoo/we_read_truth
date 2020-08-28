@@ -206,17 +206,15 @@ class MainBody extends React.Component {
     //---------- RENDER FUNCTIONS ----------//
 
     renderPassages() {
-        const { passages, esvPassage } = this.state; 
-        if (passages.length < 1) return 
+        const { passages, esvPassage } = this.state;
+        if (passages.length < 1) return
 
-        let esvSortMatch = []
         const passagesArray = this.splitPassages(passages)
+        if (esvPassage.length !== passagesArray.length) return
 
-        if (esvPassage.length === passagesArray.length) {
-            esvSortMatch = esvPassage.sort(function(a, b) {
-                return passagesArray.indexOf(a.passage) - passagesArray.indexOf(b.passage)
-            })
-        }
+        let esvSortMatch = esvPassage.sort(function (a, b) {
+            return passagesArray.indexOf(a.passage) - passagesArray.indexOf(b.passage)
+        })
 
         //---------- CATCH undefined ESV API returns ----------//
         let newEsvData = esvSortMatch.filter((ele, i) => {

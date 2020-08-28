@@ -1272,15 +1272,11 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
           passages = _this$state2.passages,
           esvPassage = _this$state2.esvPassage;
       if (passages.length < 1) return;
-      var esvSortMatch = [];
       var passagesArray = this.splitPassages(passages);
-
-      if (esvPassage.length === passagesArray.length) {
-        esvSortMatch = esvPassage.sort(function (a, b) {
-          return passagesArray.indexOf(a.passage) - passagesArray.indexOf(b.passage);
-        });
-      } //---------- CATCH undefined ESV API returns ----------//
-
+      if (esvPassage.length !== passagesArray.length) return;
+      var esvSortMatch = esvPassage.sort(function (a, b) {
+        return passagesArray.indexOf(a.passage) - passagesArray.indexOf(b.passage);
+      }); //---------- CATCH undefined ESV API returns ----------//
 
       var newEsvData = esvSortMatch.filter(function (ele, i) {
         if (ele.text === undefined) {
@@ -2623,7 +2619,7 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       defaultSorted: [],
       checked: false,
       currentPage: 1,
-      notesPerPage: 1
+      notesPerPage: 40
     };
     _this.handleUpdate = _this.handleUpdate.bind(_assertThisInitialized(_this));
     _this.handleSearch = _this.handleSearch.bind(_assertThisInitialized(_this));
