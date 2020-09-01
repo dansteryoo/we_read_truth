@@ -1002,18 +1002,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./function_helpers/bookTitles */ "./frontend/components/home/function_helpers/bookTitles.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -1080,36 +1068,39 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
   _createClass(MainBody, [{
     key: "ESVpassageGetter",
     //---------- ESV.ORG API CALL ----------//
-    value: function ESVpassageGetter(passage) {
+    value: function ESVpassageGetter(passages) {
       var _this2 = this;
 
       var esvKeys = [window.esv_one, window.esv_two, window.esv_three, window.esv_four, window.esv_five, window.esv_six];
       var randomGen = esvKeys[Math.floor(Math.random() * esvKeys.length)];
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('https://api.esv.org/v3/passage/text/?', {
-        crossDomain: true,
-        params: {
-          'q': passage,
-          'include-headings': false,
-          'include-footnotes': false,
-          'include-verse-numbers': false,
-          'include-short-copyright': false,
-          'include-passage-references': false
-        },
-        headers: {
-          'Authorization': randomGen
-        }
-      }).then(function (res) {
-        if (res.status === 200) {
-          return _this2.setState({
-            esvPassage: [].concat(_toConsumableArray(_this2.state.esvPassage), [{
+      var esvArr = [];
+      Promise.all(this.splitPassages(passages).map(function (passage) {
+        axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('https://api.esv.org/v3/passage/text/?', {
+          crossDomain: true,
+          params: {
+            'q': passage,
+            'include-headings': false,
+            'include-footnotes': false,
+            'include-verse-numbers': false,
+            'include-short-copyright': false,
+            'include-passage-references': false
+          },
+          headers: {
+            'Authorization': randomGen
+          }
+        }).then(function (res) {
+          if (res.status === 200) {
+            return esvArr.push({
               passage: res.config.params.q,
               text: res.data.passages[0]
-            }])
+            });
+          }
+        }).then(function () {
+          esvArr.length == _this2.splitPassages(passages).length && _this2.setState({
+            esvPassage: esvArr
           });
-        } else {
-          return 'Error: Passage not found';
-        }
-      });
+        });
+      }));
     }
   }, {
     key: "setBookmark",
@@ -1203,8 +1194,6 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
-      var _this4 = this;
-
       this.setBookmark();
       var _this$props2 = this.props,
           bookmark = _this$props2.bookmark,
@@ -1248,9 +1237,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
         this.setState({
           esvPassage: []
         });
-        Promise.all(this.splitPassages(passages).map(function (each) {
-          return _this4.ESVpassageGetter(each.trim());
-        }));
+        this.ESVpassageGetter(passages);
         this.setState({
           id: _id,
           img: img,
@@ -1331,11 +1318,11 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderDay",
     value: function renderDay() {
-      var _this5 = this;
+      var _this4 = this;
 
       var renderDay;
       this.props.devoBook.forEach(function (each, i) {
-        if (each.id === _this5.state.id) {
+        if (each.id === _this4.state.id) {
           renderDay = i + 1;
         }
       });
@@ -1402,10 +1389,11 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this6 = this;
+      var _this5 = this;
 
       if (this.isMainBodyDevoNull() && !this.localStorageFunc('getCurrentPage')) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
       this.state.bookmark && this.isValidNumber(this.state.bookmarkId) && this.localStorageFunc('setCurrentPage');
+      console.log("RENDER => ", this.state);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "middle-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1416,14 +1404,14 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
         id: "bookmark",
         className: this.state.bookmark ? 'fa fa-bookmark' : 'fa fa-bookmark-o',
         onClick: function onClick() {
-          return _this6.toggleBookmark();
+          return _this5.toggleBookmark();
         },
         "aria-hidden": "true"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         id: "max-mclean-audio",
         className: "fa fa-volume-up",
         onClick: function onClick() {
-          return _this6.toggleAudio();
+          return _this5.toggleAudio();
         },
         "aria-hidden": "true"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

@@ -37,7 +37,7 @@ class MainBody extends React.Component {
 
     //---------- ESV.ORG API CALL ----------//
 
-    ESVpassageGetter(passage) {
+    ESVpassageGetter(passages) {
         const esvKeys = [
             window.esv_one,
             window.esv_two,
@@ -47,35 +47,36 @@ class MainBody extends React.Component {
             window.esv_six,
         ]
         let randomGen = esvKeys[Math.floor(Math.random() * esvKeys.length)];
+        let esvArr = []
 
-        axios.get('https://api.esv.org/v3/passage/text/?', {
-            crossDomain: true,
-            params: {
-                'q': passage,
-                'include-headings': false,
-                'include-footnotes': false,
-                'include-verse-numbers': false,
-                'include-short-copyright': false,
-                'include-passage-references': false
-            },
-            headers: {
-                'Authorization': randomGen,
-            }
-        })
-        .then(res => {
-            if (res.status === 200) {
-                return this.setState({ 
-                    esvPassage: [ ...this.state.esvPassage, 
-                        { 
+        Promise.all(this.splitPassages(passages).map(passage => {
+            axios.get('https://api.esv.org/v3/passage/text/?', {
+                crossDomain: true,
+                params: {
+                    'q': passage,
+                    'include-headings': false,
+                    'include-footnotes': false,
+                    'include-verse-numbers': false,
+                    'include-short-copyright': false,
+                    'include-passage-references': false
+                },
+                headers: {
+                    'Authorization': randomGen,
+                }
+            })
+            .then(res => {
+                if (res.status === 200) {
+                    return esvArr.push({  
                         passage: res.config.params.q, 
                         text: res.data.passages[0] 
-                        }
-                    ]
-                })
-            } else {
-                return 'Error: Passage not found'
-            }
-        })
+                    })
+                }
+            })
+            .then(() => {
+                esvArr.length == this.splitPassages(passages).length
+                   && this.setState({ esvPassage: esvArr })
+            })
+        }))
     }
 
     setBookmark() {
@@ -191,9 +192,7 @@ class MainBody extends React.Component {
 
             //---------- PREVENTS DUPS in esvPassage ----------//
             this.setState({ esvPassage: [] });
-            
-            Promise.all(this.splitPassages(passages)
-                .map(each => this.ESVpassageGetter(each.trim())))
+            this.ESVpassageGetter(passages)
 
             this.setState({
                 id, img, passages, summary, title, gender, book,
@@ -348,7 +347,8 @@ class MainBody extends React.Component {
         
         this.state.bookmark && this.isValidNumber(this.state.bookmarkId)
             && this.localStorageFunc('setCurrentPage')
-        
+            
+        console.log(`RENDER => `, this.state)
         return (
             <div className='middle-container'>
                 <div className='devo-main-title'>
