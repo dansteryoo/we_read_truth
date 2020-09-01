@@ -348,7 +348,6 @@ class MainBody extends React.Component {
         this.state.bookmark && this.isValidNumber(this.state.bookmarkId)
             && this.localStorageFunc('setCurrentPage')
             
-        console.log(`RENDER => `, this.state)
         return (
             <div className='middle-container'>
                 <div className='devo-main-title'>
