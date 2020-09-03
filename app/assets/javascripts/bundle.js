@@ -1393,7 +1393,6 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
 
       if (this.isMainBodyDevoNull() && !this.localStorageFunc('getCurrentPage')) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
       this.state.bookmark && this.isValidNumber(this.state.bookmarkId) && this.localStorageFunc('setCurrentPage');
-      console.log("RENDER => ", this.state);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "middle-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2607,7 +2606,8 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       defaultSorted: [],
       checked: false,
       currentPage: 1,
-      notesPerPage: 40
+      notesPerPage: 40,
+      loading: false
     };
     _this.handleUpdate = _this.handleUpdate.bind(_assertThisInitialized(_this));
     _this.handleSearch = _this.handleSearch.bind(_assertThisInitialized(_this));
@@ -2623,11 +2623,17 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
+      this.setState({
+        loading: true
+      });
       this.props.fetchNotes().then(function () {
-        return _this2.setState({
-          notes: _this2.props.notes,
-          defaultSorted: _this2.sortByType(_this2.props.notes, 'created_at')
-        });
+        return setTimeout(function () {
+          _this2.setState({
+            notes: _this2.props.notes,
+            defaultSorted: _this2.sortByType(_this2.props.notes, "created_at"),
+            loading: false
+          });
+        }, 500);
       });
     } // componentWillUnmount() {
     // }
@@ -2849,6 +2855,7 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this6 = this;
 
+      console.log("RENDER ===> ");
       var _this$props2 = this.props,
           fetchNote = _this$props2.fetchNote,
           deleteNote = _this$props2.deleteNote;
@@ -2856,13 +2863,24 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
           notes = _this$state3.notes,
           search = _this$state3.search,
           currentPage = _this$state3.currentPage,
-          notesPerPage = _this$state3.notesPerPage; // Get current notes
+          notesPerPage = _this$state3.notesPerPage,
+          loading = _this$state3.loading; // Get current notes
 
       var indexOfLastNote = currentPage * notesPerPage;
       var indexOfFirstNote = indexOfLastNote - notesPerPage;
       var currentNotes = notes.slice(indexOfFirstNote, indexOfLastNote);
 
-      if (notes.length < 1 && search.length > 0) {
+      if (loading === true) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "notes-page-container"
+        }, this.renderModalTop(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "notes-page-content"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+          className: "notes-page-section"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "notes-page-section-empty"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Notes are loading..."))))));
+      } else if (notes.length < 1 && search.length > 0) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-page-container"
         }, this.renderModalTop(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
