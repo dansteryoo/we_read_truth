@@ -240,93 +240,66 @@ class NotesPage extends React.Component {
     }
 
     render() {
-
-        console.log(`RENDER ===> `)
+      
     const { fetchNote, deleteNote } = this.props;
     const { notes, search, currentPage, notesPerPage, loading } = this.state;
 
     // Get current notes
-    const indexOfLastNote = currentPage * notesPerPage;
-    const indexOfFirstNote = indexOfLastNote - notesPerPage;
-    const currentNotes = notes.slice(
-     indexOfFirstNote,
-     indexOfLastNote
-    );
+    const idxOfLastNote = currentPage * notesPerPage;
+    const idxOfFirstNote = idxOfLastNote - notesPerPage;
+    const currentNotes = notes.slice(idxOfFirstNote, idxOfLastNote);
 
-    if (loading === true) {
+    if (notes.length > 0) {
       return (
         <>
-          <div className="notes-page-container">
-            {this.renderModalTop()}
-            <div className="notes-page-content">
-              <section className="notes-page-section">
-                <div className="notes-page-section-empty">
-                  <span>Notes are loading...</span>
-                </div>
+        <div className="notes-page-container">
+          {this.renderModalTop()}
+          <div className="notes-page-content">
+            <section className="notes-page-section">
+              <ul className="notes-page-ul">
+                {currentNotes.map((eachNote) => (
+                  <NotesItem
+                    handleUpdate={this.handleUpdate}
+                    toggleClass={this.toggleClass}
+                    flipToDelete={this.state.flipToDelete}
+                    noteId={this.state.noteId}
+                    deleteNote={deleteNote}
+                    fetchNote={fetchNote}
+                    eachNote={eachNote}
+                    key={eachNote.id}
+                  />
+                ))}
+              </ul>
+            </section>
+          </div>
+        </div>
+      </>
+      )
+    } else {
+      return (
+      <>
+      <div className="notes-page-container">
+        {this.renderModalTop()}
+        <div className="notes-page-content">
+          <section className="notes-page-section">
+            <div className="notes-page-section-empty">
+              {loading === true ? (
+                <span>Notes are loading...</span>
+              ) : 
+                this.props.notes.length < 1 ? (
+                <span>You don't have any notes.</span>
+              ) : 
+                notes.length < 1 && search.length > 0 ? (
+                  <span>No notes matching your search.</span>
+              ) : false}
+              </div>
               </section>
             </div>
           </div>
         </>
-      );
-    } else if (notes.length < 1 && search.length > 0) {
-        return (
-          <>
-            <div className="notes-page-container">
-              {this.renderModalTop()}
-              <div className="notes-page-content">
-                <section className="notes-page-section">
-                  <div className="notes-page-section-empty">
-                    <span>No notes matching your search.</span>
-                  </div>
-                </section>
-              </div>
-            </div>
-          </>
-        );
-      }
-      if (this.props.notes.length < 1) {
-        return (
-          <>
-            <div className="notes-page-container">
-              {this.renderModalTop()}
-              <div className="notes-page-content">
-                <section className="notes-page-section">
-                  <div className="notes-page-section-empty">
-                    <span>You don't have any notes.</span>
-                  </div>
-                </section>
-              </div>
-            </div>
-          </>
-        );
-      } else {
-        return (
-          <>
-            <div className="notes-page-container">
-              {this.renderModalTop()}
-              <div className="notes-page-content">
-                <section className="notes-page-section">
-                  <ul className="notes-page-ul">
-                    {currentNotes.map((eachNote) => (
-                      <NotesItem
-                        handleUpdate={this.handleUpdate}
-                        toggleClass={this.toggleClass}
-                        flipToDelete={this.state.flipToDelete}
-                        noteId={this.state.noteId}
-                        deleteNote={deleteNote}
-                        fetchNote={fetchNote}
-                        eachNote={eachNote}
-                        key={eachNote.id}
-                      />
-                    ))}
-                  </ul>
-                </section>
-              </div>
-            </div>
-          </>
-        );
-      }
+      )
     }
+  }
 }
 
 export default NotesPage;

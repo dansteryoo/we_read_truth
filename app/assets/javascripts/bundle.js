@@ -2855,7 +2855,6 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this6 = this;
 
-      console.log("RENDER ===> ");
       var _this$props2 = this.props,
           fetchNote = _this$props2.fetchNote,
           deleteNote = _this$props2.deleteNote;
@@ -2866,43 +2865,11 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
           notesPerPage = _this$state3.notesPerPage,
           loading = _this$state3.loading; // Get current notes
 
-      var indexOfLastNote = currentPage * notesPerPage;
-      var indexOfFirstNote = indexOfLastNote - notesPerPage;
-      var currentNotes = notes.slice(indexOfFirstNote, indexOfLastNote);
+      var idxOfLastNote = currentPage * notesPerPage;
+      var idxOfFirstNote = idxOfLastNote - notesPerPage;
+      var currentNotes = notes.slice(idxOfFirstNote, idxOfLastNote);
 
-      if (loading === true) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "notes-page-container"
-        }, this.renderModalTop(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "notes-page-content"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
-          className: "notes-page-section"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "notes-page-section-empty"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Notes are loading..."))))));
-      } else if (notes.length < 1 && search.length > 0) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "notes-page-container"
-        }, this.renderModalTop(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "notes-page-content"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
-          className: "notes-page-section"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "notes-page-section-empty"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "No notes matching your search."))))));
-      }
-
-      if (this.props.notes.length < 1) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "notes-page-container"
-        }, this.renderModalTop(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "notes-page-content"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
-          className: "notes-page-section"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "notes-page-section-empty"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "You don't have any notes."))))));
-      } else {
+      if (notes.length > 0) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-page-container"
         }, this.renderModalTop(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2923,6 +2890,16 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
             key: eachNote.id
           });
         }))))));
+      } else {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "notes-page-container"
+        }, this.renderModalTop(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "notes-page-content"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+          className: "notes-page-section"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "notes-page-section-empty"
+        }, loading === true ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Notes are loading...") : this.props.notes.length < 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "You don't have any notes.") : notes.length < 1 && search.length > 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "No notes matching your search.") : false)))));
       }
     }
   }]);
