@@ -2561,8 +2561,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _home_function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../home/function_helpers/helper_funcs */ "./frontend/components/home/function_helpers/helper_funcs.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -2688,15 +2686,6 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
-    key: "handleChange",
-    value: function handleChange(f) {
-      var _this4 = this;
-
-      return function (e) {
-        return _this4.setState(_defineProperty({}, f, e.target.value));
-      };
-    }
-  }, {
     key: "handleCheck",
     value: function handleCheck(e) {
       var checkbox = e.target.value;
@@ -2734,9 +2723,12 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleSearch",
     value: function handleSearch(e) {
-      e.preventDefault(); //---------- helper_func ----------//
+      var search = e.target.value;
+      this.setState({
+        search: search
+      }); //---------- helper_func ----------//
 
-      var searchData = Object(_home_function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_3__["searchRegexMatch"])(this.state.search.toLowerCase());
+      var searchData = Object(_home_function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_3__["searchRegexMatch"])(search.toLowerCase());
       var sortNotes = this.props.notes.filter(function (each) {
         var sortTitles = each.title.toLowerCase().match(searchData);
         var sortBody = each.body.toLowerCase().match(searchData);
@@ -2769,7 +2761,7 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderModalTop",
     value: function renderModalTop() {
-      var _this5 = this;
+      var _this4 = this;
 
       var _this$props = this.props,
           currentUser = _this$props.currentUser,
@@ -2782,19 +2774,19 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       var maxPage = Math.ceil(totalNotes / notesPerPage); // Change page
 
       var paginate = function paginate(pageNumber) {
-        return _this5.setState({
+        return _this4.setState({
           currentPage: pageNumber
         });
       };
 
       var nextPage = function nextPage() {
-        currentPage < maxPage && _this5.setState({
+        currentPage < maxPage && _this4.setState({
           currentPage: currentPage + 1
         });
       };
 
       var prevPage = function prevPage() {
-        currentPage > 1 && _this5.setState({
+        currentPage > 1 && _this4.setState({
           currentPage: currentPage - 1
         });
       };
@@ -2807,14 +2799,13 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, currentUser_firstName, "'s Notes")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "notes-search"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        onSubmit: this.handleSearch,
         className: "notes-bar-search-form"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         className: "notes-search-input",
         type: "text",
         placeholder: "Search..",
         value: this.state.search,
-        onChange: this.handleChange("search")
+        onChange: this.handleSearch
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "checkbox-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
@@ -2853,7 +2844,7 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this6 = this;
+      var _this5 = this;
 
       var _this$props2 = this.props,
           fetchNote = _this$props2.fetchNote,
@@ -2880,10 +2871,10 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
           className: "notes-page-ul"
         }, currentNotes.map(function (eachNote) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_notes_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
-            handleUpdate: _this6.handleUpdate,
-            toggleClass: _this6.toggleClass,
-            flipToDelete: _this6.state.flipToDelete,
-            noteId: _this6.state.noteId,
+            handleUpdate: _this5.handleUpdate,
+            toggleClass: _this5.toggleClass,
+            flipToDelete: _this5.state.flipToDelete,
+            noteId: _this5.state.noteId,
             deleteNote: deleteNote,
             fetchNote: fetchNote,
             eachNote: eachNote,

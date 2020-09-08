@@ -79,10 +79,6 @@ class NotesPage extends React.Component {
         this.setState({ noteId })
     }
 
-    handleChange(f) {
-        return (e) => this.setState({ [f]: e.target.value })
-    }
-
     handleCheck(e) {
         const checkbox = e.target.value
 
@@ -119,10 +115,11 @@ class NotesPage extends React.Component {
     }
 
     handleSearch(e) {
-        e.preventDefault();
-
-        //---------- helper_func ----------//
-        const searchData = searchRegexMatch(this.state.search.toLowerCase());
+      const search = e.target.value
+      this.setState({ search });
+      
+      //---------- helper_func ----------//
+        const searchData = searchRegexMatch(search.toLowerCase());
 
         const sortNotes = this.props.notes.filter(each => {
             let sortTitles = each.title.toLowerCase().match(searchData)
@@ -186,7 +183,6 @@ class NotesPage extends React.Component {
             </div>
             <div className="notes-search">
               <form
-                onSubmit={this.handleSearch}
                 className="notes-bar-search-form"
               >
                 <input
@@ -194,7 +190,7 @@ class NotesPage extends React.Component {
                   type="text"
                   placeholder="Search.."
                   value={this.state.search}
-                  onChange={this.handleChange("search")}
+                  onChange={this.handleSearch}
                 />
               </form>
             </div>
