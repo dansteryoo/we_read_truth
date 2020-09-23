@@ -9,10 +9,10 @@
 
 # Devo.destroy_all
 # Devo.where(book: "Judges", gender: "HE").destroy_all
-Devo.where(book: "Ephesians").destroy_all
+Devo.where(book: "Job").destroy_all
 
 update_1 = JSON.parse(File.read("#{Rails.root}/dist/update/he_update.json"))
-update_2 = JSON.parse(File.read("#{Rails.root}/dist/update/she_update.json"))
+# update_2 = JSON.parse(File.read("#{Rails.root}/dist/update/she_update.json"))
 
 # data_1 = JSON.parse(File.read("#{Rails.root}/dist/he_v1.json"))
 # data_2 = JSON.parse(File.read("#{Rails.root}/dist/he_v2.json"))
@@ -29,7 +29,7 @@ update_2 = JSON.parse(File.read("#{Rails.root}/dist/update/she_update.json"))
 
 hash = {
     "HE": [update_1],
-    "SHE": [update_2]
+    # "SHE": [update_2]
 }
 
 hash.each do |gender, data_array|
