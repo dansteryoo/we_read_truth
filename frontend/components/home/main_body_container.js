@@ -14,8 +14,8 @@ const mapStateToProps = (state) => {
 
       if (
         devoBook[0].gender === "HE" ||
-        (devoBook[0].gender === "SHE" && devoBook[0].book === "Judges")
-      ) {
+        (devoBook[0].gender === "SHE" && 
+        (devoBook[0].book === "Judges") || devoBook[0].book === "Job")) {
         devoBook.reverse();
       }
     }
