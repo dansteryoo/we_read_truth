@@ -1709,7 +1709,7 @@ var mapStateToProps = function mapStateToProps(state) {
   if (state.devos.devoBook) {
     devoBook = Object.values(state.devos.devoBook);
 
-    if (devoBook[0].gender === "HE" || devoBook[0].gender === "SHE" && devoBook[0].book === "Judges") {
+    if (devoBook[0].gender === "HE" || devoBook[0].gender === "SHE" && devoBook[0].book === "Judges" || devoBook[0].book === "Job") {
       devoBook.reverse();
     }
   }
