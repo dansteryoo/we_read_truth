@@ -950,7 +950,6 @@ var mapStateToProps = function mapStateToProps(state) {
 
   if (devoBook.length > 0) {
     if (devoBook[0].gender === "HE" || devoBook[0].gender === "SHE" && devoBook[0].book === "Judges" || devoBook[0].book === "Job") {
-      debugger;
       devoBook.reverse();
     }
   }
