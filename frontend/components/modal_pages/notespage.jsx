@@ -159,7 +159,7 @@ class NotesPage extends React.Component {
         const { notes, notesPerPage, currentPage } = this.state; 
         const totalNotes = notes.length; 
         const maxPage = Math.ceil(totalNotes / notesPerPage);
-        const lastNote = currentPage * notesPerPage;
+        const lastNote = Math.min(currentPage * notesPerPage, totalNotes);
         const firstNote = currentPage * notesPerPage - notesPerPage + 1;
         
         // Change page
@@ -224,7 +224,7 @@ class NotesPage extends React.Component {
                 maxPage={maxPage}
               />
             </div>
-            <div>
+            <div className="notes-modal-top-totalnum">
               <span>
                 {firstNote} to {lastNote} of {totalNotes}
               </span>

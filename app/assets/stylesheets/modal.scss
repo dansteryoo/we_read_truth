@@ -294,6 +294,12 @@ $darkpink: #ff8da1;
 .notes-modal-top {
   width: 100%;
 
+  &-totalnum {
+    position: absolute;
+    top: 23px;
+    right: 100px;
+    color: $gray;
+  }
   //------------------Notes Modal Search
 
       .notes-search {
@@ -302,7 +308,7 @@ $darkpink: #ff8da1;
         top: 13.5px;
         left: 215px;
         background-color: white;
-        width: 360px;
+        width: 300px;
         border: 1px solid #ebebeb;
         border-radius: 5px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -310,7 +316,7 @@ $darkpink: #ff8da1;
     }
 
     .notes-search-input {
-      width: 340px;
+      width: 280px;
       height: 35px;
       border: 0px;
       color: #767676;
@@ -335,7 +341,6 @@ $darkpink: #ff8da1;
     top: 23px;
     left: 600px;
     color: $gray;
-    margin-left: 10px;
 }
 /* Customize the label (the container) */
 .container {
