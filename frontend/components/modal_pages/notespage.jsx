@@ -159,7 +159,9 @@ class NotesPage extends React.Component {
         const { notes, notesPerPage, currentPage } = this.state; 
         const totalNotes = notes.length; 
         const maxPage = Math.ceil(totalNotes / notesPerPage);
-
+        const lastNote = currentPage * notesPerPage;
+        const firstNote = currentPage * notesPerPage - notesPerPage + 1;
+        
         // Change page
         const paginate = (pageNumber) => 
             this.setState({ currentPage: pageNumber });
@@ -182,9 +184,7 @@ class NotesPage extends React.Component {
               <span>{currentUser_firstName}'s Notes</span>
             </div>
             <div className="notes-search">
-              <form
-                className="notes-bar-search-form"
-              >
+              <form className="notes-bar-search-form">
                 <input
                   className="notes-search-input"
                   type="text"
@@ -223,6 +223,11 @@ class NotesPage extends React.Component {
                 prevPage={prevPage}
                 maxPage={maxPage}
               />
+            </div>
+            <div>
+              <span>
+                {firstNote} to {lastNote} of {totalNotes}
+              </span>
             </div>
 
             <div className="form-closing-x" onClick={() => closeModal()}>

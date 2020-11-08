@@ -2771,7 +2771,9 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
           notesPerPage = _this$state2.notesPerPage,
           currentPage = _this$state2.currentPage;
       var totalNotes = notes.length;
-      var maxPage = Math.ceil(totalNotes / notesPerPage); // Change page
+      var maxPage = Math.ceil(totalNotes / notesPerPage);
+      var lastNote = currentPage * notesPerPage;
+      var firstNote = currentPage * notesPerPage - notesPerPage + 1; // Change page
 
       var paginate = function paginate(pageNumber) {
         return _this4.setState({
@@ -2832,7 +2834,7 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
         nextPage: nextPage,
         prevPage: prevPage,
         maxPage: maxPage
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, firstNote, " to ", lastNote, " of ", totalNotes)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-closing-x",
         onClick: function onClick() {
           return closeModal();
