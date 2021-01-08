@@ -252,7 +252,6 @@ class NotesPage extends React.Component {
 
     if (notes.length > 0) {
       return (
-        <>
         <div className="notes-page-container">
           {this.renderModalTop()}
           <div className="notes-page-content">
@@ -274,11 +273,9 @@ class NotesPage extends React.Component {
             </section>
           </div>
         </div>
-      </>
       )
     } else {
       return (
-      <>
       <div className="notes-page-container">
         {this.renderModalTop()}
         <div className="notes-page-content">
@@ -297,7 +294,6 @@ class NotesPage extends React.Component {
               </section>
             </div>
           </div>
-        </>
       )
     }
   }

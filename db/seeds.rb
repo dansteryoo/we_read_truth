@@ -8,8 +8,14 @@
 
 
 # Devo.destroy_all
-# Devo.where(book: "Mark", gender: "HE").destroy_all
-Devo.where(book: "John").destroy_all
+Devo.where(book: "Proverbs", gender: "HE").destroy_all
+Devo.where(book: "Romans").destroy_all
+Devo.where(book: "Daniel").destroy_all
+Devo.where(book: "Countdown to Acts").destroy_all
+Devo.where(book: "The Life of Moses").destroy_all
+Devo.where(book: " Lent 2020: His Love Endures").destroy_all
+Devo.where(book: "Lent 2020: His Love Endures").destroy_all
+Devo.where("book like ?", "%Hymns%").destroy_all
 
 update_1 = JSON.parse(File.read("#{Rails.root}/dist/update/he_update.json"))
 update_2 = JSON.parse(File.read("#{Rails.root}/dist/update/she_update.json"))

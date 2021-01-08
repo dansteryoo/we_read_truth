@@ -162,20 +162,16 @@ class ProfilesPage extends React.Component {
 
         if (this.state.success) {
             return (
-                <>
                 <div className='success-message-div-update'>
                     <span>Profile Updated!</span>
                 </div>
-                </>
             );
 
         } else if (this.state.demoMessage) {
                 return (
-                    <>
                         <div className='success-message-div-demo'>
                             <span>Sorry, but you cannot modify the Demo.</span>
                         </div>
-                    </>
                 );
 
         } else if (!this.state.deleteUser) {
