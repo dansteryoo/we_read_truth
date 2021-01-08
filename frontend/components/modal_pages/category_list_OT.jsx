@@ -4,16 +4,9 @@ import { OTbooks, OTbookFormat } from '../home/function_helpers/bookTitles'
 const CategoryListOT = ({ title, handleClick }) => {
 
     const lowerCaseArr = OTbooks.map(ele => ele.toLowerCase());
-    const inBookTitle = lowerCaseArr.includes(title.book)
-    const isBookTitleDefined = OTbookFormat[title.book] !== undefined
-    const bookTitle = OTbooks[lowerCaseArr.indexOf(title.book)]
-
-    let OTbook;
-    if (inBookTitle && !isBookTitleDefined) {
-        OTbook = bookTitle
-    } else if (inBookTitle && isBookTitleDefined) {
-        OTbook = OTbookFormat[title.book]
-    };
+    const bookTitleRender = OTbookFormat[title.book];
+    const bookTitle = OTbooks[lowerCaseArr.indexOf(title.book)];
+    let OTbook = bookTitleRender || bookTitle;
 
     let fetchBookPayload = {
         gender: title.gender,

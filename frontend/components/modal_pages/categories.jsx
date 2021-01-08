@@ -37,9 +37,8 @@ class CategoriesPage extends React.Component {
 
     render() {
         const { sheDevoIndex, heDevoIndex } = this.props
-        
+        console.log({ sheDevoIndex });
         return (
-            <>
                 <div className="categories-page-container">
                     <div className="form-closing-x" onClick={() => this.props.closeModal()}>
                         &#10005;
@@ -134,7 +133,6 @@ class CategoriesPage extends React.Component {
                         </div>
                     </section>
                 </div>
-            </>
         );
     }
 }

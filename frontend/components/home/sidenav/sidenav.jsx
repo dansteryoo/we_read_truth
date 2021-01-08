@@ -68,22 +68,14 @@ class SideNav extends React.Component {
 
     renderDevoBookTitle () {
         const { book } = this.state;
-        let bookInBookTitles = allBookTitles.includes(book)
-        let bookTitleDefined = allBookTitlesFormat[book] !== undefined
+        let devoBookTitle = allBookTitlesFormat[book];
+        let devoBookTitleRender = allBookTitles[allBookTitles.indexOf(book)];
 
-        let devoBookTitle;
-        if (bookInBookTitles && !bookTitleDefined) {
-            devoBookTitle = allBookTitles[allBookTitles.indexOf(book)]
-
-        } else if (bookInBookTitles && bookTitleDefined) {
-            devoBookTitle = allBookTitlesFormat[book]
-        }
-
-        return devoBookTitle
+        return devoBookTitleRender || devoBookTitle;
     }
     
     render() {
-
+        debugger
         return (
             <div className='left-container'>
                 <div className='sidenav-title'>
