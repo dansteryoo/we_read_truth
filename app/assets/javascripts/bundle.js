@@ -1569,7 +1569,6 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this3 = this;
 
-      debugger;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "left-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1805,176 +1804,120 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _category_list_Themes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./category_list_Themes */ "./frontend/components/modal_pages/category_list_Themes.jsx");
 /* harmony import */ var _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../home/function_helpers/bookTitles */ "./frontend/components/home/function_helpers/bookTitles.js");
 /* harmony import */ var _home_function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../home/function_helpers/helper_funcs */ "./frontend/components/home/function_helpers/helper_funcs.js");
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 
 
 
 
 
-
-
-var CategoriesPage = /*#__PURE__*/function (_React$Component) {
-  _inherits(CategoriesPage, _React$Component);
-
-  var _super = _createSuper(CategoriesPage);
-
-  function CategoriesPage(props) {
-    var _this;
-
-    _classCallCheck(this, CategoriesPage);
-
-    _this = _super.call(this, props);
-    _this.state = {
-      fetchBook: ''
-    };
-    _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
-    return _this;
+var styles = {
+  she: {
+    div: "categories-title-she"
+  },
+  he: {
+    div: "categories-title-he"
   }
+};
 
-  _createClass(CategoriesPage, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.props.fetchDevoIndex();
-    }
-  }, {
-    key: "handleClick",
-    // sortTitles
-    // this.props.sheDevoIndex.sort((a, b) => this.state.bibleBooks.indexOf(a.book) - this.state.bibleBooks.indexOf(b.book))
-    // sort titles by bible order 
-    // sortAlphabetically
-    // this.props.sheDevoIndex.sort((a, b) => a.book < b.book ? -1 : 1
-    // sort title by alphabetical order
-    value: function handleClick(devoPayload, e) {
-      var _this2 = this;
+var CategoriesPage = function CategoriesPage(_ref) {
+  var fetchDevoIndex = _ref.fetchDevoIndex,
+      fetchDevoBook = _ref.fetchDevoBook,
+      closeModal = _ref.closeModal,
+      sheDevoIndex = _ref.sheDevoIndex,
+      heDevoIndex = _ref.heDevoIndex;
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    fetchDevoIndex();
+  }, []);
+  /***********************************
+   *           handleClick           *
+   ***********************************/
 
-      e.preventDefault();
-      this.props.fetchDevoBook(Object(_home_function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_5__["setPayload"])(devoPayload)).then(function () {
-        return _this2.props.closeModal();
+  var handleClick = function handleClick(devoPayload, e) {
+    e.preventDefault();
+    fetchDevoBook(Object(_home_function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_5__["setPayload"])(devoPayload));
+    return closeModal();
+  };
+  /***********************************
+   *           renderBooks           *
+   ***********************************/
+
+
+  var renderBooks = function renderBooks(type, gender) {
+    var klass = gender === "she" ? "she-category-ul" : "he-category-ul";
+    var devoIndex = gender === "she" ? sheDevoIndex : heDevoIndex;
+    var Component = type === "ot" ? _category_list_OT__WEBPACK_IMPORTED_MODULE_1__["default"] : _category_list_NT__WEBPACK_IMPORTED_MODULE_2__["default"];
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      className: klass
+    }, Object(_home_function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_5__["sortTitles"])(devoIndex, _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_4__["bibleBooks"]).map(function (title, i) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Component, {
+        title: title,
+        handleClick: handleClick,
+        key: i
       });
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this3 = this;
+    }));
+  };
+  /***********************************
+   *           renderThemes          *
+   ***********************************/
 
-      var _this$props = this.props,
-          sheDevoIndex = _this$props.sheDevoIndex,
-          heDevoIndex = _this$props.heDevoIndex;
-      console.log({
-        sheDevoIndex: sheDevoIndex
+
+  var renderThemes = function renderThemes(gender) {
+    var klass = gender === "she" ? "she-category-ul" : "he-category-ul";
+    var devoIndex = gender === "she" ? sheDevoIndex : heDevoIndex;
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      className: klass
+    }, Object(_home_function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_5__["sortAlphabetically"])(devoIndex, _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_4__["bibleBooks"]).map(function (title, i) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_category_list_Themes__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        title: title,
+        handleClick: handleClick,
+        key: i
       });
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "categories-page-container"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "form-closing-x",
-        onClick: function onClick() {
-          return _this3.props.closeModal();
-        }
-      }, "\u2715"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
-        className: "categories-section-she"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "categories-title-she"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Old Testament")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "categories-OT"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "she-category-ul"
-      }, Object(_home_function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_5__["sortTitles"])(sheDevoIndex, _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_4__["bibleBooks"]).map(function (title, i) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_category_list_OT__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          title: title,
-          handleClick: _this3.handleClick,
-          key: i
-        });
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "categories-title-she"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "New Testament")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "categories-NT"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "she-category-ul"
-      }, Object(_home_function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_5__["sortTitles"])(sheDevoIndex, _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_4__["bibleBooks"]).map(function (title, i) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_category_list_NT__WEBPACK_IMPORTED_MODULE_2__["default"], {
-          title: title,
-          handleClick: _this3.handleClick,
-          key: i
-        });
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "categories-title-she"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Themes")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "categories-Other"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "she-category-ul"
-      }, Object(_home_function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_5__["sortAlphabetically"])(sheDevoIndex, _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_4__["bibleBooks"]).map(function (title, i) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_category_list_Themes__WEBPACK_IMPORTED_MODULE_3__["default"], {
-          title: title,
-          handleClick: _this3.handleClick,
-          key: i
-        });
-      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "form-or-separator-categories"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
-        className: "categories-section-he"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "categories-title-he"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Old Testament")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "categories-OT"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "he-category-ul"
-      }, Object(_home_function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_5__["sortTitles"])(heDevoIndex, _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_4__["bibleBooks"]).map(function (title, i) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_category_list_OT__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          title: title,
-          handleClick: _this3.handleClick,
-          key: i
-        });
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "categories-title-he"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "New Testament")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "categories-NT"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "he-category-ul"
-      }, Object(_home_function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_5__["sortTitles"])(heDevoIndex, _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_4__["bibleBooks"]).map(function (title, i) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_category_list_NT__WEBPACK_IMPORTED_MODULE_2__["default"], {
-          title: title,
-          handleClick: _this3.handleClick,
-          key: i
-        });
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "categories-title-he"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Themes")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "categories-Other"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "she-category-ul"
-      }, Object(_home_function_helpers_helper_funcs__WEBPACK_IMPORTED_MODULE_5__["sortAlphabetically"])(heDevoIndex, _home_function_helpers_bookTitles__WEBPACK_IMPORTED_MODULE_4__["bibleBooks"]).map(function (title, i) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_category_list_Themes__WEBPACK_IMPORTED_MODULE_3__["default"], {
-          title: title,
-          handleClick: _this3.handleClick,
-          key: i
-        });
-      })))));
-    }
-  }]);
+    }));
+  };
+  /***********************************
+   *              render             *
+   ***********************************/
 
-  return CategoriesPage;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "categories-page-container"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-closing-x",
+    onClick: closeModal
+  }, "\u2715"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+    className: "categories-section-she"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: styles.she.div
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Old Testament")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "categories-OT"
+  }, renderBooks("ot", "she")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: styles.she.div
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "New Testament")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "categories-NT"
+  }, renderBooks("nt", "she")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: styles.she.div
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Themes")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "categories-Other"
+  }, renderThemes("she"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-or-separator-categories"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+    className: "categories-section-he"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: styles.he.div
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Old Testament")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "categories-OT"
+  }, renderBooks("ot", "he")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: styles.he.div
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "New Testament")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "categories-NT"
+  }, renderBooks("nt", "he")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: styles.he.div
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Themes")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "categories-Other"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "categories-Other"
+  }, renderThemes("he")))));
+};
 
 /* harmony default export */ __webpack_exports__["default"] = (CategoriesPage);
 
@@ -2193,7 +2136,6 @@ var CategoryListThemes = function CategoryListThemes(_ref) {
       hash[key.toLowerCase()] = data[key];
     }
 
-    ;
     return hash;
   };
 
@@ -2231,6 +2173,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 
+var styles = {
+  container: "note-button-container",
+  front: "note-front",
+  bottom: "note-bottom",
+  title: "note-title",
+  body: "note-body",
+  time: "note-time",
+  back: "note-back",
+  delete: "note-delete",
+  update: "note-update",
+  cancel: "note-cancel",
+  deleteBody: "note-delete-body"
+};
 
 var NotesItem = function NotesItem(_ref) {
   var eachNote = _ref.eachNote,
@@ -2256,41 +2211,41 @@ var NotesItem = function NotesItem(_ref) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: renderFlipCard()
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "note-front"
+    className: styles.front
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "note-bottom"
+    className: styles.bottom
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, " Book: "), eachNote.category), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "note-title"
+    className: styles.title
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Day ", eachNote.day, ": "), eachNote.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "note-body"
+    className: styles.body
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Preview: "), eachNote.body), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "note-time"
+    className: styles.time
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Created: "), formateDate(eachNote.created_at), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Updated: "), formateDate(eachNote.updated_at)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "note-button-container"
+    className: styles.container
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    className: "note-update",
+    className: styles.update,
     onClick: function onClick() {
       return handleUpdate(eachNote.id);
     }
   }, "Update"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    className: "note-delete",
+    className: styles.delete,
     onClick: function onClick() {
       return toggleClass(eachNote.id);
     }
   }, "Delete"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "note-back"
+    className: styles.back
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "note-button-container"
+    className: styles.container
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    className: "note-delete",
+    className: styles.delete,
     onClick: function onClick() {
       return deleteNote(eachNote.id);
     }
   }, "Delete"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    className: "note-cancel",
+    className: styles.cancel,
     onClick: toggleClass
   }, "Cancel")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "note-delete-body"
+    className: styles.deleteBody
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Delete Note?"))));
 };
 
@@ -2884,33 +2839,27 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var ERRORS = ["", // 0 Blank email
-"", // 1 Email !valid 
+"", // 1 Email !valid
 "", // 2 Email taken
 "First name can't be blank", // 3 First name blank
 "Last name can't be blank", // 4 Last name blank
@@ -2918,333 +2867,326 @@ var ERRORS = ["", // 0 Blank email
 "Passwords do not match" // 6 PW !match
 ];
 
-var ProfilesPage = /*#__PURE__*/function (_React$Component) {
-  _inherits(ProfilesPage, _React$Component);
+var ProfilesPage = function ProfilesPage(_ref) {
+  var currentUser = _ref.currentUser,
+      clearErrors = _ref.clearErrors,
+      processForm = _ref.processForm,
+      closeModal = _ref.closeModal,
+      deleteUser = _ref.deleteUser,
+      formType = _ref.formType;
 
-  var _super = _createSuper(ProfilesPage);
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({
+    password: "",
+    firstName: "",
+    lastName: "",
+    passwordMatch: ""
+  }),
+      _useState2 = _slicedToArray(_useState, 2),
+      user = _useState2[0],
+      setUser = _useState2[1];
 
-  function ProfilesPage(props) {
-    var _this;
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
+      _useState4 = _slicedToArray(_useState3, 2),
+      errors = _useState4[0],
+      setErrors = _useState4[1];
 
-    _classCallCheck(this, ProfilesPage);
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState6 = _slicedToArray(_useState5, 2),
+      deletingUser = _useState6[0],
+      setDeletingUser = _useState6[1];
 
-    _this = _super.call(this, props);
-    _this.state = {
-      password: '',
-      firstName: '',
-      lastName: '',
-      passwordMatch: '',
-      passwordMatchError: '',
-      stateErrors: [],
-      deleteUser: false,
-      success: false,
-      demoMessage: false
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState8 = _slicedToArray(_useState7, 2),
+      success = _useState8[0],
+      setSuccess = _useState8[1];
+
+  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState10 = _slicedToArray(_useState9, 2),
+      demoMessage = _useState10[0],
+      setDemoMessage = _useState10[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    setUser(_objectSpread(_objectSpread({}, user), {}, {
+      firstName: currentUser.first_name,
+      lastName: currentUser.last_name
+    }));
+  }, []);
+
+  var isBlank = function isBlank(word) {
+    return word.trim().length < 1;
+  };
+
+  var isPasswordMatch = function isPasswordMatch() {
+    return user.password === user.passwordMatch;
+  };
+  /***********************************
+   *           handleErrors          *
+   ***********************************/
+
+
+  var handleErrors = function handleErrors() {
+    var password = user.password,
+        firstName = user.firstName,
+        lastName = user.lastName;
+    clearErrors();
+    var errs = [];
+
+    if (isBlank(firstName) || isBlank(lastName)) {
+      if (isBlank(firstName)) errs.push(ERRORS[3]); // 3 First name blank
+
+      if (isBlank(lastName)) errs.push(ERRORS[4]); // 4 Last name blank
+    }
+
+    if (!isBlank(password) || !isPasswordMatch()) {
+      if (password.length < 6) errs.push(ERRORS[5]); // 5 PW too short
+
+      if (!isPasswordMatch() && !errs.includes(ERRORS[5])) errs.push(ERRORS[6]); // 6 PW !match
+    }
+
+    return errs;
+  };
+  /***********************************
+   *           handleSubmit          *
+   ***********************************/
+
+
+  var handleSubmit = function handleSubmit(e) {
+    e.preventDefault();
+
+    if (currentUser.first_name === "Demo" && currentUser.last_name === "User") {
+      setDemoMessage(true);
+      return renderDemoMessage();
+    }
+
+    var errs = handleErrors();
+    if (errs.length > 0) return setErrors(errs);
+
+    var capitalizeFirstLetter = function capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.toLocaleLowerCase().slice(1);
     };
-    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
-    _this.handleDelete = _this.handleDelete.bind(_assertThisInitialized(_this));
-    _this.toggleDeleteConfirmation = _this.toggleDeleteConfirmation.bind(_assertThisInitialized(_this));
-    _this.processUpdate = _this.processUpdate.bind(_assertThisInitialized(_this));
-    return _this;
+
+    var userUpdate = {
+      first_name: capitalizeFirstLetter(user.firstName),
+      last_name: capitalizeFirstLetter(user.lastName),
+      id: currentUser.id
+    };
+
+    if (errors.length < 1) {
+      if (!isBlank(user.password) && isPasswordMatch()) {
+        userUpdate.password = user.password;
+        return processUpdate(userUpdate);
+      } else {
+        return processUpdate(userUpdate);
+      }
+    }
+  };
+  /***********************************
+   *          processUpdate          *
+   ***********************************/
+
+
+  var processUpdate = function processUpdate(userUpdate) {
+    processForm(userUpdate);
+    setSuccess(true);
+    renderSuccessMessage();
+  };
+  /***********************************
+   *       renderSuccessMessage      *
+   ***********************************/
+
+
+  var renderSuccessMessage = function renderSuccessMessage() {
+    window.setTimeout(function () {
+      setSuccess(false);
+      closeModal();
+    }, 2500);
+  };
+  /***********************************
+   *       renderDemoMessage      *
+   ***********************************/
+
+
+  var renderDemoMessage = function renderDemoMessage() {
+    window.setTimeout(function () {
+      setDemoMessage(false);
+      closeModal();
+    }, 4000);
+  };
+  /***********************************
+   *           handleChange          *
+   ***********************************/
+
+
+  var handleChange = function handleChange(e) {
+    var field = e.target.name;
+    var value = e.target.value;
+    setUser(_objectSpread(_objectSpread({}, user), {}, _defineProperty({}, field, value)));
+  };
+  /***********************************
+   *           renderErrors          *
+   ***********************************/
+
+
+  var renderErrors = function renderErrors() {
+    var password = user.password,
+        firstName = user.firstName,
+        lastName = user.lastName,
+        passwordMatch = user.passwordMatch;
+    var errsHash = {
+      firstName: "",
+      lastName: "",
+      pwShort: "",
+      pwNoMatch: ""
+    };
+    if (errors.length < 1) return errsHash;
+    errors.forEach(function (err) {
+      if (ERRORS.indexOf(err) === 3) errsHash.firstName = err;
+      if (ERRORS.indexOf(err) === 4) errsHash.lastName = err;
+      if (ERRORS.indexOf(err) === 5) errsHash.pwShort = err;
+      if (ERRORS.indexOf(err) === 6) errsHash.pwNoMatch = err;
+    });
+    if (!isBlank(firstName)) errsHash.firstName = "";
+    if (!isBlank(lastName)) errsHash.lastName = "";
+    if (password.length > 5) errsHash.pwShort = "";
+    if (password === passwordMatch) errsHash.pwNoMatch = "";
+    return errsHash;
+  };
+  /***********************************
+   *           handleDelete          *
+   ***********************************/
+
+
+  var handleDelete = function handleDelete(currentUser) {
+    if (currentUser.first_name !== "Demo" && currentUser.last_name !== "User") {
+      return deleteUser(currentUser.id);
+    } else {
+      setDemoMessage(true);
+      return renderDemoMessage();
+    }
+  };
+  /***********************************
+   *          !currentUser           *
+   ***********************************/
+
+
+  if (!currentUser) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
+  /***********************************
+   *             success             *
+   ***********************************/
+
+  if (success) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "success-message-div-update"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Profile Updated!"));
+    /***********************************
+     *            demoMessage          *
+     ***********************************/
+  } else if (demoMessage) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "success-message-div-demo"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Sorry, but you cannot modify the Demo."));
+    /***********************************
+     *          !deletingUser          *
+     ***********************************/
+  } else if (!deletingUser) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "form-container-update"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "form-title-update"
+    }, "Update ", currentUser.first_name, "'s Profile"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "form-closing-x",
+      onClick: closeModal
+    }, "\u2715"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      onSubmit: handleSubmit,
+      className: "form__update"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "update-form"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      type: "text",
+      className: "update-form-input",
+      value: user.firstName,
+      placeholder: "First name",
+      onChange: handleChange,
+      name: "firstName" // noValidate
+      // required
+
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "form-errors-update-first"
+    }, renderErrors().firstName, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+      id: "first-update",
+      className: "fas fa-user fa-lg"
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      type: "text",
+      className: "update-form-input",
+      value: user.lastName,
+      placeholder: "Last name",
+      onChange: handleChange,
+      name: "lastName" // noValidate
+      // required
+
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "form-errors-update-last"
+    }, renderErrors().lastName, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+      id: "last-update",
+      className: "fas fa-user fa-lg"
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      type: "password",
+      className: "update-form-input",
+      value: user.password,
+      placeholder: "Create a password",
+      onChange: handleChange,
+      name: "password" // noValidate
+      // required
+
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "form-errors-update-password"
+    }, renderErrors().pwShort, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+      id: "password-update",
+      className: "fas fa-lock fa-lg"
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      type: "password",
+      className: "update-form-input",
+      value: user.passwordMatch,
+      placeholder: "Confirm Password",
+      onChange: handleChange,
+      name: "passwordMatch" // noValidate
+      // required
+
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "form-errors-update-password"
+    }, renderErrors().pwNoMatch), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "update-form-button-container"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      className: "update-form-button",
+      type: "submit",
+      value: formType
+    }, "Update"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      className: "update-form-delete-btn",
+      onClick: setDeletingUser(!deletingUser)
+    }, "Delete")))));
+  } else {
+    /***********************************
+     *           deletingUser          *
+     ***********************************/
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "form-container-update"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "form__update"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "update-form"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "update-form-button-container"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      className: "update-form-delete-btn",
+      onClick: handleDelete(currentUser)
+    }, "Delete"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      className: "update-form-cancel-btn",
+      onClick: toggleDeleteConfirmation
+    }, "Cancel")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "update-form-delete-message"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "ARE YOU SURE YOU WANT TO DELETE YOUR ACCOUNT? "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "You will lose all your data permanently! "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Please press the delete button to confirm. "))))));
   }
-
-  _createClass(ProfilesPage, [{
-    key: "isBlank",
-    value: function isBlank(word) {
-      return word.trim().length === 0;
-    }
-  }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.setState({
-        firstName: this.props.currentUser.first_name,
-        lastName: this.props.currentUser.last_name
-      });
-    }
-  }, {
-    key: "handleSubmit",
-    value: function handleSubmit(e) {
-      e.preventDefault();
-      var currentUser = this.props.currentUser;
-
-      if (currentUser.first_name === "Demo" && currentUser.last_name === "User") {
-        this.setState({
-          demoMessage: true
-        });
-        return this.renderDemoMsg();
-      }
-
-      var _this$state = this.state,
-          stateErrors = _this$state.stateErrors,
-          password = _this$state.password,
-          firstName = _this$state.firstName,
-          lastName = _this$state.lastName,
-          passwordMatch = _this$state.passwordMatch;
-      this.props.clearErrors();
-
-      var isPasswordMatch = function isPasswordMatch() {
-        return password === passwordMatch;
-      };
-
-      var errorsArr = [];
-
-      if (this.isBlank(firstName) || this.isBlank(lastName)) {
-        if (this.isBlank(firstName)) errorsArr.push(ERRORS[3]); // 3 First name blank
-
-        if (this.isBlank(lastName)) errorsArr.push(ERRORS[4]); // 4 Last name blank
-      }
-
-      if (!this.isBlank(password) || !isPasswordMatch()) {
-        if (password.length < 6) errorsArr.push(ERRORS[5]); // 5 PW too short
-
-        if (!isPasswordMatch() && !errorsArr.includes(ERRORS[5])) errorsArr.push(ERRORS[6]); // 6 PW !match
-      }
-
-      if (errorsArr.length > 0) return this.setState({
-        stateErrors: errorsArr
-      });
-
-      var capitalizeFirstLetter = function capitalizeFirstLetter(string) {
-        return string.charAt(0).toUpperCase() + string.toLocaleLowerCase().slice(1);
-      };
-
-      var userUpdate = {
-        first_name: capitalizeFirstLetter(firstName),
-        last_name: capitalizeFirstLetter(lastName),
-        id: currentUser.id
-      };
-
-      if (stateErrors.length < 1 && this.isBlank(password)) {
-        return this.processUpdate(userUpdate);
-      } else {
-        if (!this.isBlank(password) && isPasswordMatch()) {
-          userUpdate.password = password;
-          return this.processUpdate(userUpdate);
-        } else {
-          return this.processUpdate(userUpdate);
-        }
-      }
-    }
-  }, {
-    key: "processUpdate",
-    value: function processUpdate(userUpdate) {
-      var _this2 = this;
-
-      return this.props.processForm(userUpdate).then(function () {
-        return _this2.setState({
-          success: true
-        });
-      }).then(function () {
-        return _this2.renderSuccessMsg();
-      });
-    }
-  }, {
-    key: "renderSuccessMsg",
-    value: function renderSuccessMsg() {
-      var _this3 = this;
-
-      window.setTimeout(function () {
-        _this3.setState({
-          success: false
-        });
-
-        _this3.props.closeModal();
-      }, 2500);
-    }
-  }, {
-    key: "renderDemoMsg",
-    value: function renderDemoMsg() {
-      var _this4 = this;
-
-      window.setTimeout(function () {
-        _this4.setState({
-          demoMessage: false
-        });
-
-        _this4.props.closeModal();
-      }, 4000);
-    }
-  }, {
-    key: "handleChange",
-    value: function handleChange(f) {
-      var _this5 = this;
-
-      return function (e) {
-        return _this5.setState(_defineProperty({}, f, e.target.value));
-      };
-    }
-  }, {
-    key: "renderErrors",
-    value: function renderErrors() {
-      var _this$state2 = this.state,
-          stateErrors = _this$state2.stateErrors,
-          password = _this$state2.password,
-          firstName = _this$state2.firstName,
-          lastName = _this$state2.lastName,
-          passwordMatch = _this$state2.passwordMatch;
-      var errorsHash = {
-        firstName: '',
-        lastName: '',
-        pwShort: '',
-        pwNoMatch: ''
-      };
-      if (stateErrors.length < 1) return errorsHash;
-      stateErrors.forEach(function (err) {
-        if (ERRORS.indexOf(err) === 3) errorsHash.firstName = err;
-        if (ERRORS.indexOf(err) === 4) errorsHash.lastName = err;
-        if (ERRORS.indexOf(err) === 5) errorsHash.pwShort = err;
-        if (ERRORS.indexOf(err) === 6) errorsHash.pwNoMatch = err;
-      });
-      if (!this.isBlank(firstName)) errorsHash.firstName = '';
-      if (!this.isBlank(lastName)) errorsHash.lastName = '';
-      if (password.length > 5) errorsHash.pwShort = '';
-      if (password === passwordMatch) errorsHash.pwNoMatch = '';
-      return errorsHash;
-    }
-  }, {
-    key: "handleDelete",
-    value: function handleDelete(currentUser) {
-      if (currentUser.first_name !== "Demo" && currentUser.last_name !== "User") {
-        return this.props.deleteUser(currentUser.id);
-      } else {
-        this.setState({
-          demoMessage: true
-        });
-        return this.renderDemoMsg();
-      }
-    }
-  }, {
-    key: "toggleDeleteConfirmation",
-    value: function toggleDeleteConfirmation() {
-      return this.setState({
-        deleteUser: !this.state.deleteUser
-      });
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this6 = this;
-
-      var _this$props = this.props,
-          currentUser = _this$props.currentUser,
-          formType = _this$props.formType;
-      if (!currentUser) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
-
-      if (this.state.success) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "success-message-div-update"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Profile Updated!"));
-      } else if (this.state.demoMessage) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "success-message-div-demo"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Sorry, but you cannot modify the Demo."));
-      } else if (!this.state.deleteUser) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "form-container-update"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "form-title-update"
-        }, "Update ", currentUser.first_name, "'s Profile"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "form-closing-x",
-          onClick: function onClick() {
-            return _this6.props.closeModal();
-          }
-        }, "\u2715"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-          onSubmit: this.handleSubmit,
-          className: "form__update"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "update-form"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-          type: "text",
-          className: "update-form-input",
-          value: this.state.firstName,
-          placeholder: 'First name',
-          onChange: this.handleChange('firstName'),
-          name: "firstName" // noValidate
-          // required
-
-        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "form-errors-update-first"
-        }, this.renderErrors().firstName, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          id: "first-update",
-          className: "fas fa-user fa-lg"
-        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-          type: "text",
-          className: "update-form-input",
-          value: this.state.lastName,
-          placeholder: 'Last name',
-          onChange: this.handleChange('lastName'),
-          name: "lastName" // noValidate
-          // required
-
-        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "form-errors-update-last"
-        }, this.renderErrors().lastName, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          id: "last-update",
-          className: "fas fa-user fa-lg"
-        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-          type: "password",
-          className: "update-form-input",
-          value: this.state.password,
-          placeholder: 'Create a password',
-          onChange: this.handleChange('password'),
-          name: "password" // noValidate
-          // required
-
-        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "form-errors-update-password"
-        }, this.renderErrors().pwShort, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          id: "password-update",
-          className: "fas fa-lock fa-lg"
-        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-          type: "password",
-          className: "update-form-input",
-          value: this.state.passwordMatch,
-          placeholder: 'Confirm Password',
-          onChange: this.handleChange('passwordMatch'),
-          name: "passwordMatch" // noValidate
-          // required
-
-        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "form-errors-update-password"
-        }, this.renderErrors().pwNoMatch), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "update-form-button-container"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-          className: "update-form-button",
-          type: "submit",
-          value: formType
-        }, "Update"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-          className: "update-form-delete-btn",
-          onClick: function onClick() {
-            return _this6.toggleDeleteConfirmation();
-          }
-        }, "Delete")))));
-      } else {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "form-container-update"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "form__update"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "update-form"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "update-form-button-container"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-          className: "update-form-delete-btn",
-          onClick: function onClick() {
-            return _this6.handleDelete(currentUser);
-          }
-        }, "Delete"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-          className: "update-form-cancel-btn",
-          onClick: function onClick() {
-            return _this6.toggleDeleteConfirmation();
-          }
-        }, "Cancel")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "update-form-delete-message"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "ARE YOU SURE YOU WANT TO DELETE YOUR ACCOUNT? "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "You will lose all your data permanently! "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Please press the delete button to confirm. "))))));
-      }
-    }
-  }]);
-
-  return ProfilesPage;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+};
 
 /* harmony default export */ __webpack_exports__["default"] = (ProfilesPage);
 

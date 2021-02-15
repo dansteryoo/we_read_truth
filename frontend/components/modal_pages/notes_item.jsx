@@ -1,5 +1,19 @@
 import React from 'react';
 
+const styles = {
+  container: "note-button-container",
+  front: "note-front",
+  bottom: "note-bottom",
+  title: "note-title",
+  body: "note-body",
+  time: "note-time",
+  back: "note-back",
+  delete: "note-delete",
+  update: "note-update",
+  cancel: "note-cancel",
+  deleteBody: "note-delete-body",
+};
+
 const NotesItem = ({ eachNote, handleUpdate, deleteNote, toggleClass, noteId }) => {
 
     const formateDate = (date) => {
@@ -17,56 +31,68 @@ const NotesItem = ({ eachNote, handleUpdate, deleteNote, toggleClass, noteId }) 
     }
 
     return (
-        <li className={renderFlipCard()}>
+      <li className={renderFlipCard()}>
+        {/* ---------- NOTE FRONT ---------- */}
 
-            {/* ---------- NOTE FRONT ---------- */}
-            
-            <div className='note-front'>
-                <div className='note-bottom'>
-                    <span> Book: </span>{eachNote.category}
-                </div>
-                <div className='note-title'>
-                    <span>Day {eachNote.day}: </span> 
-                    {eachNote.title}
-                </div>
-                <div className='note-body'>
-                    <span>Preview: </span>{eachNote.body}
-                </div>
-                <div className='note-time'>
-                    <span>Created: </span>{formateDate(eachNote.created_at)}
-                    <br/>
-                    <span>Updated: </span>{formateDate(eachNote.updated_at)}
-                </div>
+        <div className={styles.front}>
+          <div className={styles.bottom}>
+            <span> Book: </span>
+            {eachNote.category}
+          </div>
+          <div className={styles.title}>
+            <span>Day {eachNote.day}: </span>
+            {eachNote.title}
+          </div>
+          <div className={styles.body}>
+            <span>Preview: </span>
+            {eachNote.body}
+          </div>
+          <div className={styles.time}>
+            <span>Created: </span>
+            {formateDate(eachNote.created_at)}
+            <br />
+            <span>Updated: </span>
+            {formateDate(eachNote.updated_at)}
+          </div>
 
-                <div className='note-button-container'>
-                    <button className='note-update' onClick={() => handleUpdate(eachNote.id)}>
-                        Update
-                    </button>
-                    <button className='note-delete' onClick={() => toggleClass(eachNote.id)}>
-                        Delete
-                    </button>
-                </div>
-            </div>
+          <div className={styles.container}>
+            <button
+              className={styles.update}
+              onClick={() => handleUpdate(eachNote.id)}
+            >
+              Update
+            </button>
+            <button
+              className={styles.delete}
+              onClick={() => toggleClass(eachNote.id)}
+            >
+              Delete
+            </button>
+          </div>
+        </div>
 
-            {/* ---------- NOTE BACK ---------- */}
-            
-            <div className='note-back'>
-                <div className='note-button-container'>
-                    <button className='note-delete' onClick={() => deleteNote(eachNote.id)}>
-                        Delete
-                    </button>
-                    <button className='note-cancel' onClick={toggleClass}>
-                        Cancel
-                    </button>
-                </div>
-                <br />
-                <br />
-                <div className='note-delete-body'>
-                    <p>Delete Note?</p>
-                </div>
-            </div>
-        </li>
-    )
+        {/* ---------- NOTE BACK ---------- */}
+
+        <div className={styles.back}>
+          <div className={styles.container}>
+            <button
+              className={styles.delete}
+              onClick={() => deleteNote(eachNote.id)}
+            >
+              Delete
+            </button>
+            <button className={styles.cancel} onClick={toggleClass}>
+              Cancel
+            </button>
+          </div>
+          <br />
+          <br />
+          <div className={styles.deleteBody}>
+            <p>Delete Note?</p>
+          </div>
+        </div>
+      </li>
+    );
 }
 
 export default NotesItem;

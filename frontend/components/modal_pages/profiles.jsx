@@ -1,282 +1,344 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
 const ERRORS = [
-    "", // 0 Blank email
-    "", // 1 Email !valid 
-    "", // 2 Email taken
-    "First name can't be blank", // 3 First name blank
-    "Last name can't be blank", // 4 Last name blank
-    "Password is too short (minimum is 6 characters)", // 5 PW too short
-    "Passwords do not match", // 6 PW !match
-]
+  "", // 0 Blank email
+  "", // 1 Email !valid
+  "", // 2 Email taken
+  "First name can't be blank", // 3 First name blank
+  "Last name can't be blank", // 4 Last name blank
+  "Password is too short (minimum is 6 characters)", // 5 PW too short
+  "Passwords do not match", // 6 PW !match
+];
 
-class ProfilesPage extends React.Component {
-    constructor(props) {
-        super(props);
+const ProfilesPage = ({
+  currentUser,
+  clearErrors,
+  processForm,
+  closeModal,
+  deleteUser,
+  formType,
+}) => {
+  const [user, setUser] = useState({
+    password: "",
+    firstName: "",
+    lastName: "",
+    passwordMatch: "",
+  });
+  const [errors, setErrors] = useState([]);
+  const [deletingUser, setDeletingUser] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [demoMessage, setDemoMessage] = useState(false);
 
-        this.state = {
-            password: '',
-            firstName: '',
-            lastName: '',
-            passwordMatch: '',
-            passwordMatchError: '',
-            stateErrors: [],
-            deleteUser: false,
-            success: false,
-            demoMessage: false
-        }
+  useEffect(() => {
+    setUser({
+      ...user,
+      firstName: currentUser.first_name,
+      lastName: currentUser.last_name,
+    });
+  }, []);
 
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleDelete = this.handleDelete.bind(this);
-        this.toggleDeleteConfirmation = this.toggleDeleteConfirmation.bind(this);
-        this.processUpdate = this.processUpdate.bind(this);
+  const isBlank = (word) => word.trim().length < 1;
+  const isPasswordMatch = () => user.password === user.passwordMatch;
+
+  /***********************************
+   *           handleErrors          *
+   ***********************************/
+
+  const handleErrors = () => {
+    const { password, firstName, lastName } = user;
+    clearErrors();
+
+    let errs = [];
+
+    if (isBlank(firstName) || isBlank(lastName)) {
+      if (isBlank(firstName)) errs.push(ERRORS[3]); // 3 First name blank
+      if (isBlank(lastName)) errs.push(ERRORS[4]); // 4 Last name blank
+    }
+
+    if (!isBlank(password) || !isPasswordMatch()) {
+      if (password.length < 6) errs.push(ERRORS[5]); // 5 PW too short
+      if (!isPasswordMatch() && !errs.includes(ERRORS[5])) errs.push(ERRORS[6]); // 6 PW !match
+    }
+
+    return errs;
+  };
+
+  /***********************************
+   *           handleSubmit          *
+   ***********************************/
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (currentUser.first_name === "Demo" && currentUser.last_name === "User") {
+      setDemoMessage(true);
+      return renderDemoMessage();
+    }
+
+    const errs = handleErrors();
+    if (errs.length > 0) return setErrors(errs);
+
+    const capitalizeFirstLetter = (string) =>
+      string.charAt(0).toUpperCase() + string.toLocaleLowerCase().slice(1);
+
+    let userUpdate = {
+      first_name: capitalizeFirstLetter(user.firstName),
+      last_name: capitalizeFirstLetter(user.lastName),
+      id: currentUser.id,
     };
 
-    isBlank(word) {
-        return word.trim().length === 0
+    if (errors.length < 1) {
+      if (!isBlank(user.password) && isPasswordMatch()) {
+        userUpdate.password = user.password;
+        return processUpdate(userUpdate);
+      } else {
+        return processUpdate(userUpdate);
+      }
     }
+  };
 
-    componentDidMount() {
-        this.setState({
-            firstName: this.props.currentUser.first_name,
-            lastName: this.props.currentUser.last_name
-        })
-    }
+  /***********************************
+   *          processUpdate          *
+   ***********************************/
 
-    handleSubmit(e) {
-        e.preventDefault()
-        const { currentUser } = this.props
-        if (currentUser.first_name === "Demo" && currentUser.last_name === "User") {
-            this.setState({ demoMessage: true })
-            return this.renderDemoMsg()
-        }
+  const processUpdate = (userUpdate) => {
+    processForm(userUpdate);
+    setSuccess(true);
+    renderSuccessMessage();
+  };
 
-        const { stateErrors, password, firstName, lastName, passwordMatch } = this.state
-        this.props.clearErrors()
+  /***********************************
+   *       renderSuccessMessage      *
+   ***********************************/
 
-        const isPasswordMatch = () => password === passwordMatch
-        let errorsArr = []
+  const renderSuccessMessage = () => {
+    window.setTimeout(() => {
+      setSuccess(false);
+      closeModal();
+    }, 2500);
+  };
 
-        if (this.isBlank(firstName) || this.isBlank(lastName)) {
-            if (this.isBlank(firstName)) errorsArr.push(ERRORS[3]) // 3 First name blank
-            if (this.isBlank(lastName)) errorsArr.push(ERRORS[4]) // 4 Last name blank
-        }
+  /***********************************
+   *       renderDemoMessage      *
+   ***********************************/
 
-        if (!this.isBlank(password) || !isPasswordMatch()) {
-            if (password.length < 6) errorsArr.push(ERRORS[5]) // 5 PW too short
-            if (!isPasswordMatch() && !errorsArr.includes(ERRORS[5])) errorsArr.push(ERRORS[6]) // 6 PW !match
-        }
+  const renderDemoMessage = () => {
+    window.setTimeout(() => {
+      setDemoMessage(false);
+      closeModal();
+    }, 4000);
+  };
 
-        if (errorsArr.length > 0) return this.setState({ stateErrors: errorsArr })
+  /***********************************
+   *           handleChange          *
+   ***********************************/
 
-        const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase()
-            + string.toLocaleLowerCase().slice(1)
+  const handleChange = (e) => {
+    const field = e.target.name;
+    const value = e.target.value;
+    setUser({ ...user, [field]: value });
+  };
 
-        let userUpdate = { 
-            first_name: capitalizeFirstLetter(firstName),
-            last_name: capitalizeFirstLetter(lastName),
-            id: currentUser.id  
-        }
+  /***********************************
+   *           renderErrors          *
+   ***********************************/
 
-        if (stateErrors.length < 1 && this.isBlank(password)) {
-            return this.processUpdate(userUpdate)
-        } else {
-            if (!this.isBlank(password) && isPasswordMatch()) {
-                userUpdate.password = password
-                return this.processUpdate(userUpdate)
-            } else {
-                return this.processUpdate(userUpdate)
-            }
+  const renderErrors = () => {
+    const { password, firstName, lastName, passwordMatch } = user;
 
-        }
-    }
-
-    processUpdate(userUpdate) {
-        return this.props.processForm(userUpdate)
-            .then(() => this.setState({ success: true }))
-            .then(() => this.renderSuccessMsg())
-    }
-
-    renderSuccessMsg() {
-        window.setTimeout(() => {
-            this.setState({ success: false })
-            this.props.closeModal()
-        }, 2500)
-    }
-
-    renderDemoMsg() {
-        window.setTimeout(() => {
-            this.setState({ demoMessage: false })
-            this.props.closeModal()
-        }, 4000)
-    }
-
-    handleChange(f) {
-        return e => this.setState({ [f]: e.target.value })
+    const errsHash = {
+      firstName: "",
+      lastName: "",
+      pwShort: "",
+      pwNoMatch: "",
     };
+    if (errors.length < 1) return errsHash;
 
-    renderErrors() {
-        const { stateErrors, password, firstName, lastName, passwordMatch } = this.state;
+    errors.forEach((err) => {
+      if (ERRORS.indexOf(err) === 3) errsHash.firstName = err;
+      if (ERRORS.indexOf(err) === 4) errsHash.lastName = err;
+      if (ERRORS.indexOf(err) === 5) errsHash.pwShort = err;
+      if (ERRORS.indexOf(err) === 6) errsHash.pwNoMatch = err;
+    });
 
-        const errorsHash = {
-            firstName: '',
-            lastName: '',
-            pwShort: '',
-            pwNoMatch: '',
-        }
+    if (!isBlank(firstName)) errsHash.firstName = "";
+    if (!isBlank(lastName)) errsHash.lastName = "";
+    if (password.length > 5) errsHash.pwShort = "";
+    if (password === passwordMatch) errsHash.pwNoMatch = "";
 
-        if (stateErrors.length < 1) return errorsHash
+    return errsHash;
+  };
 
-        stateErrors.forEach(err => {
-            if (ERRORS.indexOf(err) === 3) errorsHash.firstName = err
-            if (ERRORS.indexOf(err) === 4) errorsHash.lastName = err
-            if (ERRORS.indexOf(err) === 5) errorsHash.pwShort = err
-            if (ERRORS.indexOf(err) === 6) errorsHash.pwNoMatch = err
-        })
+  /***********************************
+   *           handleDelete          *
+   ***********************************/
 
-        if (!this.isBlank(firstName)) errorsHash.firstName = ''
-        if (!this.isBlank(lastName)) errorsHash.lastName = ''
-        if (password.length > 5) errorsHash.pwShort = ''
-        if (password === passwordMatch) errorsHash.pwNoMatch = ''
-
-        return errorsHash
+  const handleDelete = (currentUser) => {
+    if (currentUser.first_name !== "Demo" && currentUser.last_name !== "User") {
+      return deleteUser(currentUser.id);
+    } else {
+      setDemoMessage(true);
+      return renderDemoMessage();
     }
+  };
 
-    handleDelete(currentUser) {
-        if (currentUser.first_name !== "Demo" 
-            && currentUser.last_name !== "User") {
-            return this.props.deleteUser(currentUser.id)
-        } else {
-            this.setState({ demoMessage: true })
-            return this.renderDemoMsg()
-        }
-    };
+  /***********************************
+   *          !currentUser           *
+   ***********************************/
 
+  if (!currentUser) return <div></div>;
 
-    toggleDeleteConfirmation() {
-        return this.setState({ deleteUser: !this.state.deleteUser })
-    }
+  /***********************************
+   *             success             *
+   ***********************************/
 
-    render() {
-        const { currentUser, formType } = this.props
-        if (!currentUser) return <div></div>
+  if (success) {
+    return (
+      <div className="success-message-div-update">
+        <span>Profile Updated!</span>
+      </div>
+    );
 
-        if (this.state.success) {
-            return (
-                <div className='success-message-div-update'>
-                    <span>Profile Updated!</span>
-                </div>
-            );
+    /***********************************
+     *            demoMessage          *
+     ***********************************/
+  } else if (demoMessage) {
+    return (
+      <div className="success-message-div-demo">
+        <span>Sorry, but you cannot modify the Demo.</span>
+      </div>
+    );
 
-        } else if (this.state.demoMessage) {
-                return (
-                        <div className='success-message-div-demo'>
-                            <span>Sorry, but you cannot modify the Demo.</span>
-                        </div>
-                );
+    /***********************************
+     *          !deletingUser          *
+     ***********************************/
+  } else if (!deletingUser) {
+    return (
+      <div className="form-container-update">
+        <div className="form-title-update">
+          Update {currentUser.first_name}'s Profile
+        </div>
 
-        } else if (!this.state.deleteUser) {
+        <div className="form-closing-x" onClick={closeModal}>
+          &#10005;
+        </div>
 
-        return (
-            <div className='form-container-update'>
-                <div className='form-title-update'>
-                    Update {currentUser.first_name}'s Profile</div>
-
-                <div className="form-closing-x" onClick={() => this.props.closeModal()}>
-                    &#10005;
-                    </div>
-                    
-                <form onSubmit={this.handleSubmit} className='form__update'>
-
-                    <div className='update-form'>
-                        <input type='text'
-                            className='update-form-input'
-                            value={this.state.firstName}
-                            placeholder={'First name'}
-                            onChange={this.handleChange('firstName')}
-                            name='firstName'
-                        // noValidate
-                        // required
-                        />
-                        <div className='form-errors-update-first'>
-                            {this.renderErrors().firstName}
-                            <i id='first-update' className='fas fa-user fa-lg'></i>
-                        </div>
-
-                        <input type='text'
-                            className='update-form-input'
-                            value={this.state.lastName}
-                            placeholder={'Last name'}
-                            onChange={this.handleChange('lastName')}
-                            name='lastName'
-                        // noValidate
-                        // required
-                        />
-                        <div className='form-errors-update-last'>
-                            {this.renderErrors().lastName}
-                            <i id='last-update' className='fas fa-user fa-lg'></i>
-                        </div>
-
-                        <input type='password'
-                            className='update-form-input'
-                            value={this.state.password}
-                            placeholder={'Create a password'}
-                            onChange={this.handleChange('password')}
-                            name='password'
-                        // noValidate
-                        // required
-                        />
-                        <div className='form-errors-update-password'>
-                            {this.renderErrors().pwShort}
-                            <i id='password-update' className='fas fa-lock fa-lg'></i>
-                        </div>
-
-                        <input type='password'
-                            className='update-form-input'
-                            value={this.state.passwordMatch}
-                            placeholder={'Confirm Password'}
-                            onChange={this.handleChange('passwordMatch')}
-                            name='passwordMatch'
-                        // noValidate
-                        // required
-                        />
-                        <div className='form-errors-update-password'>
-                            {this.renderErrors().pwNoMatch}
-                        </div>
-                        <div className='update-form-button-container'>
-                            <button className='update-form-button' type='submit' value={formType}>Update</button>
-                            <button className='update-form-delete-btn' onClick={() => this.toggleDeleteConfirmation()}>Delete</button>
-                        </div>
-                    </div>
-                </form>
+        <form onSubmit={handleSubmit} className="form__update">
+          <div className="update-form">
+            <input
+              type="text"
+              className="update-form-input"
+              value={user.firstName}
+              placeholder={"First name"}
+              onChange={handleChange}
+              name="firstName"
+              // noValidate
+              // required
+            />
+            <div className="form-errors-update-first">
+              {renderErrors().firstName}
+              <i id="first-update" className="fas fa-user fa-lg"></i>
             </div>
-            );
 
-        } else {
-            return (
-                <>
-                <div className='form-container-update'>
-                <div className='form__update'>
-                <div className='update-form'>
-                    <div className='update-form-button-container'>
-                        <button className='update-form-delete-btn' onClick={() => this.handleDelete(currentUser)}>Delete</button>
-                        <button className='update-form-cancel-btn' onClick={() => this.toggleDeleteConfirmation()}>Cancel</button>
-                    </div>
+            <input
+              type="text"
+              className="update-form-input"
+              value={user.lastName}
+              placeholder={"Last name"}
+              onChange={handleChange}
+              name="lastName"
+              // noValidate
+              // required
+            />
+            <div className="form-errors-update-last">
+              {renderErrors().lastName}
+              <i id="last-update" className="fas fa-user fa-lg"></i>
+            </div>
 
-                    <div className='update-form-delete-message'>
-                            <p>ARE YOU SURE YOU WANT TO DELETE YOUR ACCOUNT? </p>
-                            <br />
-                            <span>You will lose all your data permanently! </span>
-                            <br />
-                            <span>Please press the delete button to confirm. </span>
-                    </div>
-                </div>
-                </div>
-                </div>
-                </>
-            )
-        }
-    }
-}
+            <input
+              type="password"
+              className="update-form-input"
+              value={user.password}
+              placeholder={"Create a password"}
+              onChange={handleChange}
+              name="password"
+              // noValidate
+              // required
+            />
+            <div className="form-errors-update-password">
+              {renderErrors().pwShort}
+              <i id="password-update" className="fas fa-lock fa-lg"></i>
+            </div>
+
+            <input
+              type="password"
+              className="update-form-input"
+              value={user.passwordMatch}
+              placeholder={"Confirm Password"}
+              onChange={handleChange}
+              name="passwordMatch"
+              // noValidate
+              // required
+            />
+            <div className="form-errors-update-password">
+              {renderErrors().pwNoMatch}
+            </div>
+            <div className="update-form-button-container">
+              <button
+                className="update-form-button"
+                type="submit"
+                value={formType}
+              >
+                Update
+              </button>
+              <button
+                className="update-form-delete-btn"
+                onClick={setDeletingUser(!deletingUser)}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    );
+  } else {
+    /***********************************
+     *           deletingUser          *
+     ***********************************/
+
+    return (
+      <>
+        <div className="form-container-update">
+          <div className="form__update">
+            <div className="update-form">
+              <div className="update-form-button-container">
+                <button
+                  className="update-form-delete-btn"
+                  onClick={handleDelete(currentUser)}
+                >
+                  Delete
+                </button>
+                <button
+                  className="update-form-cancel-btn"
+                  onClick={toggleDeleteConfirmation}
+                >
+                  Cancel
+                </button>
+              </div>
+
+              <div className="update-form-delete-message">
+                <p>ARE YOU SURE YOU WANT TO DELETE YOUR ACCOUNT? </p>
+                <br />
+                <span>You will lose all your data permanently! </span>
+                <br />
+                <span>Please press the delete button to confirm. </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
+};
 
 export default ProfilesPage;
 

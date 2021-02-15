@@ -75,7 +75,6 @@ class SideNav extends React.Component {
     }
     
     render() {
-        debugger
         return (
             <div className='left-container'>
                 <div className='sidenav-title'>
