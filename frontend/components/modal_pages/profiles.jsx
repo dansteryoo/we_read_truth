@@ -273,7 +273,7 @@ const ProfilesPage = ({
               className="update-form-input"
               value={user.passwordMatch}
               placeholder={"Confirm Password"}
-              onChange={handleChange}
+              onChange={() => handleChange()}
               name="passwordMatch"
               // noValidate
               // required
@@ -291,7 +291,7 @@ const ProfilesPage = ({
               </button>
               <button
                 className="update-form-delete-btn"
-                onClick={setDeletingUser(!deletingUser)}
+                onClick={() => setDeletingUser(!deletingUser)}
               >
                 Delete
               </button>
@@ -313,13 +313,13 @@ const ProfilesPage = ({
               <div className="update-form-button-container">
                 <button
                   className="update-form-delete-btn"
-                  onClick={handleDelete(currentUser)}
+                  onClick={() => handleDelete(currentUser)}
                 >
                   Delete
                 </button>
                 <button
                   className="update-form-cancel-btn"
-                  onClick={setDeletingUser(!deletingUser)}
+                  onClick={() => setDeletingUser(!deletingUser)}
                 >
                   Cancel
                 </button>
