@@ -210,7 +210,7 @@ const ProfilesPage = ({
     /***********************************
      *          !deletingUser          *
      ***********************************/
-  } else if (!deletingUser) {
+  } else if (deletingUser === true) {
     return (
       <div className="form-container-update">
         <div className="form-title-update">
@@ -291,8 +291,8 @@ const ProfilesPage = ({
               </button>
               <button
                 className="update-form-delete-btn"
-                onClick={setDeletingUser(!deletingUser)}
-              >
+                onClick={setDeletingUser(!)}
+          === true     >
                 Delete
               </button>
             </div>
