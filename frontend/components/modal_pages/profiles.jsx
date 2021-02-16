@@ -319,7 +319,7 @@ const ProfilesPage = ({
                 </button>
                 <button
                   className="update-form-cancel-btn"
-                  onClick={toggleDeleteConfirmation}
+                  onClick={setDeletingUser(!deletingUser)}
                 >
                   Cancel
                 </button>
