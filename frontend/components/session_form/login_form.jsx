@@ -45,10 +45,8 @@ class LogInForm extends React.Component {
 
     render() {
 
-        
         return (
             <div className='form-container'>
-
                 <div className='form-title'>
                 <span id='login-title'>Login to continue or </span>
                     <Link to="/wrt/sign_up">

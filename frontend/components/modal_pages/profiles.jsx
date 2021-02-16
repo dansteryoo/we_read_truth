@@ -210,7 +210,7 @@ const ProfilesPage = ({
     /***********************************
      *          !deletingUser          *
      ***********************************/
-  } else if (deletingUser === true) {
+  } else if (!deletingUser) {
     return (
       <div className="form-container-update">
         <div className="form-title-update">
@@ -221,7 +221,7 @@ const ProfilesPage = ({
           &#10005;
         </div>
 
-        <form onSubmit={handleSubmit} className="form__update">
+        <form onSubmit={() => handleSubmit()} className="form__update">
           <div className="update-form">
             <input
               type="text"
@@ -291,8 +291,8 @@ const ProfilesPage = ({
               </button>
               <button
                 className="update-form-delete-btn"
-                onClick={setDeletingUser(!)}
-          === true     >
+                onClick={setDeletingUser(!deletingUser)}
+              >
                 Delete
               </button>
             </div>
