@@ -3018,6 +3018,10 @@ var ProfilesPage = function ProfilesPage(_ref) {
 
 
   var handleChange = function handleChange(e) {
+    console.log({
+      e: e
+    });
+    debugger;
     var field = e.target.name;
     var value = e.target.value;
     setUser(_objectSpread(_objectSpread({}, user), {}, _defineProperty({}, field, value)));
@@ -3097,7 +3101,9 @@ var ProfilesPage = function ProfilesPage(_ref) {
       className: "form-closing-x",
       onClick: closeModal
     }, "\u2715"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-      onSubmit: handleSubmit,
+      onSubmit: function onSubmit(e) {
+        return handleSubmit(e);
+      },
       className: "form__update"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "update-form"
@@ -3162,7 +3168,9 @@ var ProfilesPage = function ProfilesPage(_ref) {
       value: formType
     }, "Update"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       className: "update-form-delete-btn",
-      onClick: setDeletingUser(!deletingUser)
+      onClick: function onClick() {
+        return setDeletingUser(!deletingUser);
+      }
     }, "Delete")))));
   } else {
     /***********************************
@@ -3178,10 +3186,14 @@ var ProfilesPage = function ProfilesPage(_ref) {
       className: "update-form-button-container"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       className: "update-form-delete-btn",
-      onClick: handleDelete(currentUser)
+      onClick: function onClick() {
+        return handleDelete(currentUser);
+      }
     }, "Delete"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       className: "update-form-cancel-btn",
-      onClick: toggleDeleteConfirmation
+      onClick: function onClick() {
+        return setDeletingUser(!deletingUser);
+      }
     }, "Cancel")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "update-form-delete-message"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "ARE YOU SURE YOU WANT TO DELETE YOUR ACCOUNT? "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "You will lose all your data permanently! "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Please press the delete button to confirm. "))))));

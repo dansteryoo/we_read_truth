@@ -132,6 +132,8 @@ const ProfilesPage = ({
    ***********************************/
 
   const handleChange = (e) => {
+    console.log({e})
+    debugger;
     const field = e.target.name;
     const value = e.target.value;
     setUser({ ...user, [field]: value });
@@ -221,7 +223,7 @@ const ProfilesPage = ({
           &#10005;
         </div>
 
-        <form onSubmit={() => handleSubmit()} className="form__update">
+        <form onSubmit={(e) => handleSubmit(e)} className="form__update">
           <div className="update-form">
             <input
               type="text"
@@ -273,7 +275,7 @@ const ProfilesPage = ({
               className="update-form-input"
               value={user.passwordMatch}
               placeholder={"Confirm Password"}
-              onChange={() => handleChange()}
+              onChange={handleChange}
               name="passwordMatch"
               // noValidate
               // required
