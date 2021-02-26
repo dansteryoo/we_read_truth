@@ -128,6 +128,7 @@ class NotesForm extends React.Component {
                 errorsArr.push(ERRORS[4]); // Day is !number
             if (errorsArr.length > 0)
                 return this.setState({ updateErrors: errorsArr });
+
         } else if (id.length < 1) {
             this.setState({ loading: true });
             this.props
@@ -145,7 +146,10 @@ class NotesForm extends React.Component {
                     }),
                         this.renderSuccessMsg();
                 })
-                .then(() => this.props.fetchNotes());
+                .then(() => {
+                    this.props.fetchNotes();
+                    this.setState({ loading: false });
+                });
         } else {
             this.props
                 .updateNote(noteUpdate)
@@ -162,10 +166,11 @@ class NotesForm extends React.Component {
                     }),
                         this.renderUpdateMsg();
                 })
-                .then(() => this.props.fetchNotes());
+                .then(() => {
+                    this.props.fetchNotes();
+                    this.setState({ loading: false });
+                });
         }
-
-        this.setState({ loading: false });
     }
 
     renderSuccessMsg() {
@@ -181,6 +186,7 @@ class NotesForm extends React.Component {
     }
 
     renderFormButton() {
+        console.log(this.state.loading, "=========this.state.loading========");
         if (this.state.updateForm) {
             return (
                 <div className="button-container">

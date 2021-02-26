@@ -3699,7 +3699,11 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
             updateErrors: []
           }), _this4.renderSuccessMsg();
         }).then(function () {
-          return _this4.props.fetchNotes();
+          _this4.props.fetchNotes();
+
+          _this4.setState({
+            loading: false
+          });
         });
       } else {
         this.props.updateNote(noteUpdate).then(function () {
@@ -3714,13 +3718,13 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
             updateErrors: []
           }), _this4.renderUpdateMsg();
         }).then(function () {
-          return _this4.props.fetchNotes();
+          _this4.props.fetchNotes();
+
+          _this4.setState({
+            loading: false
+          });
         });
       }
-
-      this.setState({
-        loading: false
-      });
     }
   }, {
     key: "renderSuccessMsg",
@@ -3748,6 +3752,8 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
     key: "renderFormButton",
     value: function renderFormButton() {
       var _this7 = this;
+
+      console.log(this.state.loading, "=========this.state.loading========");
 
       if (this.state.updateForm) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
