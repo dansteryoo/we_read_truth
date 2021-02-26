@@ -3530,15 +3530,16 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      id: '',
-      title: '',
-      category: '',
-      day: '',
-      body: '',
+      id: "",
+      title: "",
+      category: "",
+      day: "",
+      body: "",
       update: false,
       success: false,
       updateErrors: [],
-      updateForm: false
+      updateForm: false,
+      loading: false
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.renderFormButton = _this.renderFormButton.bind(_assertThisInitialized(_this));
@@ -3548,7 +3549,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
   _createClass(NotesForm, [{
     key: "dayIsNumber",
     value: function dayIsNumber(day) {
-      var splitStr = day.trim().split('');
+      var splitStr = day.trim().split("");
 
       for (var i = 0; i < splitStr.length; i++) {
         if (/^[a-zA-Z]*$/.test(splitStr[i])) return false;
@@ -3604,11 +3605,11 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
             return ele.id === _this2.state.id;
           })) {
             this.setState({
-              id: '',
-              title: '',
-              category: '',
-              day: '',
-              body: '',
+              id: "",
+              title: "",
+              category: "",
+              day: "",
+              body: "",
               updateForm: false,
               updateErrors: []
             });
@@ -3629,15 +3630,16 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
     key: "handleCancelUpdate",
     value: function handleCancelUpdate() {
       return this.setState({
-        id: '',
-        title: '',
-        category: '',
-        day: '',
-        body: '',
+        id: "",
+        title: "",
+        category: "",
+        day: "",
+        body: "",
         update: false,
         success: false,
         updateErrors: [],
-        updateForm: false
+        updateForm: false,
+        loading: false
       });
     }
   }, {
@@ -3682,6 +3684,9 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
           updateErrors: errorsArr
         });
       } else if (id.length < 1) {
+        this.setState({
+          loading: true
+        });
         this.props.createNote(note).then(function () {
           _this4.setState({
             success: true,
@@ -3712,6 +3717,10 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
           return _this4.props.fetchNotes();
         });
       }
+
+      this.setState({
+        loading: false
+      });
     }
   }, {
     key: "renderSuccessMsg",
@@ -3745,6 +3754,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
           className: "button-container"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "notes-form-submit-button",
+          disabled: this.state.loading,
           type: "submit"
         }, "Update"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-form-cancel-x",
@@ -3757,6 +3767,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
           className: "button-container"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "notes-form-submit-button",
+          disabled: this.state.loading,
           type: "submit"
         }, "Create"));
       }
@@ -3766,11 +3777,11 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
     value: function renderErrors() {
       var updateErrors = this.state.updateErrors;
       var errorsHash = {
-        title: '',
-        body: '',
-        book: '',
-        day: '',
-        number: ''
+        title: "",
+        body: "",
+        book: "",
+        day: "",
+        number: ""
       };
       if (updateErrors.length < 1) return errorsHash;
       updateErrors.forEach(function (err) {
@@ -3785,11 +3796,11 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
           category = _this$state2.category,
           day = _this$state2.day,
           body = _this$state2.body;
-      if (!this.isBlank(title)) errorsHash.title = '';
-      if (!this.isBlank(body)) errorsHash.body = '';
-      if (!this.isBlank(category)) errorsHash.book = '';
-      if (!this.isBlank(day)) errorsHash.day = '';
-      if (this.dayIsNumber(day)) errorsHash.number = '';
+      if (!this.isBlank(title)) errorsHash.title = "";
+      if (!this.isBlank(body)) errorsHash.body = "";
+      if (!this.isBlank(category)) errorsHash.book = "";
+      if (!this.isBlank(day)) errorsHash.day = "";
+      if (this.dayIsNumber(day)) errorsHash.number = "";
       return errorsHash;
     }
   }, {
