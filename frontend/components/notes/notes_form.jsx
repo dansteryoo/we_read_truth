@@ -106,7 +106,8 @@ class NotesForm extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-
+        this.setState({ loading: true });
+        
         const { id, title, category, day, body } = this.state;
         let noteUpdate = { id, title, category, day, body };
         let note = { title, category, day, body };
@@ -130,7 +131,6 @@ class NotesForm extends React.Component {
                 return this.setState({ updateErrors: errorsArr });
 
         } else if (id.length < 1) {
-            this.setState({ loading: true });
             this.props
                 .createNote(note)
                 .then(() => {
@@ -186,7 +186,6 @@ class NotesForm extends React.Component {
     }
 
     renderFormButton() {
-        console.log(this.state.loading, "=========this.state.loading========");
         if (this.state.updateForm) {
             return (
                 <div className="button-container">
