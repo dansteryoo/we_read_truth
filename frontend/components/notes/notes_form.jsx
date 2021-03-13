@@ -79,6 +79,7 @@ class NotesForm extends React.Component {
                         body: "",
                         updateForm: false,
                         updateErrors: [],
+                        loading: false,
                     });
                 }
             }
@@ -148,7 +149,6 @@ class NotesForm extends React.Component {
                 })
                 .then(() => {
                     this.props.fetchNotes();
-                    this.setState({ loading: false });
                 });
         } else {
             this.props
@@ -168,7 +168,6 @@ class NotesForm extends React.Component {
                 })
                 .then(() => {
                     this.props.fetchNotes();
-                    this.setState({ loading: false });
                 });
         }
     }
