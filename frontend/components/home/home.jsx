@@ -1,7 +1,7 @@
 import React from 'react';
 import SidNavContainer from './sidenav/sidenav_container';
 import NavBarContainer from '../nav/navbar_container';
-import NotesFormContainer from '../notes/notes_form_container';
+import NotesForm from '../notes/notes_form';
 import MainBodyContainer from './main_body_container';
 
 class HomePage extends React.Component {
@@ -92,7 +92,7 @@ class HomePage extends React.Component {
                   </div>
                   <div className="content">
                     {/* ---------- NOTE FORM ---------- */}
-                    <NotesFormContainer />
+                    <NotesForm />
                   </div>
                 </div>
               </div>

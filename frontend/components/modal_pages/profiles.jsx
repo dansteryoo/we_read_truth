@@ -132,8 +132,6 @@ const ProfilesPage = ({
    ***********************************/
 
   const handleChange = (e) => {
-    console.log({e})
-    debugger;
     const field = e.target.name;
     const value = e.target.value;
     setUser({ ...user, [field]: value });
