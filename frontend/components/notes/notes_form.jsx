@@ -238,82 +238,80 @@ class NotesForm extends React.Component {
                     <span>Note Created!</span>
                 </div>
             );
-        }
-
-        if (this.state.update) {
+        } else if (this.state.update) {
             return (
                 <div className="success-message-div">
                     <span>Note Updated!</span>
                 </div>
             );
+        } else {
+            return (
+                <div className="notes-form-container">
+                    <form onSubmit={this.handleSubmit}>
+                        <div className="notes-form">
+                            {/* categories and day */}
+                            <div className="notes-form-book-day">
+                                <div className="columns">
+                                    <div className="form-errors-notes">
+                                        <label>Book </label>{" "}
+                                        {this.renderErrors().book}
+                                    </div>
+                                    <input
+                                        type="text"
+                                        className="notes-form-input"
+                                        value={this.state.category}
+                                        onChange={this.handleChange("category")}
+                                        // required
+                                    />
+                                </div>
+                                <div className="columns">
+                                    <div className="form-errors-notes">
+                                        <label>Day# </label>
+                                        {this.renderErrors().day}
+                                        {this.renderErrors().number}
+                                    </div>
+                                    <input
+                                        type="text"
+                                        className="notes-form-input"
+                                        value={this.state.day}
+                                        onChange={this.handleChange("day")}
+                                        // required
+                                    />
+                                </div>
+                            </div>
+                            {/* title */}
+                            <div className="form-errors-notes">
+                                <label>Title </label>
+                                {this.renderErrors().title}
+                            </div>
+                            <input
+                                type="text"
+                                className="notes-form-input-title"
+                                onChange={this.handleChange("title")}
+                                value={this.state.title}
+                                // required
+                            />
+                            {/* body */}
+                            <div className="form-errors-notes">
+                                <label>Body </label>
+                                {this.renderErrors().body}
+                            </div>
+                            <textarea
+                                className="notes-form-textarea"
+                                placeholder={"Enter note here.."}
+                                onChange={this.handleChange("body")}
+                                value={this.state.body}
+                                // required
+                            />
+
+                            {this.renderFormButton()}
+                        </div>
+                    </form>
+
+                    <br />
+                </div>
+            );
         }
-
-        return (
-            <div className="notes-form-container">
-                <form onSubmit={this.handleSubmit}>
-                    <div className="notes-form">
-                        {/* categories and day */}
-                        <div className="notes-form-book-day">
-                            <div className="columns">
-                                <div className="form-errors-notes">
-                                    <label>Book </label>{" "}
-                                    {this.renderErrors().book}
-                                </div>
-                                <input
-                                    type="text"
-                                    className="notes-form-input"
-                                    value={this.state.category}
-                                    onChange={this.handleChange("category")}
-                                    // required
-                                />
-                            </div>
-                            <div className="columns">
-                                <div className="form-errors-notes">
-                                    <label>Day# </label>
-                                    {this.renderErrors().day}
-                                    {this.renderErrors().number}
-                                </div>
-                                <input
-                                    type="text"
-                                    className="notes-form-input"
-                                    value={this.state.day}
-                                    onChange={this.handleChange("day")}
-                                    // required
-                                />
-                            </div>
-                        </div>
-                        {/* title */}
-                        <div className="form-errors-notes">
-                            <label>Title </label>
-                            {this.renderErrors().title}
-                        </div>
-                        <input
-                            type="text"
-                            className="notes-form-input-title"
-                            onChange={this.handleChange("title")}
-                            value={this.state.title}
-                            // required
-                        />
-                        {/* body */}
-                        <div className="form-errors-notes">
-                            <label>Body </label>
-                            {this.renderErrors().body}
-                        </div>
-                        <textarea
-                            className="notes-form-textarea"
-                            placeholder={"Enter note here.."}
-                            onChange={this.handleChange("body")}
-                            value={this.state.body}
-                            // required
-                        />
-
-                        {this.renderFormButton()}
-                    </div>
-                </form>
-
-                <br />
-            </div>
-        );
     }
 }
 
