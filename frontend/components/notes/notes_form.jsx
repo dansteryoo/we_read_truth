@@ -141,13 +141,13 @@ class NotesForm extends React.Component {
 
     renderSuccessMsg() {
         window.setTimeout(() => {
-            this.setState({ success: false });
+            this.setState({ success: false, loading: false });
         }, 3000);
     }
 
     renderUpdateMsg() {
         window.setTimeout(() => {
-            this.setState({ update: false });
+            this.setState({ update: false, loading: false });
         }, 3000);
     }
 
