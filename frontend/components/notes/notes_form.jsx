@@ -113,43 +113,34 @@ class NotesForm extends React.Component {
             !this.dayIsNumber(day)
         ) {
             let errorsArr = [];
-
             if (this.isBlank(title)) errorsArr.push(ERRORS[0]); // Title is blank
             if (this.isBlank(body)) errorsArr.push(ERRORS[1]); // Body is blank
             if (this.isBlank(category)) errorsArr.push(ERRORS[2]); // Book is blank
             if (this.isBlank(day)) errorsArr.push(ERRORS[3]); // Day is blank
             if (!this.dayIsNumber(day) && !this.isBlank(day))
                 errorsArr.push(ERRORS[4]); // Day is !number
-            if (errorsArr.length > 0)
-                return this.setState({ updateErrors: errorsArr });
+            if (errorsArr.length > 0) return this.setState({ updateErrors: errorsArr });
+
         } else if (id.length < 1) {
             this.props
                 .createNote(note)
-                .then(() => {
-                    this.setState({
+                .then(() => this.setState({
                         ...defaultState,
                         success: true,
                         loading: true,
-                    }),
-                        this.renderSuccessMsg();
-                })
-                .then(() => {
-                    this.props.fetchNotes();
-                });
+                    }))
+                .then(() => this.renderSuccessMsg())
+                .then(() => this.props.fetchNotes());
         } else {
             this.props
                 .updateNote(noteUpdate)
-                .then(() => {
-                    this.setState({
+                .then(() => this.setState({
                         ...defaultState,
                         update: true,
                         loading: true,
-                    }),
-                        this.renderUpdateMsg();
-                })
-                .then(() => {
-                    this.props.fetchNotes();
-                });
+                    }))
+                .then(() => this.renderUpdateMsg())
+                .then(() => this.props.fetchNotes());
         }
     }
 
