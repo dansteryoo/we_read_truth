@@ -24,11 +24,8 @@ const defaultState = {
     category: "",
     day: "",
     body: "",
-    update: false,
-    success: false,
     updateErrors: [],
     updateForm: false,
-    loading: false,
 };
 
 class NotesForm extends React.Component {
@@ -127,7 +124,6 @@ class NotesForm extends React.Component {
                 .then(() => this.setState({
                         ...defaultState,
                         success: true,
-                        loading: true,
                     }))
                 .then(() => this.renderSuccessMsg())
                 .then(() => this.props.fetchNotes());
@@ -137,7 +133,6 @@ class NotesForm extends React.Component {
                 .then(() => this.setState({
                         ...defaultState,
                         update: true,
-                        loading: true,
                     }))
                 .then(() => this.renderUpdateMsg())
                 .then(() => this.props.fetchNotes());
