@@ -7,23 +7,24 @@ const ERRORS = [
     "day must only be a number", // 4 Number
 ];
 
+const defaultState = {
+    id: "",
+    title: "",
+    category: "",
+    day: "",
+    body: "",
+    update: false,
+    success: false,
+    updateErrors: [],
+    updateForm: false,
+    loading: false,
+};
+
 class NotesForm extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            id: "",
-            title: "",
-            category: "",
-            day: "",
-            body: "",
-            update: false,
-            success: false,
-            updateErrors: [],
-            updateForm: false,
-            loading: false,
-        };
-
+        this.state = defaultState;
         this.handleSubmit = this.handleSubmit.bind(this);
         this.renderFormButton = this.renderFormButton.bind(this);
     }
@@ -71,16 +72,7 @@ class NotesForm extends React.Component {
 
                 //---------- AND if current props array is NOT EMPTY then reset state ----------//
                 if (!this.props.notes.some((ele) => ele.id === this.state.id)) {
-                    this.setState({
-                        id: "",
-                        title: "",
-                        category: "",
-                        day: "",
-                        body: "",
-                        updateForm: false,
-                        updateErrors: [],
-                        loading: false,
-                    });
+                    this.setState(defaultState);
                 }
             }
         }
@@ -91,18 +83,7 @@ class NotesForm extends React.Component {
     }
 
     handleCancelUpdate() {
-        return this.setState({
-            id: "",
-            title: "",
-            category: "",
-            day: "",
-            body: "",
-            update: false,
-            success: false,
-            updateErrors: [],
-            updateForm: false,
-            loading: false,
-        });
+        return this.setState(defaultState);
     }
 
     handleSubmit(e) {
@@ -136,14 +117,9 @@ class NotesForm extends React.Component {
                 .createNote(note)
                 .then(() => {
                     this.setState({
+                        ...defaultState,
                         success: true,
-                        title: "",
-                        category: "",
-                        day: "",
-                        body: "",
-                        id: "",
-                        updateForm: false,
-                        updateErrors: [],
+                        loading: true,
                     }),
                         this.renderSuccessMsg();
                 })
@@ -155,14 +131,9 @@ class NotesForm extends React.Component {
                 .updateNote(noteUpdate)
                 .then(() => {
                     this.setState({
+                        ...defaultState,
                         update: true,
-                        title: "",
-                        category: "",
-                        day: "",
-                        body: "",
-                        id: "",
-                        updateForm: false,
-                        updateErrors: [],
+                        loading: true,
                     }),
                         this.renderUpdateMsg();
                 })
