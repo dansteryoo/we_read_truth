@@ -713,7 +713,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _sidenav_sidenav_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sidenav/sidenav_container */ "./frontend/components/home/sidenav/sidenav_container.js");
 /* harmony import */ var _nav_navbar_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../nav/navbar_container */ "./frontend/components/nav/navbar_container.js");
-/* harmony import */ var _notes_notes_form_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../notes/notes_form_container */ "./frontend/components/notes/notes_form_container.js");
+/* harmony import */ var _notes_notes_form__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../notes/notes_form */ "./frontend/components/notes/notes_form.jsx");
 /* harmony import */ var _main_body_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./main_body_container */ "./frontend/components/home/main_body_container.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -836,7 +836,7 @@ var HomePage = /*#__PURE__*/function (_React$Component) {
         className: "title"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "My Notes"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "content"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_notes_notes_form_container__WEBPACK_IMPORTED_MODULE_3__["default"], null))))));
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_notes_notes_form__WEBPACK_IMPORTED_MODULE_3__["default"], null))))));
     }
   }]);
 
@@ -3018,10 +3018,6 @@ var ProfilesPage = function ProfilesPage(_ref) {
 
 
   var handleChange = function handleChange(e) {
-    console.log({
-      e: e
-    });
-    debugger;
     var field = e.target.name;
     var value = e.target.value;
     setUser(_objectSpread(_objectSpread({}, user), {}, _defineProperty({}, field, value)));
@@ -3486,7 +3482,16 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_note_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/note_actions */ "./frontend/actions/note_actions.js");
+/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -3511,12 +3516,26 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 
+
+
+
+
+
 var ERRORS = ["ttl can't be blank", // 0 Title
 "bod can't be blank", // 1 Body
 "boo can't be blank", // 2 Book
 "day can't be blank", // 3 Day
 "day must only be a number" // 4 Number
 ];
+var defaultState = {
+  id: "",
+  title: "",
+  category: "",
+  day: "",
+  body: "",
+  updateErrors: [],
+  updateForm: false
+};
 
 var NotesForm = /*#__PURE__*/function (_React$Component) {
   _inherits(NotesForm, _React$Component);
@@ -3529,18 +3548,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
     _classCallCheck(this, NotesForm);
 
     _this = _super.call(this, props);
-    _this.state = {
-      id: "",
-      title: "",
-      category: "",
-      day: "",
-      body: "",
-      update: false,
-      success: false,
-      updateErrors: [],
-      updateForm: false,
-      loading: false
-    };
+    _this.state = defaultState;
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.renderFormButton = _this.renderFormButton.bind(_assertThisInitialized(_this));
     return _this;
@@ -3599,20 +3607,12 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
 
         if (this.props.notes.length !== prevProps.notes.length) {
           //---------- AND if current props array is empty SKIP reset state ----------//
-          if (this.props.notes.length < 1) return; //---------- AND if current props array is NOT EMPTY then reset state ----------//
+          if (this.props.notes.length < 1) return; //---------- OR if current props array is NOT EMPTY then reset state ----------//
 
           if (!this.props.notes.some(function (ele) {
             return ele.id === _this2.state.id;
           })) {
-            this.setState({
-              id: "",
-              title: "",
-              category: "",
-              day: "",
-              body: "",
-              updateForm: false,
-              updateErrors: []
-            });
+            this.setState(defaultState);
           }
         }
       }
@@ -3629,18 +3629,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleCancelUpdate",
     value: function handleCancelUpdate() {
-      return this.setState({
-        id: "",
-        title: "",
-        category: "",
-        day: "",
-        body: "",
-        update: false,
-        success: false,
-        updateErrors: [],
-        updateForm: false,
-        loading: false
-      });
+      return this.setState(defaultState);
     }
   }, {
     key: "handleSubmit",
@@ -3648,6 +3637,9 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
       var _this4 = this;
 
       e.preventDefault();
+      this.setState({
+        loading: true
+      });
       var _this$state = this.state,
           id = _this$state.id,
           title = _this$state.title,
@@ -3684,45 +3676,24 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
           updateErrors: errorsArr
         });
       } else if (id.length < 1) {
-        this.setState({
-          loading: true
-        });
         this.props.createNote(note).then(function () {
-          _this4.setState({
-            success: true,
-            title: "",
-            category: "",
-            day: "",
-            body: "",
-            id: "",
-            updateForm: false,
-            updateErrors: []
-          }), _this4.renderSuccessMsg();
+          return _this4.setState(_objectSpread(_objectSpread({}, defaultState), {}, {
+            success: true
+          }));
         }).then(function () {
-          _this4.props.fetchNotes();
-
-          _this4.setState({
-            loading: false
-          });
+          return _this4.renderSuccessMsg();
+        }).then(function () {
+          return _this4.props.fetchNotes();
         });
       } else {
         this.props.updateNote(noteUpdate).then(function () {
-          _this4.setState({
-            update: true,
-            title: "",
-            category: "",
-            day: "",
-            body: "",
-            id: "",
-            updateForm: false,
-            updateErrors: []
-          }), _this4.renderUpdateMsg();
+          return _this4.setState(_objectSpread(_objectSpread({}, defaultState), {}, {
+            update: true
+          }));
         }).then(function () {
-          _this4.props.fetchNotes();
-
-          _this4.setState({
-            loading: false
-          });
+          return _this4.renderUpdateMsg();
+        }).then(function () {
+          return _this4.props.fetchNotes();
         });
       }
     }
@@ -3733,7 +3704,8 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
 
       window.setTimeout(function () {
         _this5.setState({
-          success: false
+          success: false,
+          loading: false
         });
       }, 3000);
     }
@@ -3744,7 +3716,8 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
 
       window.setTimeout(function () {
         _this6.setState({
-          update: false
+          update: false,
+          loading: false
         });
       }, 3000);
     }
@@ -3752,8 +3725,6 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
     key: "renderFormButton",
     value: function renderFormButton() {
       var _this7 = this;
-
-      console.log(this.state.loading, "=========this.state.loading========");
 
       if (this.state.updateForm) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -3821,7 +3792,7 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
           className: "success-message-div"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Note Updated!"));
       } else {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "notes-form-container"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
           onSubmit: this.handleSubmit
@@ -3865,39 +3836,13 @@ var NotesForm = /*#__PURE__*/function (_React$Component) {
           onChange: this.handleChange("body"),
           value: this.state.body // required
 
-        }), this.renderFormButton())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null)));
+        }), this.renderFormButton())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null));
       }
     }
   }]);
 
   return NotesForm;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
-
-/* harmony default export */ __webpack_exports__["default"] = (NotesForm);
-
-/***/ }),
-
-/***/ "./frontend/components/notes/notes_form_container.js":
-/*!***********************************************************!*\
-  !*** ./frontend/components/notes/notes_form_container.js ***!
-  \***********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _actions_note_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/note_actions */ "./frontend/actions/note_actions.js");
-/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
-/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
-/* harmony import */ var _notes_form__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./notes_form */ "./frontend/components/notes/notes_form.jsx");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-
-
-
-
-
-
 
 var mapStateToProps = function mapStateToProps(state) {
   var noteId;
@@ -3931,30 +3876,30 @@ var mapStateToProps = function mapStateToProps(state) {
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     openModal: function openModal(formType, id) {
-      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__["openModal"])(formType, id));
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__["openModal"])(formType, id));
     },
     fetchNotes: function fetchNotes() {
-      return dispatch(Object(_actions_note_actions__WEBPACK_IMPORTED_MODULE_1__["fetchNotes"])());
+      return dispatch(Object(_actions_note_actions__WEBPACK_IMPORTED_MODULE_2__["fetchNotes"])());
     },
     fetchNote: function fetchNote(noteId) {
-      return dispatch(Object(_actions_note_actions__WEBPACK_IMPORTED_MODULE_1__["fetchNote"])(noteId));
+      return dispatch(Object(_actions_note_actions__WEBPACK_IMPORTED_MODULE_2__["fetchNote"])(noteId));
     },
     deleteNote: function deleteNote(noteId) {
-      return dispatch(Object(_actions_note_actions__WEBPACK_IMPORTED_MODULE_1__["deleteNote"])(noteId));
+      return dispatch(Object(_actions_note_actions__WEBPACK_IMPORTED_MODULE_2__["deleteNote"])(noteId));
     },
     updateNote: function updateNote(note) {
-      return dispatch(Object(_actions_note_actions__WEBPACK_IMPORTED_MODULE_1__["updateNote"])(note));
+      return dispatch(Object(_actions_note_actions__WEBPACK_IMPORTED_MODULE_2__["updateNote"])(note));
     },
     createNote: function createNote(note) {
-      return dispatch(Object(_actions_note_actions__WEBPACK_IMPORTED_MODULE_1__["createNote"])(note));
+      return dispatch(Object(_actions_note_actions__WEBPACK_IMPORTED_MODULE_2__["createNote"])(note));
     },
     clearErrors: function clearErrors() {
-      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_3__["clearErrors"])());
+      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_4__["clearErrors"])());
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_5__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_notes_form__WEBPACK_IMPORTED_MODULE_4__["default"])));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_5__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(NotesForm)));
 
 /***/ }),
 
