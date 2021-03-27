@@ -1,7 +1,7 @@
 import React from 'react';
 import NotesItem from './notes_item'
 import Pagination from './notes_pagination'
-import { searchRegexMatch } from '../home/function_helpers/helper_funcs'
+import { searchRegexMatch } from '../../helpers/helperFunctions'
 
 class NotesPage extends React.Component {
     constructor(props) {
@@ -38,9 +38,6 @@ class NotesPage extends React.Component {
           }, 500));
           
     }
-
-    // componentWillUnmount() {
-    // }
 
     componentDidUpdate(prevProps) {
         const { notes, search, defaultSorted, checked } = this.state

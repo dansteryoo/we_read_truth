@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import CategoryListOT from "./category_list_OT";
 import CategoryListNT from "./category_list_NT";
 import CategoryListThemes from "./category_list_Themes";
-import { bibleBooks } from '../home/function_helpers/bookTitles'
-import { setPayload, sortTitles, sortAlphabetically} from '../home/function_helpers/helper_funcs'
+import { bibleBooks } from '../../helpers/bookTitles'
+import { setPayload, sortTitles, sortAlphabetically} from '../../helpers/helperFunctions'
 
 const styles = {
   she: {

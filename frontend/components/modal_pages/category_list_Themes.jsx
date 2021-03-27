@@ -1,40 +1,49 @@
 import React from "react";
-import {
-  themeBooks,
-  themeBookFormat,
-} from "../home/function_helpers/bookTitles";
+import { themeBooks, themeBookFormat } from "../../helpers/bookTitles";
+
+/********************************
+ * CategoryListThemes Component *
+ ********************************/
 
 const CategoryListThemes = ({ title, handleClick }) => {
-  const lowerCaseArr = themeBooks.map((ele) => ele.toLowerCase());
+    const lowerCaseArr = themeBooks.map((ele) => ele.toLowerCase());
 
-  const lowerCaseFormat = (data) => {
-    let hash = {};
-    for (let key in data) {
-      hash[key.toLowerCase()] = data[key];
-    }
-    return hash;
-  };
+    /********************************
+     *       lowerCaseFormat        *
+     ********************************/
 
-  const bookTitle = themeBooks[lowerCaseArr.indexOf(title.book)];
-  const lowerCaseThemeBookFormat = lowerCaseFormat(themeBookFormat);
-  const bookTitleRender = lowerCaseThemeBookFormat[title.book];
-  let themeBook = bookTitleRender || bookTitle;
+    const lowerCaseFormat = (data) => {
+        let hash = {};
+        for (let key in data) {
+            hash[key.toLowerCase()] = data[key];
+        }
+        return hash;
+    };
 
-  let fetchBookPayload = {
-    gender: title.gender,
-    book: bookTitle,
-  };
+    const bookTitle = themeBooks[lowerCaseArr.indexOf(title.book)];
+    const lowerCaseThemeBookFormat = lowerCaseFormat(themeBookFormat);
+    const bookTitleRender = lowerCaseThemeBookFormat[title.book];
+    let themeBook = bookTitleRender || bookTitle;
 
-  return (
-    <li className="category-li">
-      <span
-        className="category-title"
-        onClick={(e) => handleClick(fetchBookPayload, e)}
-      >
-        {themeBook}
-      </span>
-    </li>
-  );
+    let fetchBookPayload = {
+        gender: title.gender,
+        book: bookTitle,
+    };
+
+    /********************************
+     *            RENDER            *
+     ********************************/
+
+    return (
+        <li className="category-li">
+            <span
+                className="category-title"
+                onClick={(e) => handleClick(fetchBookPayload, e)}
+            >
+                {themeBook}
+            </span>
+        </li>
+    );
 };
 
 export default CategoryListThemes;

@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { regBibleTitles, maxMcLeanBooks } from './function_helpers/bookTitles'
+import { regBibleTitles, maxMcLeanBooks } from "../../helpers/bookTitles";
 
 class MainBody extends React.Component {
     constructor(props) {

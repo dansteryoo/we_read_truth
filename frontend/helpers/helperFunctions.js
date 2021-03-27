@@ -38,3 +38,11 @@ export const sortAlphabetically = (data) => {
         .sort((a, b) => a.book < b.book ? -1 : 1)
         .map(ele => ele)
 };
+
+export const wordIsBlank = (word) => {
+    return word.trim().length < 1;
+};
+
+export const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.toLocaleLowerCase().slice(1);
+};

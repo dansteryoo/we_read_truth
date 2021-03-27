@@ -254,8 +254,7 @@ export const allBookTitles = [
   "James",
   "1 & 2 Peter",
   "1, 2 & 3 John",
-  "Jude",
-  "Revelation",
+  "Jude & Revelation",
   "The Sermon on the Mount",
   "This Is the Gospel",
   "Mourning and Dancing",
@@ -364,8 +363,7 @@ export const bibleBooks = [
     "1, 2 & 3 John",
     "SecondJohn",
     "ThirdJohn",
-    "Jude",
-    "Revelation"
+    "Jude & Revelation"
 ]
 
 // category_list_NT.jsx
@@ -388,8 +386,7 @@ export const NTbooks = [
     "James",
     "1 & 2 Peter",
     "1, 2 & 3 John",
-    "Jude",
-    "Revelation",
+    "Jude & Revelation",
 ];
 
 // category_list_NT.jsx

@@ -1,15 +1,18 @@
 import React from "react";
 import { connect } from "react-redux";
 import {
-    fetchNote,
     fetchNotes,
-    deleteNote,
     updateNote,
     createNote,
 } from "../../actions/note_actions";
-import { openModal } from "../../actions/modal_actions";
 import { clearErrors } from "../../actions/session_actions";
 import { withRouter } from "react-router-dom";
+import { wordIsBlank } from "../../helpers/helperFunctions"
+
+/******************************
+ *          CONSTANTS         *
+ ******************************/
+
 const ERRORS = [
     "ttl can't be blank", // 0 Title
     "bod can't be blank", // 1 Body
@@ -28,6 +31,10 @@ const defaultState = {
     updateForm: false,
 };
 
+/******************************
+ *     NotesForm Component    *
+ ******************************/
+
 class NotesForm extends React.Component {
     constructor(props) {
         super(props);
@@ -44,10 +51,6 @@ class NotesForm extends React.Component {
             if (/^[a-zA-Z]*$/.test(splitStr[i])) return false;
         }
         return true;
-    }
-
-    isBlank(word) {
-        return word.trim().length < 1;
     }
 
     componentDidMount() {
@@ -103,18 +106,18 @@ class NotesForm extends React.Component {
         let note = { title, category, day, body };
 
         if (
-            this.isBlank(title) ||
-            this.isBlank(body) ||
-            this.isBlank(category) ||
-            this.isBlank(day) ||
+            wordIsBlank(title) ||
+            wordIsBlank(body) ||
+            wordIsBlank(category) ||
+            wordIsBlank(day) ||
             !this.dayIsNumber(day)
         ) {
             let errorsArr = [];
-            if (this.isBlank(title)) errorsArr.push(ERRORS[0]); // Title is blank
-            if (this.isBlank(body)) errorsArr.push(ERRORS[1]); // Body is blank
-            if (this.isBlank(category)) errorsArr.push(ERRORS[2]); // Book is blank
-            if (this.isBlank(day)) errorsArr.push(ERRORS[3]); // Day is blank
-            if (!this.dayIsNumber(day) && !this.isBlank(day))
+            if (wordIsBlank(title)) errorsArr.push(ERRORS[0]); // Title is blank
+            if (wordIsBlank(body)) errorsArr.push(ERRORS[1]); // Body is blank
+            if (wordIsBlank(category)) errorsArr.push(ERRORS[2]); // Book is blank
+            if (wordIsBlank(day)) errorsArr.push(ERRORS[3]); // Day is blank
+            if (!this.dayIsNumber(day) && !wordIsBlank(day))
                 errorsArr.push(ERRORS[4]); // Day is !number
             if (errorsArr.length > 0) return this.setState({ updateErrors: errorsArr });
 
@@ -208,10 +211,10 @@ class NotesForm extends React.Component {
 
         const { title, category, day, body } = this.state;
 
-        if (!this.isBlank(title)) errorsHash.title = "";
-        if (!this.isBlank(body)) errorsHash.body = "";
-        if (!this.isBlank(category)) errorsHash.book = "";
-        if (!this.isBlank(day)) errorsHash.day = "";
+        if (!wordIsBlank(title)) errorsHash.title = "";
+        if (!wordIsBlank(body)) errorsHash.body = "";
+        if (!wordIsBlank(category)) errorsHash.book = "";
+        if (!wordIsBlank(day)) errorsHash.day = "";
         if (this.dayIsNumber(day)) errorsHash.number = "";
 
         return errorsHash;
@@ -301,41 +304,31 @@ class NotesForm extends React.Component {
     }
 }
 
+/******************************
+ *       mapStateToProps      *
+ ******************************/
 
-const mapStateToProps = (state) => {
-    let noteId;
-    let notes;
-    let noteErrors;
-
-    if (state.notes.noteId !== undefined) {
-        noteId = state.notes.noteId;
-        notes = [];
-    } else {
-        noteId = {};
-        notes = Object.values(state.notes);
-    }
-
-    if (state.notes.noteErrors !== undefined) {
-        noteErrors = state.notes.noteErrors;
-    } else {
-        noteErrors = [];
-    }
+const mapStateToProps = ({ session, users, errors, notes, devos }) => {
+    const noteId = notes.noteId ? notes.noteId : {};
+    const notesArray = notes.noteId ? [] : Object.values(notes);
+    const noteErrors = notes.noteErrors ? notes.noteErrors : [];
 
     return {
-        currentUser: state.users[state.session.id],
-        errors: state.errors,
-        devos: Object.values(state.devos),
-        notes: notes,
+        currentUser: users[session.id],
+        errors: errors,
+        devos: Object.values(devos),
+        notes: notesArray,
         noteId: noteId,
         noteErrors: noteErrors,
     };
 };
 
+/******************************
+ *     mapDispatchToProps     *
+ ******************************/
+
 const mapDispatchToProps = (dispatch) => ({
-    openModal: (formType, id) => dispatch(openModal(formType, id)),
     fetchNotes: () => dispatch(fetchNotes()),
-    fetchNote: (noteId) => dispatch(fetchNote(noteId)),
-    deleteNote: (noteId) => dispatch(deleteNote(noteId)),
     updateNote: (note) => dispatch(updateNote(note)),
     createNote: (note) => dispatch(createNote(note)),
     clearErrors: () => dispatch(clearErrors()),

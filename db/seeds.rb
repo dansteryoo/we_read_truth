@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
-@devo = "James"
+@devo = "Revelation"
 Devo.where(book: @devo).destroy_all
 
 # Devo.destroy_all
@@ -15,13 +15,13 @@ Devo.where(book: @devo).destroy_all
 # Devo.where(book: "Esther").destroy_all
 # Devo.where("book like ?", "%Hymns%").destroy_all
 
-# update_1 = JSON.parse(File.read("#{Rails.root}/dist/update/he_update.json"))
-# update_2 = JSON.parse(File.read("#{Rails.root}/dist/update/she_update.json"))
+update_1 = JSON.parse(File.read("#{Rails.root}/dist/update/he_update.json"))
+update_2 = JSON.parse(File.read("#{Rails.root}/dist/update/she_update.json"))
 
-data_1 = JSON.parse(File.read("#{Rails.root}/dist/he_v1.json"))
+# data_1 = JSON.parse(File.read("#{Rails.root}/dist/he_v1.json"))
 # data_2 = JSON.parse(File.read("#{Rails.root}/dist/he_v2.json"))
 # data_3 = JSON.parse(File.read("#{Rails.root}/dist/he_v3.json"))
-data_4 = JSON.parse(File.read("#{Rails.root}/dist/she_v1.json"))
+# data_4 = JSON.parse(File.read("#{Rails.root}/dist/she_v1.json"))
 # data_5 = JSON.parse(File.read("#{Rails.root}/dist/she_v2.json"))
 # data_6 = JSON.parse(File.read("#{Rails.root}/dist/she_v3.json"))
 # data_7 = JSON.parse(File.read("#{Rails.root}/dist/she_v4.json"))
@@ -32,16 +32,16 @@ data_4 = JSON.parse(File.read("#{Rails.root}/dist/she_v1.json"))
 # }
 
 hash = {
-    "HE": [data_1],
-    "SHE": [data_4]
+    "HE": [update_1],
+    "SHE": [update_2]
 }
 
 hash.each do |gender, data_array|
     data_array.each do |each_data|
         each_data.each do |each|
+            title = each["devo_title"].strip
 
-            if each["book_title"].strip == @devo
-
+            # if title == @devo
                 img = each["img_url"]
                 passages = each["devo_passages"]
                 summary = each["devo_summary"]
@@ -54,9 +54,8 @@ hash.each do |gender, data_array|
                     title: title,
                     passages: passages,
                     summary: summary,
-                    img: img,
-                )
-            end
+                    img: img)
+            # end
         end
     end
 end
