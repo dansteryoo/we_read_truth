@@ -9,7 +9,7 @@ import { closeModal, openModal } from "../../actions/modal_actions";
  ******************************/
 
 const Navbar = ({ openModal, closeModal, logout }) => {
-    const [search, setSearch] = useState();
+    const [search, setSearch] = useState("");
 
     useEffect(() => {
         return () => closeModal();
