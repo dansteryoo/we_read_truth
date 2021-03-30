@@ -42,11 +42,11 @@ hash.each do |gender, data_array|
             title = each["devo_title"].strip
 
             # if title == @devo
-                img = each["img_url"]
-                passages = each["devo_passages"]
-                summary = each["devo_summary"]
-                title = each["devo_title"].strip
                 book = each["book_title"].strip
+                title = each["devo_title"].strip
+                passages = each["devo_passages"].strip.blank? ? "blank" : each["devo_passages"].strip
+                summary = each["devo_summary"].strip.blank? ? "blank" : each["devo_summary"].strip
+                img = each["img_url"].strip.blank? ? "blank" : each["img_url"].strip
 
                 Devo.create!(
                     gender: gender.to_s,

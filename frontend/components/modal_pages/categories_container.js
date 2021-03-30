@@ -3,56 +3,43 @@ import { closeModal, openModal } from '../../actions/modal_actions';
 import { fetchDevoIndex, clearDevoState, fetchDevoBook } from '../../actions/devo_actions'
 import CategoriesPage from './categories';
 
-const mapStateToProps = (state) => {
-
-    let deleteMainBodyDevo;
+const mapStateToProps = ({ devos, modal, users, session, errors }) => {
+    const deleteMainBodyDevo = devos.mainBodyDevo
+        ? Object.values(devos).filter((ele) => ele.id === undefined)
+        : Object.values(devos);
     
-    if (state.devos.mainBodyDevo) {
-        deleteMainBodyDevo = Object.values(state.devos).filter(ele => {
-            return ele.id === undefined
-        })
-    } else {
-        deleteMainBodyDevo = Object.values(state.devos)
-    }
-    
-    let allDevosIdxFiltered = deleteMainBodyDevo.filter(ele => {
-        return ele.gender === "HE" || ele.gender === "SHE"
-    });
+    const allDevosIdxFiltered = deleteMainBodyDevo.filter(
+        (ele) => ele.gender === "HE" || ele.gender === "SHE"
+    );
 
-    let allDevosIdx = allDevosIdxFiltered.map(each => ({ 
-        gender: each.gender, 
-        book: each.book.toLowerCase() 
+    const allDevosIdx = allDevosIdxFiltered.map((each) => ({
+        gender: each.gender,
+        book: each.book.toLowerCase(),
     }));
 
-    let heDevoIdx;
-    let sheDevoIdx;
+    const heDevoIndex = modal.data
+        ? allDevosIdx.filter(
+              (ele) => ele.gender === "HE" && ele.book.match(modal.data)
+          )
+        : allDevosIdx.filter((ele) => ele.gender === "HE");
 
-    if (state.modal.data === undefined) {
-        heDevoIdx = allDevosIdx.filter(ele => ele.gender === "HE");
-        sheDevoIdx = allDevosIdx.filter(ele => ele.gender === "SHE");
-    } else {
-        heDevoIdx = allDevosIdx.filter(ele => (
-            ele.gender === "HE" && ele.book.match(state.modal.data) 
-        ));
-        sheDevoIdx = allDevosIdx.filter(ele => (
-            ele.gender === "SHE" && ele.book.match(state.modal.data)
-        ));
-    };
+    const sheDevoIndex = modal.data
+        ? allDevosIdx.filter(
+              (ele) => ele.gender === "SHE" && ele.book.match(modal.data)
+          )
+        : allDevosIdx.filter((ele) => ele.gender === "SHE");
 
-    let devoBook;
-    if (state.devos.devoBook === undefined) {
-        devoBook = []
-    } else {
-        devoBook = Object.values(state.devos.devoBook)
-    };
+    const devoBook = devos.devoBook ? Object.values(devos.devoBook) : []
+
+    console.log({ allDevosIdxFiltered });
 
     return {
-        currentUser: state.users[state.session.id],
-        errors: state.errors,
-        heDevoIndex: heDevoIdx,
-        sheDevoIndex: sheDevoIdx,
-        devoBook: devoBook
-    }
+        currentUser: users[session.id],
+        errors,
+        heDevoIndex,
+        sheDevoIndex,
+        devoBook,
+    };
 };
 
 const mapDispatchToProps = (dispatch) => ({

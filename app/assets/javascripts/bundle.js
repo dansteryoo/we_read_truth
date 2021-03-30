@@ -1390,17 +1390,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var mapStateToProps = function mapStateToProps(state) {
-  var deleteMainBodyDevo;
-
-  if (state.devos.mainBodyDevo) {
-    deleteMainBodyDevo = Object.values(state.devos).filter(function (ele) {
-      return ele.id === undefined;
-    });
-  } else {
-    deleteMainBodyDevo = Object.values(state.devos);
-  }
-
+var mapStateToProps = function mapStateToProps(_ref) {
+  var devos = _ref.devos,
+      modal = _ref.modal,
+      users = _ref.users,
+      session = _ref.session,
+      errors = _ref.errors;
+  var deleteMainBodyDevo = devos.mainBodyDevo ? Object.values(devos).filter(function (ele) {
+    return ele.id === undefined;
+  }) : Object.values(devos);
   var allDevosIdxFiltered = deleteMainBodyDevo.filter(function (ele) {
     return ele.gender === "HE" || ele.gender === "SHE";
   });
@@ -1410,40 +1408,25 @@ var mapStateToProps = function mapStateToProps(state) {
       book: each.book.toLowerCase()
     };
   });
-  var heDevoIdx;
-  var sheDevoIdx;
-
-  if (state.modal.data === undefined) {
-    heDevoIdx = allDevosIdx.filter(function (ele) {
-      return ele.gender === "HE";
-    });
-    sheDevoIdx = allDevosIdx.filter(function (ele) {
-      return ele.gender === "SHE";
-    });
-  } else {
-    heDevoIdx = allDevosIdx.filter(function (ele) {
-      return ele.gender === "HE" && ele.book.match(state.modal.data);
-    });
-    sheDevoIdx = allDevosIdx.filter(function (ele) {
-      return ele.gender === "SHE" && ele.book.match(state.modal.data);
-    });
-  }
-
-  ;
-  var devoBook;
-
-  if (state.devos.devoBook === undefined) {
-    devoBook = [];
-  } else {
-    devoBook = Object.values(state.devos.devoBook);
-  }
-
-  ;
+  var heDevoIndex = modal.data ? allDevosIdx.filter(function (ele) {
+    return ele.gender === "HE" && ele.book.match(modal.data);
+  }) : allDevosIdx.filter(function (ele) {
+    return ele.gender === "HE";
+  });
+  var sheDevoIndex = modal.data ? allDevosIdx.filter(function (ele) {
+    return ele.gender === "SHE" && ele.book.match(modal.data);
+  }) : allDevosIdx.filter(function (ele) {
+    return ele.gender === "SHE";
+  });
+  var devoBook = devos.devoBook ? Object.values(devos.devoBook) : [];
+  console.log({
+    allDevosIdxFiltered: allDevosIdxFiltered
+  });
   return {
-    currentUser: state.users[state.session.id],
-    errors: state.errors,
-    heDevoIndex: heDevoIdx,
-    sheDevoIndex: sheDevoIdx,
+    currentUser: users[session.id],
+    errors: errors,
+    heDevoIndex: heDevoIndex,
+    sheDevoIndex: sheDevoIndex,
     devoBook: devoBook
   };
 };
@@ -2770,7 +2753,7 @@ var Navbar = function Navbar(_ref) {
       closeModal = _ref.closeModal,
       logout = _ref.logout;
 
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(),
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(""),
       _useState2 = _slicedToArray(_useState, 2),
       search = _useState2[0],
       setSearch = _useState2[1];
