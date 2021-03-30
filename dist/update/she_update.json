@@ -1,11 +1,172 @@
 [
-    {
-        "book_title": "Jude & Revelation",
-        "devo_passages": "Jude 1:1-25",
-        "devo_title": "Chapter 1",
-        "devo_summary": "",
-        "img_url": ""
-    },
+        {
+            "book_title": "Exodus",
+            "devo_passages": "Exodus 1:1-22, Exodus 2:1-25, Exodus 3:1-22, Exodus 4:1-31",
+            "devo_title": "Chapters 1-4",
+            "devo_summary": "",
+            "img_url": ""
+        },
+        {
+            "book_title": "Exodus",
+            "devo_passages": "Exodus 5:1-23, Exodus 6:1-30, Exodus 7:1-25",
+            "devo_title": "Chapters 5-7",
+            "devo_summary": "",
+            "img_url": ""
+        },
+        {
+            "book_title": "Exodus",
+            "devo_passages": "Exodus 8:1-32, Exodus 9:1-35, Exodus 10:1-29, Exodus 11:1-10",
+            "devo_title": "Chapters 8-11",
+            "devo_summary": "",
+            "img_url": ""
+        },
+        {
+            "book_title": "Exodus",
+            "devo_passages": "Exodus 12:1-22, Exodus 13:1-25, Exodus 14:1-31, Exodus 15:1-27",
+            "devo_title": "Chapters 12-15",
+            "devo_summary": "",
+            "img_url": ""
+        },
+        {
+            "book_title": "Exodus",
+            "devo_passages": "Exodus 16:1-36, Exodus 17:1-16, Exodus 18:1-27",
+            "devo_title": "Chapters 16-18",
+            "devo_summary": "",
+            "img_url": ""
+        },
+        {
+            "book_title": "Exodus",
+            "devo_passages": "Exodus 19:1-25, Exodus 20:1-26, Exodus 21:1-36",
+            "devo_title": "Chapters 19-21",
+            "devo_summary": "",
+            "img_url": ""
+        },
+        {
+            "book_title": "Exodus",
+            "devo_passages": "Exodus 22:1-31, Exodus 23:1-33, Exodus 24:1-18",
+            "devo_title": "Chapters 22-24",
+            "devo_summary": "",
+            "img_url": ""
+        },
+        {
+            "book_title": "Exodus",
+            "devo_passages": "Exodus 25:1-40, Exodus 26:1-37, Exodus 27:1-21",
+            "devo_title": "Chapters 25-4",
+            "devo_summary": "",
+            "img_url": ""
+        },
+        {
+            "book_title": "Exodus",
+            "devo_passages": "Exodus 28:1-43, Exodus 29:1-46, Exodus 30:1-38",
+            "devo_title": "Chapters 28-30",
+            "devo_summary": "",
+            "img_url": ""
+        },
+        {
+            "book_title": "Exodus",
+            "devo_passages": "Exodus 31:1-18, Exodus 32:1-35, Exodus 33:1-23",
+            "devo_title": "Chapters 31-33",
+            "devo_summary": "",
+            "img_url": ""
+        },
+        {
+            "book_title": "Exodus",
+            "devo_passages": "Exodus 34:1-35, Exodus 35:1-35, Exodus 36:1-38",
+            "devo_title": "Chapters 34-36",
+            "devo_summary": "",
+            "img_url": ""
+        },
+        {
+            "book_title": "Exodus",
+            "devo_passages": "Exodus 37:1-29, Exodus 38:1-31, Exodus 39:1-43, Exodus 40:1-38",
+            "devo_title": "Chapters 12-15",
+            "devo_summary": "",
+            "img_url": ""
+        },
+        {
+            "book_title": "Leviticus",
+            "devo_passages": "",
+            "devo_title": "Chapters ",
+            "devo_summary": "",
+            "img_url": ""
+        },
+        {
+            "book_title": "Numbers",
+            "devo_passages": "",
+            "devo_title": "Chapters ",
+            "devo_summary": "",
+            "img_url": ""
+        },
+        {
+            "book_title": "Deuteronomy",
+            "devo_passages": "",
+            "devo_title": "Chapters ",
+            "devo_summary": "",
+            "img_url": ""
+        },
+        {
+            "book_title": "1 & 2 Chronicles",
+            "devo_passages": "",
+            "devo_title": "Chapters ",
+            "devo_summary": "",
+            "img_url": ""
+        },
+        {
+            "book_title": "Ezra",
+            "devo_passages": "",
+            "devo_title": "Chapters ",
+            "devo_summary": "",
+            "img_url": ""
+        },
+        {
+            "book_title": "Psalm",
+            "devo_passages": "",
+            "devo_title": "Chapters ",
+            "devo_summary": "",
+            "img_url": ""
+        },
+        {
+            "book_title": "Isaiah",
+            "devo_passages": "",
+            "devo_title": "Chapters ",
+            "devo_summary": "",
+            "img_url": ""
+        },
+        {
+            "book_title": "Jeremiah",
+            "devo_passages": "",
+            "devo_title": "Chapters ",
+            "devo_summary": "",
+            "img_url": ""
+        },
+        {
+            "book_title": "Lamentations",
+            "devo_passages": "",
+            "devo_title": "Chapters ",
+            "devo_summary": "",
+            "img_url": ""
+        },
+        {
+            "book_title": "Ezekiel",
+            "devo_passages": "",
+            "devo_title": "Chapters ",
+            "devo_summary": "",
+            "img_url": ""
+        },
+        {
+            "book_title": "Philemon",
+            "devo_passages": "",
+            "devo_title": "Chapters ",
+            "devo_summary": "",
+            "img_url": ""
+        },
+        {
+            "book_title": "Jude & Revelation",
+            "devo_passages": "Jude 1:1-25",
+            "devo_title": "Chapter 1",
+            "devo_summary": "",
+            "img_url": ""
+        },
     {
         "book_title": "Jude & Revelation",
         "devo_passages": "Revelation 1:1-20, 1 Corinthians 15:54-57, 1 Thessalonians 4:13-17 ",

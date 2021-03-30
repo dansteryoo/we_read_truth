@@ -1,33 +1,25 @@
-import { connect } from 'react-redux';
-import { closeModal, openModal } from '../../actions/modal_actions';
-import { fetchDevo } from '../../actions/devo_actions';
-import { clearErrors } from '../../actions/session_actions';
-import { createBookmark, fetchBookmark, deleteBookmark } from '../../actions/bookmark_actions';
-import MainBody from './main_body';
+import { connect } from "react-redux";
+import { closeModal, openModal } from "../../actions/modal_actions";
+import { fetchDevo } from "../../actions/devo_actions";
+import { clearErrors } from "../../actions/session_actions";
+import {
+    createBookmark,
+    fetchBookmark,
+    deleteBookmark,
+} from "../../actions/bookmark_actions";
+import MainBody from "./main_body";
+import { reverseDevoBook } from "../../helpers/helperFunctions";
 
-const mapStateToProps = (state) => {
-
-    let devoBook = [];
-
-    if (state.devos.devoBook) {
-      devoBook = Object.values(state.devos.devoBook);
-
-      if (
-        devoBook[0].gender === "HE" ||
-        (devoBook[0].gender === "SHE" && devoBook[0].book === "Judges") ||
-        devoBook[0].book === "Job"
-      ) {
-        devoBook.reverse();
-      }
-    }
+const mapStateToProps = ({ session, users, devos, bookmark, errors }) => {
+    const devoBook = devos.devoBook ? Object.values(devos.devoBook) : [];
 
     return {
-        currentUser: state.users[state.session.id],
-        errors: state.errors,
-        mainBodyDevo: state.devos.mainBodyDevo || null,
-        devoBook: devoBook,
-        bookmark: state.bookmark 
-    }
+        currentUser: users[session.id],
+        mainBodyDevo: devos.mainBodyDevo ?? null,
+        errors,
+        devoBook: reverseDevoBook(devoBook),
+        bookmark,
+    };
 };
 
 const mapDispatchToProps = (dispatch) => ({
@@ -37,7 +29,7 @@ const mapDispatchToProps = (dispatch) => ({
     fetchDevo: (devoId) => dispatch(fetchDevo(devoId)),
     createBookmark: (bookmark) => dispatch(createBookmark(bookmark)),
     fetchBookmark: () => dispatch(fetchBookmark()),
-    deleteBookmark: (bookmarkId) => dispatch(deleteBookmark(bookmarkId))
+    deleteBookmark: (bookmarkId) => dispatch(deleteBookmark(bookmarkId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainBody);

@@ -1135,6 +1135,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
 /* harmony import */ var _actions_bookmark_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/bookmark_actions */ "./frontend/actions/bookmark_actions.js");
 /* harmony import */ var _main_body__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./main_body */ "./frontend/components/home/main_body.jsx");
+/* harmony import */ var _helpers_helperFunctions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../helpers/helperFunctions */ "./frontend/helpers/helperFunctions.js");
 
 
 
@@ -1142,23 +1143,22 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var mapStateToProps = function mapStateToProps(state) {
-  var devoBook = [];
 
-  if (state.devos.devoBook) {
-    devoBook = Object.values(state.devos.devoBook);
+var mapStateToProps = function mapStateToProps(_ref) {
+  var _devos$mainBodyDevo;
 
-    if (devoBook[0].gender === "HE" || devoBook[0].gender === "SHE" && devoBook[0].book === "Judges" || devoBook[0].book === "Job") {
-      devoBook.reverse();
-    }
-  }
-
+  var session = _ref.session,
+      users = _ref.users,
+      devos = _ref.devos,
+      bookmark = _ref.bookmark,
+      errors = _ref.errors;
+  var devoBook = devos.devoBook ? Object.values(devos.devoBook) : [];
   return {
-    currentUser: state.users[state.session.id],
-    errors: state.errors,
-    mainBodyDevo: state.devos.mainBodyDevo || null,
-    devoBook: devoBook,
-    bookmark: state.bookmark
+    currentUser: users[session.id],
+    mainBodyDevo: (_devos$mainBodyDevo = devos.mainBodyDevo) !== null && _devos$mainBodyDevo !== void 0 ? _devos$mainBodyDevo : null,
+    errors: errors,
+    devoBook: Object(_helpers_helperFunctions__WEBPACK_IMPORTED_MODULE_6__["reverseDevoBook"])(devoBook),
+    bookmark: bookmark
   };
 };
 
@@ -1419,9 +1419,6 @@ var mapStateToProps = function mapStateToProps(_ref) {
     return ele.gender === "SHE";
   });
   var devoBook = devos.devoBook ? Object.values(devos.devoBook) : [];
-  console.log({
-    allDevosIdxFiltered: allDevosIdxFiltered
-  });
   return {
     currentUser: users[session.id],
     errors: errors,
@@ -3855,8 +3852,7 @@ var SideNav = function SideNav(_ref) {
   var currentUser = _ref.currentUser,
       fetchDevoBook = _ref.fetchDevoBook,
       fetchDevo = _ref.fetchDevo,
-      devoBook = _ref.devoBook,
-      bookmark = _ref.bookmark;
+      devoBook = _ref.devoBook;
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(""),
       _useState2 = _slicedToArray(_useState, 2),
@@ -3972,22 +3968,13 @@ var SideNav = function SideNav(_ref) {
 
 
 var mapStateToProps = function mapStateToProps(_ref3) {
-  var _devoBook$, _devoBook$2, _devoBook$3;
-
   var session = _ref3.session,
       users = _ref3.users,
-      devos = _ref3.devos,
-      bookmark = _ref3.bookmark;
+      devos = _ref3.devos;
   var devoBook = devos.devoBook ? Object.values(devos.devoBook) : [];
-
-  if (((_devoBook$ = devoBook[0]) === null || _devoBook$ === void 0 ? void 0 : _devoBook$.gender) === "HE" || ((_devoBook$2 = devoBook[0]) === null || _devoBook$2 === void 0 ? void 0 : _devoBook$2.gender) === "SHE" && devoBook[0].book === "Judges" || ((_devoBook$3 = devoBook[0]) === null || _devoBook$3 === void 0 ? void 0 : _devoBook$3.book) === "Job") {
-    devoBook.reverse();
-  }
-
   return {
     currentUser: users[session.id],
-    devoBook: devoBook,
-    bookmark: bookmark
+    devoBook: reverseDevoBook(devoBook)
   };
 };
 /******************************
@@ -4335,7 +4322,7 @@ var themeBookFormat = {
 /*!*********************************************!*\
   !*** ./frontend/helpers/helperFunctions.js ***!
   \*********************************************/
-/*! exports provided: searchRegexMatch, setPayload, sortTitles, sortAlphabetically, wordIsBlank, capitalizeFirstLetter */
+/*! exports provided: searchRegexMatch, setPayload, sortTitles, sortAlphabetically, wordIsBlank, capitalizeFirstLetter, reverseDevoBook */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4346,6 +4333,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sortAlphabetically", function() { return sortAlphabetically; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "wordIsBlank", function() { return wordIsBlank; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "capitalizeFirstLetter", function() { return capitalizeFirstLetter; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "reverseDevoBook", function() { return reverseDevoBook; });
 var searchRegexMatch = function searchRegexMatch(search) {
   var input = Array.from(search).reduce(function (a, v, i) {
     return "".concat(a, "[^").concat(search.substring(i), "]*?").concat(v);
@@ -4392,6 +4380,31 @@ var wordIsBlank = function wordIsBlank(word) {
 };
 var capitalizeFirstLetter = function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.toLocaleLowerCase().slice(1);
+};
+var reverseDevoBook = function reverseDevoBook(devoBook) {
+  if (devoBook.length < 1) return devoBook;
+  var _devoBook$ = devoBook[0],
+      gender = _devoBook$.gender,
+      book = _devoBook$.book;
+  var reverseCheck = {
+    Exodus: true,
+    Leviticus: true,
+    Numbers: true,
+    Deuteronomy: true,
+    "1 & 2 Chronicles": true,
+    Ezra: true,
+    Isaiah: true,
+    Jeremiah: true,
+    Lamentations: true,
+    Ezekiel: true,
+    Philemon: true
+  };
+
+  if (gender === "HE" || gender === "HE" && reverseCheck[book] || gender === "SHE" && book === "Judges" || book === "Job") {
+    return devoBook.reverse();
+  }
+
+  return devoBook;
 };
 
 /***/ }),

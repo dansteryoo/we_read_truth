@@ -46,3 +46,31 @@ export const wordIsBlank = (word) => {
 export const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.toLocaleLowerCase().slice(1);
 };
+
+export const reverseDevoBook = (devoBook) => {
+    if (devoBook.length < 1) return devoBook
+    const { gender, book } = devoBook[0];
+    const reverseCheck = {
+        Exodus: true,
+        Leviticus: true,
+        Numbers: true,
+        Deuteronomy: true,
+        "1 & 2 Chronicles": true,
+        Ezra: true,
+        Isaiah: true,
+        Jeremiah: true,
+        Lamentations: true,
+        Ezekiel: true,
+        Philemon: true,
+    };
+
+    if (
+        gender === "HE" ||
+        (gender === "HE" && reverseCheck[book]) ||
+        (gender === "SHE" && book === "Judges") ||
+        book === "Job"
+    ) {
+        return devoBook.reverse();
+    }
+    return devoBook;
+};

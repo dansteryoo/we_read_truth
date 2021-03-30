@@ -31,8 +31,6 @@ const mapStateToProps = ({ devos, modal, users, session, errors }) => {
 
     const devoBook = devos.devoBook ? Object.values(devos.devoBook) : []
 
-    console.log({ allDevosIdxFiltered });
-
     return {
         currentUser: users[session.id],
         errors,

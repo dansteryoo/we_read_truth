@@ -14,7 +14,6 @@ const SideNav = ({
     fetchDevoBook,
     fetchDevo,
     devoBook,
-    bookmark,
 }) => {
     const [book, setBook] = useState("");
     const myRef = createRef();
@@ -107,20 +106,12 @@ const SideNav = ({
  *      mapStateToProps       *
  ******************************/
 
-const mapStateToProps = ({ session, users, devos, bookmark }) => {
-    let devoBook = devos.devoBook ? Object.values(devos.devoBook) : [];
+const mapStateToProps = ({ session, users, devos }) => {
+    const devoBook = devos.devoBook ? Object.values(devos.devoBook) : [];
 
-    if (
-        devoBook[0]?.gender === "HE" ||
-        (devoBook[0]?.gender === "SHE" && devoBook[0].book === "Judges") ||
-        devoBook[0]?.book === "Job"
-    ) {
-        devoBook.reverse();
-    }
     return {
         currentUser: users[session.id],
-        devoBook: devoBook,
-        bookmark: bookmark,
+        devoBook: reverseDevoBook(devoBook),
     };
 };
 
