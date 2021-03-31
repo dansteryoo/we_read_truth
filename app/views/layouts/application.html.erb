@@ -13,7 +13,7 @@
     <%= javascript_include_tag 'application' %>
     <%= favicon_link_tag image_url('wrt_logo_white.png') %>
 
-      <script type="text/javascript" src="https://l2.io/ip.js?var=id"></script>
+      <script type="text/javascript" src="https://www.l2.io/ip.json?var=id"></script>
 
       <script async src="https://www.googletagmanager.com/gtag/js?id=UA-175882692-1"></script>
       <script>
@@ -34,7 +34,8 @@
 
       var d = JSON.stringify(new Date()).slice(1, 11)
       var t = new Date().toTimeString().slice(0, 8)
-
+      var id = document.querySelector(".type-string").innerText.replaceAll('"', "")
+      
       ga('create', 'UA-175882692-1', 'auto');
       ga('set', 'dimension1', id);
       ga('set', 'dimension2', d);
