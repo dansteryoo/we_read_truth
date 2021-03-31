@@ -1,5 +1,5 @@
 import React from "react";
-import { OTbooks, OTbookFormat } from "../../helpers/bookTitles";
+import { OTbooks } from "../../helpers/bookTitles";
 
 /********************************
  *   CategoryListOT Component   *
@@ -7,11 +7,9 @@ import { OTbooks, OTbookFormat } from "../../helpers/bookTitles";
 
 const CategoryListOT = ({ title, handleClick }) => {
     const lowerCaseArr = OTbooks.map((ele) => ele.toLowerCase());
-    const bookTitleRender = OTbookFormat[title.book];
     const bookTitle = OTbooks[lowerCaseArr.indexOf(title.book)];
-    let OTbook = bookTitleRender || bookTitle;
 
-    let fetchBookPayload = {
+    const fetchBookPayload = {
         gender: title.gender,
         book: bookTitle,
     };
@@ -26,7 +24,7 @@ const CategoryListOT = ({ title, handleClick }) => {
                 className="category-title"
                 onClick={(e) => handleClick(fetchBookPayload, e)}
             >
-                {OTbook}
+                {bookTitle}
             </span>
         </li>
     );

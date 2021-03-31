@@ -1476,9 +1476,7 @@ var CategoryListNT = function CategoryListNT(_ref) {
   var lowerCaseArr = _helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["NTbooks"].map(function (ele) {
     return ele.toLowerCase();
   });
-  var bookTitleRender = _helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["NTbookFormat"][title.book];
   var bookTitle = _helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["NTbooks"][lowerCaseArr.indexOf(title.book)];
-  var NTbook = bookTitleRender || bookTitle;
   var fetchBookPayload = {
     gender: title.gender,
     book: bookTitle
@@ -1494,7 +1492,7 @@ var CategoryListNT = function CategoryListNT(_ref) {
     onClick: function onClick(e) {
       return handleClick(fetchBookPayload, e);
     }
-  }, NTbook));
+  }, bookTitle));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (CategoryListNT);
@@ -1525,9 +1523,7 @@ var CategoryListOT = function CategoryListOT(_ref) {
   var lowerCaseArr = _helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["OTbooks"].map(function (ele) {
     return ele.toLowerCase();
   });
-  var bookTitleRender = _helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["OTbookFormat"][title.book];
   var bookTitle = _helpers_bookTitles__WEBPACK_IMPORTED_MODULE_1__["OTbooks"][lowerCaseArr.indexOf(title.book)];
-  var OTbook = bookTitleRender || bookTitle;
   var fetchBookPayload = {
     gender: title.gender,
     book: bookTitle
@@ -1543,7 +1539,7 @@ var CategoryListOT = function CategoryListOT(_ref) {
     onClick: function onClick(e) {
       return handleClick(fetchBookPayload, e);
     }
-  }, OTbook));
+  }, bookTitle));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (CategoryListOT);
@@ -3844,6 +3840,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 /******************************
  *      SideNav Component     *
  ******************************/
@@ -3974,7 +3971,7 @@ var mapStateToProps = function mapStateToProps(_ref3) {
   var devoBook = devos.devoBook ? Object.values(devos.devoBook) : [];
   return {
     currentUser: users[session.id],
-    devoBook: reverseDevoBook(devoBook)
+    devoBook: Object(_helpers_helperFunctions__WEBPACK_IMPORTED_MODULE_3__["reverseDevoBook"])(devoBook)
   };
 };
 /******************************
@@ -4185,7 +4182,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 /*!****************************************!*\
   !*** ./frontend/helpers/bookTitles.js ***!
   \****************************************/
-/*! exports provided: maxMcLeanBooks, regBibleTitles, allBookTitles, allBookTitlesFormat, bibleBooks, NTbooks, NTbookFormat, OTbooks, OTbookFormat, themeBooks, themeBookFormat */
+/*! exports provided: maxMcLeanBooks, regBibleTitles, allBookTitles, allBookTitlesFormat, bibleBooks, NTbooks, OTbooks, themeBooks, themeBookFormat */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4196,9 +4193,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "allBookTitlesFormat", function() { return allBookTitlesFormat; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "bibleBooks", function() { return bibleBooks; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NTbooks", function() { return NTbooks; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NTbookFormat", function() { return NTbookFormat; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OTbooks", function() { return OTbooks; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OTbookFormat", function() { return OTbookFormat; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "themeBooks", function() { return themeBooks; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "themeBookFormat", function() { return themeBookFormat; });
 /* 
@@ -4273,7 +4268,7 @@ chapterDict['Rev'] = 22;
 var maxMcLeanBooks = ['Gen', 'Exod', 'Lev', 'Num', 'Deut', 'Josh', 'Judg', 'Ruth', '1Sam', '2Sam', '1Kgs', '2Kgs', '1Chr', '2Chr', 'Ezra', 'Neh', 'Esth', 'Job', 'Ps', 'Prov', 'Eccl', 'Song', 'Isa', 'Jer', 'Lam', 'Ezek', 'Dan', 'Hos', 'Joel', 'Amos', 'Obad', 'Jonah', 'Mic', 'Nah', 'Hab', 'Zeph', 'Hag', 'Zech', 'Mal', 'Matt', 'Mark', 'Luke', 'John', 'Acts', 'Rom', '1Cor', '2Cor', 'Gal', 'Eph', 'Phil', 'Col', '1Thess', '2Thess', '1Tim', '2Tim', 'Titus', 'Phlm', 'Heb', 'Jas', '1Pet', '2Pet', '1John', '2John', '3John', 'Jude', 'Rev'];
 var regBibleTitles = ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1 Samuel", "2 Samuel", "1 Kings", "2 Kings", "1 Chronicles", "2 Chronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalm", "Proverbs", "Ecclesiastes", "Song of Songs", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel", "Amos", "Obadiah", "Jonah", "Micah", "Nahum", "Habakkuk", "Zephaniah", "Haggai", "Zechariah", "Malachi", "Matthew", "Mark", "Luke", "John", "Acts", "Romans", "1 Corinthians", "1 Corinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1 Thessalonians", "2 Thessalonians", "1 Timothy", "2 Timothy", "Titus", "Philemon", "Hebrews", "James", "1 Peter", "2 Peter", "1 John", "2 John", "3 John", "Jude", "Revelation"]; // sidenav.jsx 
 
-var allBookTitles = ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1 & 2 Samuel", "1 & 2 Kings", "1 & 2 Chronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalms", "Proverbs", "Ecclesiastes", "Song of Songs", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel, Amos, Obadiah, Jonah, and Micah", "Nahum, Habakkuk, Zephaniah, and Haggai", "Zechariah and Malachi", "Matthew", "Mark", "Luke", "John", "Acts of the Apostles", "Romans", "1 & 2 Corinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1 & 2 Thessalonians", "1 & 2 TimothyandTitus", "Philemon", "Hebrews", "James", "1 & 2 Peter", "1, 2 & 3 John", "Jude & Revelation", "The Sermon on the Mount", "This Is the Gospel", "Mourning and Dancing", "Names of God", "In Spirit & in Truth: A Study of Biblical Worship", "The Resurrected Life", "The Risen Christ", "Jesus, Keep Me Near The Cross", "The Beatitudes", "Psalms for Prayer", "Attributes of God", "Psalms of Rest", "Because He Lives", "The Miracles of Jesus", "Songs for the Road: The Psalms of Ascent", "Men & Women in the Word: Old Testament", "Men & Women in the Word: New Testament", "Give Thanks", "Making Room: A Study of Biblical Hospitality", "I Am: Statements of Our Savior", "Worthy of Praise", "Holding Tight to Permanent", "The Fruit of the Spirit", "The Parables of Jesus", "Go Tell It on the Mountain", "Psalms of Gratitude", "Promises of God", "Psalm 119", "The Presence of God"]; // sidenav.jsx 
+var allBookTitles = ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1 & 2 Samuel", "1 & 2 Kings", "1 & 2 Chronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalms", "Proverbs", "Ecclesiastes", "Song of Songs", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel, Amos, Obadiah, Jonah, & Micah", "Nahum, Habakkuk, Zephaniah, & Haggai", "Zechariah & Malachi", "Matthew", "Mark", "Luke", "John", "Acts of the Apostles", "Romans", "1 & 2 Corinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1 & 2 Thessalonians", "1 & 2 Timothy & Titus", "Philemon & Hebrews", "James", "1 & 2 Peter", "1, 2, 3 John", "Jude & Revelation", "The Sermon on the Mount", "This Is the Gospel", "Mourning and Dancing", "Names of God", "In Spirit & in Truth: A Study of Biblical Worship", "The Resurrected Life", "The Risen Christ", "Jesus, Keep Me Near The Cross", "The Beatitudes", "Psalms for Prayer", "Attributes of God", "Psalms of Rest", "Because He Lives", "The Miracles of Jesus", "Songs for the Road: The Psalms of Ascent", "Men & Women in the Word: Old Testament", "Men & Women in the Word: New Testament", "Give Thanks", "Making Room: A Study of Biblical Hospitality", "I Am: Statements of Our Savior", "Worthy of Praise", "Holding Tight to Permanent", "The Fruit of the Spirit", "The Parables of Jesus", "Go Tell It on the Mountain", "Psalms of Gratitude", "Promises of God", "Psalm 119", "The Presence of God"]; // sidenav.jsx 
 
 var allBookTitlesFormat = {
   "Acts of the Apostles": "Acts",
@@ -4285,23 +4280,11 @@ var allBookTitlesFormat = {
   "I Am: Statements of Our Savior": 'I Am (Statements of Our Savior)'
 }; // categories.jsx 
 
-var bibleBooks = ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1 & 2 Samuel", "SecondSamuel", "1 & 2 Kings", "SecondKings", "1 & 2 Chronicles", "SecondChronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalm", "Proverbs", "Ecclesiastes", "Song of Songs", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel, Amos, Obadiah, Jonah, and Micah", "Amos", "Obadiah", "Jonah", "Micah", "Nahum, Habakkuk, Zephaniah, and Haggai", "Habakkuk", "Zephaniah", "Haggai", "Zechariah and Malachi", "Malachi", "Matthew", "Mark", "Luke", "John", "Acts of the Apostles", "Romans", "1 & 2 Corinthians", "SecondCorinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1 & 2 Thessalonians", "SecondThessalonians", "1 & 2 Timothy and Titus", "SecondTimothy", "Titus", "Philemon", "Hebrews", "James", "1 & 2 Peter", "SecondPeter", "1, 2 & 3 John", "SecondJohn", "ThirdJohn", "Jude & Revelation"]; // category_list_NT.jsx
+var bibleBooks = ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1 & 2 Samuel", "SecondSamuel", "1 & 2 Kings", "SecondKings", "1 & 2 Chronicles", "SecondChronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalm", "Proverbs", "Ecclesiastes", "Song of Songs", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel, Amos, Obadiah, Jonah, & Micah", "Amos", "Obadiah", "Jonah", "Micah", "Nahum, Habakkuk, Zephaniah, & Haggai", "Habakkuk", "Zephaniah", "Haggai", "Zechariah & Malachi", "Malachi", "Matthew", "Mark", "Luke", "John", "Acts of the Apostles", "Romans", "1 & 2 Corinthians", "SecondCorinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1 & 2 Thessalonians", "SecondThessalonians", "1 & 2 Timothy & Titus", "SecondTimothy", "Titus", "Philemon", "Philemon & Hebrews", "James", "1 & 2 Peter", "SecondPeter", "1, 2, 3 John", "SecondJohn", "ThirdJohn", "Jude & Revelation"]; // category_list_NT.jsx
 
-var NTbooks = ["Matthew", "Mark", "Luke", "John", "Acts of the Apostles", "Romans", "1 & 2 Corinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1 & 2 Thessalonians", "1 & 2 Timothy and Titus", "Philemon", "Hebrews", "James", "1 & 2 Peter", "1, 2 & 3 John", "Jude & Revelation"]; // category_list_NT.jsx
+var NTbooks = ["Matthew", "Mark", "Luke", "John", "Acts of the Apostles", "Romans", "1 & 2 Corinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1 & 2 Thessalonians", "1 & 2 Timothy & Titus", "Philemon & Hebrews", "James", "1 & 2 Peter", "1, 2, 3 John", "Jude & Revelation"]; // category_list_OT.jsx
 
-var NTbookFormat = {
-  "1 & 2 timothy and titus": "1 & 2 Timothy & Titus",
-  "acts of the apostles": "Acts",
-  "1, 2 & 3 john": "1, 2, 3 John"
-}; // category_list_OT.jsx
-
-var OTbooks = ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1 & 2 Samuel", "1 & 2 Kings", "1 & 2 Chronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalms", "Proverbs", "Ecclesiastes", "Song of Songs", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel, Amos, Obadiah, Jonah, and Micah", "Nahum, Habakkuk, Zephaniah, and Haggai", "Zechariah and Malachi"]; // category_list_OT.jsx
-
-var OTbookFormat = {
-  "zechariah and malachi": "Zechariah & Malachi",
-  "nahum, habakkuk, zephaniah, and haggai": "Nahum, Habakkuk, Zephaniah, & Haggai",
-  "joel, amos, obadiah, jonah, and micah": "Joel, Amos, Obadiah, Jonah, & Micah"
-}; // category_list_Other.jsx
+var OTbooks = ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1 & 2 Samuel", "1 & 2 Kings", "1 & 2 Chronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalms", "Proverbs", "Ecclesiastes", "Song of Songs", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel, Amos, Obadiah, Jonah, & Micah", "Nahum, Habakkuk, Zephaniah, & Haggai", "Zechariah & Malachi"]; // category_list_Other.jsx
 
 var themeBooks = ["The Sermon on the Mount", "This Is the Gospel", "Mourning and Dancing", "Names of God", "In Spirit & in Truth: A Study of Biblical Worship", "The Resurrected Life", "The Risen Christ", "Jesus, Keep Me Near The Cross", "The Beatitudes", "Psalms for Prayer", "Attributes of God", "Psalms of Rest", "Because He Lives", "The Miracles of Jesus", "Songs for the Road: The Psalms of Ascent", "Men & Women in the Word: Old Testament", "Men & Women in the Word: New Testament", "Give Thanks", "Making Room: A Study of Biblical Hospitality", "I Am: Statements of Our Savior", "Worthy of Praise", "Holding Tight to Permanent", "The Fruit of the Spirit", "The Parables of Jesus", "Go Tell It on the Mountain", "Psalms of Gratitude", "Promises of God", "Psalm 119", "The Presence of God"]; // category_list_Other.jsx
 

@@ -16,7 +16,6 @@ $orange: #ff5a5f;
 
 .nav-container {
     display: inline-flex;
-    background-color: white;
     position: fixed;
     top: 0;
     width: 100%;
@@ -33,14 +32,12 @@ $orange: #ff5a5f;
         cursor: pointer;
     }
 
-
     .nav-home {
         background-color: transparent;
 
         img {
             width: 250px;
             padding: 18px 0 0 60px;
-            // padding: 40px 0 0 60px;
         }
     }
 
@@ -55,7 +52,6 @@ $orange: #ff5a5f;
         padding-right: 20px;
         
         li {
-            color: black;
             font-weight: 500;
             margin: 10px 50px 0 0;
             height: 20px;
@@ -117,8 +113,6 @@ $orange: #ff5a5f;
         }
 
     }
-
-
 
 //------------------Navbar Search
 

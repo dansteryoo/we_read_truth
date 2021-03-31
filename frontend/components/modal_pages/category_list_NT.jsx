@@ -1,5 +1,5 @@
 import React from "react";
-import { NTbooks, NTbookFormat } from "../../helpers/bookTitles";
+import { NTbooks } from "../../helpers/bookTitles";
 
 /********************************
  *   CategoryListNT Component   *
@@ -7,11 +7,9 @@ import { NTbooks, NTbookFormat } from "../../helpers/bookTitles";
 
 const CategoryListNT = ({ title, handleClick }) => {
     const lowerCaseArr = NTbooks.map((ele) => ele.toLowerCase());
-    const bookTitleRender = NTbookFormat[title.book];
     const bookTitle = NTbooks[lowerCaseArr.indexOf(title.book)];
-    let NTbook = bookTitleRender || bookTitle;
 
-    let fetchBookPayload = {
+    const fetchBookPayload = {
         gender: title.gender,
         book: bookTitle,
     };
@@ -26,7 +24,7 @@ const CategoryListNT = ({ title, handleClick }) => {
                 className="category-title"
                 onClick={(e) => handleClick(fetchBookPayload, e)}
             >
-                {NTbook}
+                {bookTitle}
             </span>
         </li>
     );
