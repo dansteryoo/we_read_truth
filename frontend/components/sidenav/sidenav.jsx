@@ -4,6 +4,7 @@ import { allBookTitles, allBookTitlesFormat } from "../../helpers/bookTitles";
 import { setPayload } from "../../helpers/helperFunctions";
 import { connect } from "react-redux";
 import { fetchDevo, fetchDevoBook } from "../../actions/devo_actions";
+import { reverseDevoBook } from "../../helpers/helperFunctions";
 
 /******************************
  *      SideNav Component     *
