@@ -11,6 +11,14 @@
 # Devo.where(book: @devo).destroy_all
 
 
+    # // {
+    # //     "book_title": "Psalm",
+    # //     "devo_passages": "Leviticus 4:1, Leviticus 1:1, Leviticus 1:1",
+    # //     "devo_title": "Chapters 150",
+    # //     "devo_summary": "",
+    # //     "img_url": ""
+    # // },
+
 Devo.destroy_all
 # Devo.where(gender: "SHE").destroy_all
 # Devo.where(book: "Esther").destroy_all
