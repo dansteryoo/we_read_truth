@@ -102,7 +102,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchBookmark", function() { return fetchBookmark; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createBookmark", function() { return createBookmark; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteBookmark", function() { return deleteBookmark; });
-/* harmony import */ var _util_bookmark_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/bookmark_api_util */ "./frontend/util/bookmark_api_util.jsx");
+/* harmony import */ var _util_bookmark_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/bookmark_api_util */ "./frontend/util/bookmark_api_util.js");
 
 var RECEIVE_BOOKMARK = 'RECEIVE_BOOKMARK';
 var REMOVE_BOOKMARK = 'REMOVE_BOOKMARK';
@@ -162,7 +162,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchDevoIndex", function() { return fetchDevoIndex; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchDevoBook", function() { return fetchDevoBook; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchDevo", function() { return fetchDevo; });
-/* harmony import */ var _util_devos_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/devos_api_util */ "./frontend/util/devos_api_util.jsx");
+/* harmony import */ var _util_devos_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/devos_api_util */ "./frontend/util/devos_api_util.js");
 
 var RECEIVE_DEVO = 'RECEIVE_DEVO';
 var CLEAR_DEVO_STATE = "CLEAR_DEVO_STATE";
@@ -271,7 +271,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createNote", function() { return createNote; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateNote", function() { return updateNote; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteNote", function() { return deleteNote; });
-/* harmony import */ var _util_notes_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/notes_api_util */ "./frontend/util/notes_api_util.jsx");
+/* harmony import */ var _util_notes_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/notes_api_util */ "./frontend/util/notes_api_util.js");
 
 var RECEIVE_NOTES = 'RECEIVE_NOTES';
 var RECEIVE_NOTE = 'RECEIVE_NOTE';
@@ -372,7 +372,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logindemo", function() { return logindemo; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateUser", function() { return updateUser; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteUser", function() { return deleteUser; });
-/* harmony import */ var _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/session_api_util */ "./frontend/util/session_api_util.jsx");
+/* harmony import */ var _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/session_api_util */ "./frontend/util/session_api_util.js");
 
 var RECEIVE_CURRENT_USER = 'RECEIVE_CURRENT_USER';
 var LOGOUT_CURRENT_USER = 'LOGOUT_CURRENT_USER';
@@ -453,10 +453,10 @@ var deleteUser = function deleteUser(userId) {
 
 /***/ }),
 
-/***/ "./frontend/components/app.jsx":
-/*!*************************************!*\
-  !*** ./frontend/components/app.jsx ***!
-  \*************************************/
+/***/ "./frontend/components/app.js":
+/*!************************************!*\
+  !*** ./frontend/components/app.js ***!
+  \************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -465,12 +465,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _util_route_util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../util/route_util */ "./frontend/util/route_util.jsx");
-/* harmony import */ var _splash_modal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./splash/modal */ "./frontend/components/splash/modal.jsx");
-/* harmony import */ var _splash_splash__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./splash/splash */ "./frontend/components/splash/splash.jsx");
-/* harmony import */ var _sessionForms_signupForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./sessionForms/signupForm */ "./frontend/components/sessionForms/signupForm.jsx");
-/* harmony import */ var _home_homepage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./home/homepage */ "./frontend/components/home/homepage.jsx");
-/* harmony import */ var _home_welcome__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./home/welcome */ "./frontend/components/home/welcome.jsx");
+/* harmony import */ var _util_route_util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../util/route_util */ "./frontend/util/route_util.js");
+/* harmony import */ var _splash_modal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./splash/modal */ "./frontend/components/splash/modal.js");
+/* harmony import */ var _splash_splash__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./splash/splash */ "./frontend/components/splash/splash.js");
+/* harmony import */ var _sessionForms_signupForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./sessionForms/signupForm */ "./frontend/components/sessionForms/signupForm.js");
+/* harmony import */ var _home_homepage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./home/homepage */ "./frontend/components/home/homepage.js");
+/* harmony import */ var _home_welcome__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./home/welcome */ "./frontend/components/home/welcome.js");
 
 
 
@@ -506,10 +506,10 @@ var App = function App(props) {
 
 /***/ }),
 
-/***/ "./frontend/components/home/homepage.jsx":
-/*!***********************************************!*\
-  !*** ./frontend/components/home/homepage.jsx ***!
-  \***********************************************/
+/***/ "./frontend/components/home/homepage.js":
+/*!**********************************************!*\
+  !*** ./frontend/components/home/homepage.js ***!
+  \**********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -517,14 +517,14 @@ var App = function App(props) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _sidenav_sidenav__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../sidenav/sidenav */ "./frontend/components/sidenav/sidenav.jsx");
+/* harmony import */ var _sidenav_sidenav__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../sidenav/sidenav */ "./frontend/components/sidenav/sidenav.js");
 /* harmony import */ var _navbar_navbar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../navbar/navbar */ "./frontend/components/navbar/navbar.jsx");
-/* harmony import */ var _notes_notesForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../notes/notesForm */ "./frontend/components/notes/notesForm.jsx");
+/* harmony import */ var _notes_notesForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../notes/notesForm */ "./frontend/components/notes/notesForm.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_devo_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../actions/devo_actions */ "./frontend/actions/devo_actions.js");
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
 /* harmony import */ var _actions_note_actions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../actions/note_actions */ "./frontend/actions/note_actions.js");
-/* harmony import */ var _home_main_body_container__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../home/main_body_container */ "./frontend/components/home/main_body_container.js");
+/* harmony import */ var _main_body_container__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./main_body_container */ "./frontend/components/home/main_body_container.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -610,7 +610,7 @@ var Homepage = function Homepage(_ref) {
     className: "\n                        title\n                        ".concat("left-" + leftSide, "\n                        ").concat("right-" + rightSide, "\n                    ")
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Welcome ", currentUser.first_name, "!"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "content"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_home_main_body_container__WEBPACK_IMPORTED_MODULE_8__["default"], null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_main_body_container__WEBPACK_IMPORTED_MODULE_8__["default"], null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     id: "right",
     className: rightSide
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -666,10 +666,10 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 /***/ }),
 
-/***/ "./frontend/components/home/main_body.jsx":
-/*!************************************************!*\
-  !*** ./frontend/components/home/main_body.jsx ***!
-  \************************************************/
+/***/ "./frontend/components/home/main_body.js":
+/*!***********************************************!*\
+  !*** ./frontend/components/home/main_body.js ***!
+  \***********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1134,7 +1134,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_devo_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/devo_actions */ "./frontend/actions/devo_actions.js");
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
 /* harmony import */ var _actions_bookmark_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/bookmark_actions */ "./frontend/actions/bookmark_actions.js");
-/* harmony import */ var _main_body__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./main_body */ "./frontend/components/home/main_body.jsx");
+/* harmony import */ var _main_body__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./main_body */ "./frontend/components/home/main_body.js");
 /* harmony import */ var _helpers_helperFunctions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../helpers/helperFunctions */ "./frontend/helpers/helperFunctions.js");
 
 
@@ -1192,10 +1192,10 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 /***/ }),
 
-/***/ "./frontend/components/home/welcome.jsx":
-/*!**********************************************!*\
-  !*** ./frontend/components/home/welcome.jsx ***!
-  \**********************************************/
+/***/ "./frontend/components/home/welcome.js":
+/*!*********************************************!*\
+  !*** ./frontend/components/home/welcome.js ***!
+  \*********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1237,10 +1237,10 @@ var WelcomeMessage = function WelcomeMessage() {
 
 /***/ }),
 
-/***/ "./frontend/components/modal_pages/categories.jsx":
-/*!********************************************************!*\
-  !*** ./frontend/components/modal_pages/categories.jsx ***!
-  \********************************************************/
+/***/ "./frontend/components/modal_pages/categories.js":
+/*!*******************************************************!*\
+  !*** ./frontend/components/modal_pages/categories.js ***!
+  \*******************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1248,9 +1248,9 @@ var WelcomeMessage = function WelcomeMessage() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _category_list_OT__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./category_list_OT */ "./frontend/components/modal_pages/category_list_OT.jsx");
-/* harmony import */ var _category_list_NT__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./category_list_NT */ "./frontend/components/modal_pages/category_list_NT.jsx");
-/* harmony import */ var _category_list_Themes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./category_list_Themes */ "./frontend/components/modal_pages/category_list_Themes.jsx");
+/* harmony import */ var _category_list_OT__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./category_list_OT */ "./frontend/components/modal_pages/category_list_OT.js");
+/* harmony import */ var _category_list_NT__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./category_list_NT */ "./frontend/components/modal_pages/category_list_NT.js");
+/* harmony import */ var _category_list_Themes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./category_list_Themes */ "./frontend/components/modal_pages/category_list_Themes.js");
 /* harmony import */ var _helpers_bookTitles__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../helpers/bookTitles */ "./frontend/helpers/bookTitles.js");
 /* harmony import */ var _helpers_helperFunctions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../helpers/helperFunctions */ "./frontend/helpers/helperFunctions.js");
 
@@ -1384,7 +1384,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
 /* harmony import */ var _actions_devo_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/devo_actions */ "./frontend/actions/devo_actions.js");
-/* harmony import */ var _categories__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./categories */ "./frontend/components/modal_pages/categories.jsx");
+/* harmony import */ var _categories__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./categories */ "./frontend/components/modal_pages/categories.js");
 
 
 
@@ -1452,10 +1452,10 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 /***/ }),
 
-/***/ "./frontend/components/modal_pages/category_list_NT.jsx":
-/*!**************************************************************!*\
-  !*** ./frontend/components/modal_pages/category_list_NT.jsx ***!
-  \**************************************************************/
+/***/ "./frontend/components/modal_pages/category_list_NT.js":
+/*!*************************************************************!*\
+  !*** ./frontend/components/modal_pages/category_list_NT.js ***!
+  \*************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1499,10 +1499,10 @@ var CategoryListNT = function CategoryListNT(_ref) {
 
 /***/ }),
 
-/***/ "./frontend/components/modal_pages/category_list_OT.jsx":
-/*!**************************************************************!*\
-  !*** ./frontend/components/modal_pages/category_list_OT.jsx ***!
-  \**************************************************************/
+/***/ "./frontend/components/modal_pages/category_list_OT.js":
+/*!*************************************************************!*\
+  !*** ./frontend/components/modal_pages/category_list_OT.js ***!
+  \*************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1546,10 +1546,10 @@ var CategoryListOT = function CategoryListOT(_ref) {
 
 /***/ }),
 
-/***/ "./frontend/components/modal_pages/category_list_Themes.jsx":
-/*!******************************************************************!*\
-  !*** ./frontend/components/modal_pages/category_list_Themes.jsx ***!
-  \******************************************************************/
+/***/ "./frontend/components/modal_pages/category_list_Themes.js":
+/*!*****************************************************************!*\
+  !*** ./frontend/components/modal_pages/category_list_Themes.js ***!
+  \*****************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1610,10 +1610,10 @@ var CategoryListThemes = function CategoryListThemes(_ref) {
 
 /***/ }),
 
-/***/ "./frontend/components/modal_pages/notesPage.jsx":
-/*!*******************************************************!*\
-  !*** ./frontend/components/modal_pages/notesPage.jsx ***!
-  \*******************************************************/
+/***/ "./frontend/components/modal_pages/notesPage.js":
+/*!******************************************************!*\
+  !*** ./frontend/components/modal_pages/notesPage.js ***!
+  \******************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1622,7 +1622,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _notes_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./notes_item */ "./frontend/components/modal_pages/notes_item.jsx");
-/* harmony import */ var _notes_pagination__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./notes_pagination */ "./frontend/components/modal_pages/notes_pagination.jsx");
+/* harmony import */ var _notes_pagination__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./notes_pagination */ "./frontend/components/modal_pages/notes_pagination.js");
 /* harmony import */ var _helpers_helperFunctions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helpers/helperFunctions */ "./frontend/helpers/helperFunctions.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
@@ -2120,10 +2120,10 @@ var NotesItem = function NotesItem(_ref) {
 
 /***/ }),
 
-/***/ "./frontend/components/modal_pages/notes_pagination.jsx":
-/*!**************************************************************!*\
-  !*** ./frontend/components/modal_pages/notes_pagination.jsx ***!
-  \**************************************************************/
+/***/ "./frontend/components/modal_pages/notes_pagination.js":
+/*!*************************************************************!*\
+  !*** ./frontend/components/modal_pages/notes_pagination.js ***!
+  \*************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2268,10 +2268,10 @@ var Pagination = function Pagination(_ref) {
 
 /***/ }),
 
-/***/ "./frontend/components/modal_pages/profilePage.jsx":
-/*!*********************************************************!*\
-  !*** ./frontend/components/modal_pages/profilePage.jsx ***!
-  \*********************************************************/
+/***/ "./frontend/components/modal_pages/profilePage.js":
+/*!********************************************************!*\
+  !*** ./frontend/components/modal_pages/profilePage.js ***!
+  \********************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2842,10 +2842,10 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 /***/ }),
 
-/***/ "./frontend/components/notes/notesForm.jsx":
-/*!*************************************************!*\
-  !*** ./frontend/components/notes/notesForm.jsx ***!
-  \*************************************************/
+/***/ "./frontend/components/notes/notesForm.js":
+/*!************************************************!*\
+  !*** ./frontend/components/notes/notesForm.js ***!
+  \************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -3265,10 +3265,10 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 /***/ }),
 
-/***/ "./frontend/components/root.jsx":
-/*!**************************************!*\
-  !*** ./frontend/components/root.jsx ***!
-  \**************************************/
+/***/ "./frontend/components/root.js":
+/*!*************************************!*\
+  !*** ./frontend/components/root.js ***!
+  \*************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -3278,7 +3278,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./app */ "./frontend/components/app.jsx");
+/* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./app */ "./frontend/components/app.js");
 
 
 
@@ -3295,10 +3295,10 @@ var Root = function Root(_ref) {
 
 /***/ }),
 
-/***/ "./frontend/components/sessionForms/loginForm.jsx":
-/*!********************************************************!*\
-  !*** ./frontend/components/sessionForms/loginForm.jsx ***!
-  \********************************************************/
+/***/ "./frontend/components/sessionForms/loginForm.js":
+/*!*******************************************************!*\
+  !*** ./frontend/components/sessionForms/loginForm.js ***!
+  \*******************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -3470,10 +3470,10 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 /***/ }),
 
-/***/ "./frontend/components/sessionForms/signupForm.jsx":
-/*!*********************************************************!*\
-  !*** ./frontend/components/sessionForms/signupForm.jsx ***!
-  \*********************************************************/
+/***/ "./frontend/components/sessionForms/signupForm.js":
+/*!********************************************************!*\
+  !*** ./frontend/components/sessionForms/signupForm.js ***!
+  \********************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -3778,10 +3778,10 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 /***/ }),
 
-/***/ "./frontend/components/sidenav/sidenav.jsx":
-/*!*************************************************!*\
-  !*** ./frontend/components/sidenav/sidenav.jsx ***!
-  \*************************************************/
+/***/ "./frontend/components/sidenav/sidenav.js":
+/*!************************************************!*\
+  !*** ./frontend/components/sidenav/sidenav.js ***!
+  \************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -3789,7 +3789,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _sidenav_sidenav_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../sidenav/sidenav_item */ "./frontend/components/sidenav/sidenav_item.jsx");
+/* harmony import */ var _sidenav_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sidenav_item */ "./frontend/components/sidenav/sidenav_item.js");
 /* harmony import */ var _helpers_bookTitles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/bookTitles */ "./frontend/helpers/bookTitles.js");
 /* harmony import */ var _helpers_helperFunctions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helpers/helperFunctions */ "./frontend/helpers/helperFunctions.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
@@ -3927,7 +3927,7 @@ var SideNav = function SideNav(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
     className: "sidenav-ul"
   }, devoBook.map(function (dailyDevo, i) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sidenav_sidenav_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sidenav_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
       days: i,
       dailyDevo: dailyDevo,
       fetchDevo: fetchDevo,
@@ -3970,10 +3970,10 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 /***/ }),
 
-/***/ "./frontend/components/sidenav/sidenav_item.jsx":
-/*!******************************************************!*\
-  !*** ./frontend/components/sidenav/sidenav_item.jsx ***!
-  \******************************************************/
+/***/ "./frontend/components/sidenav/sidenav_item.js":
+/*!*****************************************************!*\
+  !*** ./frontend/components/sidenav/sidenav_item.js ***!
+  \*****************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -4006,10 +4006,10 @@ var SideNavItem = function SideNavItem(_ref) {
 
 /***/ }),
 
-/***/ "./frontend/components/splash/modal.jsx":
-/*!**********************************************!*\
-  !*** ./frontend/components/splash/modal.jsx ***!
-  \**********************************************/
+/***/ "./frontend/components/splash/modal.js":
+/*!*********************************************!*\
+  !*** ./frontend/components/splash/modal.js ***!
+  \*********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -4020,8 +4020,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
 /* harmony import */ var _modal_pages_categories_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../modal_pages/categories_container */ "./frontend/components/modal_pages/categories_container.js");
-/* harmony import */ var _modal_pages_notesPage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../modal_pages/notesPage */ "./frontend/components/modal_pages/notesPage.jsx");
-/* harmony import */ var _modal_pages_profilePage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../modal_pages/profilePage */ "./frontend/components/modal_pages/profilePage.jsx");
+/* harmony import */ var _modal_pages_notesPage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../modal_pages/notesPage */ "./frontend/components/modal_pages/notesPage.js");
+/* harmony import */ var _modal_pages_profilePage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../modal_pages/profilePage */ "./frontend/components/modal_pages/profilePage.js");
 
 
 
@@ -4109,10 +4109,10 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 /***/ }),
 
-/***/ "./frontend/components/splash/splash.jsx":
-/*!***********************************************!*\
-  !*** ./frontend/components/splash/splash.jsx ***!
-  \***********************************************/
+/***/ "./frontend/components/splash/splash.js":
+/*!**********************************************!*\
+  !*** ./frontend/components/splash/splash.js ***!
+  \**********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -4120,7 +4120,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _sessionForms_loginForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../sessionForms/loginForm */ "./frontend/components/sessionForms/loginForm.jsx");
+/* harmony import */ var _sessionForms_loginForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../sessionForms/loginForm */ "./frontend/components/sessionForms/loginForm.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
 
@@ -4396,8 +4396,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _components_root__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/root */ "./frontend/components/root.jsx");
-/* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./store/store */ "./frontend/store/store.jsx");
+/* harmony import */ var _components_root__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/root */ "./frontend/components/root.js");
+/* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./store/store */ "./frontend/store/store.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
@@ -4749,10 +4749,10 @@ var usersReducer = function usersReducer() {
 
 /***/ }),
 
-/***/ "./frontend/store/store.jsx":
-/*!**********************************!*\
-  !*** ./frontend/store/store.jsx ***!
-  \**********************************/
+/***/ "./frontend/store/store.js":
+/*!*********************************!*\
+  !*** ./frontend/store/store.js ***!
+  \*********************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -4774,10 +4774,10 @@ var configureStore = function configureStore() {
 
 /***/ }),
 
-/***/ "./frontend/util/bookmark_api_util.jsx":
-/*!*********************************************!*\
-  !*** ./frontend/util/bookmark_api_util.jsx ***!
-  \*********************************************/
+/***/ "./frontend/util/bookmark_api_util.js":
+/*!********************************************!*\
+  !*** ./frontend/util/bookmark_api_util.js ***!
+  \********************************************/
 /*! exports provided: createBookmark, deleteBookmark, fetchBookmark */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -4810,10 +4810,10 @@ var fetchBookmark = function fetchBookmark() {
 
 /***/ }),
 
-/***/ "./frontend/util/devos_api_util.jsx":
-/*!******************************************!*\
-  !*** ./frontend/util/devos_api_util.jsx ***!
-  \******************************************/
+/***/ "./frontend/util/devos_api_util.js":
+/*!*****************************************!*\
+  !*** ./frontend/util/devos_api_util.js ***!
+  \*****************************************/
 /*! exports provided: fetchDevoIndex, fetchDevo, fetchDevoBook */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -4843,10 +4843,10 @@ var fetchDevoBook = function fetchDevoBook(devoBook) {
 
 /***/ }),
 
-/***/ "./frontend/util/notes_api_util.jsx":
-/*!******************************************!*\
-  !*** ./frontend/util/notes_api_util.jsx ***!
-  \******************************************/
+/***/ "./frontend/util/notes_api_util.js":
+/*!*****************************************!*\
+  !*** ./frontend/util/notes_api_util.js ***!
+  \*****************************************/
 /*! exports provided: fetchNotes, fetchNote, createNote, updateNote, deleteNote */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -4896,10 +4896,10 @@ var deleteNote = function deleteNote(noteId) {
 
 /***/ }),
 
-/***/ "./frontend/util/route_util.jsx":
-/*!**************************************!*\
-  !*** ./frontend/util/route_util.jsx ***!
-  \**************************************/
+/***/ "./frontend/util/route_util.js":
+/*!*************************************!*\
+  !*** ./frontend/util/route_util.js ***!
+  \*************************************/
 /*! exports provided: AuthRoute, ProtectedRoute */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -4958,10 +4958,10 @@ var ProtectedRoute = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withR
 
 /***/ }),
 
-/***/ "./frontend/util/session_api_util.jsx":
-/*!********************************************!*\
-  !*** ./frontend/util/session_api_util.jsx ***!
-  \********************************************/
+/***/ "./frontend/util/session_api_util.js":
+/*!*******************************************!*\
+  !*** ./frontend/util/session_api_util.js ***!
+  \*******************************************/
 /*! exports provided: signup, login, logout, logindemo, updateUser, deleteUser */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 

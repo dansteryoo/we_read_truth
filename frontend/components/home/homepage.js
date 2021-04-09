@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { clearDevoState } from "../../actions/devo_actions";
 import { clearErrors } from "../../actions/session_actions";
 import { clearNoteState } from "../../actions/note_actions";
-import MainBodyContainer from "../home/main_body_container"
+import MainBodyContainer from "./main_body_container"
 
 /******************************
  *     Homepage Component     *

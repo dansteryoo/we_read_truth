@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createRef } from "react";
-import SideNavItem from "../sidenav/sidenav_item";
+import SideNavItem from "./sidenav_item";
 import { allBookTitles, allBookTitlesFormat } from "../../helpers/bookTitles";
 import { setPayload } from "../../helpers/helperFunctions";
 import { connect } from "react-redux";
