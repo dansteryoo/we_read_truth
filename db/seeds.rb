@@ -21,17 +21,17 @@
 
 # Devo.destroy_all
 # Devo.where(gender: "SHE").destroy_all
-Devo.where(book: "Ezekiel").destroy_all
-Devo.where(book: "Lamentations").destroy_all
-Devo.where(book: "Isaiah").destroy_all
-Devo.where(book: "Ezra").destroy_all
-Devo.where(book: "1 & 2 Chronicles").destroy_all
-Devo.where(book: "Deuteronomy").destroy_all
-Devo.where(book: "Numbers").destroy_all
-Devo.where(book: "Exodus").destroy_all
+Devo.where(gender: "SHE", book: "Nahum, Habakkuk, Zephaniah, and Haggai").destroy_all
+# Devo.where(book: "Lamentations").destroy_all
+# Devo.where(book: "Isaiah").destroy_all
+# Devo.where(book: "Ezra").destroy_all
+# Devo.where(book: "1 & 2 Chronicles").destroy_all
+# Devo.where(book: "Deuteronomy").destroy_all
+# Devo.where(book: "Numbers").destroy_all
+# Devo.where(book: "Exodus").destroy_all
 # Devo.where("book like ?", "%Hymns%").destroy_all
 
-update_1 = JSON.parse(File.read("#{Rails.root}/dist/update/he_update.json"))
+# update_1 = JSON.parse(File.read("#{Rails.root}/dist/update/he_update.json"))
 update_2 = JSON.parse(File.read("#{Rails.root}/dist/update/she_update.json"))
 
 # data_1 = JSON.parse(File.read("#{Rails.root}/dist/he_v1.json"))
@@ -47,7 +47,7 @@ update_2 = JSON.parse(File.read("#{Rails.root}/dist/update/she_update.json"))
 # }
 
 hash = {
-    "HE": [update_1.reverse()],
+    # "HE": [update_1.reverse()],
     "SHE": [update_2]
 }
 
