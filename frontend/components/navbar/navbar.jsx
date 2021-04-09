@@ -37,7 +37,7 @@ const Navbar = ({ openModal, closeModal, logout }) => {
     };
 
     /******************************
-     *           RENDER           *
+     *           render           *
      ******************************/
 
     return (

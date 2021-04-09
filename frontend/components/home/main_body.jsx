@@ -197,7 +197,7 @@ class MainBody extends React.Component {
         }
     }
 
-    //---------- RENDER FUNCTIONS ----------//
+    //---------- render FUNCTIONS ----------//
 
     renderPassages() {
         const { passages, esvPassage } = this.state;

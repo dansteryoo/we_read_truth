@@ -31,7 +31,7 @@ const CategoryListThemes = ({ title, handleClick }) => {
     };
 
     /********************************
-     *            RENDER            *
+     *            render            *
      ********************************/
 
     return (

@@ -15,7 +15,7 @@ const CategoryListOT = ({ title, handleClick }) => {
     };
 
     /********************************
-     *            RENDER            *
+     *            render            *
      ********************************/
 
     return (
