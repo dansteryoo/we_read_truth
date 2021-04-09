@@ -1624,6 +1624,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _notes_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./notes_item */ "./frontend/components/modal_pages/notes_item.jsx");
 /* harmony import */ var _notes_pagination__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./notes_pagination */ "./frontend/components/modal_pages/notes_pagination.jsx");
 /* harmony import */ var _helpers_helperFunctions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helpers/helperFunctions */ "./frontend/helpers/helperFunctions.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+/* harmony import */ var _actions_note_actions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../actions/note_actions */ "./frontend/actions/note_actions.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1645,6 +1648,9 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
 
 
 
@@ -1673,6 +1679,7 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       loading: false
     };
     _this.handleUpdate = _this.handleUpdate.bind(_assertThisInitialized(_this));
+    _this.handleDelete = _this.handleDelete.bind(_assertThisInitialized(_this));
     _this.handleSearch = _this.handleSearch.bind(_assertThisInitialized(_this));
     _this.handleCheck = _this.handleCheck.bind(_assertThisInitialized(_this));
     _this.toggleClass = _this.toggleClass.bind(_assertThisInitialized(_this));
@@ -1739,6 +1746,15 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
 
       this.props.fetchNote(noteId).then(function () {
         return _this3.props.closeModal();
+      });
+    }
+  }, {
+    key: "handleDelete",
+    value: function handleDelete(noteId) {
+      var _this4 = this;
+
+      this.props.deleteNote(noteId).then(function () {
+        return _this4.props.fetchNotes();
       });
     }
   }, {
@@ -1824,7 +1840,7 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderModalTop",
     value: function renderModalTop() {
-      var _this4 = this;
+      var _this5 = this;
 
       var _this$props = this.props,
           currentUser = _this$props.currentUser,
@@ -1839,19 +1855,19 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
       var firstNote = currentPage * notesPerPage - notesPerPage + 1; // Change page
 
       var paginate = function paginate(pageNumber) {
-        return _this4.setState({
+        return _this5.setState({
           currentPage: pageNumber
         });
       };
 
       var nextPage = function nextPage() {
-        currentPage < maxPage && _this4.setState({
+        currentPage < maxPage && _this5.setState({
           currentPage: currentPage + 1
         });
       };
 
       var prevPage = function prevPage() {
-        currentPage > 1 && _this4.setState({
+        currentPage > 1 && _this5.setState({
           currentPage: currentPage - 1
         });
       };
@@ -1911,7 +1927,7 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this5 = this;
+      var _this6 = this;
 
       var _this$props2 = this.props,
           fetchNote = _this$props2.fetchNote,
@@ -1938,11 +1954,10 @@ var NotesPage = /*#__PURE__*/function (_React$Component) {
           className: "notes-page-ul"
         }, currentNotes.map(function (eachNote) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_notes_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
-            handleUpdate: _this5.handleUpdate,
-            toggleClass: _this5.toggleClass,
-            flipToDelete: _this5.state.flipToDelete,
-            noteId: _this5.state.noteId,
-            deleteNote: deleteNote,
+            handleUpdate: _this6.handleUpdate,
+            toggleClass: _this6.toggleClass,
+            noteId: _this6.state.noteId,
+            handleDelete: _this6.handleDelete,
             fetchNote: fetchNote,
             eachNote: eachNote,
             key: eachNote.id
@@ -1991,62 +2006,22 @@ var mapStateToProps = function mapStateToProps(_ref) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    closeModal: function (_closeModal) {
-      function closeModal() {
-        return _closeModal.apply(this, arguments);
-      }
-
-      closeModal.toString = function () {
-        return _closeModal.toString();
-      };
-
-      return closeModal;
-    }(function () {
-      return dispatch(closeModal());
-    }),
-    fetchNotes: function (_fetchNotes) {
-      function fetchNotes(_x) {
-        return _fetchNotes.apply(this, arguments);
-      }
-
-      fetchNotes.toString = function () {
-        return _fetchNotes.toString();
-      };
-
-      return fetchNotes;
-    }(function (noteId) {
-      return dispatch(fetchNotes());
-    }),
-    fetchNote: function (_fetchNote) {
-      function fetchNote(_x2) {
-        return _fetchNote.apply(this, arguments);
-      }
-
-      fetchNote.toString = function () {
-        return _fetchNote.toString();
-      };
-
-      return fetchNote;
-    }(function (noteId) {
-      return dispatch(fetchNote(noteId));
-    }),
-    deleteNote: function (_deleteNote) {
-      function deleteNote(_x3) {
-        return _deleteNote.apply(this, arguments);
-      }
-
-      deleteNote.toString = function () {
-        return _deleteNote.toString();
-      };
-
-      return deleteNote;
-    }(function (noteId) {
-      return dispatch(deleteNote(noteId));
-    })
+    closeModal: function closeModal() {
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_5__["closeModal"])());
+    },
+    fetchNotes: function fetchNotes(noteId) {
+      return dispatch(Object(_actions_note_actions__WEBPACK_IMPORTED_MODULE_6__["fetchNotes"])());
+    },
+    fetchNote: function fetchNote(noteId) {
+      return dispatch(Object(_actions_note_actions__WEBPACK_IMPORTED_MODULE_6__["fetchNote"])(noteId));
+    },
+    deleteNote: function deleteNote(noteId) {
+      return dispatch(Object(_actions_note_actions__WEBPACK_IMPORTED_MODULE_6__["deleteNote"])(noteId));
+    }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (connect(mapStateToProps, mapDispatchToProps)(NotesPage));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_4__["connect"])(mapStateToProps, mapDispatchToProps)(NotesPage));
 
 /***/ }),
 
@@ -4064,15 +4039,15 @@ var Modal = function Modal(_ref) {
   var component;
 
   switch (modal) {
-    case 'Notes':
+    case "Notes":
       component = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_modal_pages_notesPage__WEBPACK_IMPORTED_MODULE_4__["default"], null);
       break;
 
-    case 'Categories':
+    case "Categories":
       component = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_modal_pages_categories_container__WEBPACK_IMPORTED_MODULE_3__["default"], null);
       break;
 
-    case 'Profiles':
+    case "Profiles":
       component = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_modal_pages_profilePage__WEBPACK_IMPORTED_MODULE_5__["default"], null);
       break;
 

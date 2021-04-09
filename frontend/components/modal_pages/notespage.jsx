@@ -2,6 +2,13 @@ import React from "react";
 import NotesItem from "./notes_item";
 import Pagination from "./notes_pagination";
 import { searchRegexMatch } from "../../helpers/helperFunctions";
+import { connect } from "react-redux";
+import { closeModal } from "../../actions/modal_actions";
+import {
+    fetchNote,
+    fetchNotes,
+    deleteNote,
+} from "../../actions/note_actions";
 
 class NotesPage extends React.Component {
     constructor(props) {
@@ -19,6 +26,7 @@ class NotesPage extends React.Component {
         };
 
         this.handleUpdate = this.handleUpdate.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
         this.handleCheck = this.handleCheck.bind(this);
         this.toggleClass = this.toggleClass.bind(this);
@@ -75,6 +83,10 @@ class NotesPage extends React.Component {
 
     handleUpdate(noteId) {
         this.props.fetchNote(noteId).then(() => this.props.closeModal());
+    }
+
+    handleDelete(noteId) {
+        this.props.deleteNote(noteId).then(() => this.props.fetchNotes());
     }
 
     toggleClass(noteId) {
@@ -269,9 +281,8 @@ class NotesPage extends React.Component {
                                     <NotesItem
                                         handleUpdate={this.handleUpdate}
                                         toggleClass={this.toggleClass}
-                                        flipToDelete={this.state.flipToDelete}
                                         noteId={this.state.noteId}
-                                        deleteNote={deleteNote}
+                                        handleDelete={this.handleDelete}
                                         fetchNote={fetchNote}
                                         eachNote={eachNote}
                                         key={eachNote.id}
