@@ -2,9 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { closeModal } from '../../actions/modal_actions';
 import CategoriesContainer from '../modal_pages/categories_container';
-import NotesContainer from '../modal_pages/notespage_container';
-import ProfilesContainer from '../modal_pages/profiles_container';
+import NotesPage from '../modal_pages/notesPage';
+import ProfilePage from "../modal_pages/profilePage";
 
+/******************************
+ *       Modal Component      *
+ ******************************/
 
 const Modal = ({ modal, closeModal }) => {
     if (!modal) return null;
@@ -12,13 +15,13 @@ const Modal = ({ modal, closeModal }) => {
     let component;
     switch (modal) {
         case 'Notes':
-            component = <NotesContainer />;
+            component = <NotesPage />;
             break;
         case 'Categories':
             component = <CategoriesContainer />;
             break;
         case 'Profiles':
-            component = <ProfilesContainer />;
+            component = <ProfilePage />;
             break;
         default:
             return null;
@@ -32,6 +35,10 @@ const Modal = ({ modal, closeModal }) => {
         </div>
     );
 }
+
+/******************************
+ *       mapStateToProps      *
+ ******************************/
 
 const mapStateToProps = (state) => {
 
@@ -53,6 +60,10 @@ const mapStateToProps = (state) => {
         typeId: idVar
     }
 };
+
+/******************************
+ *     mapDispatchToProps     *
+ ******************************/
 
 const mapDispatchToProps = (dispatch) => ({
     closeModal: () => dispatch(closeModal())

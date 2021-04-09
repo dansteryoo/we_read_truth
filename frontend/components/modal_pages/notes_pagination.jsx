@@ -1,5 +1,9 @@
 import React from 'react';
 
+/******************************
+ *    Pagination Component    *
+ ******************************/
+
 const Pagination = ({
   paginate,
   currentPage,

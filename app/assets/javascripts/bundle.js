@@ -1610,6 +1610,412 @@ var CategoryListThemes = function CategoryListThemes(_ref) {
 
 /***/ }),
 
+/***/ "./frontend/components/modal_pages/notesPage.jsx":
+/*!*******************************************************!*\
+  !*** ./frontend/components/modal_pages/notesPage.jsx ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+/* harmony import */ var _actions_note_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/note_actions */ "./frontend/actions/note_actions.js");
+/* harmony import */ var _notes_item__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./notes_item */ "./frontend/components/modal_pages/notes_item.jsx");
+/* harmony import */ var _notes_pagination__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./notes_pagination */ "./frontend/components/modal_pages/notes_pagination.jsx");
+/* harmony import */ var _helpers_helperFunctions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../helpers/helperFunctions */ "./frontend/helpers/helperFunctions.js");
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+
+/******************************
+ *         CONSTANTS          *
+ ******************************/
+
+var NOTES_PER_PAGE = 40;
+/******************************
+ *     NotesPage Component    *
+ ******************************/
+
+var NotesPage = function NotesPage(_ref) {
+  var fetchNotes = _ref.fetchNotes,
+      fetchNote = _ref.fetchNote,
+      deleteNote = _ref.deleteNote,
+      currentUser = _ref.currentUser,
+      closeModal = _ref.closeModal;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(""),
+      _useState2 = _slicedToArray(_useState, 2),
+      noteId = _useState2[0],
+      setNoteId = _useState2[1];
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
+      _useState4 = _slicedToArray(_useState3, 2),
+      notes = _useState4[0],
+      setNotes = _useState4[1];
+
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(""),
+      _useState6 = _slicedToArray(_useState5, 2),
+      search = _useState6[0],
+      setSearch = _useState6[1];
+
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState8 = _slicedToArray(_useState7, 2),
+      checked = _useState8[0],
+      setChecked = _useState8[1];
+
+  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(1),
+      _useState10 = _slicedToArray(_useState9, 2),
+      currentPage = _useState10[0],
+      setCurrentPage = _useState10[1];
+
+  var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState12 = _slicedToArray(_useState11, 2),
+      loading = _useState12[0],
+      setLoading = _useState12[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    setLoading(true);
+    handleMounting();
+  }, []);
+  /******************************
+   *       handleMounting       *
+   ******************************/
+
+  var handleMounting = /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+      var _yield$fetchNotes, notes;
+
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return fetchNotes();
+
+            case 2:
+              _yield$fetchNotes = _context.sent;
+              notes = _yield$fetchNotes.notes;
+              notes = Object.values(notes);
+              setNotes(notes);
+              setLoading(false);
+
+            case 7:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    return function handleMounting() {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+  /******************************
+   *         sortByType         *
+   ******************************/
+
+
+  var sortByType = function sortByType(notes, type) {
+    var sortedNotes = notes.sort(function (a, b) {
+      return a["".concat(type)].toLowerCase() < b["".concat(type)].toLowerCase() ? -1 : 1;
+    }).map(function (ele) {
+      return ele;
+    });
+    type === "updated_at" ? sortedNotes.reverse() : sortedNotes;
+    return sortedNotes;
+  };
+  /******************************
+   *        handleUpdate        *
+   ******************************/
+
+
+  var handleUpdate = /*#__PURE__*/function () {
+    var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(noteId) {
+      return regeneratorRuntime.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              fetchNote(noteId);
+              return _context2.abrupt("return", closeModal());
+
+            case 2:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }));
+
+    return function handleUpdate(_x) {
+      return _ref3.apply(this, arguments);
+    };
+  }();
+  /******************************
+   *        toggleClass         *
+   ******************************/
+
+
+  var toggleClass = function toggleClass(noteId) {
+    setNoteId(noteId);
+  };
+  /******************************
+   *        handleCheck         *
+   ******************************/
+
+
+  var handleCheck = function handleCheck(e) {
+    var checkbox = e.target.value;
+    var myCheckbox = document.getElementsByName("checkbox");
+    var checkboxBool = [];
+    myCheckbox.forEach(function (ele) {
+      if (checkbox !== ele.value) ele.checked = false;
+      checkboxBool.push(ele.checked === true);
+    });
+    /******************************
+     *   default created_at sort  *
+     *   on blank checkboxes      *
+     ******************************/
+
+    if (!checkboxBool.includes(true)) {
+      setNotes(sortByType(notes, "created_at"));
+      setChecked(false);
+    } else {
+      setChecked(true);
+
+      switch (checkbox) {
+        case "byBook":
+          return setNotes(sortByType(notes, "category"));
+
+        case "byUpdated":
+          return setNotes(sortByType(notes, "updated_at"));
+      }
+    }
+  };
+  /******************************
+   *        handleSearch        *
+   ******************************/
+
+
+  var handleSearch = function handleSearch(e) {
+    var search = e.target.value;
+    setSearch(search);
+    var searchData = Object(_helpers_helperFunctions__WEBPACK_IMPORTED_MODULE_6__["searchRegexMatch"])(search.toLowerCase());
+    var sortNotes = notes.filter(function (each) {
+      var sortTitles = each.title.toLowerCase().match(searchData);
+      var sortBody = each.body.toLowerCase().match(searchData);
+      var sortBook = each.category.toLowerCase().match(searchData);
+      return sortTitles || sortBody || sortBook;
+    });
+    var myCheckbox = document.getElementsByName("checkbox");
+    var checkboxName = [];
+    myCheckbox.forEach(function (ele) {
+      if (ele.checked) checkboxName.push(ele.value);
+    });
+
+    if (checked) {
+      if (checkboxName.includes("byBook")) {
+        return setNotes(sortByType(sortNotes, "category"));
+      } else {
+        return setNotes(sortByType(sortNotes, "updated_at"));
+      }
+    } else {
+      return setNotes(sortByType(sortNotes, "created_at"));
+    }
+  };
+  /******************************
+   *       renderModalTop       *
+   ******************************/
+
+
+  var renderModalTop = function renderModalTop() {
+    var totalNotes = notes.length;
+    var maxPage = Math.ceil(totalNotes / NOTES_PER_PAGE);
+    var lastNote = Math.min(currentPage * NOTES_PER_PAGE, totalNotes);
+    var firstNote = currentPage * NOTES_PER_PAGE - NOTES_PER_PAGE + 1;
+    /******************************
+     *        change pages        *
+     ******************************/
+
+    var paginate = function paginate(pageNumber) {
+      return setCurrentPage(pageNumber);
+    };
+
+    var nextPage = function nextPage() {
+      return currentPage < maxPage && setCurrentPage(currentPage + 1);
+    };
+
+    var prevPage = function prevPage() {
+      return currentPage > 1 && setCurrentPage(currentPage - 1);
+    };
+
+    var currentUser_firstName = currentUser ? currentUser.first_name : "Demo";
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "notes-modal-top"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "notes-page-username"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, currentUser_firstName, "'s Notes")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "notes-search"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      className: "notes-bar-search-form"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      className: "notes-search-input",
+      type: "text",
+      placeholder: "Search..",
+      value: search,
+      onChange: handleSearch
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "checkbox-container"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      className: "container"
+    }, "By Book", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      type: "checkbox",
+      name: "checkbox",
+      value: "byBook",
+      onChange: function onChange(e) {
+        return handleCheck(e);
+      }
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      className: "checkmark"
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      className: "container"
+    }, "By Updated", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      type: "checkbox",
+      name: "checkbox",
+      value: "byUpdated",
+      onChange: function onChange(e) {
+        return handleCheck(e);
+      }
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      className: "checkmark"
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_notes_pagination__WEBPACK_IMPORTED_MODULE_5__["default"], {
+      paginate: paginate,
+      currentPage: currentPage,
+      nextPage: nextPage,
+      prevPage: prevPage,
+      maxPage: maxPage
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "notes-modal-top-totalnum"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, firstNote, " to ", lastNote, " of ", totalNotes)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "form-closing-x",
+      onClick: function onClick() {
+        return closeModal();
+      }
+    }, "\u2715"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "form-or-separator-notes"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)));
+  };
+  /******************************
+   *      get current notes     *
+   ******************************/
+
+
+  var idxOfLastNote = currentPage * NOTES_PER_PAGE;
+  var idxOfFirstNote = idxOfLastNote - NOTES_PER_PAGE;
+  var currentNotes = notes.slice(idxOfFirstNote, idxOfLastNote);
+  /******************************
+   *           render           *
+   ******************************/
+
+  if (notes.length > 0) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "notes-page-container"
+    }, renderModalTop(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "notes-page-content"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+      className: "notes-page-section"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      className: "notes-page-ul"
+    }, currentNotes.map(function (eachNote) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_notes_item__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        eachNote: eachNote,
+        handleUpdate: handleUpdate,
+        deleteNote: deleteNote,
+        toggleClass: toggleClass,
+        noteId: noteId,
+        key: eachNote.id
+      });
+    })))));
+  } else {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "notes-page-container"
+    }, renderModalTop(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "notes-page-content"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+      className: "notes-page-section"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "notes-page-section-empty"
+    }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Notes are loading...") : notes.length < 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "You don't have any notes.") : notes.length < 1 && search.length > 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "No notes matching your search.") : false))));
+  }
+};
+/******************************
+ *      mapStateToProps       *
+ ******************************/
+
+
+var mapStateToProps = function mapStateToProps(_ref4) {
+  var devos = _ref4.devos,
+      notes = _ref4.notes,
+      users = _ref4.users,
+      session = _ref4.session,
+      errors = _ref4.errors;
+  var noteId = notes.noteId ? notes.noteId : {};
+  return {
+    currentUser: users[session.id],
+    errors: errors,
+    devos: Object.values(devos),
+    noteId: noteId
+  };
+};
+/******************************
+ *     mapDispatchToProps     *
+ ******************************/
+
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    closeModal: function closeModal() {
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__["closeModal"])());
+    },
+    fetchNotes: function fetchNotes(noteId) {
+      return dispatch(Object(_actions_note_actions__WEBPACK_IMPORTED_MODULE_3__["fetchNotes"])());
+    },
+    fetchNote: function fetchNote(noteId) {
+      return dispatch(Object(_actions_note_actions__WEBPACK_IMPORTED_MODULE_3__["fetchNote"])(noteId));
+    },
+    deleteNote: function deleteNote(noteId) {
+      return dispatch(Object(_actions_note_actions__WEBPACK_IMPORTED_MODULE_3__["deleteNote"])(noteId));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(NotesPage));
+
+/***/ }),
+
 /***/ "./frontend/components/modal_pages/notes_item.jsx":
 /*!********************************************************!*\
   !*** ./frontend/components/modal_pages/notes_item.jsx ***!
@@ -1635,6 +2041,9 @@ var styles = {
   cancel: "note-cancel",
   deleteBody: "note-delete-body"
 };
+/******************************
+ *    NotesItem Component     *
+ ******************************/
 
 var NotesItem = function NotesItem(_ref) {
   var eachNote = _ref.eachNote,
@@ -1653,8 +2062,8 @@ var NotesItem = function NotesItem(_ref) {
   };
 
   var renderFlipCard = function renderFlipCard() {
-    if (noteId !== eachNote.id) return 'note-li';
-    return 'note-flip';
+    if (noteId !== eachNote.id) return "note-li";
+    return "note-flip";
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
@@ -1726,6 +2135,9 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 
+/******************************
+ *    Pagination Component    *
+ ******************************/
 
 var Pagination = function Pagination(_ref) {
   var paginate = _ref.paginate,
@@ -1847,10 +2259,10 @@ var Pagination = function Pagination(_ref) {
 
 /***/ }),
 
-/***/ "./frontend/components/modal_pages/notespage.jsx":
-/*!*******************************************************!*\
-  !*** ./frontend/components/modal_pages/notespage.jsx ***!
-  \*******************************************************/
+/***/ "./frontend/components/modal_pages/profilePage.jsx":
+/*!*********************************************************!*\
+  !*** ./frontend/components/modal_pages/profilePage.jsx ***!
+  \*********************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1858,434 +2270,9 @@ var Pagination = function Pagination(_ref) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _notes_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./notes_item */ "./frontend/components/modal_pages/notes_item.jsx");
-/* harmony import */ var _notes_pagination__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./notes_pagination */ "./frontend/components/modal_pages/notes_pagination.jsx");
-/* harmony import */ var _helpers_helperFunctions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helpers/helperFunctions */ "./frontend/helpers/helperFunctions.js");
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-
-
-
-
-
-var NotesPage = /*#__PURE__*/function (_React$Component) {
-  _inherits(NotesPage, _React$Component);
-
-  var _super = _createSuper(NotesPage);
-
-  function NotesPage(props) {
-    var _this;
-
-    _classCallCheck(this, NotesPage);
-
-    _this = _super.call(this, props);
-    _this.state = {
-      noteId: '',
-      search: '',
-      notes: [],
-      defaultSorted: [],
-      checked: false,
-      currentPage: 1,
-      notesPerPage: 40,
-      loading: false
-    };
-    _this.handleUpdate = _this.handleUpdate.bind(_assertThisInitialized(_this));
-    _this.handleSearch = _this.handleSearch.bind(_assertThisInitialized(_this));
-    _this.handleCheck = _this.handleCheck.bind(_assertThisInitialized(_this));
-    _this.toggleClass = _this.toggleClass.bind(_assertThisInitialized(_this));
-    _this.renderModalTop = _this.renderModalTop.bind(_assertThisInitialized(_this));
-    _this.sortByType = _this.sortByType.bind(_assertThisInitialized(_this));
-    return _this;
-  }
-
-  _createClass(NotesPage, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      this.setState({
-        loading: true
-      });
-      this.props.fetchNotes().then(function () {
-        return setTimeout(function () {
-          _this2.setState({
-            notes: _this2.props.notes,
-            defaultSorted: _this2.sortByType(_this2.props.notes, "created_at"),
-            loading: false
-          });
-        }, 500);
-      });
-    }
-  }, {
-    key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps) {
-      var _this$state = this.state,
-          notes = _this$state.notes,
-          search = _this$state.search,
-          defaultSorted = _this$state.defaultSorted,
-          checked = _this$state.checked; //---------- defaultSorted on blank search input ----------//
-
-      if (JSON.stringify(notes) !== JSON.stringify(defaultSorted) && search.length < 1 && checked === false) {
-        return this.setState({
-          notes: defaultSorted
-        });
-      }
-
-      if (prevProps.notes.length !== this.props.notes.length) {
-        return this.setState({
-          notes: this.props.notes,
-          defaultSorted: this.sortByType(this.props.notes, 'created_at')
-        });
-      }
-    }
-  }, {
-    key: "sortByType",
-    value: function sortByType(notes, type) {
-      var sortedNotes = notes.sort(function (a, b) {
-        return a["".concat(type)].toLowerCase() < b["".concat(type)].toLowerCase() ? -1 : 1;
-      }).map(function (ele) {
-        return ele;
-      });
-      type === "updated_at" ? sortedNotes.reverse() : sortedNotes;
-      return sortedNotes;
-    }
-  }, {
-    key: "handleUpdate",
-    value: function handleUpdate(noteId) {
-      var _this3 = this;
-
-      this.props.fetchNote(noteId).then(function () {
-        return _this3.props.closeModal();
-      });
-    }
-  }, {
-    key: "toggleClass",
-    value: function toggleClass(noteId) {
-      this.setState({
-        noteId: noteId
-      });
-    }
-  }, {
-    key: "handleCheck",
-    value: function handleCheck(e) {
-      var checkbox = e.target.value;
-      var myCheckbox = document.getElementsByName("checkbox");
-      var checkboxBool = [];
-      myCheckbox.forEach(function (ele) {
-        if (checkbox !== ele.value) ele.checked = false;
-        checkboxBool.push(ele.checked === true);
-      });
-      var notes = this.state.notes; //---------- default byCreated sort on blank checkboxes ----------//
-
-      if (!checkboxBool.includes(true)) {
-        return this.setState({
-          notes: this.sortByType(notes, 'created_at'),
-          checked: false
-        });
-      } else {
-        this.setState({
-          checked: true
-        });
-
-        switch (checkbox) {
-          case 'byBook':
-            return this.setState({
-              notes: this.sortByType(notes, 'category')
-            });
-
-          case 'byUpdated':
-            return this.setState({
-              notes: this.sortByType(notes, 'updated_at')
-            });
-        }
-      }
-    }
-  }, {
-    key: "handleSearch",
-    value: function handleSearch(e) {
-      var search = e.target.value;
-      this.setState({
-        search: search
-      }); //---------- helper_func ----------//
-
-      var searchData = Object(_helpers_helperFunctions__WEBPACK_IMPORTED_MODULE_3__["searchRegexMatch"])(search.toLowerCase());
-      var sortNotes = this.props.notes.filter(function (each) {
-        var sortTitles = each.title.toLowerCase().match(searchData);
-        var sortBody = each.body.toLowerCase().match(searchData);
-        var sortBook = each.category.toLowerCase().match(searchData);
-        return sortTitles || sortBody || sortBook;
-      });
-      var checked = this.state.checked;
-      var myCheckbox = document.getElementsByName("checkbox");
-      var checkboxName = [];
-      myCheckbox.forEach(function (ele) {
-        if (ele.checked === true) checkboxName.push(ele.value);
-      });
-
-      if (checked) {
-        if (checkboxName.includes('byBook')) {
-          return this.setState({
-            notes: this.sortByType(sortNotes, 'category')
-          });
-        } else {
-          return this.setState({
-            notes: this.sortByType(sortNotes, 'updated_at')
-          });
-        }
-      } else {
-        return this.setState({
-          notes: this.sortByType(sortNotes, 'created_at')
-        });
-      }
-    }
-  }, {
-    key: "renderModalTop",
-    value: function renderModalTop() {
-      var _this4 = this;
-
-      var _this$props = this.props,
-          currentUser = _this$props.currentUser,
-          closeModal = _this$props.closeModal;
-      var _this$state2 = this.state,
-          notes = _this$state2.notes,
-          notesPerPage = _this$state2.notesPerPage,
-          currentPage = _this$state2.currentPage;
-      var totalNotes = notes.length;
-      var maxPage = Math.ceil(totalNotes / notesPerPage);
-      var lastNote = Math.min(currentPage * notesPerPage, totalNotes);
-      var firstNote = currentPage * notesPerPage - notesPerPage + 1; // Change page
-
-      var paginate = function paginate(pageNumber) {
-        return _this4.setState({
-          currentPage: pageNumber
-        });
-      };
-
-      var nextPage = function nextPage() {
-        currentPage < maxPage && _this4.setState({
-          currentPage: currentPage + 1
-        });
-      };
-
-      var prevPage = function prevPage() {
-        currentPage > 1 && _this4.setState({
-          currentPage: currentPage - 1
-        });
-      };
-
-      var currentUser_firstName = currentUser ? currentUser.first_name : 'Demo';
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "notes-modal-top"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "notes-page-username"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, currentUser_firstName, "'s Notes")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "notes-search"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        className: "notes-bar-search-form"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        className: "notes-search-input",
-        type: "text",
-        placeholder: "Search..",
-        value: this.state.search,
-        onChange: this.handleSearch
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "checkbox-container"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        className: "container"
-      }, "By Book", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "checkbox",
-        name: "checkbox",
-        value: "byBook",
-        onChange: this.handleCheck
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "checkmark"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        className: "container"
-      }, "By Updated", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "checkbox",
-        name: "checkbox",
-        value: "byUpdated",
-        onChange: this.handleCheck
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "checkmark"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_notes_pagination__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        paginate: paginate,
-        currentPage: currentPage,
-        nextPage: nextPage,
-        prevPage: prevPage,
-        maxPage: maxPage
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "notes-modal-top-totalnum"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, firstNote, " to ", lastNote, " of ", totalNotes)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "form-closing-x",
-        onClick: function onClick() {
-          return closeModal();
-        }
-      }, "\u2715"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "form-or-separator-notes"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)));
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this5 = this;
-
-      var _this$props2 = this.props,
-          fetchNote = _this$props2.fetchNote,
-          deleteNote = _this$props2.deleteNote;
-      var _this$state3 = this.state,
-          notes = _this$state3.notes,
-          search = _this$state3.search,
-          currentPage = _this$state3.currentPage,
-          notesPerPage = _this$state3.notesPerPage,
-          loading = _this$state3.loading; // Get current notes
-
-      var idxOfLastNote = currentPage * notesPerPage;
-      var idxOfFirstNote = idxOfLastNote - notesPerPage;
-      var currentNotes = notes.slice(idxOfFirstNote, idxOfLastNote);
-
-      if (notes.length > 0) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "notes-page-container"
-        }, this.renderModalTop(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "notes-page-content"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
-          className: "notes-page-section"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-          className: "notes-page-ul"
-        }, currentNotes.map(function (eachNote) {
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_notes_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
-            handleUpdate: _this5.handleUpdate,
-            toggleClass: _this5.toggleClass,
-            flipToDelete: _this5.state.flipToDelete,
-            noteId: _this5.state.noteId,
-            deleteNote: deleteNote,
-            fetchNote: fetchNote,
-            eachNote: eachNote,
-            key: eachNote.id
-          });
-        })))));
-      } else {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "notes-page-container"
-        }, this.renderModalTop(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "notes-page-content"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
-          className: "notes-page-section"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "notes-page-section-empty"
-        }, loading === true ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Notes are loading...") : this.props.notes.length < 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "You don't have any notes.") : notes.length < 1 && search.length > 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "No notes matching your search.") : false))));
-      }
-    }
-  }]);
-
-  return NotesPage;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
-
-/* harmony default export */ __webpack_exports__["default"] = (NotesPage);
-
-/***/ }),
-
-/***/ "./frontend/components/modal_pages/notespage_container.js":
-/*!****************************************************************!*\
-  !*** ./frontend/components/modal_pages/notespage_container.js ***!
-  \****************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
-/* harmony import */ var _actions_note_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/note_actions */ "./frontend/actions/note_actions.js");
-/* harmony import */ var _notespage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./notespage */ "./frontend/components/modal_pages/notespage.jsx");
-
-
-
-
-
-var mapStateToProps = function mapStateToProps(state) {
-  var noteId;
-  var notes;
-
-  if (state.notes.noteId !== undefined) {
-    noteId = state.notes.noteId;
-    notes = [];
-  } else {
-    noteId = {};
-    notes = Object.values(state.notes);
-  }
-
-  return {
-    currentUser: state.users[state.session.id],
-    errors: state.errors,
-    devos: Object.values(state.devos),
-    notes: notes,
-    noteId: noteId
-  };
-};
-
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {
-    closeModal: function closeModal() {
-      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_1__["closeModal"])());
-    },
-    openModal: function openModal(formType, id) {
-      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_1__["openModal"])(formType, id));
-    },
-    fetchNotes: function fetchNotes() {
-      return dispatch(Object(_actions_note_actions__WEBPACK_IMPORTED_MODULE_2__["fetchNotes"])());
-    },
-    fetchNote: function fetchNote(noteId) {
-      return dispatch(Object(_actions_note_actions__WEBPACK_IMPORTED_MODULE_2__["fetchNote"])(noteId));
-    },
-    deleteNote: function deleteNote(noteId) {
-      return dispatch(Object(_actions_note_actions__WEBPACK_IMPORTED_MODULE_2__["deleteNote"])(noteId));
-    },
-    updateNote: function updateNote(note) {
-      return dispatch(Object(_actions_note_actions__WEBPACK_IMPORTED_MODULE_2__["updateNote"])(note));
-    },
-    createNote: function createNote(note) {
-      return dispatch(Object(_actions_note_actions__WEBPACK_IMPORTED_MODULE_2__["createNote"])(note));
-    }
-  };
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_notespage__WEBPACK_IMPORTED_MODULE_3__["default"]));
-
-/***/ }),
-
-/***/ "./frontend/components/modal_pages/profiles.jsx":
-/*!******************************************************!*\
-  !*** ./frontend/components/modal_pages/profiles.jsx ***!
-  \******************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
+/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2305,6 +2292,13 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
+
+
+
+/******************************
+ *         CONSTANTS          *
+ ******************************/
+
 var ERRORS = ["", // 0 Blank email
 "", // 1 Email !valid
 "", // 2 Email taken
@@ -2313,8 +2307,11 @@ var ERRORS = ["", // 0 Blank email
 "Password is too short (minimum is 6 characters)", // 5 PW too short
 "Passwords do not match" // 6 PW !match
 ];
+/******************************
+ *   ProfilePage Component   *
+ ******************************/
 
-var ProfilesPage = function ProfilesPage(_ref) {
+var ProfilePage = function ProfilePage(_ref) {
   var currentUser = _ref.currentUser,
       clearErrors = _ref.clearErrors,
       processForm = _ref.processForm,
@@ -2619,7 +2616,7 @@ var ProfilesPage = function ProfilesPage(_ref) {
     /***********************************
      *           deletingUser          *
      ***********************************/
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "form-container-update"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "form__update"
@@ -2639,69 +2636,39 @@ var ProfilesPage = function ProfilesPage(_ref) {
       }
     }, "Cancel")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "update-form-delete-message"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "ARE YOU SURE YOU WANT TO DELETE YOUR ACCOUNT? "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "You will lose all your data permanently! "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Please press the delete button to confirm. "))))));
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "ARE YOU SURE YOU WANT TO DELETE YOUR ACCOUNT?", " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "You will lose all your data permanently!", " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Please press the delete button to confirm.", " "))))));
   }
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (ProfilesPage);
-
-/***/ }),
-
-/***/ "./frontend/components/modal_pages/profiles_container.js":
-/*!***************************************************************!*\
-  !*** ./frontend/components/modal_pages/profiles_container.js ***!
-  \***************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
-/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
-/* harmony import */ var _profiles__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./profiles */ "./frontend/components/modal_pages/profiles.jsx");
-
-
-
-
-
-var mapStateToProps = function mapStateToProps(state) {
-  var errors;
-
-  if (state.errors !== undefined) {
-    errors = state.errors;
-  } else {
-    errors = [];
-  }
-
+var mapStateToProps = function mapStateToProps(_ref2) {
+  var errors = _ref2.errors,
+      users = _ref2.users,
+      session = _ref2.session;
   return {
-    currentUser: state.users[state.session.id],
-    errors: state.errors,
-    formType: 'Profile Update'
+    currentUser: users[session.id],
+    errors: errors ? errors : [],
+    formType: "Profile Update"
   };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     processForm: function processForm(user) {
-      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["updateUser"])(user));
+      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_2__["updateUser"])(user));
     },
     deleteUser: function deleteUser(userId) {
-      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["deleteUser"])(userId));
+      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_2__["deleteUser"])(userId));
     },
     closeModal: function closeModal() {
-      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__["closeModal"])());
-    },
-    openModal: function openModal(formType) {
-      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__["openModal"])(formType));
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__["closeModal"])());
     },
     clearErrors: function clearErrors() {
-      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["clearErrors"])());
+      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_2__["clearErrors"])());
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_profiles__WEBPACK_IMPORTED_MODULE_3__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(ProfilePage));
 
 /***/ }),
 
@@ -4044,14 +4011,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
 /* harmony import */ var _modal_pages_categories_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../modal_pages/categories_container */ "./frontend/components/modal_pages/categories_container.js");
-/* harmony import */ var _modal_pages_notespage_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../modal_pages/notespage_container */ "./frontend/components/modal_pages/notespage_container.js");
-/* harmony import */ var _modal_pages_profiles_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../modal_pages/profiles_container */ "./frontend/components/modal_pages/profiles_container.js");
+/* harmony import */ var _modal_pages_notesPage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../modal_pages/notesPage */ "./frontend/components/modal_pages/notesPage.jsx");
+/* harmony import */ var _modal_pages_profilePage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../modal_pages/profilePage */ "./frontend/components/modal_pages/profilePage.jsx");
 
 
 
 
 
 
+/******************************
+ *       Modal Component      *
+ ******************************/
 
 var Modal = function Modal(_ref) {
   var modal = _ref.modal,
@@ -4061,7 +4031,7 @@ var Modal = function Modal(_ref) {
 
   switch (modal) {
     case 'Notes':
-      component = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_modal_pages_notespage_container__WEBPACK_IMPORTED_MODULE_4__["default"], null);
+      component = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_modal_pages_notesPage__WEBPACK_IMPORTED_MODULE_4__["default"], null);
       break;
 
     case 'Categories':
@@ -4069,7 +4039,7 @@ var Modal = function Modal(_ref) {
       break;
 
     case 'Profiles':
-      component = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_modal_pages_profiles_container__WEBPACK_IMPORTED_MODULE_5__["default"], null);
+      component = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_modal_pages_profilePage__WEBPACK_IMPORTED_MODULE_5__["default"], null);
       break;
 
     default:
@@ -4086,6 +4056,10 @@ var Modal = function Modal(_ref) {
     }
   }, component));
 };
+/******************************
+ *       mapStateToProps      *
+ ******************************/
+
 
 var mapStateToProps = function mapStateToProps(state) {
   var modalVar;
@@ -4109,6 +4083,10 @@ var mapStateToProps = function mapStateToProps(state) {
     typeId: idVar
   };
 };
+/******************************
+ *     mapDispatchToProps     *
+ ******************************/
+
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
