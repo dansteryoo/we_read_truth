@@ -21,7 +21,7 @@ const styles = {
 const NotesItem = ({
     eachNote,
     handleUpdate,
-    deleteNote,
+    handleDelete,
     toggleClass,
     noteId,
 }) => {
@@ -90,7 +90,7 @@ const NotesItem = ({
                 <div className={styles.container}>
                     <button
                         className={styles.delete}
-                        onClick={() => deleteNote(eachNote.id)}
+                        onClick={() => handleDelete(eachNote.id)}
                     >
                         Delete
                     </button>

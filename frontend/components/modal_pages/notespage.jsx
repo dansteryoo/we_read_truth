@@ -1,56 +1,68 @@
-import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
-import { closeModal } from "../../actions/modal_actions";
-import { fetchNote, fetchNotes, deleteNote } from "../../actions/note_actions";
+import React from "react";
 import NotesItem from "./notes_item";
 import Pagination from "./notes_pagination";
 import { searchRegexMatch } from "../../helpers/helperFunctions";
 
-/******************************
- *         CONSTANTS          *
- ******************************/
+class NotesPage extends React.Component {
+    constructor(props) {
+        super(props);
 
-const NOTES_PER_PAGE = 40;
+        this.state = {
+            noteId: "",
+            search: "",
+            notes: [],
+            defaultSorted: [],
+            checked: false,
+            currentPage: 1,
+            notesPerPage: 40,
+            loading: false,
+        };
 
-/******************************
- *     NotesPage Component    *
- ******************************/
+        this.handleUpdate = this.handleUpdate.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
+        this.handleCheck = this.handleCheck.bind(this);
+        this.toggleClass = this.toggleClass.bind(this);
+        this.renderModalTop = this.renderModalTop.bind(this);
+        this.sortByType = this.sortByType.bind(this);
+    }
 
-const NotesPage = ({
-    fetchNotes,
-    fetchNote,
-    deleteNote,
-    currentUser,
-    closeModal,
-}) => {
-    const [noteId, setNoteId] = useState("");
-    const [notes, setNotes] = useState([]);
-    const [search, setSearch] = useState("");
-    const [checked, setChecked] = useState(false);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [loading, setLoading] = useState(false);
+    componentDidMount() {
+        this.setState({ loading: true });
+        this.props.fetchNotes().then(() =>
+            setTimeout(() => {
+                this.setState({
+                    notes: this.props.notes,
+                    defaultSorted: this.sortByType(
+                        this.props.notes,
+                        "created_at"
+                    ),
+                    loading: false,
+                });
+            }, 500)
+        );
+    }
 
-    useEffect(() => {
-        setLoading(true);
-        handleMounting();
-    }, []);
+    componentDidUpdate(prevProps) {
+        const { notes, search, defaultSorted, checked } = this.state;
 
-    /******************************
-     *       handleMounting       *
-     ******************************/
+        //---------- defaultSorted on blank search input ----------//
+        if (
+            JSON.stringify(notes) !== JSON.stringify(defaultSorted) &&
+            search.length < 1 &&
+            checked === false
+        ) {
+            return this.setState({ notes: defaultSorted });
+        }
 
-    const handleMounting = async () => {
-        let { notes } = await fetchNotes();
-        notes = Object.values(notes);
-        setNotes(notes);
-        setLoading(false);
-    };
+        if (prevProps.notes.length !== this.props.notes.length) {
+            return this.setState({
+                notes: this.props.notes,
+                defaultSorted: this.sortByType(this.props.notes, "created_at"),
+            });
+        }
+    }
 
-    /******************************
-     *         sortByType         *
-     ******************************/
-
-    const sortByType = (notes, type) => {
+    sortByType(notes, type) {
         let sortedNotes = notes
             .sort((a, b) =>
                 a[`${type}`].toLowerCase() < b[`${type}`].toLowerCase() ? -1 : 1
@@ -59,30 +71,17 @@ const NotesPage = ({
 
         type === "updated_at" ? sortedNotes.reverse() : sortedNotes;
         return sortedNotes;
-    };
+    }
 
-    /******************************
-     *        handleUpdate        *
-     ******************************/
+    handleUpdate(noteId) {
+        this.props.fetchNote(noteId).then(() => this.props.closeModal());
+    }
 
-    const handleUpdate = async (noteId) => {
-        fetchNote(noteId);
-        return closeModal();
-    };
+    toggleClass(noteId) {
+        this.setState({ noteId });
+    }
 
-    /******************************
-     *        toggleClass         *
-     ******************************/
-
-    const toggleClass = (noteId) => {
-        setNoteId(noteId);
-    };
-
-    /******************************
-     *        handleCheck         *
-     ******************************/
-
-    const handleCheck = (e) => {
+    handleCheck(e) {
         const checkbox = e.target.value;
 
         let myCheckbox = document.getElementsByName("checkbox");
@@ -93,35 +92,38 @@ const NotesPage = ({
             checkboxBool.push(ele.checked === true);
         });
 
-        /******************************
-         *   default created_at sort  *
-         *   on blank checkboxes      *
-         ******************************/
-
+        const { notes } = this.state;
+        //---------- default byCreated sort on blank checkboxes ----------//
         if (!checkboxBool.includes(true)) {
-            setNotes(sortByType(notes, "created_at"));
-            setChecked(false);
+            return this.setState({
+                notes: this.sortByType(notes, "created_at"),
+                checked: false,
+            });
         } else {
-            setChecked(true);
+            this.setState({ checked: true });
+
             switch (checkbox) {
                 case "byBook":
-                    return setNotes(sortByType(notes, "category"));
+                    return this.setState({
+                        notes: this.sortByType(notes, "category"),
+                    });
+
                 case "byUpdated":
-                    return setNotes(sortByType(notes, "updated_at"));
+                    return this.setState({
+                        notes: this.sortByType(notes, "updated_at"),
+                    });
             }
         }
-    };
+    }
 
-    /******************************
-     *        handleSearch        *
-     ******************************/
-
-    const handleSearch = (e) => {
+    handleSearch(e) {
         const search = e.target.value;
-        setSearch(search);
+        this.setState({ search });
 
+        //---------- helper_func ----------//
         const searchData = searchRegexMatch(search.toLowerCase());
-        const sortNotes = notes.filter((each) => {
+
+        const sortNotes = this.props.notes.filter((each) => {
             let sortTitles = each.title.toLowerCase().match(searchData);
             let sortBody = each.body.toLowerCase().match(searchData);
             let sortBook = each.category.toLowerCase().match(searchData);
@@ -129,43 +131,52 @@ const NotesPage = ({
             return sortTitles || sortBody || sortBook;
         });
 
+        const { checked } = this.state;
         let myCheckbox = document.getElementsByName("checkbox");
         let checkboxName = [];
 
         myCheckbox.forEach((ele) => {
-            if (ele.checked) checkboxName.push(ele.value);
+            if (ele.checked === true) checkboxName.push(ele.value);
         });
 
         if (checked) {
             if (checkboxName.includes("byBook")) {
-                return setNotes(sortByType(sortNotes, "category"));
+                return this.setState({
+                    notes: this.sortByType(sortNotes, "category"),
+                });
             } else {
-                return setNotes(sortByType(sortNotes, "updated_at"));
+                return this.setState({
+                    notes: this.sortByType(sortNotes, "updated_at"),
+                });
             }
         } else {
-            return setNotes(sortByType(sortNotes, "created_at"));
+            return this.setState({
+                notes: this.sortByType(sortNotes, "created_at"),
+            });
         }
-    };
+    }
 
-    /******************************
-     *       renderModalTop       *
-     ******************************/
-
-    const renderModalTop = () => {
+    renderModalTop() {
+        const { currentUser, closeModal } = this.props;
+        const { notes, notesPerPage, currentPage } = this.state;
         const totalNotes = notes.length;
-        const maxPage = Math.ceil(totalNotes / NOTES_PER_PAGE);
-        const lastNote = Math.min(currentPage * NOTES_PER_PAGE, totalNotes);
-        const firstNote = currentPage * NOTES_PER_PAGE - NOTES_PER_PAGE + 1;
+        const maxPage = Math.ceil(totalNotes / notesPerPage);
+        const lastNote = Math.min(currentPage * notesPerPage, totalNotes);
+        const firstNote = currentPage * notesPerPage - notesPerPage + 1;
 
-        /******************************
-         *        change pages        *
-         ******************************/
+        // Change page
+        const paginate = (pageNumber) =>
+            this.setState({ currentPage: pageNumber });
 
-        const paginate = (pageNumber) => setCurrentPage(pageNumber);
-        const nextPage = () =>
-            currentPage < maxPage && setCurrentPage(currentPage + 1);
-        const prevPage = () =>
-            currentPage > 1 && setCurrentPage(currentPage - 1);
+        const nextPage = () => {
+            currentPage < maxPage &&
+                this.setState({ currentPage: currentPage + 1 });
+        };
+
+        const prevPage = () => {
+            currentPage > 1 && this.setState({ currentPage: currentPage - 1 });
+        };
+
         let currentUser_firstName = currentUser
             ? currentUser.first_name
             : "Demo";
@@ -181,8 +192,8 @@ const NotesPage = ({
                             className="notes-search-input"
                             type="text"
                             placeholder="Search.."
-                            value={search}
-                            onChange={handleSearch}
+                            value={this.state.search}
+                            onChange={this.handleSearch}
                         />
                     </form>
                 </div>
@@ -193,7 +204,7 @@ const NotesPage = ({
                             type="checkbox"
                             name="checkbox"
                             value="byBook"
-                            onChange={(e) => handleCheck(e)}
+                            onChange={this.handleCheck}
                         />
                         <span className="checkmark"></span>
                     </label>
@@ -203,7 +214,7 @@ const NotesPage = ({
                             type="checkbox"
                             name="checkbox"
                             value="byUpdated"
-                            onChange={(e) => handleCheck(e)}
+                            onChange={this.handleCheck}
                         />
                         <span className="checkmark"></span>
                     </label>
@@ -230,64 +241,71 @@ const NotesPage = ({
                 </div>
             </div>
         );
-    };
-    /******************************
-     *      get current notes     *
-     ******************************/
-
-    const idxOfLastNote = currentPage * NOTES_PER_PAGE;
-    const idxOfFirstNote = idxOfLastNote - NOTES_PER_PAGE;
-    const currentNotes = notes.slice(idxOfFirstNote, idxOfLastNote);
-
-    /******************************
-     *           render           *
-     ******************************/
-
-    if (notes.length > 0) {
-        return (
-            <div className="notes-page-container">
-                {renderModalTop()}
-                <div className="notes-page-content">
-                    <section className="notes-page-section">
-                        <ul className="notes-page-ul">
-                            {currentNotes.map((eachNote) => (
-                                <NotesItem
-                                    eachNote={eachNote}
-                                    handleUpdate={handleUpdate}
-                                    deleteNote={deleteNote}
-                                    toggleClass={toggleClass}
-                                    noteId={noteId}
-                                    key={eachNote.id}
-                                />
-                            ))}
-                        </ul>
-                    </section>
-                </div>
-            </div>
-        );
-    } else {
-        return (
-            <div className="notes-page-container">
-                {renderModalTop()}
-                <div className="notes-page-content">
-                    <section className="notes-page-section">
-                        <div className="notes-page-section-empty">
-                            {loading ? (
-                                <span>Notes are loading...</span>
-                            ) : notes.length < 1 ? (
-                                <span>You don't have any notes.</span>
-                            ) : notes.length < 1 && search.length > 0 ? (
-                                <span>No notes matching your search.</span>
-                            ) : (
-                                false
-                            )}
-                        </div>
-                    </section>
-                </div>
-            </div>
-        );
     }
-};
+
+    render() {
+        const { fetchNote, deleteNote } = this.props;
+        const {
+            notes,
+            search,
+            currentPage,
+            notesPerPage,
+            loading,
+        } = this.state;
+
+        // Get current notes
+        const idxOfLastNote = currentPage * notesPerPage;
+        const idxOfFirstNote = idxOfLastNote - notesPerPage;
+        const currentNotes = notes.slice(idxOfFirstNote, idxOfLastNote);
+
+        if (notes.length > 0) {
+            return (
+                <div className="notes-page-container">
+                    {this.renderModalTop()}
+                    <div className="notes-page-content">
+                        <section className="notes-page-section">
+                            <ul className="notes-page-ul">
+                                {currentNotes.map((eachNote) => (
+                                    <NotesItem
+                                        handleUpdate={this.handleUpdate}
+                                        toggleClass={this.toggleClass}
+                                        flipToDelete={this.state.flipToDelete}
+                                        noteId={this.state.noteId}
+                                        deleteNote={deleteNote}
+                                        fetchNote={fetchNote}
+                                        eachNote={eachNote}
+                                        key={eachNote.id}
+                                    />
+                                ))}
+                            </ul>
+                        </section>
+                    </div>
+                </div>
+            );
+        } else {
+            return (
+                <div className="notes-page-container">
+                    {this.renderModalTop()}
+                    <div className="notes-page-content">
+                        <section className="notes-page-section">
+                            <div className="notes-page-section-empty">
+                                {loading === true ? (
+                                    <span>Notes are loading...</span>
+                                ) : this.props.notes.length < 1 ? (
+                                    <span>You don't have any notes.</span>
+                                ) : notes.length < 1 && search.length > 0 ? (
+                                    <span>No notes matching your search.</span>
+                                ) : (
+                                    false
+                                )}
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            );
+        }
+    }
+}
 
 /******************************
  *      mapStateToProps       *
@@ -300,6 +318,7 @@ const mapStateToProps = ({ devos, notes, users, session, errors }) => {
         currentUser: users[session.id],
         errors: errors,
         devos: Object.values(devos),
+        notes: notes.noteId ? [] : Object.values(notes),
         noteId: noteId,
     };
 };

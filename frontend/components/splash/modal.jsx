@@ -1,8 +1,8 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { closeModal } from '../../actions/modal_actions';
-import CategoriesContainer from '../modal_pages/categories_container';
-import NotesPage from '../modal_pages/notesPage';
+import React from "react";
+import { connect } from "react-redux";
+import { closeModal } from "../../actions/modal_actions";
+import CategoriesContainer from "../modal_pages/categories_container";
+import NotesPage from "../modal_pages/notesPage";
 import ProfilePage from "../modal_pages/profilePage";
 
 /******************************
@@ -14,13 +14,13 @@ const Modal = ({ modal, closeModal }) => {
 
     let component;
     switch (modal) {
-        case 'Notes':
+        case "Notes":
             component = <NotesPage />;
             break;
-        case 'Categories':
+        case "Categories":
             component = <CategoriesContainer />;
             break;
-        case 'Profiles':
+        case "Profiles":
             component = <ProfilePage />;
             break;
         default:
@@ -28,37 +28,36 @@ const Modal = ({ modal, closeModal }) => {
     }
 
     return (
-        <div className='modal-background' onClick={closeModal}>
-            <div className='modal-content' onClick={e => e.stopPropagation()}>
+        <div className="modal-background" onClick={closeModal}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                 {component}
             </div>
         </div>
     );
-}
+};
 
 /******************************
  *       mapStateToProps      *
  ******************************/
 
 const mapStateToProps = (state) => {
-
     let modalVar;
-    if(!state.modal) {
-        modalVar = null
+    if (!state.modal) {
+        modalVar = null;
     } else {
-        modalVar = state.modal.formType
+        modalVar = state.modal.formType;
     }
     let idVar;
     if (!state.modal) {
-        idVar = null
+        idVar = null;
     } else {
-        idVar = state.modal.bookingId
+        idVar = state.modal.bookingId;
     }
 
     return {
         modal: modalVar,
-        typeId: idVar
-    }
+        typeId: idVar,
+    };
 };
 
 /******************************
@@ -66,8 +65,7 @@ const mapStateToProps = (state) => {
  ******************************/
 
 const mapDispatchToProps = (dispatch) => ({
-    closeModal: () => dispatch(closeModal())
+    closeModal: () => dispatch(closeModal()),
 });
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(Modal);
