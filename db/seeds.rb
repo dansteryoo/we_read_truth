@@ -19,30 +19,37 @@
     # //     "img_url": ""
     # // },
 
-Devo.destroy_all
+# Devo.destroy_all
 # Devo.where(gender: "SHE").destroy_all
-# Devo.where(book: "Esther").destroy_all
+Devo.where(book: "Ezekiel").destroy_all
+Devo.where(book: "Lamentations").destroy_all
+Devo.where(book: "Isaiah").destroy_all
+Devo.where(book: "Ezra").destroy_all
+Devo.where(book: "1 & 2 Chronicles").destroy_all
+Devo.where(book: "Deuteronomy").destroy_all
+Devo.where(book: "Numbers").destroy_all
+Devo.where(book: "Exodus").destroy_all
 # Devo.where("book like ?", "%Hymns%").destroy_all
 
 update_1 = JSON.parse(File.read("#{Rails.root}/dist/update/he_update.json"))
 update_2 = JSON.parse(File.read("#{Rails.root}/dist/update/she_update.json"))
 
-data_1 = JSON.parse(File.read("#{Rails.root}/dist/he_v1.json"))
-data_2 = JSON.parse(File.read("#{Rails.root}/dist/he_v2.json"))
-data_3 = JSON.parse(File.read("#{Rails.root}/dist/he_v3.json"))
-data_4 = JSON.parse(File.read("#{Rails.root}/dist/she_v1.json"))
-data_5 = JSON.parse(File.read("#{Rails.root}/dist/she_v2.json"))
-data_6 = JSON.parse(File.read("#{Rails.root}/dist/she_v3.json"))
-
-hash = {
-    "HE": [update_1, data_1, data_2, data_3],
-    "SHE": [update_2, data_4, data_5, data_6]
-}
+# data_1 = JSON.parse(File.read("#{Rails.root}/dist/he_v1.json"))
+# data_2 = JSON.parse(File.read("#{Rails.root}/dist/he_v2.json"))
+# data_3 = JSON.parse(File.read("#{Rails.root}/dist/he_v3.json"))
+# data_4 = JSON.parse(File.read("#{Rails.root}/dist/she_v1.json"))
+# data_5 = JSON.parse(File.read("#{Rails.root}/dist/she_v2.json"))
+# data_6 = JSON.parse(File.read("#{Rails.root}/dist/she_v3.json"))
 
 # hash = {
-#     "HE": [update_1],
-#     "SHE": [update_2]
+#     "HE": [update_1.reverse(), data_1, data_2, data_3],
+#     "SHE": [update_2, data_4, data_5, data_6]
 # }
+
+hash = {
+    "HE": [update_1.reverse()],
+    "SHE": [update_2]
+}
 
 hash.each do |gender, data_array|
     data_array.each do |each_data|
