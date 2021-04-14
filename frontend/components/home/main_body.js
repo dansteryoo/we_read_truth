@@ -344,49 +344,56 @@ class MainBody extends React.Component {
             && this.localStorageFunc('setCurrentPage')
             
         return (
-            <div className='middle-container'>
-                <div className='devo-main-title'>
-                    <span className='devo-main-day'>Day {this.state.renderDay}:</span>
+            <div className="middle-container">
+                <div className="devo-main-title">
+                    <span className="devo-main-day">
+                        Day {this.state.renderDay}:
+                    </span>
                     <span>{this.state.title}</span>
-                        <i id='bookmark' 
-                        className={this.state.bookmark ? 'fa fa-bookmark' : 'fa fa-bookmark-o' } 
-                        onClick={() => this.toggleBookmark()} 
-                        aria-hidden="true">
-                        </i>
-                    <i id='max-mclean-audio' className="fa fa-volume-up"
+                    <i
+                        id="bookmark"
+                        className={
+                            this.state.bookmark
+                                ? "fa fa-bookmark"
+                                : "fa fa-bookmark-o"
+                        }
+                        onClick={() => this.toggleBookmark()}
+                        aria-hidden="true"
+                    ></i>
+                    <i
+                        id="max-mclean-audio"
+                        className="fa fa-volume-up"
                         onClick={() => this.toggleAudio()}
-                        aria-hidden="true">
-                    </i>
+                        aria-hidden="true"
+                    ></i>
                 </div>
-            <div className='devo-main-container' ref={this.myRef}>
-                <div className="form-or-separator-mainbody-passages">
-                    <hr />
-                </div>
-                <div className='devo-main-passages'>
-                    
-                    <span>{this.renderPassages()}</span>
-
-                </div>
-                <div className="form-or-separator-mainbody-summary">
-                    <hr />
-                </div>
-                <div className="devo-main-body">
-
-                    <span>{this.renderSummary()}</span>
-
-                </div>
-                <div className="form-or-separator-mainbody-image">
-                    <hr />
-                </div>
-                <div className='devo-main-image'>
-                    <img src={this.state.img}/>
-                </div>
-                <div className='devo-main-footer'>
-                    <span>{}</span>
+                <div className="devo-main-container" ref={this.myRef}>
+                    <div className="form-or-separator-mainbody-passages">
+                        <hr />
+                    </div>
+                    <div className="devo-main-passages">
+                        <span>{this.renderPassages()}</span>
+                    </div>
+                    <div className="form-or-separator-mainbody-summary">
+                        <hr />
+                    </div>
+                    <div className="devo-main-body">
+                        <br />
+                        <span>{this.renderSummary()}</span>
+                        <br />
+                    </div>
+                    <div className="form-or-separator-mainbody-image">
+                        <hr />
+                    </div>
+                    <div className="devo-main-image">
+                        <img src={this.state.img} />
+                    </div>
+                    <div className="devo-main-footer">
+                        <span>{}</span>
+                    </div>
                 </div>
             </div>
-        </div>
-        )
+        );
     };
 }
 
