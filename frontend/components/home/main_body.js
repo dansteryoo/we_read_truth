@@ -379,7 +379,7 @@ class MainBody extends React.Component {
                     </div>
                     <div className="devo-main-body">
                         <br />
-                        <span>{this.renderSummary()}</span>
+                        <div>{this.renderSummary()}</div>
                         <br />
                     </div>
                     <div className="form-or-separator-mainbody-image">
