@@ -29,6 +29,7 @@ const defaultState = {
     body: "",
     updateErrors: [],
     updateForm: false,
+    loading: false,
 };
 
 /******************************

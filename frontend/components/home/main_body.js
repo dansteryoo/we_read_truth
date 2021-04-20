@@ -388,9 +388,6 @@ class MainBody extends React.Component {
                     <div className="devo-main-image">
                         <img src={this.state.img} />
                     </div>
-                    <div className="devo-main-footer">
-                        <span>{}</span>
-                    </div>
                 </div>
             </div>
         );
