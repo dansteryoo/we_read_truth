@@ -5,10 +5,10 @@
     <title>We Read Truth</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <meta property="og:title" content="We Read Truth" />
+    <meta name="title" property="og:title" content="We Read Truth" />
     <meta property="og:type" content="website" />
-    <meta property="og:description" content="A website where users can journal their devotionals using the 'She Reads Truth' and 'He Reads Truth' content." />
-    <meta property="og:image" content="<%= image_url("we_read_truth.png") %>" />
+    <meta name="description" property="og:description" content="A website where users can journal their devotionals using the 'She Reads Truth' and 'He Reads Truth' content." />
+    <meta name="image" property="og:image" content="<%= image_url("we_read_truth.png") %>" />
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
     <%= favicon_link_tag image_url('wrt_logo_white.png') %>
