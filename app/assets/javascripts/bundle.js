@@ -1078,7 +1078,7 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
         className: "devo-main-day"
       }, "Day ", this.state.renderDay, ":"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, this.state.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         id: "bookmark",
-        className: this.state.bookmark ? 'fa fa-bookmark' : 'fa fa-bookmark-o',
+        className: this.state.bookmark ? "fa fa-bookmark" : "fa fa-bookmark-o",
         onClick: function onClick() {
           return _this5.toggleBookmark();
         },
@@ -1101,15 +1101,13 @@ var MainBody = /*#__PURE__*/function (_React$Component) {
         className: "form-or-separator-mainbody-summary"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "devo-main-body"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, this.renderSummary())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.renderSummary()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-or-separator-mainbody-image"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "devo-main-image"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: this.state.img
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "devo-main-footer"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null))));
+      }))));
     }
   }]);
 
@@ -2909,7 +2907,8 @@ var defaultState = {
   day: "",
   body: "",
   updateErrors: [],
-  updateForm: false
+  updateForm: false,
+  loading: false
 };
 /******************************
  *     NotesForm Component    *
